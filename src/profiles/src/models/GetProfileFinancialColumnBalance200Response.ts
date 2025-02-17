@@ -31,6 +31,18 @@ export interface GetProfileFinancialColumnBalance200Response {
      * @memberof GetProfileFinancialColumnBalance200Response
      */
     difference: { [key: string]: number; };
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof GetProfileFinancialColumnBalance200Response
+     */
+    credit?: { [key: string]: number; };
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof GetProfileFinancialColumnBalance200Response
+     */
+    debit?: { [key: string]: number; };
 }
 
 /**
@@ -54,6 +66,8 @@ export function GetProfileFinancialColumnBalance200ResponseFromJSONTyped(json: a
         
         'statement': json['statement'],
         'difference': json['difference'],
+        'credit': json['credit'] == null ? undefined : json['credit'],
+        'debit': json['debit'] == null ? undefined : json['debit'],
     };
 }
 
@@ -70,6 +84,8 @@ export function GetProfileFinancialColumnBalance200ResponseToJSONTyped(value?: G
         
         'statement': value['statement'],
         'difference': value['difference'],
+        'credit': value['credit'],
+        'debit': value['debit'],
     };
 }
 
