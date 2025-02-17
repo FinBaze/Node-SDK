@@ -36,13 +36,13 @@ export interface GetProfileFinancialColumnBalance200Response {
      * @type {{ [key: string]: number; }}
      * @memberof GetProfileFinancialColumnBalance200Response
      */
-    credit?: { [key: string]: number; };
+    credit: { [key: string]: number; };
     /**
      * 
      * @type {{ [key: string]: number; }}
      * @memberof GetProfileFinancialColumnBalance200Response
      */
-    debit?: { [key: string]: number; };
+    debit: { [key: string]: number; };
 }
 
 /**
@@ -51,6 +51,8 @@ export interface GetProfileFinancialColumnBalance200Response {
 export function instanceOfGetProfileFinancialColumnBalance200Response(value: object): value is GetProfileFinancialColumnBalance200Response {
     if (!('statement' in value) || value['statement'] === undefined) return false;
     if (!('difference' in value) || value['difference'] === undefined) return false;
+    if (!('credit' in value) || value['credit'] === undefined) return false;
+    if (!('debit' in value) || value['debit'] === undefined) return false;
     return true;
 }
 
@@ -66,8 +68,8 @@ export function GetProfileFinancialColumnBalance200ResponseFromJSONTyped(json: a
         
         'statement': json['statement'],
         'difference': json['difference'],
-        'credit': json['credit'] == null ? undefined : json['credit'],
-        'debit': json['debit'] == null ? undefined : json['debit'],
+        'credit': json['credit'],
+        'debit': json['debit'],
     };
 }
 
