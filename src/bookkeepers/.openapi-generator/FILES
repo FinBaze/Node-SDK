@@ -24,8 +24,10 @@ src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
+src/models/ForbiddenError.ts
 src/models/GetBookkeeperAccounts200Response.ts
 src/models/GetBookkeeperProfiles200Response.ts
+src/models/InvalidRequestError.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts
@@ -44,6 +46,7 @@ src/models/NLVATFilingDataSection2.ts
 src/models/NLVATFilingDataSection3.ts
 src/models/NLVATFilingDataSection4.ts
 src/models/NLVATFilingDataSection5.ts
+src/models/NotFoundError.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentTask.ts
@@ -81,6 +84,7 @@ src/models/SalesInvoicePublicEmbeddedLinesInner.ts
 src/models/SalesInvoicePublicEmbeddedProfile.ts
 src/models/SalesInvoicePublicEmbeddedProfileNl.ts
 src/models/SalesInvoicePublicEmbeddedProfileNlVat.ts
+src/models/ServerError.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/Subscription.ts
@@ -89,6 +93,7 @@ src/models/SubscriptionEmbedded.ts
 src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
+src/models/UnauthorisedError.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/VehicleTripOdometer.ts

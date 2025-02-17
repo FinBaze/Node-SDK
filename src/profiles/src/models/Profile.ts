@@ -62,6 +62,12 @@ export interface Profile {
     legalName: string;
     /**
      * 
+     * @type {string}
+     * @memberof Profile
+     */
+    ledgerChart: string;
+    /**
+     * 
      * @type {ProfileFeatures}
      * @memberof Profile
      */
@@ -145,6 +151,7 @@ export type ProfileDistanceUnitEnum = typeof ProfileDistanceUnitEnum[keyof typeo
 export function instanceOfProfile(value: object): value is Profile {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
+    if (!('ledgerChart' in value) || value['ledgerChart'] === undefined) return false;
     if (!('features' in value) || value['features'] === undefined) return false;
     if (!('url' in value) || value['url'] === undefined) return false;
     if (!('timezone' in value) || value['timezone'] === undefined) return false;
@@ -168,7 +175,8 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
     return {
         
         'id': json['id'],
-        'legalName': json['legal_name'],
+        'legalName': json['legal-name'],
+        'ledgerChart': json['ledger-chart'],
         'features': ProfileFeaturesFromJSON(json['features']),
         'url': json['url'],
         'timezone': json['timezone'],
@@ -194,7 +202,8 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
 
     return {
         
-        'legal_name': value['legalName'],
+        'legal-name': value['legalName'],
+        'ledger-chart': value['ledgerChart'],
         'features': ProfileFeaturesToJSON(value['features']),
         'url': value['url'],
         'timezone': value['timezone'],

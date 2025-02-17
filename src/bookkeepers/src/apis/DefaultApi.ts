@@ -19,9 +19,14 @@ import type {
   Bookkeeper,
   CreateBookkeeperAccountRequest,
   CreateBookkeeperProfileRequest,
+  ForbiddenError,
   GetBookkeeperAccounts200Response,
   GetBookkeeperProfiles200Response,
+  InvalidRequestError,
+  NotFoundError,
   Profile,
+  ServerError,
+  UnauthorisedError,
 } from '../models/index';
 import {
     AccountFromJSON,
@@ -32,12 +37,22 @@ import {
     CreateBookkeeperAccountRequestToJSON,
     CreateBookkeeperProfileRequestFromJSON,
     CreateBookkeeperProfileRequestToJSON,
+    ForbiddenErrorFromJSON,
+    ForbiddenErrorToJSON,
     GetBookkeeperAccounts200ResponseFromJSON,
     GetBookkeeperAccounts200ResponseToJSON,
     GetBookkeeperProfiles200ResponseFromJSON,
     GetBookkeeperProfiles200ResponseToJSON,
+    InvalidRequestErrorFromJSON,
+    InvalidRequestErrorToJSON,
+    NotFoundErrorFromJSON,
+    NotFoundErrorToJSON,
     ProfileFromJSON,
     ProfileToJSON,
+    ServerErrorFromJSON,
+    ServerErrorToJSON,
+    UnauthorisedErrorFromJSON,
+    UnauthorisedErrorToJSON,
 } from '../models/index';
 
 export interface CreateBookkeeperAccountOperationRequest {
