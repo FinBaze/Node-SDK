@@ -24,13 +24,19 @@ export interface GetProfileLedgerChart200ResponseSectionsValue {
      * @type {string}
      * @memberof GetProfileLedgerChart200ResponseSectionsValue
      */
-    name?: string;
+    name: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof GetProfileLedgerChart200ResponseSectionsValue
+     */
+    trans: { [key: string]: string; };
     /**
      * 
      * @type {string}
      * @memberof GetProfileLedgerChart200ResponseSectionsValue
      */
-    type?: GetProfileLedgerChart200ResponseSectionsValueTypeEnum;
+    type: GetProfileLedgerChart200ResponseSectionsValueTypeEnum;
     /**
      * 
      * @type {string}
@@ -65,6 +71,9 @@ export type GetProfileLedgerChart200ResponseSectionsValueSideEnum = typeof GetPr
  * Check if a given object implements the GetProfileLedgerChart200ResponseSectionsValue interface.
  */
 export function instanceOfGetProfileLedgerChart200ResponseSectionsValue(value: object): value is GetProfileLedgerChart200ResponseSectionsValue {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('trans' in value) || value['trans'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
     return true;
 }
 
@@ -78,8 +87,9 @@ export function GetProfileLedgerChart200ResponseSectionsValueFromJSONTyped(json:
     }
     return {
         
-        'name': json['name'] == null ? undefined : json['name'],
-        'type': json['type'] == null ? undefined : json['type'],
+        'name': json['name'],
+        'trans': json['trans'],
+        'type': json['type'],
         'side': json['side'] == null ? undefined : json['side'],
     };
 }
@@ -96,6 +106,7 @@ export function GetProfileLedgerChart200ResponseSectionsValueToJSONTyped(value?:
     return {
         
         'name': value['name'],
+        'trans': value['trans'],
         'type': value['type'],
         'side': value['side'],
     };

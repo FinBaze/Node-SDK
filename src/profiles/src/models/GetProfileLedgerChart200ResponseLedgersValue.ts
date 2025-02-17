@@ -26,6 +26,12 @@ export interface GetProfileLedgerChart200ResponseLedgersValue {
      */
     name: string;
     /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof GetProfileLedgerChart200ResponseLedgersValue
+     */
+    trans: { [key: string]: string; };
+    /**
      * ID of the ledger category
      * @type {string}
      * @memberof GetProfileLedgerChart200ResponseLedgersValue
@@ -83,6 +89,7 @@ export type GetProfileLedgerChart200ResponseLedgersValueTagsEnum = typeof GetPro
  */
 export function instanceOfGetProfileLedgerChart200ResponseLedgersValue(value: object): value is GetProfileLedgerChart200ResponseLedgersValue {
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('trans' in value) || value['trans'] === undefined) return false;
     if (!('category' in value) || value['category'] === undefined) return false;
     if (!('ledger' in value) || value['ledger'] === undefined) return false;
     return true;
@@ -99,6 +106,7 @@ export function GetProfileLedgerChart200ResponseLedgersValueFromJSONTyped(json: 
     return {
         
         'name': json['name'],
+        'trans': json['trans'],
         'category': json['category'],
         'ledger': json['ledger'],
         'correlation': json['correlation'] == null ? undefined : json['correlation'],
@@ -120,6 +128,7 @@ export function GetProfileLedgerChart200ResponseLedgersValueToJSONTyped(value?: 
     return {
         
         'name': value['name'],
+        'trans': value['trans'],
         'category': value['category'],
         'ledger': value['ledger'],
         'correlation': value['correlation'],

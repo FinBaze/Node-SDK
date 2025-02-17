@@ -26,6 +26,12 @@ export interface GetProfileLedgerChart200ResponseCategoriesValue {
      */
     name: string;
     /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof GetProfileLedgerChart200ResponseCategoriesValue
+     */
+    trans: { [key: string]: string; };
+    /**
      * ID of the section
      * @type {string}
      * @memberof GetProfileLedgerChart200ResponseCategoriesValue
@@ -57,6 +63,7 @@ export type GetProfileLedgerChart200ResponseCategoriesValueTagsEnum = typeof Get
  */
 export function instanceOfGetProfileLedgerChart200ResponseCategoriesValue(value: object): value is GetProfileLedgerChart200ResponseCategoriesValue {
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('trans' in value) || value['trans'] === undefined) return false;
     if (!('section' in value) || value['section'] === undefined) return false;
     return true;
 }
@@ -72,6 +79,7 @@ export function GetProfileLedgerChart200ResponseCategoriesValueFromJSONTyped(jso
     return {
         
         'name': json['name'],
+        'trans': json['trans'],
         'section': json['section'],
         'tags': json['tags'] == null ? undefined : json['tags'],
     };
@@ -89,6 +97,7 @@ export function GetProfileLedgerChart200ResponseCategoriesValueToJSONTyped(value
     return {
         
         'name': value['name'],
+        'trans': value['trans'],
         'section': value['section'],
         'tags': value['tags'],
     };
