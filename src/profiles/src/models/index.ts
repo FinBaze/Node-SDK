@@ -42,6 +42,8 @@ export * from './CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1';
 export * from './CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2';
 export * from './CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset';
 export * from './CreatePurchaseInvoiceLineRequest';
+export * from './CreatePurchaseInvoicePayment200Response';
+export * from './CreatePurchaseInvoicePaymentRequest';
 export * from './CreatePurchaseInvoiceRequest';
 export * from './CreateQuoteRequest';
 export * from './CreateRelationRequest';

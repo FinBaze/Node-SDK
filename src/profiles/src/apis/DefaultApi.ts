@@ -37,6 +37,8 @@ import type {
   CreateProfileRequest,
   CreatePurchaseInvoiceFinalRequest,
   CreatePurchaseInvoiceLineRequest,
+  CreatePurchaseInvoicePayment200Response,
+  CreatePurchaseInvoicePaymentRequest,
   CreatePurchaseInvoiceRequest,
   CreateQuoteRequest,
   CreateRelationRequest,
@@ -160,6 +162,10 @@ import {
     CreatePurchaseInvoiceFinalRequestToJSON,
     CreatePurchaseInvoiceLineRequestFromJSON,
     CreatePurchaseInvoiceLineRequestToJSON,
+    CreatePurchaseInvoicePayment200ResponseFromJSON,
+    CreatePurchaseInvoicePayment200ResponseToJSON,
+    CreatePurchaseInvoicePaymentRequestFromJSON,
+    CreatePurchaseInvoicePaymentRequestToJSON,
     CreatePurchaseInvoiceRequestFromJSON,
     CreatePurchaseInvoiceRequestToJSON,
     CreateQuoteRequestFromJSON,
@@ -440,6 +446,12 @@ export interface CreatePurchaseInvoiceLineOperationRequest {
     profileId: string;
     purchaseInvoiceId: string;
     createPurchaseInvoiceLineRequest?: CreatePurchaseInvoiceLineRequest;
+}
+
+export interface CreatePurchaseInvoicePaymentOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    createPurchaseInvoicePaymentRequest?: CreatePurchaseInvoicePaymentRequest;
 }
 
 export interface CreateQuoteOperationRequest {
@@ -1735,6 +1747,22 @@ export interface DefaultApiInterface {
      * creates a purchase invoice line
      */
     createPurchaseInvoiceLine(requestParameters: CreatePurchaseInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceLine>;
+
+    /**
+     * Create purchaseinvoice payment
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {CreatePurchaseInvoicePaymentRequest} [createPurchaseInvoicePaymentRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePurchaseInvoicePayment200Response>>;
+
+    /**
+     * Create purchaseinvoice payment
+     */
+    createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePurchaseInvoicePayment200Response>;
 
     /**
      * Creates an concept Quote
@@ -5273,6 +5301,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createPurchaseInvoiceLine(requestParameters: CreatePurchaseInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceLine> {
         const response = await this.createPurchaseInvoiceLineRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create purchaseinvoice payment
+     */
+    async createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePurchaseInvoicePayment200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPurchaseInvoicePayment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling createPurchaseInvoicePayment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/payment`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePurchaseInvoicePaymentRequestToJSON(requestParameters['createPurchaseInvoicePaymentRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreatePurchaseInvoicePayment200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create purchaseinvoice payment
+     */
+    async createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePurchaseInvoicePayment200Response> {
+        const response = await this.createPurchaseInvoicePaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
