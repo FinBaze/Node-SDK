@@ -20,6 +20,13 @@ import {
     CreatePurchaseInvoiceFinalRequestFileToJSON,
     CreatePurchaseInvoiceFinalRequestFileToJSONTyped,
 } from './CreatePurchaseInvoiceFinalRequestFile';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
+import {
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -45,6 +52,12 @@ export interface CreatePurchaseInvoiceRequest {
      * @memberof CreatePurchaseInvoiceRequest
      */
     relation: string;
+    /**
+     * 
+     * @type {CreateSalesInvoiceRequestPeriod}
+     * @memberof CreatePurchaseInvoiceRequest
+     */
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * Invoice number of the purchase invoice
      * @type {string}
@@ -93,6 +106,7 @@ export function CreatePurchaseInvoiceRequestFromJSONTyped(json: any, ignoreDiscr
         'file': json['file'] == null ? undefined : CreatePurchaseInvoiceFinalRequestFileFromJSON(json['file']),
         'currency': json['currency'],
         'relation': json['relation'],
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'invoiceId': json['invoice_id'] == null ? undefined : json['invoice_id'],
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
@@ -114,6 +128,7 @@ export function CreatePurchaseInvoiceRequestToJSONTyped(value?: CreatePurchaseIn
         'file': CreatePurchaseInvoiceFinalRequestFileToJSON(value['file']),
         'currency': value['currency'],
         'relation': value['relation'],
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'invoice_id': value['invoiceId'],
         'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),

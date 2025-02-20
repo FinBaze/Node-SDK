@@ -11,6 +11,7 @@ src/models/Address.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
 src/models/CreateAccountMeZendeskToken200Response.ts
+src/models/CreateDeviceRequest.ts
 src/models/CreateSalesInvoicePublicPayment200Response.ts
 src/models/CreateSalesInvoicePublicPaymentRequest.ts
 src/models/CreateSalesInvoicePublicPaymentRequestData.ts
@@ -18,6 +19,7 @@ src/models/CreateSalesInvoicePublicPaymentRequestDataOpenbanking.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
+src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
@@ -96,6 +98,7 @@ src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/UnauthorisedError.ts
 src/models/UpdateAccountMeRequest.ts
+src/models/UpdateDeviceRequest.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/VehicleTripOdometer.ts

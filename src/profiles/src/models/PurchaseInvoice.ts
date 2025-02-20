@@ -27,6 +27,13 @@ import {
     SalesInvoiceAmountsToJSON,
     SalesInvoiceAmountsToJSONTyped,
 } from './SalesInvoiceAmounts';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
+import {
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -52,6 +59,12 @@ export interface PurchaseInvoice {
      * @memberof PurchaseInvoice
      */
     invoiceId: string;
+    /**
+     * 
+     * @type {CreateSalesInvoiceRequestPeriod}
+     * @memberof PurchaseInvoice
+     */
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * Due date of the invoice
      * @type {Date}
@@ -164,6 +177,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'uuid': json['uuid'],
         'invoiceId': json['invoice_id'],
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
@@ -192,6 +206,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
     return {
         
         'invoice_id': value['invoiceId'],
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'date': ((value['date']).toISOString().substring(0,10)),
         'overdue': value['overdue'],

@@ -17,22 +17,29 @@ import * as runtime from '../runtime';
 import type {
   Account,
   CreateAccountMeZendeskToken200Response,
+  CreateDeviceRequest,
   CreateSalesInvoicePublicPayment200Response,
   CreateSalesInvoicePublicPaymentRequest,
+  Device,
   ResetAccountPasswordRequest,
   SalesInvoicePublic,
   SendResetPasswordRequestRequest,
   UpdateAccountMeRequest,
+  UpdateDeviceRequest,
 } from '../models/index';
 import {
     AccountFromJSON,
     AccountToJSON,
     CreateAccountMeZendeskToken200ResponseFromJSON,
     CreateAccountMeZendeskToken200ResponseToJSON,
+    CreateDeviceRequestFromJSON,
+    CreateDeviceRequestToJSON,
     CreateSalesInvoicePublicPayment200ResponseFromJSON,
     CreateSalesInvoicePublicPayment200ResponseToJSON,
     CreateSalesInvoicePublicPaymentRequestFromJSON,
     CreateSalesInvoicePublicPaymentRequestToJSON,
+    DeviceFromJSON,
+    DeviceToJSON,
     ResetAccountPasswordRequestFromJSON,
     ResetAccountPasswordRequestToJSON,
     SalesInvoicePublicFromJSON,
@@ -41,12 +48,22 @@ import {
     SendResetPasswordRequestRequestToJSON,
     UpdateAccountMeRequestFromJSON,
     UpdateAccountMeRequestToJSON,
+    UpdateDeviceRequestFromJSON,
+    UpdateDeviceRequestToJSON,
 } from '../models/index';
+
+export interface CreateDeviceOperationRequest {
+    createDeviceRequest?: CreateDeviceRequest;
+}
 
 export interface CreateSalesInvoicePublicPaymentOperationRequest {
     profileId: string;
     salesInvoiceUUID: string;
     createSalesInvoicePublicPaymentRequest?: CreateSalesInvoicePublicPaymentRequest;
+}
+
+export interface DeleteDeviceRequest {
+    deviceId: string;
 }
 
 export interface GetAccountRequest {
@@ -86,6 +103,11 @@ export interface UpdateAccountMeOperationRequest {
     updateAccountMeRequest?: UpdateAccountMeRequest;
 }
 
+export interface UpdateDeviceOperationRequest {
+    deviceId: string;
+    updateDeviceRequest?: UpdateDeviceRequest;
+}
+
 /**
  * DefaultApi - interface
  * 
@@ -120,6 +142,20 @@ export interface DefaultApiInterface {
     createAccountMeZendeskToken(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccountMeZendeskToken200Response>;
 
     /**
+     * Creates an device
+     * @param {CreateDeviceRequest} [createDeviceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createDeviceRaw(requestParameters: CreateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Device>>;
+
+    /**
+     * Creates an device
+     */
+    createDevice(requestParameters: CreateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device>;
+
+    /**
      * Creates an payment attempt for an sales invoice
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceUUID The uuid of the sales invoice
@@ -134,6 +170,20 @@ export interface DefaultApiInterface {
      * Creates an payment attempt for an sales invoice
      */
     createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSalesInvoicePublicPayment200Response>;
+
+    /**
+     * Creates an device
+     * @param {string} deviceId The ID of the device
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteDeviceRaw(requestParameters: DeleteDeviceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Creates an device
+     */
+    deleteDevice(requestParameters: DeleteDeviceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Returns an account
@@ -265,6 +315,21 @@ export interface DefaultApiInterface {
      */
     updateAccountMe(requestParameters: UpdateAccountMeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
 
+    /**
+     * Creates an device
+     * @param {string} deviceId The ID of the device
+     * @param {UpdateDeviceRequest} [updateDeviceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateDeviceRaw(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Device>>;
+
+    /**
+     * Creates an device
+     */
+    updateDevice(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device>;
+
 }
 
 /**
@@ -335,6 +400,40 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates an device
+     */
+    async createDeviceRaw(requestParameters: CreateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Device>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/accounts/@me/devices`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateDeviceRequestToJSON(requestParameters['createDeviceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an device
+     */
+    async createDevice(requestParameters: CreateDeviceOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device> {
+        const response = await this.createDeviceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates an payment attempt for an sales invoice
      */
     async createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSalesInvoicePublicPayment200Response>> {
@@ -380,6 +479,43 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     async createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSalesInvoicePublicPayment200Response> {
         const response = await this.createSalesInvoicePublicPaymentRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates an device
+     */
+    async deleteDeviceRaw(requestParameters: DeleteDeviceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['deviceId'] == null) {
+            throw new runtime.RequiredError(
+                'deviceId',
+                'Required parameter "deviceId" was null or undefined when calling deleteDevice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/accounts/@me/devices/{deviceId}`.replace(`{${"deviceId"}}`, encodeURIComponent(String(requestParameters['deviceId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Creates an device
+     */
+    async deleteDevice(requestParameters: DeleteDeviceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteDeviceRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -733,6 +869,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateAccountMe(requestParameters: UpdateAccountMeOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
         const response = await this.updateAccountMeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an device
+     */
+    async updateDeviceRaw(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Device>> {
+        if (requestParameters['deviceId'] == null) {
+            throw new runtime.RequiredError(
+                'deviceId',
+                'Required parameter "deviceId" was null or undefined when calling updateDevice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/accounts/@me/devices/{deviceId}`.replace(`{${"deviceId"}}`, encodeURIComponent(String(requestParameters['deviceId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateDeviceRequestToJSON(requestParameters['updateDeviceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an device
+     */
+    async updateDevice(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device> {
+        const response = await this.updateDeviceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

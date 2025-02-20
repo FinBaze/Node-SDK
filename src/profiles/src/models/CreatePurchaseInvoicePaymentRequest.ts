@@ -26,6 +26,12 @@ export interface CreatePurchaseInvoicePaymentRequest {
      */
     monetaryAccount: string;
     /**
+     * 
+     * @type {Date}
+     * @memberof CreatePurchaseInvoicePaymentRequest
+     */
+    execution?: Date;
+    /**
      * Non required field of the amount that should be paid, defaults to total invoice amount
      * @type {number}
      * @memberof CreatePurchaseInvoicePaymentRequest
@@ -52,6 +58,7 @@ export function CreatePurchaseInvoicePaymentRequestFromJSONTyped(json: any, igno
     return {
         
         'monetaryAccount': json['monetary-account'],
+        'execution': json['execution'] == null ? undefined : (new Date(json['execution'])),
         'amount': json['amount'] == null ? undefined : json['amount'],
     };
 }
@@ -68,6 +75,7 @@ export function CreatePurchaseInvoicePaymentRequestToJSONTyped(value?: CreatePur
     return {
         
         'monetary-account': value['monetaryAccount'],
+        'execution': value['execution'] == null ? undefined : ((value['execution']).toISOString().substring(0,10)),
         'amount': value['amount'],
     };
 }

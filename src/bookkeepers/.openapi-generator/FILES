@@ -22,6 +22,7 @@ src/models/CreateBookkeeperProfileRequestSettingsSalesInvoice.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
+src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts

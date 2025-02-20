@@ -27,6 +27,13 @@ import {
     CreatePurchaseInvoiceFinalRequestLinesInnerToJSON,
     CreatePurchaseInvoiceFinalRequestLinesInnerToJSONTyped,
 } from './CreatePurchaseInvoiceFinalRequestLinesInner';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
+import {
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -46,6 +53,12 @@ export interface CreatePurchaseInvoiceFinalRequest {
      * @memberof CreatePurchaseInvoiceFinalRequest
      */
     currency: string;
+    /**
+     * 
+     * @type {CreateSalesInvoiceRequestPeriod}
+     * @memberof CreatePurchaseInvoiceFinalRequest
+     */
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * ID of the relation to use
      * @type {string}
@@ -109,6 +122,7 @@ export function CreatePurchaseInvoiceFinalRequestFromJSONTyped(json: any, ignore
         
         'file': json['file'] == null ? undefined : CreatePurchaseInvoiceFinalRequestFileFromJSON(json['file']),
         'currency': json['currency'],
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'relation': json['relation'],
         'invoiceId': json['invoice_id'],
         'date': (new Date(json['date'])),
@@ -131,6 +145,7 @@ export function CreatePurchaseInvoiceFinalRequestToJSONTyped(value?: CreatePurch
         
         'file': CreatePurchaseInvoiceFinalRequestFileToJSON(value['file']),
         'currency': value['currency'],
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'relation': value['relation'],
         'invoice_id': value['invoiceId'],
         'date': ((value['date']).toISOString().substring(0,10)),

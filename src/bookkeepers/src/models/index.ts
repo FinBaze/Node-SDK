@@ -16,6 +16,7 @@ export * from './CreateBookkeeperProfileRequestSettingsSalesInvoice';
 export * from './CreditLoan';
 export * from './CurrentAccount';
 export * from './DebitLoan';
+export * from './Device';
 export * from './Employee';
 export * from './ExpenseCategory';
 export * from './ForbiddenError';

@@ -67,6 +67,7 @@ export * from './CreditSalesInvoiceRequest';
 export * from './CurrentAccount';
 export * from './DebitLoan';
 export * from './DeleteSubscriptionRequest';
+export * from './Device';
 export * from './Employee';
 export * from './ExpenseCategory';
 export * from './ForbiddenError';
