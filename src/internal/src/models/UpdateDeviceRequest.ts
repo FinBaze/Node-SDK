@@ -24,13 +24,14 @@ export interface UpdateDeviceRequest {
      * @type {string}
      * @memberof UpdateDeviceRequest
      */
-    token?: string;
+    pushToken: string;
 }
 
 /**
  * Check if a given object implements the UpdateDeviceRequest interface.
  */
 export function instanceOfUpdateDeviceRequest(value: object): value is UpdateDeviceRequest {
+    if (!('pushToken' in value) || value['pushToken'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function UpdateDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'token': json['token'] == null ? undefined : json['token'],
+        'pushToken': json['push_token'],
     };
 }
 
@@ -59,7 +60,7 @@ export function UpdateDeviceRequestToJSONTyped(value?: UpdateDeviceRequest | nul
 
     return {
         
-        'token': value['token'],
+        'push_token': value['pushToken'],
     };
 }
 

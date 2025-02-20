@@ -24,6 +24,12 @@ export interface CreateDeviceRequest {
      * @type {string}
      * @memberof CreateDeviceRequest
      */
+    pushToken?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateDeviceRequest
+     */
     uuid: string;
     /**
      * 
@@ -79,6 +85,7 @@ export function CreateDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
+        'pushToken': json['push_token'] == null ? undefined : json['push_token'],
         'uuid': json['uuid'],
         'name': json['name'],
         'model': json['model'],
@@ -97,6 +104,7 @@ export function CreateDeviceRequestToJSONTyped(value?: CreateDeviceRequest | nul
 
     return {
         
+        'push_token': value['pushToken'],
         'uuid': value['uuid'],
         'name': value['name'],
         'model': value['model'],
