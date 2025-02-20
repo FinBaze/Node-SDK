@@ -24,13 +24,48 @@ export interface CreateDeviceRequest {
      * @type {string}
      * @memberof CreateDeviceRequest
      */
-    token?: string;
+    uuid: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateDeviceRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateDeviceRequest
+     */
+    model: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateDeviceRequest
+     */
+    os: CreateDeviceRequestOsEnum;
 }
+
+
+/**
+ * @export
+ */
+export const CreateDeviceRequestOsEnum = {
+    Ios: 'ios',
+    Android: 'android',
+    Web: 'web',
+    Visionos: 'visionos'
+} as const;
+export type CreateDeviceRequestOsEnum = typeof CreateDeviceRequestOsEnum[keyof typeof CreateDeviceRequestOsEnum];
+
 
 /**
  * Check if a given object implements the CreateDeviceRequest interface.
  */
 export function instanceOfCreateDeviceRequest(value: object): value is CreateDeviceRequest {
+    if (!('uuid' in value) || value['uuid'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('model' in value) || value['model'] === undefined) return false;
+    if (!('os' in value) || value['os'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +79,10 @@ export function CreateDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'token': json['token'] == null ? undefined : json['token'],
+        'uuid': json['uuid'],
+        'name': json['name'],
+        'model': json['model'],
+        'os': json['os'],
     };
 }
 
@@ -59,7 +97,10 @@ export function CreateDeviceRequestToJSONTyped(value?: CreateDeviceRequest | nul
 
     return {
         
-        'token': value['token'],
+        'uuid': value['uuid'],
+        'name': value['name'],
+        'model': value['model'],
+        'os': value['os'],
     };
 }
 

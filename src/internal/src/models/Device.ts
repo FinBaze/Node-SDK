@@ -42,7 +42,7 @@ export interface Device {
      * @type {string}
      * @memberof Device
      */
-    os: string;
+    os: DeviceOsEnum;
     /**
      * 
      * @type {string}
@@ -62,6 +62,19 @@ export interface Device {
      */
     readonly created: Date;
 }
+
+
+/**
+ * @export
+ */
+export const DeviceOsEnum = {
+    Ios: 'ios',
+    Android: 'android',
+    Web: 'web',
+    Visionos: 'visionos'
+} as const;
+export type DeviceOsEnum = typeof DeviceOsEnum[keyof typeof DeviceOsEnum];
+
 
 /**
  * Check if a given object implements the Device interface.
