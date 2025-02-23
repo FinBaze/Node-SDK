@@ -20,6 +20,12 @@ import { mapValues } from '../runtime';
  */
 export interface GetProfileLedgerChart200ResponseCategoriesValue {
     /**
+     * Sort index
+     * @type {string}
+     * @memberof GetProfileLedgerChart200ResponseCategoriesValue
+     */
+    index: string;
+    /**
      * 
      * @type {string}
      * @memberof GetProfileLedgerChart200ResponseCategoriesValue
@@ -62,6 +68,7 @@ export type GetProfileLedgerChart200ResponseCategoriesValueTagsEnum = typeof Get
  * Check if a given object implements the GetProfileLedgerChart200ResponseCategoriesValue interface.
  */
 export function instanceOfGetProfileLedgerChart200ResponseCategoriesValue(value: object): value is GetProfileLedgerChart200ResponseCategoriesValue {
+    if (!('index' in value) || value['index'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('trans' in value) || value['trans'] === undefined) return false;
     if (!('section' in value) || value['section'] === undefined) return false;
@@ -78,6 +85,7 @@ export function GetProfileLedgerChart200ResponseCategoriesValueFromJSONTyped(jso
     }
     return {
         
+        'index': json['index'],
         'name': json['name'],
         'trans': json['trans'],
         'section': json['section'],
@@ -96,6 +104,7 @@ export function GetProfileLedgerChart200ResponseCategoriesValueToJSONTyped(value
 
     return {
         
+        'index': value['index'],
         'name': value['name'],
         'trans': value['trans'],
         'section': value['section'],

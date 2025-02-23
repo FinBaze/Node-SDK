@@ -26,6 +26,12 @@ export interface GetProfileLedgerChart200ResponseSectionsValue {
      */
     name: string;
     /**
+     * Sort index
+     * @type {string}
+     * @memberof GetProfileLedgerChart200ResponseSectionsValue
+     */
+    index: string;
+    /**
      * 
      * @type {{ [key: string]: string; }}
      * @memberof GetProfileLedgerChart200ResponseSectionsValue
@@ -72,6 +78,7 @@ export type GetProfileLedgerChart200ResponseSectionsValueSideEnum = typeof GetPr
  */
 export function instanceOfGetProfileLedgerChart200ResponseSectionsValue(value: object): value is GetProfileLedgerChart200ResponseSectionsValue {
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
     if (!('trans' in value) || value['trans'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
@@ -88,6 +95,7 @@ export function GetProfileLedgerChart200ResponseSectionsValueFromJSONTyped(json:
     return {
         
         'name': json['name'],
+        'index': json['index'],
         'trans': json['trans'],
         'type': json['type'],
         'side': json['side'] == null ? undefined : json['side'],
@@ -106,6 +114,7 @@ export function GetProfileLedgerChart200ResponseSectionsValueToJSONTyped(value?:
     return {
         
         'name': value['name'],
+        'index': value['index'],
         'trans': value['trans'],
         'type': value['type'],
         'side': value['side'],
