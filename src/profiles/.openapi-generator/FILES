@@ -22,6 +22,8 @@ src/models/CreateDebitLoanRequest.ts
 src/models/CreateEmployeeRequest.ts
 src/models/CreateMemorialEntryRequest.ts
 src/models/CreateMemorialEntryRequestItemsInner.ts
+src/models/CreateMonetaryAccountBankPayment200Response.ts
+src/models/CreateMonetaryAccountBankPaymentRequest.ts
 src/models/CreateMonetaryAccountOpenbankingAuthorisation201Response.ts
 src/models/CreateMonetaryAccountOpenbankingAuthorisationRequest.ts
 src/models/CreateMonetaryAccountPaymentRequestInner.ts
@@ -48,7 +50,6 @@ src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1.ts
 src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2.ts
 src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset.ts
 src/models/CreatePurchaseInvoiceLineRequest.ts
-src/models/CreatePurchaseInvoicePayment200Response.ts
 src/models/CreatePurchaseInvoicePaymentRequest.ts
 src/models/CreatePurchaseInvoiceRequest.ts
 src/models/CreateQuoteRequest.ts

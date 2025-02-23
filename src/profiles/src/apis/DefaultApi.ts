@@ -26,6 +26,8 @@ import type {
   CreateDebitLoanRequest,
   CreateEmployeeRequest,
   CreateMemorialEntryRequest,
+  CreateMonetaryAccountBankPayment200Response,
+  CreateMonetaryAccountBankPaymentRequest,
   CreateMonetaryAccountOpenbankingAuthorisation201Response,
   CreateMonetaryAccountOpenbankingAuthorisationRequest,
   CreateMonetaryAccountPaymentRequestInner,
@@ -37,7 +39,6 @@ import type {
   CreateProfileRequest,
   CreatePurchaseInvoiceFinalRequest,
   CreatePurchaseInvoiceLineRequest,
-  CreatePurchaseInvoicePayment200Response,
   CreatePurchaseInvoicePaymentRequest,
   CreatePurchaseInvoiceRequest,
   CreateQuoteRequest,
@@ -142,6 +143,10 @@ import {
     CreateEmployeeRequestToJSON,
     CreateMemorialEntryRequestFromJSON,
     CreateMemorialEntryRequestToJSON,
+    CreateMonetaryAccountBankPayment200ResponseFromJSON,
+    CreateMonetaryAccountBankPayment200ResponseToJSON,
+    CreateMonetaryAccountBankPaymentRequestFromJSON,
+    CreateMonetaryAccountBankPaymentRequestToJSON,
     CreateMonetaryAccountOpenbankingAuthorisation201ResponseFromJSON,
     CreateMonetaryAccountOpenbankingAuthorisation201ResponseToJSON,
     CreateMonetaryAccountOpenbankingAuthorisationRequestFromJSON,
@@ -164,8 +169,6 @@ import {
     CreatePurchaseInvoiceFinalRequestToJSON,
     CreatePurchaseInvoiceLineRequestFromJSON,
     CreatePurchaseInvoiceLineRequestToJSON,
-    CreatePurchaseInvoicePayment200ResponseFromJSON,
-    CreatePurchaseInvoicePayment200ResponseToJSON,
     CreatePurchaseInvoicePaymentRequestFromJSON,
     CreatePurchaseInvoicePaymentRequestToJSON,
     CreatePurchaseInvoiceRequestFromJSON,
@@ -400,6 +403,12 @@ export interface CreateMonetaryAccountAutoProcessRequest {
     profileId: string;
     monetaryAccountId: string;
     upateMonetaryAccountAutoProcessRequest?: Omit<UpateMonetaryAccountAutoProcessRequest, 'id'|'updated'|'created'>;
+}
+
+export interface CreateMonetaryAccountBankPaymentOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    createMonetaryAccountBankPaymentRequest?: CreateMonetaryAccountBankPaymentRequest;
 }
 
 export interface CreateMonetaryAccountOpenbankingAuthorisationOperationRequest {
@@ -1633,6 +1642,22 @@ export interface DefaultApiInterface {
     createMonetaryAccountAutoProcess(requestParameters: CreateMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess>;
 
     /**
+     * Create purchaseinvoice payment
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {CreateMonetaryAccountBankPaymentRequest} [createMonetaryAccountBankPaymentRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createMonetaryAccountBankPaymentRaw(requestParameters: CreateMonetaryAccountBankPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>>;
+
+    /**
+     * Create purchaseinvoice payment
+     */
+    createMonetaryAccountBankPayment(requestParameters: CreateMonetaryAccountBankPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response>;
+
+    /**
      * Create an openbanking request
      * @param {string} profileId The id of the profile
      * @param {string} monetaryAccountId The ID of the monetary account
@@ -1809,12 +1834,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePurchaseInvoicePayment200Response>>;
+    createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>>;
 
     /**
      * Create purchaseinvoice payment
      */
-    createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePurchaseInvoicePayment200Response>;
+    createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response>;
 
     /**
      * Creates an concept Quote
@@ -4978,6 +5003,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Create purchaseinvoice payment
+     */
+    async createMonetaryAccountBankPaymentRaw(requestParameters: CreateMonetaryAccountBankPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createMonetaryAccountBankPayment().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling createMonetaryAccountBankPayment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/bank/payment`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateMonetaryAccountBankPaymentRequestToJSON(requestParameters['createMonetaryAccountBankPaymentRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateMonetaryAccountBankPayment200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create purchaseinvoice payment
+     */
+    async createMonetaryAccountBankPayment(requestParameters: CreateMonetaryAccountBankPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response> {
+        const response = await this.createMonetaryAccountBankPaymentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Create an openbanking request
      */
     async createMonetaryAccountOpenbankingAuthorisationRaw(requestParameters: CreateMonetaryAccountOpenbankingAuthorisationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountOpenbankingAuthorisation201Response>> {
@@ -5471,7 +5544,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Create purchaseinvoice payment
      */
-    async createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePurchaseInvoicePayment200Response>> {
+    async createPurchaseInvoicePaymentRaw(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -5505,13 +5578,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreatePurchaseInvoicePaymentRequestToJSON(requestParameters['createPurchaseInvoicePaymentRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreatePurchaseInvoicePayment200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateMonetaryAccountBankPayment200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Create purchaseinvoice payment
      */
-    async createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePurchaseInvoicePayment200Response> {
+    async createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response> {
         const response = await this.createPurchaseInvoicePaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
