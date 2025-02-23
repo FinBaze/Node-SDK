@@ -214,6 +214,19 @@ export interface DefaultApiInterface {
     getAccountMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
 
     /**
+     * Get all devices
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getDevicesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Device>>>;
+
+    /**
+     * Get all devices
+     */
+    getDevices(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Device>>;
+
+    /**
      * Returns a purchase invoice public data
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceUUID The uuid of the purchase invoice
@@ -585,6 +598,37 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getAccountMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
         const response = await this.getAccountMeRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get all devices
+     */
+    async getDevicesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Device>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/accounts/@me/devices`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DeviceFromJSON));
+    }
+
+    /**
+     * Get all devices
+     */
+    async getDevices(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Device>> {
+        const response = await this.getDevicesRaw(initOverrides);
         return await response.value();
     }
 

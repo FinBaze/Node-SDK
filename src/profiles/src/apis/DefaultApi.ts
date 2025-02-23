@@ -86,6 +86,7 @@ import type {
   ImportMonetaryAccountMT940Request,
   MemorialEntry,
   MonetaryAccount,
+  MonetaryAccountAutoProcess,
   MonetaryAccountPayment,
   NLVATFiling,
   ProcessDocument,
@@ -112,6 +113,7 @@ import type {
   SubmitProcessDocumentRequest,
   Subscription,
   SubscriptionLine,
+  UpateMonetaryAccountAutoProcessRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
   Vehicle,
@@ -260,6 +262,8 @@ import {
     MemorialEntryToJSON,
     MonetaryAccountFromJSON,
     MonetaryAccountToJSON,
+    MonetaryAccountAutoProcessFromJSON,
+    MonetaryAccountAutoProcessToJSON,
     MonetaryAccountPaymentFromJSON,
     MonetaryAccountPaymentToJSON,
     NLVATFilingFromJSON,
@@ -312,6 +316,8 @@ import {
     SubscriptionToJSON,
     SubscriptionLineFromJSON,
     SubscriptionLineToJSON,
+    UpateMonetaryAccountAutoProcessRequestFromJSON,
+    UpateMonetaryAccountAutoProcessRequestToJSON,
     UpdateCreditLoanRequestFromJSON,
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
@@ -388,6 +394,12 @@ export interface CreateMemorialEntryOperationRequest {
 export interface CreateMonetaryAccountOperationRequest {
     profileId: string;
     createMonetaryAccountRequest?: CreateMonetaryAccountRequest;
+}
+
+export interface CreateMonetaryAccountAutoProcessRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    upateMonetaryAccountAutoProcessRequest?: Omit<UpateMonetaryAccountAutoProcessRequest, 'id'|'updated'|'created'>;
 }
 
 export interface CreateMonetaryAccountOpenbankingAuthorisationOperationRequest {
@@ -578,6 +590,12 @@ export interface DeleteMemorialEntryRequest {
 export interface DeleteMonetaryAccountRequest {
     profileId: string;
     monetaryAccountId: string;
+}
+
+export interface DeleteMonetaryAccountAutoProcessRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    monetaryAccountAutoProcessId: string;
 }
 
 export interface DeleteMonetaryAccountPaymentRequest {
@@ -771,6 +789,17 @@ export interface GetMemorialEntryRequest {
 }
 
 export interface GetMonetaryAccountRequest {
+    profileId: string;
+    monetaryAccountId: string;
+}
+
+export interface GetMonetaryAccountAutoProcessRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    monetaryAccountAutoProcessId: string;
+}
+
+export interface GetMonetaryAccountAutoProcessesRequest {
     profileId: string;
     monetaryAccountId: string;
 }
@@ -1211,6 +1240,13 @@ export interface SubmitProcessDocumentOperationRequest {
     submitProcessDocumentRequest?: SubmitProcessDocumentRequest;
 }
 
+export interface UpateMonetaryAccountAutoProcessOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    monetaryAccountAutoProcessId: string;
+    upateMonetaryAccountAutoProcessRequest?: Omit<UpateMonetaryAccountAutoProcessRequest, 'id'|'updated'|'created'>;
+}
+
 export interface UpdateAssetRequest {
     profileId: string;
     assetId: string;
@@ -1579,6 +1615,22 @@ export interface DefaultApiInterface {
      * Creates a monetary account
      */
     createMonetaryAccount(requestParameters: CreateMonetaryAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccount>;
+
+    /**
+     * Creates a monetary account auto process
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {UpateMonetaryAccountAutoProcessRequest} [upateMonetaryAccountAutoProcessRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createMonetaryAccountAutoProcessRaw(requestParameters: CreateMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>>;
+
+    /**
+     * Creates a monetary account auto process
+     */
+    createMonetaryAccountAutoProcess(requestParameters: CreateMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess>;
 
     /**
      * Create an openbanking request
@@ -2131,6 +2183,22 @@ export interface DefaultApiInterface {
     deleteMonetaryAccount(requestParameters: DeleteMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Deletes a monetary account auto process
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {string} monetaryAccountAutoProcessId The ID of the monetary account auto process
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteMonetaryAccountAutoProcessRaw(requestParameters: DeleteMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a monetary account auto process
+     */
+    deleteMonetaryAccountAutoProcess(requestParameters: DeleteMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Deletes a monetary account payment
      * @param {string} profileId The id of the profile
      * @param {string} monetaryAccountId The ID of the monetary account
@@ -2664,6 +2732,37 @@ export interface DefaultApiInterface {
      * Returns a monetary account
      */
     getMonetaryAccount(requestParameters: GetMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccount>;
+
+    /**
+     * Returns a monetary account auto process
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {string} monetaryAccountAutoProcessId The ID of the monetary account auto process
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getMonetaryAccountAutoProcessRaw(requestParameters: GetMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>>;
+
+    /**
+     * Returns a monetary account auto process
+     */
+    getMonetaryAccountAutoProcess(requestParameters: GetMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess>;
+
+    /**
+     * Returns all monetary account auto processes
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getMonetaryAccountAutoProcessesRaw(requestParameters: GetMonetaryAccountAutoProcessesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MonetaryAccountAutoProcess>>>;
+
+    /**
+     * Returns all monetary account auto processes
+     */
+    getMonetaryAccountAutoProcesses(requestParameters: GetMonetaryAccountAutoProcessesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountAutoProcess>>;
 
     /**
      * Create an openbanking request
@@ -3815,6 +3914,23 @@ export interface DefaultApiInterface {
     submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument>;
 
     /**
+     * Updates a monetary account auto process
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {string} monetaryAccountAutoProcessId The ID of the monetary account auto process
+     * @param {UpateMonetaryAccountAutoProcessRequest} [upateMonetaryAccountAutoProcessRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    upateMonetaryAccountAutoProcessRaw(requestParameters: UpateMonetaryAccountAutoProcessOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>>;
+
+    /**
+     * Updates a monetary account auto process
+     */
+    upateMonetaryAccountAutoProcess(requestParameters: UpateMonetaryAccountAutoProcessOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess>;
+
+    /**
      * Updates a asset
      * @param {string} profileId The id of the profile
      * @param {string} assetId The id of the asset
@@ -4810,6 +4926,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createMonetaryAccount(requestParameters: CreateMonetaryAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccount> {
         const response = await this.createMonetaryAccountRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a monetary account auto process
+     */
+    async createMonetaryAccountAutoProcessRaw(requestParameters: CreateMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling createMonetaryAccountAutoProcess().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpateMonetaryAccountAutoProcessRequestToJSON(requestParameters['upateMonetaryAccountAutoProcessRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MonetaryAccountAutoProcessFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a monetary account auto process
+     */
+    async createMonetaryAccountAutoProcess(requestParameters: CreateMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess> {
+        const response = await this.createMonetaryAccountAutoProcessRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -6400,6 +6564,57 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteMonetaryAccount(requestParameters: DeleteMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteMonetaryAccountRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a monetary account auto process
+     */
+    async deleteMonetaryAccountAutoProcessRaw(requestParameters: DeleteMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling deleteMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountAutoProcessId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountAutoProcessId',
+                'Required parameter "monetaryAccountAutoProcessId" was null or undefined when calling deleteMonetaryAccountAutoProcess().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a monetary account auto process
+     */
+    async deleteMonetaryAccountAutoProcess(requestParameters: DeleteMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteMonetaryAccountAutoProcessRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -8002,6 +8217,103 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getMonetaryAccount(requestParameters: GetMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccount> {
         const response = await this.getMonetaryAccountRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a monetary account auto process
+     */
+    async getMonetaryAccountAutoProcessRaw(requestParameters: GetMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling getMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountAutoProcessId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountAutoProcessId',
+                'Required parameter "monetaryAccountAutoProcessId" was null or undefined when calling getMonetaryAccountAutoProcess().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MonetaryAccountAutoProcessFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a monetary account auto process
+     */
+    async getMonetaryAccountAutoProcess(requestParameters: GetMonetaryAccountAutoProcessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess> {
+        const response = await this.getMonetaryAccountAutoProcessRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all monetary account auto processes
+     */
+    async getMonetaryAccountAutoProcessesRaw(requestParameters: GetMonetaryAccountAutoProcessesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MonetaryAccountAutoProcess>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getMonetaryAccountAutoProcesses().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling getMonetaryAccountAutoProcesses().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MonetaryAccountAutoProcessFromJSON));
+    }
+
+    /**
+     * Returns all monetary account auto processes
+     */
+    async getMonetaryAccountAutoProcesses(requestParameters: GetMonetaryAccountAutoProcessesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountAutoProcess>> {
+        const response = await this.getMonetaryAccountAutoProcessesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -11522,6 +11834,61 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument> {
         const response = await this.submitProcessDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a monetary account auto process
+     */
+    async upateMonetaryAccountAutoProcessRaw(requestParameters: UpateMonetaryAccountAutoProcessOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountAutoProcess>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling upateMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling upateMonetaryAccountAutoProcess().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountAutoProcessId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountAutoProcessId',
+                'Required parameter "monetaryAccountAutoProcessId" was null or undefined when calling upateMonetaryAccountAutoProcess().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpateMonetaryAccountAutoProcessRequestToJSON(requestParameters['upateMonetaryAccountAutoProcessRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MonetaryAccountAutoProcessFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a monetary account auto process
+     */
+    async upateMonetaryAccountAutoProcess(requestParameters: UpateMonetaryAccountAutoProcessOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountAutoProcess> {
+        const response = await this.upateMonetaryAccountAutoProcessRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

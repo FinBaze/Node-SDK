@@ -117,6 +117,7 @@ src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts
 src/models/MonetaryAccount.ts
+src/models/MonetaryAccountAutoProcess.ts
 src/models/MonetaryAccountFeatures.ts
 src/models/MonetaryAccountPayment.ts
 src/models/MonetaryAccountPaymentEmbedded.ts
@@ -173,6 +174,9 @@ src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/UnauthorisedError.ts
+src/models/UpateMonetaryAccountAutoProcessRequest.ts
+src/models/UpateMonetaryAccountAutoProcessRequestProcess.ts
+src/models/UpateMonetaryAccountAutoProcessRequestRulesInner.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/Vehicle.ts

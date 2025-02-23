@@ -1,1 +1,1 @@
-import { SalesInvoice } from "./index";
+import { MonetaryAccountAutoProcess } from "./index";
