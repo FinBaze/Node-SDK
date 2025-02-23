@@ -1104,6 +1104,10 @@ export interface GetSalesInvoicesRequest {
     credit?: boolean;
     credited?: boolean;
     concept?: boolean;
+    currency?: string;
+    amount?: number;
+    amountLte?: number;
+    amountGte?: number;
 }
 
 export interface GetStockCategoriesRequest {
@@ -3564,6 +3568,10 @@ export interface DefaultApiInterface {
      * @param {boolean} [credit] If the invoice is an credit invoice
      * @param {boolean} [credited] If the invoice has already been credited
      * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {string} [currency] The currency of the sales invoice
+     * @param {number} [amount] The amount the invoice should equal to
+     * @param {number} [amountLte] The amount the invoice should be less than or equal to
+     * @param {number} [amountGte] The amount the invoice should be greater than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -10766,6 +10774,22 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['concept'] != null) {
             queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        if (requestParameters['currency'] != null) {
+            queryParameters['currency'] = requestParameters['currency'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
+        }
+
+        if (requestParameters['amountLte'] != null) {
+            queryParameters['amount_lte'] = requestParameters['amountLte'];
+        }
+
+        if (requestParameters['amountGte'] != null) {
+            queryParameters['amount_gte'] = requestParameters['amountGte'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
