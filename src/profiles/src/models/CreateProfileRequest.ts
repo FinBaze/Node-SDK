@@ -89,6 +89,12 @@ export interface CreateProfileRequest {
      * @memberof CreateProfileRequest
      */
     address: Address;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreateProfileRequest
+     */
+    metadata?: { [key: string]: any; };
 }
 
 
@@ -133,6 +139,7 @@ export function CreateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'distanceUnit': json['distance-unit'],
         'currency': json['currency'],
         'address': AddressFromJSON(json['address']),
+        'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
 
@@ -155,6 +162,7 @@ export function CreateProfileRequestToJSONTyped(value?: CreateProfileRequest | n
         'distance-unit': value['distanceUnit'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
+        'metadata': value['metadata'],
     };
 }
 

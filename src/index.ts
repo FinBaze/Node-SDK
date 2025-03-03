@@ -1,9 +1,10 @@
 import * as ProfilesApi from './profiles/src/index';
 import * as InternalApi from './internal/src/index';
 import * as BookkeepersApi from './bookkeepers/src/index';
+import * as DevelopersApi from './developers/src/index';
 
+import * as jsonwebtoken from "jsonwebtoken";
 import { jwtDecode } from "jwt-decode";
-
 
 export enum EnvType {
     DEVELOPMENT = 'development',
@@ -89,7 +90,6 @@ class FinbazeInternalApi extends InternalApi.DefaultApi {
     }
 
     constructor(finbaze: FinbazeAPI) {
-        console.log(FinbazeAPI.getURL(finbaze.env));
         super(new InternalApi.Configuration({
             basePath: FinbazeAPI.getURL(finbaze.env),
         }));
@@ -102,12 +102,58 @@ class FinbazeInternalApi extends InternalApi.DefaultApi {
     }
 }
 
+class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
+
+    private finbaze: FinbazeAPI;
+
+    async req(context: ProfilesApi.RequestOpts, init?: ProfilesApi.InitOverrideFunction | RequestInit) {
+        return super.request(context, init);
+    }
+
+    get username() {
+        return this.finbaze.clientCredentials.clientId;
+    }
+    get password() {
+        return jsonwebtoken.sign({
+            sub: this.finbaze.clientCredentials.clientId,
+        }, this.finbaze.clientCredentials.privateKey, {
+            issuer: this.username,
+            audience: 'api.finbaze.com',
+        });
+    }
+
+    get accessToken() {
+        return () => {
+            if (!this.finbaze.authenticated) return undefined;
+            return this.finbaze.accessToken();
+        }
+    }
+
+    constructor(finbaze: FinbazeAPI) {
+        super(new DevelopersApi.Configuration({
+            basePath: FinbazeAPI.getURL(finbaze.env),
+        }));
+
+        this.finbaze = finbaze;
+        this.configuration = new DevelopersApi.Configuration({
+            basePath: FinbazeAPI.getURL(finbaze.env),
+            accessToken: this.accessToken,
+        });
+    }
+}
+
 class FinbazeAPI {
 
     profiles: FinbazeProfilesApi;
     internal: FinbazeInternalApi;
+    developers: FinbazeDevelopersApi;
     bookkeepers: FinbazeBookkeepersApi;
     env: EnvType;
+    clientCredentials?: {
+        clientId: string,
+        publicKey?: Buffer | string;
+        privateKey: Buffer | string;
+    }
 
     private token: FinbazeAPIAccessToken;
     get authenticated() {
@@ -123,20 +169,24 @@ class FinbazeAPI {
         }[env]
     }
 
-    constructor(env: EnvType) {
+    constructor(env: EnvType, clientCredentials?: {
+        clientId: string,
+        publicKey?: Buffer | string,
+        privateKey: Buffer | string,
+    }) {
+        this.clientCredentials = clientCredentials;
         this.env = env;
         this.profiles = new FinbazeProfilesApi(this);
         this.internal = new FinbazeInternalApi(this);
         this.bookkeepers = new FinbazeBookkeepersApi(this);
+        this.developers = new FinbazeDevelopersApi(this);
     }
 
     public async accessToken() {
-        console.log('accesstoken', { token: this.token });
-
         if (!this.token) return undefined;
         const decoded = jwtDecode(this.token.access_token);
-        console.log({ decoded });
         const exp = new Date(decoded.exp * 1000);
+
         if (exp.getTime() < new Date().getTime()) {
             const newAccessToken = await this.refreshAccessToken(this.token);
             this.token = newAccessToken;
@@ -146,9 +196,27 @@ class FinbazeAPI {
     }
 
     public async restoreAccessToken(token: FinbazeAPIAccessToken, onUpdateAccesstoken: (token: FinbazeAPIAccessToken) => void) {
-        console.log("restoring", this.token);
         this.token = token;
         this.onUpdateAccesstoken = onUpdateAccesstoken;
+    }
+
+
+    public async exchangeAuthorisationCode(code: string, redirectUri: string) {
+        const result = await this.developers.getOAuth2AccessToken({
+            grantType: 'authorization_code',
+            code,
+            redirectUri,
+        });
+
+        this.restoreAccessToken({
+            refresh_token: result.refreshToken,
+            access_token: result.accessToken,
+            expires_in: result.expiresIn,
+            scope: result.scope,
+            token_type: result.tokenType,
+        } as FinbazeAPIAccessToken, this.onUpdateAccesstoken);
+
+        return result;
     }
 
     public async getAccountAccessToken(data: {

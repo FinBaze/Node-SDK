@@ -132,6 +132,12 @@ export interface Profile {
      * @memberof Profile
      */
     readonly created: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Profile
+     */
+    metadata?: { [key: string]: any; };
 }
 
 
@@ -188,6 +194,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'address': AddressFromJSON(json['address']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
+        'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
 
@@ -213,6 +220,7 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
         'distance-unit': value['distanceUnit'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
+        'metadata': value['metadata'],
     };
 }
 

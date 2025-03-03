@@ -89,6 +89,12 @@ export interface CreateBookkeeperProfileRequest {
      * @memberof CreateBookkeeperProfileRequest
      */
     address: Address;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreateBookkeeperProfileRequest
+     */
+    metadata?: { [key: string]: any; };
 }
 
 
@@ -133,6 +139,7 @@ export function CreateBookkeeperProfileRequestFromJSONTyped(json: any, ignoreDis
         'distanceUnit': json['distance-unit'],
         'currency': json['currency'],
         'address': AddressFromJSON(json['address']),
+        'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
 
@@ -155,6 +162,7 @@ export function CreateBookkeeperProfileRequestToJSONTyped(value?: CreateBookkeep
         'distance-unit': value['distanceUnit'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
+        'metadata': value['metadata'],
     };
 }
 
