@@ -117,6 +117,7 @@ import type {
   UpateMonetaryAccountAutoProcessRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
+  UpdateProfileRequest,
   Vehicle,
   VehicleTrip,
 } from '../models/index';
@@ -325,6 +326,8 @@ import {
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
     UpdateCurrentAccountRequestToJSON,
+    UpdateProfileRequestFromJSON,
+    UpdateProfileRequestToJSON,
     VehicleFromJSON,
     VehicleToJSON,
     VehicleTripFromJSON,
@@ -1338,9 +1341,9 @@ export interface UpdateProductCategoryRequest {
     createProductCategoryRequest?: CreateProductCategoryRequest;
 }
 
-export interface UpdateProfileRequest {
+export interface UpdateProfileOperationRequest {
     profileId: string;
-    createProfileRequest: CreateProfileRequest;
+    updateProfileRequest: UpdateProfileRequest;
 }
 
 export interface UpdatePurchaseInvoiceRequest {
@@ -4174,17 +4177,17 @@ export interface DefaultApiInterface {
     /**
      * Updates a profile
      * @param {string} profileId The id of the profile
-     * @param {CreateProfileRequest} createProfileRequest 
+     * @param {UpdateProfileRequest} updateProfileRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateProfileRaw(requestParameters: UpdateProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Profile>>;
+    updateProfileRaw(requestParameters: UpdateProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Profile>>;
 
     /**
      * Updates a profile
      */
-    updateProfile(requestParameters: UpdateProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile>;
+    updateProfile(requestParameters: UpdateProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile>;
 
     /**
      * updates a purchase invoice
@@ -12620,7 +12623,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a profile
      */
-    async updateProfileRaw(requestParameters: UpdateProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Profile>> {
+    async updateProfileRaw(requestParameters: UpdateProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Profile>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -12628,10 +12631,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             );
         }
 
-        if (requestParameters['createProfileRequest'] == null) {
+        if (requestParameters['updateProfileRequest'] == null) {
             throw new runtime.RequiredError(
-                'createProfileRequest',
-                'Required parameter "createProfileRequest" was null or undefined when calling updateProfile().'
+                'updateProfileRequest',
+                'Required parameter "updateProfileRequest" was null or undefined when calling updateProfile().'
             );
         }
 
@@ -12651,7 +12654,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateProfileRequestToJSON(requestParameters['createProfileRequest']),
+            body: UpdateProfileRequestToJSON(requestParameters['updateProfileRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ProfileFromJSON(jsonValue));
@@ -12660,7 +12663,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a profile
      */
-    async updateProfile(requestParameters: UpdateProfileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile> {
+    async updateProfile(requestParameters: UpdateProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile> {
         const response = await this.updateProfileRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -180,6 +180,7 @@ src/models/UpateMonetaryAccountAutoProcessRequestProcess.ts
 src/models/UpateMonetaryAccountAutoProcessRequestRulesInner.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
+src/models/UpdateProfileRequest.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/index.ts

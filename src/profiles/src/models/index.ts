@@ -174,5 +174,6 @@ export * from './UpateMonetaryAccountAutoProcessRequestProcess';
 export * from './UpateMonetaryAccountAutoProcessRequestRulesInner';
 export * from './UpdateCreditLoanRequest';
 export * from './UpdateCurrentAccountRequest';
+export * from './UpdateProfileRequest';
 export * from './Vehicle';
 export * from './VehicleTrip';
