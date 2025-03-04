@@ -15,9 +15,15 @@
 
 import * as runtime from '../runtime';
 import type {
+  App,
+  GetApps200Response,
   GetOAuth2AccessToken200Response,
 } from '../models/index';
 import {
+    AppFromJSON,
+    AppToJSON,
+    GetApps200ResponseFromJSON,
+    GetApps200ResponseToJSON,
     GetOAuth2AccessToken200ResponseFromJSON,
     GetOAuth2AccessToken200ResponseToJSON,
 } from '../models/index';
@@ -28,6 +34,15 @@ export interface AuthorizeOAuth2Request {
     state: string;
     scope?: string;
     responseType?: AuthorizeOAuth2ResponseTypeEnum;
+}
+
+export interface GetAppRequest {
+    appId: string;
+}
+
+export interface GetAppsRequest {
+    page?: number;
+    size?: number;
 }
 
 export interface GetOAuth2AccessTokenRequest {
@@ -63,6 +78,35 @@ export interface DefaultApiInterface {
      * Authorises an OAuth2 connection
      */
     authorizeOAuth2(requestParameters: AuthorizeOAuth2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Returns a app
+     * @param {string} appId The id of the app
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAppRaw(requestParameters: GetAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<App>>;
+
+    /**
+     * Returns a app
+     */
+    getApp(requestParameters: GetAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<App>;
+
+    /**
+     * Returns all apps
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAppsRaw(requestParameters: GetAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApps200Response>>;
+
+    /**
+     * Returns all apps
+     */
+    getApps(requestParameters: GetAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApps200Response>;
 
     /**
      * Creates an OAuth2 token
@@ -139,6 +183,83 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async authorizeOAuth2(requestParameters: AuthorizeOAuth2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
         const response = await this.authorizeOAuth2Raw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a app
+     */
+    async getAppRaw(requestParameters: GetAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<App>> {
+        if (requestParameters['appId'] == null) {
+            throw new runtime.RequiredError(
+                'appId',
+                'Required parameter "appId" was null or undefined when calling getApp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AppFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a app
+     */
+    async getApp(requestParameters: GetAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<App> {
+        const response = await this.getAppRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all apps
+     */
+    async getAppsRaw(requestParameters: GetAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetApps200Response>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/apps`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetApps200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all apps
+     */
+    async getApps(requestParameters: GetAppsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetApps200Response> {
+        const response = await this.getAppsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -8,6 +8,7 @@ src/apis/index.ts
 src/index.ts
 src/models/Account.ts
 src/models/Address.ts
+src/models/App.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
 src/models/CreateAccountMeZendeskToken200Response.ts

@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './Account';
 export * from './Address';
+export * from './App';
 export * from './Asset';
 export * from './Bookkeeper';
 export * from './CreateAccountMeZendeskToken200Response';

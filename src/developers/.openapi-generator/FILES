@@ -8,6 +8,7 @@ src/apis/index.ts
 src/index.ts
 src/models/Account.ts
 src/models/Address.ts
+src/models/App.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
 src/models/CreditLoan.ts
@@ -17,6 +18,7 @@ src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
+src/models/GetApps200Response.ts
 src/models/GetOAuth2AccessToken200Response.ts
 src/models/InvalidRequestError.ts
 src/models/MemorialEntry.ts

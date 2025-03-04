@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './Account';
 export * from './Address';
+export * from './App';
 export * from './Asset';
 export * from './Bookkeeper';
 export * from './CreditLoan';
@@ -11,6 +12,7 @@ export * from './Device';
 export * from './Employee';
 export * from './ExpenseCategory';
 export * from './ForbiddenError';
+export * from './GetApps200Response';
 export * from './GetOAuth2AccessToken200Response';
 export * from './InvalidRequestError';
 export * from './MemorialEntry';
