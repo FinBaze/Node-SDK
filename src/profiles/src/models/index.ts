@@ -108,6 +108,7 @@ export * from './GetVehicleTrips200Response';
 export * from './GetVehicles200Response';
 export * from './ImportMonetaryAccountCAMT053Request';
 export * from './ImportMonetaryAccountMT940Request';
+export * from './InstallApp200Response';
 export * from './InvalidRequestError';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';

@@ -85,6 +85,7 @@ import type {
   GetVehicles200Response,
   ImportMonetaryAccountCAMT053Request,
   ImportMonetaryAccountMT940Request,
+  InstallApp200Response,
   MemorialEntry,
   MonetaryAccount,
   MonetaryAccountAutoProcess,
@@ -262,6 +263,8 @@ import {
     ImportMonetaryAccountCAMT053RequestToJSON,
     ImportMonetaryAccountMT940RequestFromJSON,
     ImportMonetaryAccountMT940RequestToJSON,
+    InstallApp200ResponseFromJSON,
+    InstallApp200ResponseToJSON,
     MemorialEntryFromJSON,
     MemorialEntryToJSON,
     MonetaryAccountFromJSON,
@@ -1180,6 +1183,12 @@ export interface ImportMonetaryAccountMT940OperationRequest {
     profileId: string;
     monetaryAccountId: string;
     importMonetaryAccountMT940Request?: ImportMonetaryAccountMT940Request;
+}
+
+export interface InstallAppRequest {
+    profileId: string;
+    appId: string;
+    body?: object;
 }
 
 export interface ProcessMonetaryAccountPaymentCreditLoanOperationRequest {
@@ -3774,6 +3783,22 @@ export interface DefaultApiInterface {
      * Imports an MT940 file into a monetary account
      */
     importMonetaryAccountMT940(requestParameters: ImportMonetaryAccountMT940OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Installs an app
+     * @param {string} profileId The id of the profile
+     * @param {string} appId The id of the app
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    installAppRaw(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>>;
+
+    /**
+     * Installs an app
+     */
+    installApp(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response>;
 
     /**
      * Updates a monetary account
@@ -11387,6 +11412,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async importMonetaryAccountMT940(requestParameters: ImportMonetaryAccountMT940OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.importMonetaryAccountMT940Raw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Installs an app
+     */
+    async installAppRaw(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling installApp().'
+            );
+        }
+
+        if (requestParameters['appId'] == null) {
+            throw new runtime.RequiredError(
+                'appId',
+                'Required parameter "appId" was null or undefined when calling installApp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/apps/{appId}/install`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InstallApp200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Installs an app
+     */
+    async installApp(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response> {
+        const response = await this.installAppRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

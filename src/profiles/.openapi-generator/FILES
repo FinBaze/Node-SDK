@@ -114,6 +114,7 @@ src/models/GetVehicleTrips200Response.ts
 src/models/GetVehicles200Response.ts
 src/models/ImportMonetaryAccountCAMT053Request.ts
 src/models/ImportMonetaryAccountMT940Request.ts
+src/models/InstallApp200Response.ts
 src/models/InvalidRequestError.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
