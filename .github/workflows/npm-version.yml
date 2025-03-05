@@ -29,16 +29,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
       - run: git config --global user.name 'FinBaze Bot'
       - run: git config --global user.email 'info@finbaze.com'
       - run: npm version patch -m "[RELEASE] %s - version bump"
       - run: git push
 
   publish-npm:
-    needs: increment
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -53,7 +50,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   release:
-    needs: increment
+    needs: build
     runs-on: ubuntu-latest
     if: "!startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
