@@ -119,6 +119,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
         return jsonwebtoken.sign({
             sub: this.finbaze.clientCredentials.clientId,
         }, this.finbaze.clientCredentials.privateKey, {
+            algorithm: 'RS512',
             issuer: this.username,
             audience: 'api.finbaze.com',
         });
