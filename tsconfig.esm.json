@@ -1,7 +1,15 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "outDir": "dist/esm"
-  }
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "types": [
+            "node"
+        ],
+        "module": "ESNext",
+        "outDir": "dist/esm",
+        "target": "ESNext"
+    }
 }

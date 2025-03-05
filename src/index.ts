@@ -111,9 +111,11 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
     }
 
     get username() {
-        return this.finbaze.clientCredentials.clientId;
+        return this.finbaze.clientCredentials?.clientId;
     }
     get password() {
+        if (!this.finbaze.clientCredentials?.clientId || !this.finbaze.clientCredentials?.privateKey)
+            return undefined;
         return jsonwebtoken.sign({
             sub: this.finbaze.clientCredentials.clientId,
         }, this.finbaze.clientCredentials.privateKey, {
@@ -138,6 +140,8 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
         this.configuration = new DevelopersApi.Configuration({
             basePath: FinbazeAPI.getURL(finbaze.env),
             accessToken: this.accessToken,
+            username: this.username,
+            password: this.password,
         });
     }
 }
