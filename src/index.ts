@@ -226,7 +226,7 @@ class FinbazeAPI {
         phone?: string,
     }, onUpdateAccesstoken: (token: FinbazeAPIAccessToken) => void) {
         const result = await this.profiles.req({
-            path: '/v1/oauth/token',
+            path: '/v1/oauth2/token',
             method: 'POST',
             body: new URLSearchParams({
                 grant_type: 'password',
@@ -255,7 +255,7 @@ class FinbazeAPI {
 
     public async refreshAccessToken(accessToken: FinbazeAPIAccessToken) {
         const result = await this.profiles.req({
-            path: '/v1/oauth/token',
+            path: '/v1/oauth2/token',
             method: 'POST',
             body: new URLSearchParams({
                 grant_type: 'refresh_token',
