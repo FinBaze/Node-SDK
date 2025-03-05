@@ -4,9 +4,10 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [published]
-    branches: [main]
+  workflow_run:
+    workflows: [Version Increment]
+    types:
+      - completed
 
 jobs:
   build:
