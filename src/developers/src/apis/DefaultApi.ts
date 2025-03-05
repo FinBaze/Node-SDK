@@ -321,7 +321,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const response = await this.request({
             path: `/v1/oauth2/token`,
-            method: 'GET',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
