@@ -122,6 +122,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
             algorithm: 'RS512',
             issuer: this.username,
             audience: 'api.finbaze.com',
+            expiresIn: '1m'
         });
     }
 
