@@ -126,6 +126,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
         });
     }
 
+    
     get accessToken() {
         return () => {
             if (!this.finbaze.authenticated) return undefined;
