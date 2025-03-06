@@ -1105,6 +1105,21 @@ export interface GetReminderRequest {
     reminderId2?: string;
 }
 
+export interface GetReminderPreviewEmailRequest {
+    profileId: string;
+    reminderId: string;
+}
+
+export interface GetReminderPreviewHTMLRequest {
+    profileId: string;
+    reminderId: string;
+}
+
+export interface GetReminderPreviewPDFRequest {
+    profileId: string;
+    reminderId: string;
+}
+
 export interface GetRemindersRequest {
     profileId: string;
     page?: number;
@@ -3599,6 +3614,51 @@ export interface DefaultApiInterface {
      * Returns a reminder
      */
     getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+
+    /**
+     * Retrieves a preview of the html content of the email
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getReminderPreviewEmailRaw(requestParameters: GetReminderPreviewEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>>;
+
+    /**
+     * Retrieves a preview of the html content of the email
+     */
+    getReminderPreviewEmail(requestParameters: GetReminderPreviewEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
+
+    /**
+     * Retrieves a preview of the html content of the invoice itself
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getReminderPreviewHTMLRaw(requestParameters: GetReminderPreviewHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>>;
+
+    /**
+     * Retrieves a preview of the html content of the invoice itself
+     */
+    getReminderPreviewHTML(requestParameters: GetReminderPreviewHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
+
+    /**
+     * Retrieves a preview of the PDF content of the invoice itself
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getReminderPreviewPDFRaw(requestParameters: GetReminderPreviewPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Retrieves a preview of the PDF content of the invoice itself
+     */
+    getReminderPreviewPDF(requestParameters: GetReminderPreviewPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
 
     /**
      * Returns all reminders
@@ -10836,6 +10896,149 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
         const response = await this.getReminderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a preview of the html content of the email
+     */
+    async getReminderPreviewEmailRaw(requestParameters: GetReminderPreviewEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminderPreviewEmail().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling getReminderPreviewEmail().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}/preview/email`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Retrieves a preview of the html content of the email
+     */
+    async getReminderPreviewEmail(requestParameters: GetReminderPreviewEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.getReminderPreviewEmailRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a preview of the html content of the invoice itself
+     */
+    async getReminderPreviewHTMLRaw(requestParameters: GetReminderPreviewHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminderPreviewHTML().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling getReminderPreviewHTML().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}/preview/html`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Retrieves a preview of the html content of the invoice itself
+     */
+    async getReminderPreviewHTML(requestParameters: GetReminderPreviewHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.getReminderPreviewHTMLRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a preview of the PDF content of the invoice itself
+     */
+    async getReminderPreviewPDFRaw(requestParameters: GetReminderPreviewPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminderPreviewPDF().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling getReminderPreviewPDF().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}/preview/pdf`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Retrieves a preview of the PDF content of the invoice itself
+     */
+    async getReminderPreviewPDF(requestParameters: GetReminderPreviewPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.getReminderPreviewPDFRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
