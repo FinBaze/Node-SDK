@@ -19,6 +19,7 @@ src/models/CreateBookkeeperProfileRequestSettings.ts
 src/models/CreateBookkeeperProfileRequestSettingsBranding.ts
 src/models/CreateBookkeeperProfileRequestSettingsEmail.ts
 src/models/CreateBookkeeperProfileRequestSettingsPurchaseInvoice.ts
+src/models/CreateBookkeeperProfileRequestSettingsReminder.ts
 src/models/CreateBookkeeperProfileRequestSettingsSalesInvoice.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts

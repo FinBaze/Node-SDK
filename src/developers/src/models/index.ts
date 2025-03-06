@@ -52,6 +52,7 @@ export * from './ProfileSettings';
 export * from './ProfileSettingsBranding';
 export * from './ProfileSettingsEmail';
 export * from './ProfileSettingsPurchaseInvoice';
+export * from './ProfileSettingsReminder';
 export * from './ProfileSettingsSalesInvoice';
 export * from './PurchaseInvoice';
 export * from './PurchaseInvoiceEmbedded';

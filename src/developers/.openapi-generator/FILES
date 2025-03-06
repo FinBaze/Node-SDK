@@ -58,6 +58,7 @@ src/models/ProfileSettings.ts
 src/models/ProfileSettingsBranding.ts
 src/models/ProfileSettingsEmail.ts
 src/models/ProfileSettingsPurchaseInvoice.ts
+src/models/ProfileSettingsReminder.ts
 src/models/ProfileSettingsSalesInvoice.ts
 src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts

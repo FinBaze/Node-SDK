@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CreateBookkeeperProfileRequestSettingsReminder } from './CreateBookkeeperProfileRequestSettingsReminder';
+import {
+    CreateBookkeeperProfileRequestSettingsReminderFromJSON,
+    CreateBookkeeperProfileRequestSettingsReminderFromJSONTyped,
+    CreateBookkeeperProfileRequestSettingsReminderToJSON,
+    CreateBookkeeperProfileRequestSettingsReminderToJSONTyped,
+} from './CreateBookkeeperProfileRequestSettingsReminder';
 import type { CreateBookkeeperProfileRequestSettingsEmail } from './CreateBookkeeperProfileRequestSettingsEmail';
 import {
     CreateBookkeeperProfileRequestSettingsEmailFromJSON,
@@ -62,6 +69,12 @@ export interface CreateBookkeeperProfileRequestSettings {
     salesInvoice?: CreateBookkeeperProfileRequestSettingsSalesInvoice;
     /**
      * 
+     * @type {CreateBookkeeperProfileRequestSettingsReminder}
+     * @memberof CreateBookkeeperProfileRequestSettings
+     */
+    reminder?: CreateBookkeeperProfileRequestSettingsReminder;
+    /**
+     * 
      * @type {CreateBookkeeperProfileRequestSettingsPurchaseInvoice}
      * @memberof CreateBookkeeperProfileRequestSettings
      */
@@ -93,6 +106,7 @@ export function CreateBookkeeperProfileRequestSettingsFromJSONTyped(json: any, i
         
         'email': json['email'] == null ? undefined : CreateBookkeeperProfileRequestSettingsEmailFromJSON(json['email']),
         'salesInvoice': json['sales_invoice'] == null ? undefined : CreateBookkeeperProfileRequestSettingsSalesInvoiceFromJSON(json['sales_invoice']),
+        'reminder': json['reminder'] == null ? undefined : CreateBookkeeperProfileRequestSettingsReminderFromJSON(json['reminder']),
         'purchaseInvoice': json['purchase_invoice'] == null ? undefined : CreateBookkeeperProfileRequestSettingsPurchaseInvoiceFromJSON(json['purchase_invoice']),
         'branding': json['branding'] == null ? undefined : CreateBookkeeperProfileRequestSettingsBrandingFromJSON(json['branding']),
     };
@@ -111,6 +125,7 @@ export function CreateBookkeeperProfileRequestSettingsToJSONTyped(value?: Create
         
         'email': CreateBookkeeperProfileRequestSettingsEmailToJSON(value['email']),
         'sales_invoice': CreateBookkeeperProfileRequestSettingsSalesInvoiceToJSON(value['salesInvoice']),
+        'reminder': CreateBookkeeperProfileRequestSettingsReminderToJSON(value['reminder']),
         'purchase_invoice': CreateBookkeeperProfileRequestSettingsPurchaseInvoiceToJSON(value['purchaseInvoice']),
         'branding': CreateBookkeeperProfileRequestSettingsBrandingToJSON(value['branding']),
     };

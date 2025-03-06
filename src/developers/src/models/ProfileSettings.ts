@@ -20,6 +20,13 @@ import {
     ProfileSettingsEmailToJSON,
     ProfileSettingsEmailToJSONTyped,
 } from './ProfileSettingsEmail';
+import type { ProfileSettingsReminder } from './ProfileSettingsReminder';
+import {
+    ProfileSettingsReminderFromJSON,
+    ProfileSettingsReminderFromJSONTyped,
+    ProfileSettingsReminderToJSON,
+    ProfileSettingsReminderToJSONTyped,
+} from './ProfileSettingsReminder';
 import type { ProfileSettingsSalesInvoice } from './ProfileSettingsSalesInvoice';
 import {
     ProfileSettingsSalesInvoiceFromJSON,
@@ -62,6 +69,12 @@ export interface ProfileSettings {
     salesInvoice?: ProfileSettingsSalesInvoice;
     /**
      * 
+     * @type {ProfileSettingsReminder}
+     * @memberof ProfileSettings
+     */
+    reminder?: ProfileSettingsReminder;
+    /**
+     * 
      * @type {ProfileSettingsPurchaseInvoice}
      * @memberof ProfileSettings
      */
@@ -93,6 +106,7 @@ export function ProfileSettingsFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'email': json['email'] == null ? undefined : ProfileSettingsEmailFromJSON(json['email']),
         'salesInvoice': json['sales_invoice'] == null ? undefined : ProfileSettingsSalesInvoiceFromJSON(json['sales_invoice']),
+        'reminder': json['reminder'] == null ? undefined : ProfileSettingsReminderFromJSON(json['reminder']),
         'purchaseInvoice': json['purchase_invoice'] == null ? undefined : ProfileSettingsPurchaseInvoiceFromJSON(json['purchase_invoice']),
         'branding': json['branding'] == null ? undefined : ProfileSettingsBrandingFromJSON(json['branding']),
     };
@@ -111,6 +125,7 @@ export function ProfileSettingsToJSONTyped(value?: ProfileSettings | null, ignor
         
         'email': ProfileSettingsEmailToJSON(value['email']),
         'sales_invoice': ProfileSettingsSalesInvoiceToJSON(value['salesInvoice']),
+        'reminder': ProfileSettingsReminderToJSON(value['reminder']),
         'purchase_invoice': ProfileSettingsPurchaseInvoiceToJSON(value['purchaseInvoice']),
         'branding': ProfileSettingsBrandingToJSON(value['branding']),
     };

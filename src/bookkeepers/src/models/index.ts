@@ -13,6 +13,7 @@ export * from './CreateBookkeeperProfileRequestSettings';
 export * from './CreateBookkeeperProfileRequestSettingsBranding';
 export * from './CreateBookkeeperProfileRequestSettingsEmail';
 export * from './CreateBookkeeperProfileRequestSettingsPurchaseInvoice';
+export * from './CreateBookkeeperProfileRequestSettingsReminder';
 export * from './CreateBookkeeperProfileRequestSettingsSalesInvoice';
 export * from './CreditLoan';
 export * from './CurrentAccount';
