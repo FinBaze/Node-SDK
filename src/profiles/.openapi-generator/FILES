@@ -42,6 +42,7 @@ src/models/CreateProfileRequestSettings.ts
 src/models/CreateProfileRequestSettingsBranding.ts
 src/models/CreateProfileRequestSettingsEmail.ts
 src/models/CreateProfileRequestSettingsPurchaseInvoice.ts
+src/models/CreateProfileRequestSettingsReminder.ts
 src/models/CreateProfileRequestSettingsSalesInvoice.ts
 src/models/CreatePurchaseInvoiceFinalRequest.ts
 src/models/CreatePurchaseInvoiceFinalRequestFile.ts
@@ -60,6 +61,11 @@ src/models/CreateRelationRequestBankIban.ts
 src/models/CreateRelationRequestEu.ts
 src/models/CreateRelationRequestEuVies.ts
 src/models/CreateRelationsImportRequest.ts
+src/models/CreateReminder200Response.ts
+src/models/CreateReminder200ResponseAmounts.ts
+src/models/CreateReminder200ResponseAmountsBooked.ts
+src/models/CreateReminder200ResponseEmbedded.ts
+src/models/CreateReminderRequest.ts
 src/models/CreateSalesInvoiceLineRequest.ts
 src/models/CreateSalesInvoiceRequest.ts
 src/models/CreateSalesInvoiceRequestPeriod.ts
@@ -110,6 +116,7 @@ src/models/GetProfileMetadata200Response.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetQuotes200Response.ts
 src/models/GetRelations200Response.ts
+src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
 src/models/GetSubscriptions200Response.ts
 src/models/GetVehicleTrips200Response.ts

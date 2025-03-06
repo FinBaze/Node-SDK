@@ -44,6 +44,8 @@ import type {
   CreateQuoteRequest,
   CreateRelationRequest,
   CreateRelationsImportRequest,
+  CreateReminder200Response,
+  CreateReminderRequest,
   CreateSalesInvoiceLineRequest,
   CreateSalesInvoiceRequest,
   CreateStockCategoryRequest,
@@ -81,6 +83,7 @@ import type {
   GetPurchaseInvoices200Response,
   GetQuotes200Response,
   GetRelations200Response,
+  GetReminders200Response,
   GetSalesInvoices200Response,
   GetSubscriptions200Response,
   GetVehicleTrips200Response,
@@ -183,6 +186,10 @@ import {
     CreateRelationRequestToJSON,
     CreateRelationsImportRequestFromJSON,
     CreateRelationsImportRequestToJSON,
+    CreateReminder200ResponseFromJSON,
+    CreateReminder200ResponseToJSON,
+    CreateReminderRequestFromJSON,
+    CreateReminderRequestToJSON,
     CreateSalesInvoiceLineRequestFromJSON,
     CreateSalesInvoiceLineRequestToJSON,
     CreateSalesInvoiceRequestFromJSON,
@@ -257,6 +264,8 @@ import {
     GetQuotes200ResponseToJSON,
     GetRelations200ResponseFromJSON,
     GetRelations200ResponseToJSON,
+    GetReminders200ResponseFromJSON,
+    GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
     GetSubscriptions200ResponseFromJSON,
@@ -513,6 +522,11 @@ export interface CreateRelationsImportOperationRequest {
     createRelationsImportRequest?: CreateRelationsImportRequest;
 }
 
+export interface CreateReminderOperationRequest {
+    profileId: string;
+    createReminderRequest?: CreateReminderRequest;
+}
+
 export interface CreateRevenueCategoryRequest {
     profileId: string;
     createStockCategoryRequest?: CreateStockCategoryRequest;
@@ -675,6 +689,11 @@ export interface DeleteQuoteLineRequest {
 export interface DeleteRelationRequest {
     profileId: string;
     relationId: string;
+}
+
+export interface DeleteReminderRequest {
+    profileId: string;
+    reminderId: string;
 }
 
 export interface DeleteRevenueCategoryRequest {
@@ -1078,6 +1097,20 @@ export interface GetRelationsRequest {
     vatNumber?: string;
 }
 
+export interface GetReminderRequest {
+    profileId: string;
+    reminderId: string;
+    relation?: string;
+    product?: string;
+    reminderId2?: string;
+}
+
+export interface GetRemindersRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+}
+
 export interface GetRevenueCategoriesRequest {
     profileId: string;
 }
@@ -1407,6 +1440,12 @@ export interface UpdateRelationRequest {
     profileId: string;
     relationId: string;
     createRelationRequest?: CreateRelationRequest;
+}
+
+export interface UpdateReminderRequest {
+    profileId: string;
+    reminderId: string;
+    createReminderRequest?: CreateReminderRequest;
 }
 
 export interface UpdateRevenueCategoryRequest {
@@ -1956,6 +1995,21 @@ export interface DefaultApiInterface {
     createRelationsImport(requestParameters: CreateRelationsImportOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Relation>>;
 
     /**
+     * Creates an reminder
+     * @param {string} profileId The id of the profile
+     * @param {CreateReminderRequest} [createReminderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+
+    /**
+     * Creates an reminder
+     */
+    createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+
+    /**
      * Creates an revenue category
      * @param {string} profileId The id of the profile
      * @param {CreateStockCategoryRequest} [createStockCategoryRequest] 
@@ -2428,6 +2482,21 @@ export interface DefaultApiInterface {
      * Deletes a relation
      */
     deleteRelation(requestParameters: DeleteRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a reminder
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteReminderRaw(requestParameters: DeleteReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a reminder
+     */
+    deleteReminder(requestParameters: DeleteReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a revenue categroy
@@ -3514,6 +3583,40 @@ export interface DefaultApiInterface {
     getRelations(requestParameters: GetRelationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelations200Response>;
 
     /**
+     * Returns a reminder
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {string} [relation] ID of the relation to filter to
+     * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [reminderId2] Invoice ID to search
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+
+    /**
+     * Returns a reminder
+     */
+    getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+
+    /**
+     * Returns all reminders
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getRemindersRaw(requestParameters: GetRemindersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReminders200Response>>;
+
+    /**
+     * Returns all reminders
+     */
+    getReminders(requestParameters: GetRemindersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReminders200Response>;
+
+    /**
      * Returns all revenue categories
      * @param {string} profileId The id of the profile
      * @param {*} [options] Override http request option.
@@ -4363,6 +4466,22 @@ export interface DefaultApiInterface {
      * Updates a relations
      */
     updateRelation(requestParameters: UpdateRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation>;
+
+    /**
+     * Updates a reminder
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderId The id of the reminder
+     * @param {CreateReminderRequest} [createReminderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+
+    /**
+     * Updates a reminder
+     */
+    updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
 
     /**
      * Updates a revenue category
@@ -5906,6 +6025,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates an reminder
+     */
+    async createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateReminderRequestToJSON(requestParameters['createReminderRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an reminder
+     */
+    async createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+        const response = await this.createReminderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates an revenue category
      */
     async createRevenueCategoryRaw(requestParameters: CreateRevenueCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RevenueCategory>>> {
@@ -7297,6 +7457,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteRelation(requestParameters: DeleteRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteRelationRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a reminder
+     */
+    async deleteReminderRaw(requestParameters: DeleteReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteReminder().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling deleteReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a reminder
+     */
+    async deleteReminder(requestParameters: DeleteReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteReminderRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -10579,6 +10783,109 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a reminder
+     */
+    async getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminder().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling getReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['reminderId2'] != null) {
+            queryParameters['reminder-id'] = requestParameters['reminderId2'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a reminder
+     */
+    async getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+        const response = await this.getReminderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all reminders
+     */
+    async getRemindersRaw(requestParameters: GetRemindersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReminders200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminders().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetReminders200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all reminders
+     */
+    async getReminders(requestParameters: GetRemindersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReminders200Response> {
+        const response = await this.getRemindersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns all revenue categories
      */
     async getRevenueCategoriesRaw(requestParameters: GetRevenueCategoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RevenueCategory>>> {
@@ -13195,6 +13502,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateRelation(requestParameters: UpdateRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation> {
         const response = await this.updateRelationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a reminder
+     */
+    async updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateReminder().'
+            );
+        }
+
+        if (requestParameters['reminderId'] == null) {
+            throw new runtime.RequiredError(
+                'reminderId',
+                'Required parameter "reminderId" was null or undefined when calling updateReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/reminders/{reminderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderId"}}`, encodeURIComponent(String(requestParameters['reminderId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateReminderRequestToJSON(requestParameters['createReminderRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a reminder
+     */
+    async updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+        const response = await this.updateReminderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

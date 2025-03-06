@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CreateProfileRequestSettingsReminder } from './CreateProfileRequestSettingsReminder';
+import {
+    CreateProfileRequestSettingsReminderFromJSON,
+    CreateProfileRequestSettingsReminderFromJSONTyped,
+    CreateProfileRequestSettingsReminderToJSON,
+    CreateProfileRequestSettingsReminderToJSONTyped,
+} from './CreateProfileRequestSettingsReminder';
 import type { CreateProfileRequestSettingsSalesInvoice } from './CreateProfileRequestSettingsSalesInvoice';
 import {
     CreateProfileRequestSettingsSalesInvoiceFromJSON,
@@ -62,6 +69,12 @@ export interface ProfileSettings {
     salesInvoice?: CreateProfileRequestSettingsSalesInvoice;
     /**
      * 
+     * @type {CreateProfileRequestSettingsReminder}
+     * @memberof ProfileSettings
+     */
+    reminder?: CreateProfileRequestSettingsReminder;
+    /**
+     * 
      * @type {CreateProfileRequestSettingsPurchaseInvoice}
      * @memberof ProfileSettings
      */
@@ -93,6 +106,7 @@ export function ProfileSettingsFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'email': json['email'] == null ? undefined : CreateProfileRequestSettingsEmailFromJSON(json['email']),
         'salesInvoice': json['sales_invoice'] == null ? undefined : CreateProfileRequestSettingsSalesInvoiceFromJSON(json['sales_invoice']),
+        'reminder': json['reminder'] == null ? undefined : CreateProfileRequestSettingsReminderFromJSON(json['reminder']),
         'purchaseInvoice': json['purchase_invoice'] == null ? undefined : CreateProfileRequestSettingsPurchaseInvoiceFromJSON(json['purchase_invoice']),
         'branding': json['branding'] == null ? undefined : ProfileSettingsBrandingFromJSON(json['branding']),
     };
@@ -111,6 +125,7 @@ export function ProfileSettingsToJSONTyped(value?: ProfileSettings | null, ignor
         
         'email': CreateProfileRequestSettingsEmailToJSON(value['email']),
         'sales_invoice': CreateProfileRequestSettingsSalesInvoiceToJSON(value['salesInvoice']),
+        'reminder': CreateProfileRequestSettingsReminderToJSON(value['reminder']),
         'purchase_invoice': CreateProfileRequestSettingsPurchaseInvoiceToJSON(value['purchaseInvoice']),
         'branding': ProfileSettingsBrandingToJSON(value['branding']),
     };
