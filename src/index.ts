@@ -110,10 +110,10 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
         return super.request(context, init);
     }
 
-    get username() {
+    private get username() {
         return this.finbaze.clientCredentials?.clientId;
     }
-    get password() {
+    private get password() {
         if (!this.finbaze.clientCredentials?.clientId || !this.finbaze.clientCredentials?.privateKey)
             return undefined;
         return jsonwebtoken.sign({
@@ -213,6 +213,22 @@ class FinbazeAPI {
             grantType: 'authorization_code',
             code,
             redirectUri,
+        });
+
+        this.restoreAccessToken({
+            refresh_token: result.refreshToken,
+            access_token: result.accessToken,
+            expires_in: result.expiresIn,
+            scope: result.scope,
+            token_type: result.tokenType,
+        } as FinbazeAPIAccessToken, this.onUpdateAccesstoken);
+
+        return result;
+    }
+
+    public async getDeveloperAccessToken() {
+        const result = await this.developers.getOAuth2AccessToken({
+            grantType: 'client_credentials',
         });
 
         this.restoreAccessToken({

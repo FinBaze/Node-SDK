@@ -50,7 +50,6 @@ export interface GetOAuth2AccessTokenRequest {
     code?: string;
     redirectUri?: string;
     clientId?: string;
-    clientSecret?: string;
     refreshToken?: string;
 }
 
@@ -114,7 +113,6 @@ export interface DefaultApiInterface {
      * @param {string} [code] Authorization code (required for authorization_code grant type).
      * @param {string} [redirectUri] Redirect URI used in authorization request.
      * @param {string} [clientId] Client ID issued during client registration.
-     * @param {string} [clientSecret] Client secret for authentication.
      * @param {string} [refreshToken] Refresh token to obtain a new access token (required for refresh_token grant type).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -309,10 +307,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['clientId'] != null) {
             formParams.append('client_id', requestParameters['clientId'] as any);
-        }
-
-        if (requestParameters['clientSecret'] != null) {
-            formParams.append('client_secret', requestParameters['clientSecret'] as any);
         }
 
         if (requestParameters['refreshToken'] != null) {
