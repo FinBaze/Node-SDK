@@ -30,7 +30,19 @@ export interface App {
      * @type {string}
      * @memberof App
      */
+    icon?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
     name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    description?: string;
     /**
      * 
      * @type {Date}
@@ -66,7 +78,9 @@ export function AppFromJSONTyped(json: any, ignoreDiscriminator: boolean): App {
     return {
         
         'id': json['id'],
+        'icon': json['icon'] == null ? undefined : json['icon'],
         'name': json['name'],
+        'description': json['description'] == null ? undefined : json['description'],
         'updated': json['updated'] == null ? undefined : (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -84,7 +98,9 @@ export function AppToJSONTyped(value?: Omit<App, 'updated'|'created'> | null, ig
     return {
         
         'id': value['id'],
+        'icon': value['icon'],
         'name': value['name'],
+        'description': value['description'],
     };
 }
 

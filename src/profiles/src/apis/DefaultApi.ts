@@ -65,6 +65,8 @@ import type {
   GetCurrentAccounts200Response,
   GetDebitLoans200Response,
   GetEmployees200Response,
+  GetInstalledApp200Response,
+  GetInstalledApps200Response,
   GetMemorialEntries200Response,
   GetMonetaryAccountOpenbankingAuthorisation200Response,
   GetNLVatData200Response,
@@ -223,6 +225,10 @@ import {
     GetDebitLoans200ResponseToJSON,
     GetEmployees200ResponseFromJSON,
     GetEmployees200ResponseToJSON,
+    GetInstalledApp200ResponseFromJSON,
+    GetInstalledApp200ResponseToJSON,
+    GetInstalledApps200ResponseFromJSON,
+    GetInstalledApps200ResponseToJSON,
     GetMemorialEntries200ResponseFromJSON,
     GetMemorialEntries200ResponseToJSON,
     GetMonetaryAccountOpenbankingAuthorisation200ResponseFromJSON,
@@ -597,6 +603,11 @@ export interface DeleteExpenseCategoryRequest {
     expenseCategoryId: string;
 }
 
+export interface DeleteInstalledAppRequest {
+    appId: string;
+    profileId: string;
+}
+
 export interface DeleteMemorialEntryRequest {
     profileId: string;
     memorialEntryId: string;
@@ -788,6 +799,17 @@ export interface GetExpenseCategoriesRequest {
 export interface GetExpenseCategoryRequest {
     profileId: string;
     expenseCategoryId: string;
+}
+
+export interface GetInstalledAppRequest {
+    appId: string;
+    profileId: string;
+}
+
+export interface GetInstalledAppsRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
 }
 
 export interface GetMemorialEntriesRequest {
@@ -2194,6 +2216,21 @@ export interface DefaultApiInterface {
     deleteExpenseCategory(requestParameters: DeleteExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Returns a app
+     * @param {string} appId The id of the app
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteInstalledAppRaw(requestParameters: DeleteInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Returns a app
+     */
+    deleteInstalledApp(requestParameters: DeleteInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Deletes a memorial entry
      * @param {string} profileId The id of the profile
      * @param {string} memorialEntryId The id of the memorial entry
@@ -2725,6 +2762,37 @@ export interface DefaultApiInterface {
      * Returns a expense category
      */
     getExpenseCategory(requestParameters: GetExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExpenseCategory>;
+
+    /**
+     * Returns a app
+     * @param {string} appId The id of the app
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getInstalledAppRaw(requestParameters: GetInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetInstalledApp200Response>>;
+
+    /**
+     * Returns a app
+     */
+    getInstalledApp(requestParameters: GetInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApp200Response>;
+
+    /**
+     * Returns all installed apps
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getInstalledAppsRaw(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetInstalledApps200Response>>;
+
+    /**
+     * Returns all installed apps
+     */
+    getInstalledApps(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApps200Response>;
 
     /**
      * Returns all memorial entries
@@ -6588,6 +6656,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a app
+     */
+    async deleteInstalledAppRaw(requestParameters: DeleteInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['appId'] == null) {
+            throw new runtime.RequiredError(
+                'appId',
+                'Required parameter "appId" was null or undefined when calling deleteInstalledApp().'
+            );
+        }
+
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteInstalledApp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Returns a app
+     */
+    async deleteInstalledApp(requestParameters: DeleteInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteInstalledAppRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Deletes a memorial entry
      */
     async deleteMemorialEntryRaw(requestParameters: DeleteMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -8182,6 +8294,97 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getExpenseCategory(requestParameters: GetExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExpenseCategory> {
         const response = await this.getExpenseCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a app
+     */
+    async getInstalledAppRaw(requestParameters: GetInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetInstalledApp200Response>> {
+        if (requestParameters['appId'] == null) {
+            throw new runtime.RequiredError(
+                'appId',
+                'Required parameter "appId" was null or undefined when calling getInstalledApp().'
+            );
+        }
+
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getInstalledApp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetInstalledApp200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a app
+     */
+    async getInstalledApp(requestParameters: GetInstalledAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApp200Response> {
+        const response = await this.getInstalledAppRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all installed apps
+     */
+    async getInstalledAppsRaw(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetInstalledApps200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getInstalledApps().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/apps`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetInstalledApps200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all installed apps
+     */
+    async getInstalledApps(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApps200Response> {
+        const response = await this.getInstalledAppsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

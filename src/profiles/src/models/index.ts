@@ -79,6 +79,8 @@ export * from './GetCreditLoans200Response';
 export * from './GetCurrentAccounts200Response';
 export * from './GetDebitLoans200Response';
 export * from './GetEmployees200Response';
+export * from './GetInstalledApp200Response';
+export * from './GetInstalledApps200Response';
 export * from './GetMemorialEntries200Response';
 export * from './GetMonetaryAccountOpenbankingAuthorisation200Response';
 export * from './GetNLVatData200Response';
