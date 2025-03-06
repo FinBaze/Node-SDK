@@ -38,43 +38,43 @@ import {
 /**
  * 
  * @export
- * @interface CreateReminder200ResponseEmbedded
+ * @interface ReminderEmbedded
  */
-export interface CreateReminder200ResponseEmbedded {
+export interface ReminderEmbedded {
     /**
      * 
      * @type {Array<SalesInvoice>}
-     * @memberof CreateReminder200ResponseEmbedded
+     * @memberof ReminderEmbedded
      */
     invoices: Array<SalesInvoice>;
     /**
      * 
      * @type {Array<MonetaryAccountPayment>}
-     * @memberof CreateReminder200ResponseEmbedded
+     * @memberof ReminderEmbedded
      */
     payments: Array<MonetaryAccountPayment>;
     /**
      * 
      * @type {Profile}
-     * @memberof CreateReminder200ResponseEmbedded
+     * @memberof ReminderEmbedded
      */
     profile?: Profile;
 }
 
 /**
- * Check if a given object implements the CreateReminder200ResponseEmbedded interface.
+ * Check if a given object implements the ReminderEmbedded interface.
  */
-export function instanceOfCreateReminder200ResponseEmbedded(value: object): value is CreateReminder200ResponseEmbedded {
+export function instanceOfReminderEmbedded(value: object): value is ReminderEmbedded {
     if (!('invoices' in value) || value['invoices'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
     return true;
 }
 
-export function CreateReminder200ResponseEmbeddedFromJSON(json: any): CreateReminder200ResponseEmbedded {
-    return CreateReminder200ResponseEmbeddedFromJSONTyped(json, false);
+export function ReminderEmbeddedFromJSON(json: any): ReminderEmbedded {
+    return ReminderEmbeddedFromJSONTyped(json, false);
 }
 
-export function CreateReminder200ResponseEmbeddedFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateReminder200ResponseEmbedded {
+export function ReminderEmbeddedFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReminderEmbedded {
     if (json == null) {
         return json;
     }
@@ -86,11 +86,11 @@ export function CreateReminder200ResponseEmbeddedFromJSONTyped(json: any, ignore
     };
 }
 
-export function CreateReminder200ResponseEmbeddedToJSON(json: any): CreateReminder200ResponseEmbedded {
-    return CreateReminder200ResponseEmbeddedToJSONTyped(json, false);
+export function ReminderEmbeddedToJSON(json: any): ReminderEmbedded {
+    return ReminderEmbeddedToJSONTyped(json, false);
 }
 
-export function CreateReminder200ResponseEmbeddedToJSONTyped(value?: CreateReminder200ResponseEmbedded | null, ignoreDiscriminator: boolean = false): any {
+export function ReminderEmbeddedToJSONTyped(value?: ReminderEmbedded | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -44,7 +44,6 @@ import type {
   CreateQuoteRequest,
   CreateRelationRequest,
   CreateRelationsImportRequest,
-  CreateReminder200Response,
   CreateReminderRequest,
   CreateSalesInvoiceLineRequest,
   CreateSalesInvoiceRequest,
@@ -112,6 +111,7 @@ import type {
   Quote,
   QuoteLine,
   Relation,
+  Reminder,
   RevenueCategory,
   SalesInvoice,
   SalesInvoiceLine,
@@ -186,8 +186,6 @@ import {
     CreateRelationRequestToJSON,
     CreateRelationsImportRequestFromJSON,
     CreateRelationsImportRequestToJSON,
-    CreateReminder200ResponseFromJSON,
-    CreateReminder200ResponseToJSON,
     CreateReminderRequestFromJSON,
     CreateReminderRequestToJSON,
     CreateSalesInvoiceLineRequestFromJSON,
@@ -322,6 +320,8 @@ import {
     QuoteLineToJSON,
     RelationFromJSON,
     RelationToJSON,
+    ReminderFromJSON,
+    ReminderToJSON,
     RevenueCategoryFromJSON,
     RevenueCategoryToJSON,
     SalesInvoiceFromJSON,
@@ -2017,12 +2017,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+    createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>>;
 
     /**
      * Creates an reminder
      */
-    createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+    createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder>;
 
     /**
      * Creates an revenue category
@@ -3608,12 +3608,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+    getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>>;
 
     /**
      * Returns a reminder
      */
-    getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+    getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder>;
 
     /**
      * Retrieves a preview of the html content of the email
@@ -4536,12 +4536,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>>;
+    updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>>;
 
     /**
      * Updates a reminder
      */
-    updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response>;
+    updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder>;
 
     /**
      * Updates a revenue category
@@ -6087,7 +6087,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an reminder
      */
-    async createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+    async createReminderRaw(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -6114,13 +6114,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateReminderRequestToJSON(requestParameters['createReminderRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ReminderFromJSON(jsonValue));
     }
 
     /**
      * Creates an reminder
      */
-    async createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+    async createReminder(requestParameters: CreateReminderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder> {
         const response = await this.createReminderRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -10845,7 +10845,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns a reminder
      */
-    async getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+    async getReminderRaw(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10888,13 +10888,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ReminderFromJSON(jsonValue));
     }
 
     /**
      * Returns a reminder
      */
-    async getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+    async getReminder(requestParameters: GetReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder> {
         const response = await this.getReminderRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -13711,7 +13711,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a reminder
      */
-    async updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminder200Response>> {
+    async updateReminderRaw(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -13745,13 +13745,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateReminderRequestToJSON(requestParameters['createReminderRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminder200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ReminderFromJSON(jsonValue));
     }
 
     /**
      * Updates a reminder
      */
-    async updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminder200Response> {
+    async updateReminder(requestParameters: UpdateReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder> {
         const response = await this.updateReminderRaw(requestParameters, initOverrides);
         return await response.value();
     }

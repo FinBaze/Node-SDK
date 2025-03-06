@@ -61,10 +61,6 @@ src/models/CreateRelationRequestBankIban.ts
 src/models/CreateRelationRequestEu.ts
 src/models/CreateRelationRequestEuVies.ts
 src/models/CreateRelationsImportRequest.ts
-src/models/CreateReminder200Response.ts
-src/models/CreateReminder200ResponseAmounts.ts
-src/models/CreateReminder200ResponseAmountsBooked.ts
-src/models/CreateReminder200ResponseEmbedded.ts
 src/models/CreateReminderRequest.ts
 src/models/CreateSalesInvoiceLineRequest.ts
 src/models/CreateSalesInvoiceRequest.ts
@@ -160,6 +156,10 @@ src/models/Quote.ts
 src/models/QuoteEmbedded.ts
 src/models/QuoteLine.ts
 src/models/Relation.ts
+src/models/Reminder.ts
+src/models/ReminderAmounts.ts
+src/models/ReminderAmountsBooked.ts
+src/models/ReminderEmbedded.ts
 src/models/RevenueCategory.ts
 src/models/SalesInvoice.ts
 src/models/SalesInvoiceAmounts.ts
