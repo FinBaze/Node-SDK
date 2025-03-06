@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Employee } from './Employee';
+import type { Reminder } from './Reminder';
 import {
-    EmployeeFromJSON,
-    EmployeeFromJSONTyped,
-    EmployeeToJSON,
-    EmployeeToJSONTyped,
-} from './Employee';
+    ReminderFromJSON,
+    ReminderFromJSONTyped,
+    ReminderToJSON,
+    ReminderToJSONTyped,
+} from './Reminder';
 
 /**
  * 
@@ -53,10 +53,10 @@ export interface GetReminders200Response {
     count: number;
     /**
      * 
-     * @type {Array<Employee>}
+     * @type {Array<Reminder>}
      * @memberof GetReminders200Response
      */
-    data: Array<Employee>;
+    data: Array<Reminder>;
 }
 
 /**
@@ -85,7 +85,7 @@ export function GetReminders200ResponseFromJSONTyped(json: any, ignoreDiscrimina
         'pages': json['pages'],
         'size': json['size'],
         'count': json['count'],
-        'data': ((json['data'] as Array<any>).map(EmployeeFromJSON)),
+        'data': ((json['data'] as Array<any>).map(ReminderFromJSON)),
     };
 }
 
@@ -104,7 +104,7 @@ export function GetReminders200ResponseToJSONTyped(value?: GetReminders200Respon
         'pages': value['pages'],
         'size': value['size'],
         'count': value['count'],
-        'data': ((value['data'] as Array<any>).map(EmployeeToJSON)),
+        'data': ((value['data'] as Array<any>).map(ReminderToJSON)),
     };
 }
 
