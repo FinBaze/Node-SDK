@@ -1124,6 +1124,13 @@ export interface GetRemindersRequest {
     profileId: string;
     page?: number;
     size?: number;
+    currency?: string;
+    date?: Date;
+    paid?: boolean;
+    overdue?: boolean;
+    relation?: string;
+    salesInvoice?: string;
+    reminderId?: string;
 }
 
 export interface GetRevenueCategoriesRequest {
@@ -3665,6 +3672,13 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [currency] The 3 letter currency
+     * @param {Date} [date] The date of the reminder
+     * @param {boolean} [paid] Filter if the reminder is paid
+     * @param {boolean} [overdue] Filter if the reminder is overdue
+     * @param {string} [relation] ID of the relation to filter to
+     * @param {string} [salesInvoice] ID of the sales invoice to filter to
+     * @param {string} [reminderId] Reminder ID to search
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -11061,6 +11075,34 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['size'] != null) {
             queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['currency'] != null) {
+            queryParameters['currency'] = requestParameters['currency'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['paid'] != null) {
+            queryParameters['paid'] = requestParameters['paid'];
+        }
+
+        if (requestParameters['overdue'] != null) {
+            queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['salesInvoice'] != null) {
+            queryParameters['sales-invoice'] = requestParameters['salesInvoice'];
+        }
+
+        if (requestParameters['reminderId'] != null) {
+            queryParameters['reminder-id'] = requestParameters['reminderId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
