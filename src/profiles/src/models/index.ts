@@ -106,7 +106,7 @@ export * from './GetProfileLedgerChart200ResponseCategoriesValue';
 export * from './GetProfileLedgerChart200ResponseLedgersValue';
 export * from './GetProfileLedgerChart200ResponseSectionsValue';
 export * from './GetProfileMetadata200Response';
-export * from './GetProfileMonthlyRecurringRevenue200ResponseValue';
+export * from './GetProfileOutgoingPurchaseInvoices200ResponseValue';
 export * from './GetProjects200Response';
 export * from './GetProjectsTimes200Response';
 export * from './GetPurchaseInvoicePaymentBatches200Response';

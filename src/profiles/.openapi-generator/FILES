@@ -112,7 +112,7 @@ src/models/GetProfileLedgerChart200ResponseCategoriesValue.ts
 src/models/GetProfileLedgerChart200ResponseLedgersValue.ts
 src/models/GetProfileLedgerChart200ResponseSectionsValue.ts
 src/models/GetProfileMetadata200Response.ts
-src/models/GetProfileMonthlyRecurringRevenue200ResponseValue.ts
+src/models/GetProfileOutgoingPurchaseInvoices200ResponseValue.ts
 src/models/GetProjects200Response.ts
 src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200Response.ts
