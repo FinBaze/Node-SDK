@@ -32,6 +32,12 @@ export interface SubscriptionLine {
      */
     product?: string;
     /**
+     * ID of the project to use to apply the revenue to
+     * @type {string}
+     * @memberof SubscriptionLine
+     */
+    project?: string;
+    /**
      * 
      * @type {string}
      * @memberof SubscriptionLine
@@ -128,6 +134,7 @@ export function SubscriptionLineFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'id': json['id'],
         'product': json['product'] == null ? undefined : json['product'],
+        'project': json['project'] == null ? undefined : json['project'],
         'revenueCategory': json['revenue-category'],
         'name': json['name'],
         'taxCode': json['tax-code'],
@@ -154,6 +161,7 @@ export function SubscriptionLineToJSONTyped(value?: Omit<SubscriptionLine, 'id'|
     return {
         
         'product': value['product'],
+        'project': value['project'],
         'revenue-category': value['revenueCategory'],
         'name': value['name'],
         'tax-code': value['taxCode'],

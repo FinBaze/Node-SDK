@@ -16,73 +16,67 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface CreateSalesInvoiceLineRequest
+ * @interface CreateQuoteLineRequest
  */
-export interface CreateSalesInvoiceLineRequest {
+export interface CreateQuoteLineRequest {
     /**
      * 
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     name?: string;
     /**
      * 
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     description?: string;
     /**
      * 
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     reference?: string;
     /**
-     * Product ID to retrieve the information from
+     * 
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     product?: string;
     /**
-     * ID of the project to use to apply the revenue to
-     * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
-     */
-    project?: string;
-    /**
      * 
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     revenueCategory?: string;
     /**
      * ISO 3166-1 alpha-2 country code
      * @type {string}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
-    taxCode?: CreateSalesInvoiceLineRequestTaxCodeEnum;
+    taxCode?: CreateQuoteLineRequestTaxCodeEnum;
     /**
      * 
      * @type {number}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     price?: number;
     /**
      * 
      * @type {number}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     discount?: number;
     /**
      * 
      * @type {number}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     quantity: number;
     /**
      * Free form key/ value pair
      * @type {object}
-     * @memberof CreateSalesInvoiceLineRequest
+     * @memberof CreateQuoteLineRequest
      */
     metadata?: object;
 }
@@ -91,7 +85,7 @@ export interface CreateSalesInvoiceLineRequest {
 /**
  * @export
  */
-export const CreateSalesInvoiceLineRequestTaxCodeEnum = {
+export const CreateQuoteLineRequestTaxCodeEnum = {
     Nl2012High: 'NL_2012_HIGH',
     Nl2019Low: 'NL_2019_LOW',
     Nl2001High: 'NL_2001_HIGH',
@@ -101,22 +95,22 @@ export const CreateSalesInvoiceLineRequestTaxCodeEnum = {
     Nl2024Transfer: 'NL_2024_TRANSFER',
     EuDirective2006112EcArticle40: 'EU_Directive_2006/112/EC_Article_40'
 } as const;
-export type CreateSalesInvoiceLineRequestTaxCodeEnum = typeof CreateSalesInvoiceLineRequestTaxCodeEnum[keyof typeof CreateSalesInvoiceLineRequestTaxCodeEnum];
+export type CreateQuoteLineRequestTaxCodeEnum = typeof CreateQuoteLineRequestTaxCodeEnum[keyof typeof CreateQuoteLineRequestTaxCodeEnum];
 
 
 /**
- * Check if a given object implements the CreateSalesInvoiceLineRequest interface.
+ * Check if a given object implements the CreateQuoteLineRequest interface.
  */
-export function instanceOfCreateSalesInvoiceLineRequest(value: object): value is CreateSalesInvoiceLineRequest {
+export function instanceOfCreateQuoteLineRequest(value: object): value is CreateQuoteLineRequest {
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     return true;
 }
 
-export function CreateSalesInvoiceLineRequestFromJSON(json: any): CreateSalesInvoiceLineRequest {
-    return CreateSalesInvoiceLineRequestFromJSONTyped(json, false);
+export function CreateQuoteLineRequestFromJSON(json: any): CreateQuoteLineRequest {
+    return CreateQuoteLineRequestFromJSONTyped(json, false);
 }
 
-export function CreateSalesInvoiceLineRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSalesInvoiceLineRequest {
+export function CreateQuoteLineRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateQuoteLineRequest {
     if (json == null) {
         return json;
     }
@@ -126,7 +120,6 @@ export function CreateSalesInvoiceLineRequestFromJSONTyped(json: any, ignoreDisc
         'description': json['description'] == null ? undefined : json['description'],
         'reference': json['reference'] == null ? undefined : json['reference'],
         'product': json['product'] == null ? undefined : json['product'],
-        'project': json['project'] == null ? undefined : json['project'],
         'revenueCategory': json['revenue-category'] == null ? undefined : json['revenue-category'],
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
         'price': json['price'] == null ? undefined : json['price'],
@@ -136,11 +129,11 @@ export function CreateSalesInvoiceLineRequestFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function CreateSalesInvoiceLineRequestToJSON(json: any): CreateSalesInvoiceLineRequest {
-    return CreateSalesInvoiceLineRequestToJSONTyped(json, false);
+export function CreateQuoteLineRequestToJSON(json: any): CreateQuoteLineRequest {
+    return CreateQuoteLineRequestToJSONTyped(json, false);
 }
 
-export function CreateSalesInvoiceLineRequestToJSONTyped(value?: CreateSalesInvoiceLineRequest | null, ignoreDiscriminator: boolean = false): any {
+export function CreateQuoteLineRequestToJSONTyped(value?: CreateQuoteLineRequest | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -151,7 +144,6 @@ export function CreateSalesInvoiceLineRequestToJSONTyped(value?: CreateSalesInvo
         'description': value['description'],
         'reference': value['reference'],
         'product': value['product'],
-        'project': value['project'],
         'revenue-category': value['revenueCategory'],
         'tax-code': value['taxCode'],
         'price': value['price'],

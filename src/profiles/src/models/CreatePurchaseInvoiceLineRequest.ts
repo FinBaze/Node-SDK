@@ -46,6 +46,12 @@ export interface CreatePurchaseInvoiceLineRequest {
      */
     product?: string;
     /**
+     * ID of the project to use to apply the revenue to
+     * @type {string}
+     * @memberof CreatePurchaseInvoiceLineRequest
+     */
+    project?: string;
+    /**
      * ID of the expense category
      * @type {string}
      * @memberof CreatePurchaseInvoiceLineRequest
@@ -127,6 +133,7 @@ export function CreatePurchaseInvoiceLineRequestFromJSONTyped(json: any, ignoreD
         'name': json['name'] == null ? undefined : json['name'],
         'description': json['description'] == null ? undefined : json['description'],
         'product': json['product'] == null ? undefined : json['product'],
+        'project': json['project'] == null ? undefined : json['project'],
         'expenseCategory': json['expense-category'] == null ? undefined : json['expense-category'],
         'asset': json['asset'] == null ? undefined : CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetFromJSON(json['asset']),
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
@@ -151,6 +158,7 @@ export function CreatePurchaseInvoiceLineRequestToJSONTyped(value?: CreatePurcha
         'name': value['name'],
         'description': value['description'],
         'product': value['product'],
+        'project': value['project'],
         'expense-category': value['expenseCategory'],
         'asset': CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetToJSON(value['asset']),
         'tax-code': value['taxCode'],

@@ -37,10 +37,13 @@ import type {
   CreateProductRequest,
   CreateProfileAccountRequest,
   CreateProfileRequest,
+  CreateProjectRequest,
+  CreateProjectTimeRequest,
   CreatePurchaseInvoiceFinalRequest,
   CreatePurchaseInvoiceLineRequest,
   CreatePurchaseInvoicePaymentRequest,
   CreatePurchaseInvoiceRequest,
+  CreateQuoteLineRequest,
   CreateQuoteRequest,
   CreateRelationRequest,
   CreateRelationsImportRequest,
@@ -79,6 +82,8 @@ import type {
   GetProfileFinancialLedger200ResponseInner,
   GetProfileLedgerChart200Response,
   GetProfileMetadata200Response,
+  GetProjects200Response,
+  GetProjectsTimes200Response,
   GetPurchaseInvoices200Response,
   GetQuotes200Response,
   GetRelations200Response,
@@ -106,6 +111,8 @@ import type {
   Product,
   ProductCategory,
   Profile,
+  Project,
+  ProjectTime,
   PurchaseInvoice,
   PurchaseInvoiceLine,
   Quote,
@@ -172,6 +179,10 @@ import {
     CreateProfileAccountRequestToJSON,
     CreateProfileRequestFromJSON,
     CreateProfileRequestToJSON,
+    CreateProjectRequestFromJSON,
+    CreateProjectRequestToJSON,
+    CreateProjectTimeRequestFromJSON,
+    CreateProjectTimeRequestToJSON,
     CreatePurchaseInvoiceFinalRequestFromJSON,
     CreatePurchaseInvoiceFinalRequestToJSON,
     CreatePurchaseInvoiceLineRequestFromJSON,
@@ -180,6 +191,8 @@ import {
     CreatePurchaseInvoicePaymentRequestToJSON,
     CreatePurchaseInvoiceRequestFromJSON,
     CreatePurchaseInvoiceRequestToJSON,
+    CreateQuoteLineRequestFromJSON,
+    CreateQuoteLineRequestToJSON,
     CreateQuoteRequestFromJSON,
     CreateQuoteRequestToJSON,
     CreateRelationRequestFromJSON,
@@ -256,6 +269,10 @@ import {
     GetProfileLedgerChart200ResponseToJSON,
     GetProfileMetadata200ResponseFromJSON,
     GetProfileMetadata200ResponseToJSON,
+    GetProjects200ResponseFromJSON,
+    GetProjects200ResponseToJSON,
+    GetProjectsTimes200ResponseFromJSON,
+    GetProjectsTimes200ResponseToJSON,
     GetPurchaseInvoices200ResponseFromJSON,
     GetPurchaseInvoices200ResponseToJSON,
     GetQuotes200ResponseFromJSON,
@@ -310,6 +327,10 @@ import {
     ProductCategoryToJSON,
     ProfileFromJSON,
     ProfileToJSON,
+    ProjectFromJSON,
+    ProjectToJSON,
+    ProjectTimeFromJSON,
+    ProjectTimeToJSON,
     PurchaseInvoiceFromJSON,
     PurchaseInvoiceToJSON,
     PurchaseInvoiceLineFromJSON,
@@ -474,6 +495,17 @@ export interface CreateProfileAccountOperationRequest {
     createProfileAccountRequest?: CreateProfileAccountRequest;
 }
 
+export interface CreateProjectOperationRequest {
+    profileId: string;
+    createProjectRequest?: CreateProjectRequest;
+}
+
+export interface CreateProjectTimeOperationRequest {
+    profileId: string;
+    projectId: string;
+    createProjectTimeRequest?: Omit<CreateProjectTimeRequest, 'id'|'updated'|'created'>;
+}
+
 export interface CreatePurchaseInvoiceOperationRequest {
     profileId: string;
     createPurchaseInvoiceRequest?: CreatePurchaseInvoiceRequest;
@@ -501,10 +533,10 @@ export interface CreateQuoteOperationRequest {
     createQuoteRequest?: CreateQuoteRequest;
 }
 
-export interface CreateQuoteLineRequest {
+export interface CreateQuoteLineOperationRequest {
     profileId: string;
     quoteId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createQuoteLineRequest?: CreateQuoteLineRequest;
 }
 
 export interface CreateRelationOperationRequest {
@@ -662,6 +694,17 @@ export interface DeleteProductCategoryRequest {
 export interface DeleteProfileAccountRequest {
     profileId: string;
     accountId: string;
+}
+
+export interface DeleteProjectRequest {
+    profileId: string;
+    projectId: string;
+}
+
+export interface DeleteProjectTimeRequest {
+    profileId: string;
+    projectId: string;
+    projectTimeId: string;
 }
 
 export interface DeletePurchaseInvoiceRequest {
@@ -1020,6 +1063,32 @@ export interface GetProfileMonthlyRecurringRevenueRequest {
     group?: GetProfileMonthlyRecurringRevenueGroupEnum;
 }
 
+export interface GetProjectRequest {
+    profileId: string;
+    projectId: string;
+}
+
+export interface GetProjectTimeRequest {
+    profileId: string;
+    projectId: string;
+    projectTimeId: string;
+}
+
+export interface GetProjectsRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    name?: string;
+    relation?: string;
+}
+
+export interface GetProjectsTimesRequest {
+    profileId: string;
+    projectId: string;
+    page?: number;
+    size?: number;
+}
+
 export interface GetPurchaseInvoiceRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -1044,6 +1113,7 @@ export interface GetPurchaseInvoicesRequest {
     invoiceId?: string;
     date?: Date;
     overdue?: boolean;
+    project?: string;
     paid?: boolean;
     concept?: boolean;
 }
@@ -1187,6 +1257,7 @@ export interface GetSalesInvoicesRequest {
     subscription?: string;
     relation?: string;
     product?: string;
+    project?: string;
     invoiceId?: string;
     date?: Date;
     overdue?: boolean;
@@ -1439,6 +1510,19 @@ export interface UpdateProfileOperationRequest {
     updateProfileRequest: UpdateProfileRequest;
 }
 
+export interface UpdateProjectRequest {
+    profileId: string;
+    projectId: string;
+    createProjectRequest?: CreateProjectRequest;
+}
+
+export interface UpdateProjectTimeRequest {
+    profileId: string;
+    projectId: string;
+    projectTimeId: string;
+    createProjectTimeRequest?: Omit<CreateProjectTimeRequest, 'id'|'updated'|'created'>;
+}
+
 export interface UpdatePurchaseInvoiceRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -1462,7 +1546,7 @@ export interface UpdateQuoteLineRequest {
     profileId: string;
     quoteId: string;
     quoteLineId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createQuoteLineRequest?: CreateQuoteLineRequest;
 }
 
 export interface UpdateRelationRequest {
@@ -1886,6 +1970,37 @@ export interface DefaultApiInterface {
     createProfileAccount(requestParameters: CreateProfileAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
 
     /**
+     * Creates a project
+     * @param {string} profileId The id of the profile
+     * @param {CreateProjectRequest} [createProjectRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createProjectRaw(requestParameters: CreateProjectOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>>;
+
+    /**
+     * Creates a project
+     */
+    createProject(requestParameters: CreateProjectOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project>;
+
+    /**
+     * Creates a project time
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {CreateProjectTimeRequest} [createProjectTimeRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createProjectTimeRaw(requestParameters: CreateProjectTimeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>>;
+
+    /**
+     * Creates a project time
+     */
+    createProjectTime(requestParameters: CreateProjectTimeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime>;
+
+    /**
      * Creates an new purchase invoice with the given data, when using this endpoint the purchase invoice also needs to be closed in order to be processed. The purchase invoice will first be in concept and not be processed in the financial statement.
      * @param {string} profileId The id of the profile
      * @param {CreatePurchaseInvoiceRequest} [createPurchaseInvoiceRequest] 
@@ -1966,17 +2081,17 @@ export interface DefaultApiInterface {
      * Creates an quote line
      * @param {string} profileId The id of the profile
      * @param {string} quoteId The id of the quote
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateQuoteLineRequest} [createQuoteLineRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createQuoteLineRaw(requestParameters: CreateQuoteLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QuoteLine>>;
+    createQuoteLineRaw(requestParameters: CreateQuoteLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QuoteLine>>;
 
     /**
      * Creates an quote line
      */
-    createQuoteLine(requestParameters: CreateQuoteLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QuoteLine>;
+    createQuoteLine(requestParameters: CreateQuoteLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QuoteLine>;
 
     /**
      * Creates an relations
@@ -2434,6 +2549,37 @@ export interface DefaultApiInterface {
      * Deletes a profile account
      */
     deleteProfileAccount(requestParameters: DeleteProfileAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a project
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a project
+     */
+    deleteProject(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a project time
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {string} projectTimeId The ID of the project time
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteProjectTimeRaw(requestParameters: DeleteProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a project time
+     */
+    deleteProjectTime(requestParameters: DeleteProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a purchase invoice
@@ -3415,6 +3561,72 @@ export interface DefaultApiInterface {
     getProfiles(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Profile>>;
 
     /**
+     * Returns a project
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>>;
+
+    /**
+     * Returns a project
+     */
+    getProject(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project>;
+
+    /**
+     * Returns a project time
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {string} projectTimeId The ID of the project time
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProjectTimeRaw(requestParameters: GetProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>>;
+
+    /**
+     * Returns a project time
+     */
+    getProjectTime(requestParameters: GetProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime>;
+
+    /**
+     * Returns all projects
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [name] Project name
+     * @param {string} [relation] ID of the relation to filter to
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjects200Response>>;
+
+    /**
+     * Returns all projects
+     */
+    getProjects(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProjects200Response>;
+
+    /**
+     * Returns all projects
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProjectsTimesRaw(requestParameters: GetProjectsTimesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjectsTimes200Response>>;
+
+    /**
+     * Returns all projects
+     */
+    getProjectsTimes(requestParameters: GetProjectsTimesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProjectsTimes200Response>;
+
+    /**
      * Returns a purchase invoices
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
@@ -3469,6 +3681,7 @@ export interface DefaultApiInterface {
      * @param {string} [invoiceId] Invoice ID to filter
      * @param {Date} [date] Invoice date to filter
      * @param {boolean} [overdue] If the invoice is overdue to filter
+     * @param {string} [project] Filter invoices that contain this project ID
      * @param {boolean} [paid] If the invoice is paid to filter
      * @param {boolean} [concept] If the invoice is in an concept invoice
      * @param {*} [options] Override http request option.
@@ -3842,6 +4055,7 @@ export interface DefaultApiInterface {
      * @param {string} [subscription] Subscription ID to filter to
      * @param {string} [relation] ID of the relation to filter to
      * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [project] Filter invoices that contain this project ID
      * @param {string} [invoiceId] Invoice ID to search
      * @param {Date} [date] Invoice date
      * @param {boolean} [overdue] If the invoice is overdue
@@ -4484,6 +4698,39 @@ export interface DefaultApiInterface {
     updateProfile(requestParameters: UpdateProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile>;
 
     /**
+     * Updates a project
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {CreateProjectRequest} [createProjectRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateProjectRaw(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>>;
+
+    /**
+     * Updates a project
+     */
+    updateProject(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project>;
+
+    /**
+     * Updates a project time
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {string} projectTimeId The ID of the project time
+     * @param {CreateProjectTimeRequest} [createProjectTimeRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateProjectTimeRaw(requestParameters: UpdateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>>;
+
+    /**
+     * Updates a project time
+     */
+    updateProjectTime(requestParameters: UpdateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime>;
+
+    /**
      * updates a purchase invoice
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
@@ -4537,7 +4784,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {string} quoteId The id of the quote
      * @param {string} quoteLineId The id of the quote line
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateQuoteLineRequest} [createQuoteLineRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -5733,6 +5980,95 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates a project
+     */
+    async createProjectRaw(requestParameters: CreateProjectOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createProject().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProjectRequestToJSON(requestParameters['createProjectRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a project
+     */
+    async createProject(requestParameters: CreateProjectOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project> {
+        const response = await this.createProjectRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a project time
+     */
+    async createProjectTimeRaw(requestParameters: CreateProjectTimeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling createProjectTime().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}/times`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProjectTimeRequestToJSON(requestParameters['createProjectTimeRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectTimeFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a project time
+     */
+    async createProjectTime(requestParameters: CreateProjectTimeOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.createProjectTimeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates an new purchase invoice with the given data, when using this endpoint the purchase invoice also needs to be closed in order to be processed. The purchase invoice will first be in concept and not be processed in the financial statement.
      */
     async createPurchaseInvoiceRaw(requestParameters: CreatePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -5954,7 +6290,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an quote line
      */
-    async createQuoteLineRaw(requestParameters: CreateQuoteLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QuoteLine>> {
+    async createQuoteLineRaw(requestParameters: CreateQuoteLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<QuoteLine>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -5985,7 +6321,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateQuoteLineRequestToJSON(requestParameters['createQuoteLineRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => QuoteLineFromJSON(jsonValue));
@@ -5994,7 +6330,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an quote line
      */
-    async createQuoteLine(requestParameters: CreateQuoteLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QuoteLine> {
+    async createQuoteLine(requestParameters: CreateQuoteLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QuoteLine> {
         const response = await this.createQuoteLineRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -7321,6 +7657,101 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteProfileAccount(requestParameters: DeleteProfileAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteProfileAccountRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a project
+     */
+    async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteProject().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling deleteProject().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a project
+     */
+    async deleteProject(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteProjectRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a project time
+     */
+    async deleteProjectTimeRaw(requestParameters: DeleteProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling deleteProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectTimeId'] == null) {
+            throw new runtime.RequiredError(
+                'projectTimeId',
+                'Required parameter "projectTimeId" was null or undefined when calling deleteProjectTime().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}/times/{projectTimeId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))).replace(`{${"projectTimeId"}}`, encodeURIComponent(String(requestParameters['projectTimeId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a project time
+     */
+    async deleteProjectTime(requestParameters: DeleteProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteProjectTimeRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -10265,6 +10696,210 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a project
+     */
+    async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProject().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling getProject().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a project
+     */
+    async getProject(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project> {
+        const response = await this.getProjectRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a project time
+     */
+    async getProjectTimeRaw(requestParameters: GetProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling getProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectTimeId'] == null) {
+            throw new runtime.RequiredError(
+                'projectTimeId',
+                'Required parameter "projectTimeId" was null or undefined when calling getProjectTime().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}/times/{projectTimeId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))).replace(`{${"projectTimeId"}}`, encodeURIComponent(String(requestParameters['projectTimeId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectTimeFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a project time
+     */
+    async getProjectTime(requestParameters: GetProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.getProjectTimeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all projects
+     */
+    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjects200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProjects().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProjects200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all projects
+     */
+    async getProjects(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProjects200Response> {
+        const response = await this.getProjectsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all projects
+     */
+    async getProjectsTimesRaw(requestParameters: GetProjectsTimesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjectsTimes200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProjectsTimes().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling getProjectsTimes().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}/times`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProjectsTimes200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all projects
+     */
+    async getProjectsTimes(requestParameters: GetProjectsTimesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProjectsTimes200Response> {
+        const response = await this.getProjectsTimesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a purchase invoices
      */
     async getPurchaseInvoiceRaw(requestParameters: GetPurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -10441,6 +11076,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['overdue'] != null) {
             queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
         }
 
         if (requestParameters['paid'] != null) {
@@ -11603,6 +12242,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['product'] != null) {
             queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
         }
 
         if (requestParameters['invoiceId'] != null) {
@@ -13571,6 +14214,109 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Updates a project
+     */
+    async updateProjectRaw(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateProject().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling updateProject().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProjectRequestToJSON(requestParameters['createProjectRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a project
+     */
+    async updateProject(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Project> {
+        const response = await this.updateProjectRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a project time
+     */
+    async updateProjectTimeRaw(requestParameters: UpdateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTime>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling updateProjectTime().'
+            );
+        }
+
+        if (requestParameters['projectTimeId'] == null) {
+            throw new runtime.RequiredError(
+                'projectTimeId',
+                'Required parameter "projectTimeId" was null or undefined when calling updateProjectTime().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/projects/{projectId}/times/{projectTimeId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))).replace(`{${"projectTimeId"}}`, encodeURIComponent(String(requestParameters['projectTimeId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProjectTimeRequestToJSON(requestParameters['createProjectTimeRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectTimeFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a project time
+     */
+    async updateProjectTime(requestParameters: UpdateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.updateProjectTimeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * updates a purchase invoice
      */
     async updatePurchaseInvoiceRaw(requestParameters: UpdatePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -13762,7 +14508,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateQuoteLineRequestToJSON(requestParameters['createQuoteLineRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => QuoteLineFromJSON(jsonValue));

@@ -58,6 +58,8 @@ export * from './ProfileSettingsEmail';
 export * from './ProfileSettingsPurchaseInvoice';
 export * from './ProfileSettingsReminder';
 export * from './ProfileSettingsSalesInvoice';
+export * from './Project';
+export * from './ProjectTime';
 export * from './PurchaseInvoice';
 export * from './PurchaseInvoiceEmbedded';
 export * from './PurchaseInvoiceLine';

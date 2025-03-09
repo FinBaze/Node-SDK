@@ -34,6 +34,12 @@ export interface SalesInvoiceLine {
      */
     readonly id: string;
     /**
+     * ID of the project to use to apply the revenue to
+     * @type {string}
+     * @memberof SalesInvoiceLine
+     */
+    project?: string;
+    /**
      * 
      * @type {string}
      * @memberof SalesInvoiceLine
@@ -157,6 +163,7 @@ export function SalesInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'id': json['id'],
+        'project': json['project'] == null ? undefined : json['project'],
         'name': json['name'],
         'description': json['description'] == null ? undefined : json['description'],
         'product': json['product'] == null ? undefined : json['product'],
@@ -184,6 +191,7 @@ export function SalesInvoiceLineToJSONTyped(value?: Omit<SalesInvoiceLine, 'id'|
 
     return {
         
+        'project': value['project'],
         'name': value['name'],
         'description': value['description'],
         'product': value['product'],

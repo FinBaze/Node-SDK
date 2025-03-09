@@ -44,6 +44,8 @@ src/models/CreateProfileRequestSettingsEmail.ts
 src/models/CreateProfileRequestSettingsPurchaseInvoice.ts
 src/models/CreateProfileRequestSettingsReminder.ts
 src/models/CreateProfileRequestSettingsSalesInvoice.ts
+src/models/CreateProjectRequest.ts
+src/models/CreateProjectTimeRequest.ts
 src/models/CreatePurchaseInvoiceFinalRequest.ts
 src/models/CreatePurchaseInvoiceFinalRequestFile.ts
 src/models/CreatePurchaseInvoiceFinalRequestLinesInner.ts
@@ -54,6 +56,7 @@ src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset.ts
 src/models/CreatePurchaseInvoiceLineRequest.ts
 src/models/CreatePurchaseInvoicePaymentRequest.ts
 src/models/CreatePurchaseInvoiceRequest.ts
+src/models/CreateQuoteLineRequest.ts
 src/models/CreateQuoteRequest.ts
 src/models/CreateRelationRequest.ts
 src/models/CreateRelationRequestBank.ts
@@ -109,6 +112,8 @@ src/models/GetProfileLedgerChart200ResponseCategoriesValue.ts
 src/models/GetProfileLedgerChart200ResponseLedgersValue.ts
 src/models/GetProfileLedgerChart200ResponseSectionsValue.ts
 src/models/GetProfileMetadata200Response.ts
+src/models/GetProjects200Response.ts
+src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetQuotes200Response.ts
 src/models/GetRelations200Response.ts
@@ -149,6 +154,8 @@ src/models/Profile.ts
 src/models/ProfileFeatures.ts
 src/models/ProfileSettings.ts
 src/models/ProfileSettingsBranding.ts
+src/models/Project.ts
+src/models/ProjectTime.ts
 src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts
 src/models/PurchaseInvoiceLine.ts

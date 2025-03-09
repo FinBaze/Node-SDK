@@ -1,0 +1,1 @@
+import { MonetaryAccountAutoProcess } from "./index";

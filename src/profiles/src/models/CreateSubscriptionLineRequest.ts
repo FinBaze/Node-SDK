@@ -44,6 +44,12 @@ export interface CreateSubscriptionLineRequest {
      */
     taxCode?: string;
     /**
+     * ID of the project to use to apply the revenue to
+     * @type {string}
+     * @memberof CreateSubscriptionLineRequest
+     */
+    project?: string;
+    /**
      * 
      * @type {number}
      * @memberof CreateSubscriptionLineRequest
@@ -109,6 +115,7 @@ export function CreateSubscriptionLineRequestFromJSONTyped(json: any, ignoreDisc
         'revenueCategory': json['revenue-category'] == null ? undefined : json['revenue-category'],
         'name': json['name'] == null ? undefined : json['name'],
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
+        'project': json['project'] == null ? undefined : json['project'],
         'tax': json['tax'] == null ? undefined : json['tax'],
         'price': json['price'] == null ? undefined : json['price'],
         'quantity': json['quantity'],
@@ -134,6 +141,7 @@ export function CreateSubscriptionLineRequestToJSONTyped(value?: Omit<CreateSubs
         'revenue-category': value['revenueCategory'],
         'name': value['name'],
         'tax-code': value['taxCode'],
+        'project': value['project'],
         'tax': value['tax'],
         'price': value['price'],
         'quantity': value['quantity'],

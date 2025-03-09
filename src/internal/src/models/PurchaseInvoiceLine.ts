@@ -58,6 +58,12 @@ export interface PurchaseInvoiceLine {
      */
     product?: string;
     /**
+     * ID of the project to use to apply the revenue to
+     * @type {string}
+     * @memberof PurchaseInvoiceLine
+     */
+    project?: string;
+    /**
      * 
      * @type {string}
      * @memberof PurchaseInvoiceLine
@@ -167,6 +173,7 @@ export function PurchaseInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator:
         'asset': json['asset'] == null ? undefined : json['asset'],
         'description': json['description'] == null ? undefined : json['description'],
         'product': json['product'] == null ? undefined : json['product'],
+        'project': json['project'] == null ? undefined : json['project'],
         'expenseCategory': json['expense-category'] == null ? undefined : json['expense-category'],
         'taxCode': json['tax-code'],
         'tax': json['tax'],
@@ -195,6 +202,7 @@ export function PurchaseInvoiceLineToJSONTyped(value?: Omit<PurchaseInvoiceLine,
         'asset': value['asset'],
         'description': value['description'],
         'product': value['product'],
+        'project': value['project'],
         'expense-category': value['expenseCategory'],
         'tax-code': value['taxCode'],
         'tax': value['tax'],
