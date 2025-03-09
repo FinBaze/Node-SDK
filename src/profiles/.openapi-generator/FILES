@@ -105,7 +105,6 @@ src/models/GetNLVatData200ResponseSection5.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetProducts200Response.ts
 src/models/GetProfileAccounts200Response.ts
-src/models/GetProfileAnalyticsRevenue200ResponseValue.ts
 src/models/GetProfileFinancialColumnBalance200Response.ts
 src/models/GetProfileFinancialLedger200ResponseInner.ts
 src/models/GetProfileLedgerChart200Response.ts
@@ -113,6 +112,7 @@ src/models/GetProfileLedgerChart200ResponseCategoriesValue.ts
 src/models/GetProfileLedgerChart200ResponseLedgersValue.ts
 src/models/GetProfileLedgerChart200ResponseSectionsValue.ts
 src/models/GetProfileMetadata200Response.ts
+src/models/GetProfileMonthlyRecurringRevenue200ResponseValue.ts
 src/models/GetProjects200Response.ts
 src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200Response.ts

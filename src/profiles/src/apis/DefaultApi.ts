@@ -78,11 +78,11 @@ import type {
   GetProcessDocuments200Response,
   GetProducts200Response,
   GetProfileAccounts200Response,
-  GetProfileAnalyticsRevenue200ResponseValue,
   GetProfileFinancialColumnBalance200Response,
   GetProfileFinancialLedger200ResponseInner,
   GetProfileLedgerChart200Response,
   GetProfileMetadata200Response,
+  GetProfileMonthlyRecurringRevenue200ResponseValue,
   GetProjects200Response,
   GetProjectsTimes200Response,
   GetPurchaseInvoicePaymentBatches200Response,
@@ -264,8 +264,6 @@ import {
     GetProducts200ResponseToJSON,
     GetProfileAccounts200ResponseFromJSON,
     GetProfileAccounts200ResponseToJSON,
-    GetProfileAnalyticsRevenue200ResponseValueFromJSON,
-    GetProfileAnalyticsRevenue200ResponseValueToJSON,
     GetProfileFinancialColumnBalance200ResponseFromJSON,
     GetProfileFinancialColumnBalance200ResponseToJSON,
     GetProfileFinancialLedger200ResponseInnerFromJSON,
@@ -274,6 +272,8 @@ import {
     GetProfileLedgerChart200ResponseToJSON,
     GetProfileMetadata200ResponseFromJSON,
     GetProfileMetadata200ResponseToJSON,
+    GetProfileMonthlyRecurringRevenue200ResponseValueFromJSON,
+    GetProfileMonthlyRecurringRevenue200ResponseValueToJSON,
     GetProjects200ResponseFromJSON,
     GetProjects200ResponseToJSON,
     GetProjectsTimes200ResponseFromJSON,
@@ -3501,12 +3501,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getProfileAnalyticsCashOnHandRaw(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>>;
+    getProfileAnalyticsCashOnHandRaw(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>>;
 
     /**
      * Returns the cash on hand of a profiel
      */
-    getProfileAnalyticsCashOnHand(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>;
+    getProfileAnalyticsCashOnHand(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>;
 
     /**
      * Returns the expenses of a profiel
@@ -3518,12 +3518,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getProfileAnalyticsExpensesRaw(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>>;
+    getProfileAnalyticsExpensesRaw(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>>;
 
     /**
      * Returns the expenses of a profiel
      */
-    getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>;
+    getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>;
 
     /**
      * Returns the revenue of a profiel
@@ -3535,12 +3535,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getProfileAnalyticsRevenueRaw(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>>;
+    getProfileAnalyticsRevenueRaw(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>>;
 
     /**
      * Returns the revenue of a profiel
      */
-    getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>;
+    getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>;
 
     /**
      * Returns all aggregated financial statement column balance
@@ -3626,12 +3626,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: number; }>>;
+    getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>>;
 
     /**
      * Returns the monthly recurring revenue of a profiel
      */
-    getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: number; }>;
+    getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>;
 
     /**
      * Returns a list of all the profiles
@@ -10528,7 +10528,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns the cash on hand of a profiel
      */
-    async getProfileAnalyticsCashOnHandRaw(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>> {
+    async getProfileAnalyticsCashOnHandRaw(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10560,13 +10560,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileAnalyticsRevenue200ResponseValueFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileMonthlyRecurringRevenue200ResponseValueFromJSON));
     }
 
     /**
      * Returns the cash on hand of a profiel
      */
-    async getProfileAnalyticsCashOnHand(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }> {
+    async getProfileAnalyticsCashOnHand(requestParameters: GetProfileAnalyticsCashOnHandRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }> {
         const response = await this.getProfileAnalyticsCashOnHandRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -10574,7 +10574,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns the expenses of a profiel
      */
-    async getProfileAnalyticsExpensesRaw(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>> {
+    async getProfileAnalyticsExpensesRaw(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10610,13 +10610,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileAnalyticsRevenue200ResponseValueFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileMonthlyRecurringRevenue200ResponseValueFromJSON));
     }
 
     /**
      * Returns the expenses of a profiel
      */
-    async getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }> {
+    async getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }> {
         const response = await this.getProfileAnalyticsExpensesRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -10624,7 +10624,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns the revenue of a profiel
      */
-    async getProfileAnalyticsRevenueRaw(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }>> {
+    async getProfileAnalyticsRevenueRaw(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10660,13 +10660,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileAnalyticsRevenue200ResponseValueFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileMonthlyRecurringRevenue200ResponseValueFromJSON));
     }
 
     /**
      * Returns the revenue of a profiel
      */
-    async getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileAnalyticsRevenue200ResponseValue; }> {
+    async getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }> {
         const response = await this.getProfileAnalyticsRevenueRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -10880,7 +10880,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns the monthly recurring revenue of a profiel
      */
-    async getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: number; }>> {
+    async getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10916,13 +10916,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetProfileMonthlyRecurringRevenue200ResponseValueFromJSON));
     }
 
     /**
      * Returns the monthly recurring revenue of a profiel
      */
-    async getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: number; }> {
+    async getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileMonthlyRecurringRevenue200ResponseValue; }> {
         const response = await this.getProfileMonthlyRecurringRevenueRaw(requestParameters, initOverrides);
         return await response.value();
     }
