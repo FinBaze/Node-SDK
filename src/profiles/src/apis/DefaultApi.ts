@@ -1013,6 +1013,13 @@ export interface GetProfileMetadataRequest {
     profileId: string;
 }
 
+export interface GetProfileMonthlyRecurringRevenueRequest {
+    profileId: string;
+    start?: Date;
+    end?: Date;
+    group?: GetProfileMonthlyRecurringRevenueGroupEnum;
+}
+
 export interface GetPurchaseInvoiceRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -3376,6 +3383,23 @@ export interface DefaultApiInterface {
      * Returns a profile metadata
      */
     getProfileMetadata(requestParameters: GetProfileMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileMetadata200Response>;
+
+    /**
+     * Returns the monthly recurring revenue of a profiel
+     * @param {string} profileId The id of the profile
+     * @param {Date} [start] ISO date as start date
+     * @param {Date} [end] ISO date as start date
+     * @param {'date' | 'week' | 'month'} [group] Group by a specific period
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: number; }>>;
+
+    /**
+     * Returns the monthly recurring revenue of a profiel
+     */
+    getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: number; }>;
 
     /**
      * Returns a list of all the profiles
@@ -10160,6 +10184,56 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns the monthly recurring revenue of a profiel
+     */
+    async getProfileMonthlyRecurringRevenueRaw(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: number; }>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileMonthlyRecurringRevenue().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = (requestParameters['start'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['end'] != null) {
+            queryParameters['end'] = (requestParameters['end'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['group'] != null) {
+            queryParameters['group'] = requestParameters['group'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/analytics/monthly-recurring-revenue`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Returns the monthly recurring revenue of a profiel
+     */
+    async getProfileMonthlyRecurringRevenue(requestParameters: GetProfileMonthlyRecurringRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: number; }> {
+        const response = await this.getProfileMonthlyRecurringRevenueRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of all the profiles
      */
     async getProfilesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Profile>>> {
@@ -14217,6 +14291,15 @@ export const GetProfileAnalyticsRevenueGroupEnum = {
     Month: 'month'
 } as const;
 export type GetProfileAnalyticsRevenueGroupEnum = typeof GetProfileAnalyticsRevenueGroupEnum[keyof typeof GetProfileAnalyticsRevenueGroupEnum];
+/**
+ * @export
+ */
+export const GetProfileMonthlyRecurringRevenueGroupEnum = {
+    Date: 'date',
+    Week: 'week',
+    Month: 'month'
+} as const;
+export type GetProfileMonthlyRecurringRevenueGroupEnum = typeof GetProfileMonthlyRecurringRevenueGroupEnum[keyof typeof GetProfileMonthlyRecurringRevenueGroupEnum];
 /**
  * @export
  */

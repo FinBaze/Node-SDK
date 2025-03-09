@@ -44,6 +44,12 @@ export interface ReminderAmounts {
      * @type {number}
      * @memberof ReminderAmounts
      */
+    subtotal: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReminderAmounts
+     */
     payments: number;
     /**
      * 
@@ -51,6 +57,12 @@ export interface ReminderAmounts {
      * @memberof ReminderAmounts
      */
     fees: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReminderAmounts
+     */
+    interest: number;
 }
 
 /**
@@ -59,8 +71,10 @@ export interface ReminderAmounts {
 export function instanceOfReminderAmounts(value: object): value is ReminderAmounts {
     if (!('booked' in value) || value['booked'] === undefined) return false;
     if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('subtotal' in value) || value['subtotal'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
     if (!('fees' in value) || value['fees'] === undefined) return false;
+    if (!('interest' in value) || value['interest'] === undefined) return false;
     return true;
 }
 
@@ -76,8 +90,10 @@ export function ReminderAmountsFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'booked': ReminderAmountsBookedFromJSON(json['booked']),
         'total': json['total'],
+        'subtotal': json['subtotal'],
         'payments': json['payments'],
         'fees': json['fees'],
+        'interest': json['interest'],
     };
 }
 
@@ -94,8 +110,10 @@ export function ReminderAmountsToJSONTyped(value?: ReminderAmounts | null, ignor
         
         'booked': ReminderAmountsBookedToJSON(value['booked']),
         'total': value['total'],
+        'subtotal': value['subtotal'],
         'payments': value['payments'],
         'fees': value['fees'],
+        'interest': value['interest'],
     };
 }
 
