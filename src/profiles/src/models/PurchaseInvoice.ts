@@ -78,6 +78,12 @@ export interface PurchaseInvoice {
      */
     date: Date;
     /**
+     * ID of the purchase invoice payment batch where this purchase invoice is included
+     * @type {string}
+     * @memberof PurchaseInvoice
+     */
+    batch?: string;
+    /**
      * 
      * @type {Date}
      * @memberof PurchaseInvoice
@@ -180,6 +186,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
+        'batch': json['batch'] == null ? undefined : json['batch'],
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
         'paid': json['paid'] == null ? undefined : (new Date(json['paid'])),
         'overdue': json['overdue'],
@@ -209,6 +216,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
         'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'date': ((value['date']).toISOString().substring(0,10)),
+        'batch': value['batch'],
         'overdue': value['overdue'],
         'concept': value['concept'],
         'amounts': SalesInvoiceAmountsToJSON(value['amounts']),

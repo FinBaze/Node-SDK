@@ -41,6 +41,7 @@ import type {
   CreateProjectTimeRequest,
   CreatePurchaseInvoiceFinalRequest,
   CreatePurchaseInvoiceLineRequest,
+  CreatePurchaseInvoicePaymentBatchRequest,
   CreatePurchaseInvoicePaymentRequest,
   CreatePurchaseInvoiceRequest,
   CreateQuoteLineRequest,
@@ -84,6 +85,8 @@ import type {
   GetProfileMetadata200Response,
   GetProjects200Response,
   GetProjectsTimes200Response,
+  GetPurchaseInvoicePaymentBatches200Response,
+  GetPurchaseInvoicePaymentBatches200ResponseDataInner,
   GetPurchaseInvoices200Response,
   GetQuotes200Response,
   GetRelations200Response,
@@ -187,6 +190,8 @@ import {
     CreatePurchaseInvoiceFinalRequestToJSON,
     CreatePurchaseInvoiceLineRequestFromJSON,
     CreatePurchaseInvoiceLineRequestToJSON,
+    CreatePurchaseInvoicePaymentBatchRequestFromJSON,
+    CreatePurchaseInvoicePaymentBatchRequestToJSON,
     CreatePurchaseInvoicePaymentRequestFromJSON,
     CreatePurchaseInvoicePaymentRequestToJSON,
     CreatePurchaseInvoiceRequestFromJSON,
@@ -273,6 +278,10 @@ import {
     GetProjects200ResponseToJSON,
     GetProjectsTimes200ResponseFromJSON,
     GetProjectsTimes200ResponseToJSON,
+    GetPurchaseInvoicePaymentBatches200ResponseFromJSON,
+    GetPurchaseInvoicePaymentBatches200ResponseToJSON,
+    GetPurchaseInvoicePaymentBatches200ResponseDataInnerFromJSON,
+    GetPurchaseInvoicePaymentBatches200ResponseDataInnerToJSON,
     GetPurchaseInvoices200ResponseFromJSON,
     GetPurchaseInvoices200ResponseToJSON,
     GetQuotes200ResponseFromJSON,
@@ -528,6 +537,16 @@ export interface CreatePurchaseInvoicePaymentOperationRequest {
     createPurchaseInvoicePaymentRequest?: CreatePurchaseInvoicePaymentRequest;
 }
 
+export interface CreatePurchaseInvoicePaymentBatchOperationRequest {
+    profileId: string;
+    createPurchaseInvoicePaymentBatchRequest?: CreatePurchaseInvoicePaymentBatchRequest;
+}
+
+export interface CreatePurchaseInvoicePaymentBatchBankPaymentRequest {
+    profileId: string;
+    purchaseInvoicePaymentBatchId: string;
+}
+
 export interface CreateQuoteOperationRequest {
     profileId: string;
     createQuoteRequest?: CreateQuoteRequest;
@@ -716,6 +735,11 @@ export interface DeletePurchaseInvoiceLineRequest {
     profileId: string;
     purchaseInvoiceId: string;
     purchaseInvoiceLineId: string;
+}
+
+export interface DeletePurchaseInvoicePaymentBatchRequest {
+    profileId: string;
+    purchaseInvoicePaymentBatchId: string;
 }
 
 export interface DeleteQuoteRequest {
@@ -1103,6 +1127,17 @@ export interface GetPurchaseInvoiceLineRequest {
 export interface GetPurchaseInvoiceLinesRequest {
     profileId: string;
     purchaseInvoiceId: string;
+}
+
+export interface GetPurchaseInvoicePaymentBatchRequest {
+    profileId: string;
+    purchaseInvoicePaymentBatchId: string;
+}
+
+export interface GetPurchaseInvoicePaymentBatchesRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
 }
 
 export interface GetPurchaseInvoicesRequest {
@@ -1534,6 +1569,12 @@ export interface UpdatePurchaseInvoiceLineRequest {
     purchaseInvoiceId: string;
     purchaseInvoiceLineId: string;
     createPurchaseInvoiceLineRequest?: CreatePurchaseInvoiceLineRequest;
+}
+
+export interface UpdatePurchaseInvoicePaymentBatchRequest {
+    profileId: string;
+    projectId: string;
+    createPurchaseInvoicePaymentBatchRequest?: CreatePurchaseInvoicePaymentBatchRequest;
 }
 
 export interface UpdateQuoteRequest {
@@ -2061,6 +2102,36 @@ export interface DefaultApiInterface {
      * Create purchaseinvoice payment
      */
     createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response>;
+
+    /**
+     * Creates a payment batch
+     * @param {string} profileId The id of the profile
+     * @param {CreatePurchaseInvoicePaymentBatchRequest} [createPurchaseInvoicePaymentBatchRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPurchaseInvoicePaymentBatchRaw(requestParameters: CreatePurchaseInvoicePaymentBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>>;
+
+    /**
+     * Creates a payment batch
+     */
+    createPurchaseInvoicePaymentBatch(requestParameters: CreatePurchaseInvoicePaymentBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner>;
+
+    /**
+     * Create purchase invoice payment batch payment
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoicePaymentBatchId The ID of the purchase invoice payment batch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPurchaseInvoicePaymentBatchBankPaymentRaw(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>>;
+
+    /**
+     * Create purchase invoice payment batch payment
+     */
+    createPurchaseInvoicePaymentBatchBankPayment(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response>;
 
     /**
      * Creates an concept Quote
@@ -2611,6 +2682,21 @@ export interface DefaultApiInterface {
      * Deletes a purchase invoice line
      */
     deletePurchaseInvoiceLine(requestParameters: DeletePurchaseInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a payment batch
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoicePaymentBatchId The ID of the purchase invoice payment batch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deletePurchaseInvoicePaymentBatchRaw(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a payment batch
+     */
+    deletePurchaseInvoicePaymentBatch(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a quote
@@ -3671,6 +3757,37 @@ export interface DefaultApiInterface {
      * Returns all purchase invoice lines of a purchase invoice
      */
     getPurchaseInvoiceLines(requestParameters: GetPurchaseInvoiceLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PurchaseInvoiceLine>>;
+
+    /**
+     * Returns a payment batch
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoicePaymentBatchId The ID of the purchase invoice payment batch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoicePaymentBatchRaw(requestParameters: GetPurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>>;
+
+    /**
+     * Returns a payment batch
+     */
+    getPurchaseInvoicePaymentBatch(requestParameters: GetPurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner>;
+
+    /**
+     * Returns all payment batches
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoicePaymentBatchesRaw(requestParameters: GetPurchaseInvoicePaymentBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200Response>>;
+
+    /**
+     * Returns all payment batches
+     */
+    getPurchaseInvoicePaymentBatches(requestParameters: GetPurchaseInvoicePaymentBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200Response>;
 
     /**
      * Returns all purchase invoices
@@ -4762,6 +4879,22 @@ export interface DefaultApiInterface {
      * updates a purchase invoice
      */
     updatePurchaseInvoiceLine(requestParameters: UpdatePurchaseInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceLine>;
+
+    /**
+     * Updates a payment batch
+     * @param {string} profileId The id of the profile
+     * @param {string} projectId The ID of the project
+     * @param {CreatePurchaseInvoicePaymentBatchRequest} [createPurchaseInvoicePaymentBatchRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updatePurchaseInvoicePaymentBatchRaw(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>>;
+
+    /**
+     * Updates a payment batch
+     */
+    updatePurchaseInvoicePaymentBatch(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner>;
 
     /**
      * Updates an Quote
@@ -6243,6 +6376,92 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createPurchaseInvoicePayment(requestParameters: CreatePurchaseInvoicePaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response> {
         const response = await this.createPurchaseInvoicePaymentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a payment batch
+     */
+    async createPurchaseInvoicePaymentBatchRaw(requestParameters: CreatePurchaseInvoicePaymentBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePurchaseInvoicePaymentBatchRequestToJSON(requestParameters['createPurchaseInvoicePaymentBatchRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseInvoicePaymentBatches200ResponseDataInnerFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a payment batch
+     */
+    async createPurchaseInvoicePaymentBatch(requestParameters: CreatePurchaseInvoicePaymentBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner> {
+        const response = await this.createPurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create purchase invoice payment batch payment
+     */
+    async createPurchaseInvoicePaymentBatchBankPaymentRaw(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateMonetaryAccountBankPayment200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPurchaseInvoicePaymentBatchBankPayment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoicePaymentBatchId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoicePaymentBatchId',
+                'Required parameter "purchaseInvoicePaymentBatchId" was null or undefined when calling createPurchaseInvoicePaymentBatchBankPayment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}/payment`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoicePaymentBatchId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoicePaymentBatchId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateMonetaryAccountBankPayment200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create purchase invoice payment batch payment
+     */
+    async createPurchaseInvoicePaymentBatchBankPayment(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response> {
+        const response = await this.createPurchaseInvoicePaymentBatchBankPaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -7847,6 +8066,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deletePurchaseInvoiceLine(requestParameters: DeletePurchaseInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deletePurchaseInvoiceLineRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a payment batch
+     */
+    async deletePurchaseInvoicePaymentBatchRaw(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deletePurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoicePaymentBatchId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoicePaymentBatchId',
+                'Required parameter "purchaseInvoicePaymentBatchId" was null or undefined when calling deletePurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoicePaymentBatchId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoicePaymentBatchId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a payment batch
+     */
+    async deletePurchaseInvoicePaymentBatch(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deletePurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -11038,6 +11301,97 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getPurchaseInvoiceLines(requestParameters: GetPurchaseInvoiceLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PurchaseInvoiceLine>> {
         const response = await this.getPurchaseInvoiceLinesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a payment batch
+     */
+    async getPurchaseInvoicePaymentBatchRaw(requestParameters: GetPurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoicePaymentBatchId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoicePaymentBatchId',
+                'Required parameter "purchaseInvoicePaymentBatchId" was null or undefined when calling getPurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoicePaymentBatchId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoicePaymentBatchId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseInvoicePaymentBatches200ResponseDataInnerFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a payment batch
+     */
+    async getPurchaseInvoicePaymentBatch(requestParameters: GetPurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner> {
+        const response = await this.getPurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all payment batches
+     */
+    async getPurchaseInvoicePaymentBatchesRaw(requestParameters: GetPurchaseInvoicePaymentBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseInvoicePaymentBatches().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseInvoicePaymentBatches200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all payment batches
+     */
+    async getPurchaseInvoicePaymentBatches(requestParameters: GetPurchaseInvoicePaymentBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200Response> {
+        const response = await this.getPurchaseInvoicePaymentBatchesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -14416,6 +14770,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updatePurchaseInvoiceLine(requestParameters: UpdatePurchaseInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceLine> {
         const response = await this.updatePurchaseInvoiceLineRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a payment batch
+     */
+    async updatePurchaseInvoicePaymentBatchRaw(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoicePaymentBatches200ResponseDataInner>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePurchaseInvoicePaymentBatchRequestToJSON(requestParameters['createPurchaseInvoicePaymentBatchRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseInvoicePaymentBatches200ResponseDataInnerFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a payment batch
+     */
+    async updatePurchaseInvoicePaymentBatch(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner> {
+        const response = await this.updatePurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

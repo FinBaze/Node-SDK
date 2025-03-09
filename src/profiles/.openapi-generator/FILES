@@ -54,6 +54,7 @@ src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1.ts
 src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2.ts
 src/models/CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset.ts
 src/models/CreatePurchaseInvoiceLineRequest.ts
+src/models/CreatePurchaseInvoicePaymentBatchRequest.ts
 src/models/CreatePurchaseInvoicePaymentRequest.ts
 src/models/CreatePurchaseInvoiceRequest.ts
 src/models/CreateQuoteLineRequest.ts
@@ -114,6 +115,8 @@ src/models/GetProfileLedgerChart200ResponseSectionsValue.ts
 src/models/GetProfileMetadata200Response.ts
 src/models/GetProjects200Response.ts
 src/models/GetProjectsTimes200Response.ts
+src/models/GetPurchaseInvoicePaymentBatches200Response.ts
+src/models/GetPurchaseInvoicePaymentBatches200ResponseDataInner.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetQuotes200Response.ts
 src/models/GetRelations200Response.ts
