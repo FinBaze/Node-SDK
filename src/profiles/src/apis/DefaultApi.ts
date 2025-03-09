@@ -1156,6 +1156,7 @@ export interface GetPurchaseInvoicesRequest {
     date?: Date;
     overdue?: boolean;
     project?: string;
+    batch?: string;
     paid?: boolean;
     concept?: boolean;
 }
@@ -3823,6 +3824,7 @@ export interface DefaultApiInterface {
      * @param {Date} [date] Invoice date to filter
      * @param {boolean} [overdue] If the invoice is overdue to filter
      * @param {string} [project] Filter invoices that contain this project ID
+     * @param {string} [batch] Filter invoices that are in this batch
      * @param {boolean} [paid] If the invoice is paid to filter
      * @param {boolean} [concept] If the invoice is in an concept invoice
      * @param {*} [options] Override http request option.
@@ -11508,6 +11510,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['project'] != null) {
             queryParameters['project'] = requestParameters['project'];
+        }
+
+        if (requestParameters['batch'] != null) {
+            queryParameters['batch'] = requestParameters['batch'];
         }
 
         if (requestParameters['paid'] != null) {
