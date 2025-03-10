@@ -1895,12 +1895,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createMonetaryAccountAutoProcessBacktestRaw(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountPayment>>;
+    createMonetaryAccountAutoProcessBacktestRaw(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MonetaryAccountPayment>>>;
 
     /**
      * Creates a monetary account auto process
      */
-    createMonetaryAccountAutoProcessBacktest(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountPayment>;
+    createMonetaryAccountAutoProcessBacktest(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountPayment>>;
 
     /**
      * Create purchaseinvoice payment
@@ -5754,7 +5754,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates a monetary account auto process
      */
-    async createMonetaryAccountAutoProcessBacktestRaw(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MonetaryAccountPayment>> {
+    async createMonetaryAccountAutoProcessBacktestRaw(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MonetaryAccountPayment>>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -5788,13 +5788,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateMonetaryAccountAutoProcessBacktestRequestToJSON(requestParameters['createMonetaryAccountAutoProcessBacktestRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MonetaryAccountPaymentFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MonetaryAccountPaymentFromJSON));
     }
 
     /**
      * Creates a monetary account auto process
      */
-    async createMonetaryAccountAutoProcessBacktest(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountPayment> {
+    async createMonetaryAccountAutoProcessBacktest(requestParameters: CreateMonetaryAccountAutoProcessBacktestOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountPayment>> {
         const response = await this.createMonetaryAccountAutoProcessBacktestRaw(requestParameters, initOverrides);
         return await response.value();
     }
