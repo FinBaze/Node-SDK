@@ -70,13 +70,13 @@ export interface PurchaseInvoice {
      * @type {Date}
      * @memberof PurchaseInvoice
      */
-    due?: Date;
+    scheduled?: Date;
     /**
      * Due date of the invoice
      * @type {Date}
      * @memberof PurchaseInvoice
      */
-    scheduled?: Date;
+    due?: Date;
     /**
      * Date of issuance of the invoice
      * @type {Date}
@@ -190,8 +190,8 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'uuid': json['uuid'],
         'invoiceId': json['invoice_id'],
         'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
-        'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'scheduled': json['scheduled'] == null ? undefined : (new Date(json['scheduled'])),
+        'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
         'batch': json['batch'] == null ? undefined : json['batch'],
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
@@ -221,8 +221,8 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
         
         'invoice_id': value['invoiceId'],
         'period': SalesInvoicePeriodToJSON(value['period']),
-        'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'scheduled': value['scheduled'] == null ? undefined : ((value['scheduled']).toISOString().substring(0,10)),
+        'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'date': ((value['date']).toISOString().substring(0,10)),
         'batch': value['batch'],
         'overdue': value['overdue'],

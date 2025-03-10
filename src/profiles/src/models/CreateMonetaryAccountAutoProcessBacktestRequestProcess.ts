@@ -16,65 +16,65 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UpateMonetaryAccountAutoProcessRequestProcess
+ * @interface CreateMonetaryAccountAutoProcessBacktestRequestProcess
  */
-export interface UpateMonetaryAccountAutoProcessRequestProcess {
+export interface CreateMonetaryAccountAutoProcessBacktestRequestProcess {
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     salesInvoiceId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     purchaseInvoiceId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     currentAccountId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     debitLoanId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     creditLoanId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     relationId?: string;
     /**
      * 
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestProcess
      */
     ledger?: string;
 }
 
 /**
- * Check if a given object implements the UpateMonetaryAccountAutoProcessRequestProcess interface.
+ * Check if a given object implements the CreateMonetaryAccountAutoProcessBacktestRequestProcess interface.
  */
-export function instanceOfUpateMonetaryAccountAutoProcessRequestProcess(value: object): value is UpateMonetaryAccountAutoProcessRequestProcess {
+export function instanceOfCreateMonetaryAccountAutoProcessBacktestRequestProcess(value: object): value is CreateMonetaryAccountAutoProcessBacktestRequestProcess {
     return true;
 }
 
-export function UpateMonetaryAccountAutoProcessRequestProcessFromJSON(json: any): UpateMonetaryAccountAutoProcessRequestProcess {
-    return UpateMonetaryAccountAutoProcessRequestProcessFromJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequestProcess {
+    return CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSONTyped(json, false);
 }
 
-export function UpateMonetaryAccountAutoProcessRequestProcessFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpateMonetaryAccountAutoProcessRequestProcess {
+export function CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMonetaryAccountAutoProcessBacktestRequestProcess {
     if (json == null) {
         return json;
     }
@@ -90,11 +90,11 @@ export function UpateMonetaryAccountAutoProcessRequestProcessFromJSONTyped(json:
     };
 }
 
-export function UpateMonetaryAccountAutoProcessRequestProcessToJSON(json: any): UpateMonetaryAccountAutoProcessRequestProcess {
-    return UpateMonetaryAccountAutoProcessRequestProcessToJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestProcessToJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequestProcess {
+    return CreateMonetaryAccountAutoProcessBacktestRequestProcessToJSONTyped(json, false);
 }
 
-export function UpateMonetaryAccountAutoProcessRequestProcessToJSONTyped(value?: UpateMonetaryAccountAutoProcessRequestProcess | null, ignoreDiscriminator: boolean = false): any {
+export function CreateMonetaryAccountAutoProcessBacktestRequestProcessToJSONTyped(value?: CreateMonetaryAccountAutoProcessBacktestRequestProcess | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

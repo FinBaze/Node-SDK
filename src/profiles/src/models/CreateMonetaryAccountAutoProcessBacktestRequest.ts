@@ -31,51 +31,51 @@ import {
 /**
  * 
  * @export
- * @interface MonetaryAccountAutoProcess
+ * @interface CreateMonetaryAccountAutoProcessBacktestRequest
  */
-export interface MonetaryAccountAutoProcess {
+export interface CreateMonetaryAccountAutoProcessBacktestRequest {
     /**
      * 
      * @type {string}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     name: string;
     /**
      * 
      * @type {Array<CreateMonetaryAccountAutoProcessBacktestRequestRulesInner>}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     rules: Array<CreateMonetaryAccountAutoProcessBacktestRequestRulesInner>;
     /**
      * 
      * @type {CreateMonetaryAccountAutoProcessBacktestRequestProcess}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     process: CreateMonetaryAccountAutoProcessBacktestRequestProcess;
     /**
      * 
      * @type {Date}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof MonetaryAccountAutoProcess
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     readonly created: Date;
 }
 
 /**
- * Check if a given object implements the MonetaryAccountAutoProcess interface.
+ * Check if a given object implements the CreateMonetaryAccountAutoProcessBacktestRequest interface.
  */
-export function instanceOfMonetaryAccountAutoProcess(value: object): value is MonetaryAccountAutoProcess {
+export function instanceOfCreateMonetaryAccountAutoProcessBacktestRequest(value: object): value is CreateMonetaryAccountAutoProcessBacktestRequest {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('rules' in value) || value['rules'] === undefined) return false;
@@ -85,11 +85,11 @@ export function instanceOfMonetaryAccountAutoProcess(value: object): value is Mo
     return true;
 }
 
-export function MonetaryAccountAutoProcessFromJSON(json: any): MonetaryAccountAutoProcess {
-    return MonetaryAccountAutoProcessFromJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestFromJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequest {
+    return CreateMonetaryAccountAutoProcessBacktestRequestFromJSONTyped(json, false);
 }
 
-export function MonetaryAccountAutoProcessFromJSONTyped(json: any, ignoreDiscriminator: boolean): MonetaryAccountAutoProcess {
+export function CreateMonetaryAccountAutoProcessBacktestRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMonetaryAccountAutoProcessBacktestRequest {
     if (json == null) {
         return json;
     }
@@ -104,11 +104,11 @@ export function MonetaryAccountAutoProcessFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function MonetaryAccountAutoProcessToJSON(json: any): MonetaryAccountAutoProcess {
-    return MonetaryAccountAutoProcessToJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestToJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequest {
+    return CreateMonetaryAccountAutoProcessBacktestRequestToJSONTyped(json, false);
 }
 
-export function MonetaryAccountAutoProcessToJSONTyped(value?: Omit<MonetaryAccountAutoProcess, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function CreateMonetaryAccountAutoProcessBacktestRequestToJSONTyped(value?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

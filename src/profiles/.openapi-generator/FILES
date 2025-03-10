@@ -23,6 +23,9 @@ src/models/CreateDebitLoanRequest.ts
 src/models/CreateEmployeeRequest.ts
 src/models/CreateMemorialEntryRequest.ts
 src/models/CreateMemorialEntryRequestItemsInner.ts
+src/models/CreateMonetaryAccountAutoProcessBacktestRequest.ts
+src/models/CreateMonetaryAccountAutoProcessBacktestRequestProcess.ts
+src/models/CreateMonetaryAccountAutoProcessBacktestRequestRulesInner.ts
 src/models/CreateMonetaryAccountBankPayment200Response.ts
 src/models/CreateMonetaryAccountBankPaymentRequest.ts
 src/models/CreateMonetaryAccountOpenbankingAuthorisation201Response.ts
@@ -196,9 +199,6 @@ src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/UnauthorisedError.ts
-src/models/UpateMonetaryAccountAutoProcessRequest.ts
-src/models/UpateMonetaryAccountAutoProcessRequestProcess.ts
-src/models/UpateMonetaryAccountAutoProcessRequestRulesInner.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/UpdateProfileRequest.ts

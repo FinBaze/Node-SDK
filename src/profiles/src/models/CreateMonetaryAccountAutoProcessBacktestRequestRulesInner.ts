@@ -16,59 +16,59 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UpateMonetaryAccountAutoProcessRequestRulesInner
+ * @interface CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
  */
-export interface UpateMonetaryAccountAutoProcessRequestRulesInner {
+export interface CreateMonetaryAccountAutoProcessBacktestRequestRulesInner {
     /**
      * Regex to match with the holder name field
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     holderName?: string;
     /**
      * Regex to match with the iban field
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     iban?: string;
     /**
      * Regex to match with the reference field
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     reference?: string;
     /**
      * Regex to match with the description field
      * @type {string}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     description?: string;
     /**
      * Amount to match lte
      * @type {number}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     amountLte?: number;
     /**
      * Amount to match gte
      * @type {number}
-     * @memberof UpateMonetaryAccountAutoProcessRequestRulesInner
+     * @memberof CreateMonetaryAccountAutoProcessBacktestRequestRulesInner
      */
     amountGte?: number;
 }
 
 /**
- * Check if a given object implements the UpateMonetaryAccountAutoProcessRequestRulesInner interface.
+ * Check if a given object implements the CreateMonetaryAccountAutoProcessBacktestRequestRulesInner interface.
  */
-export function instanceOfUpateMonetaryAccountAutoProcessRequestRulesInner(value: object): value is UpateMonetaryAccountAutoProcessRequestRulesInner {
+export function instanceOfCreateMonetaryAccountAutoProcessBacktestRequestRulesInner(value: object): value is CreateMonetaryAccountAutoProcessBacktestRequestRulesInner {
     return true;
 }
 
-export function UpateMonetaryAccountAutoProcessRequestRulesInnerFromJSON(json: any): UpateMonetaryAccountAutoProcessRequestRulesInner {
-    return UpateMonetaryAccountAutoProcessRequestRulesInnerFromJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerFromJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequestRulesInner {
+    return CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerFromJSONTyped(json, false);
 }
 
-export function UpateMonetaryAccountAutoProcessRequestRulesInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpateMonetaryAccountAutoProcessRequestRulesInner {
+export function CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMonetaryAccountAutoProcessBacktestRequestRulesInner {
     if (json == null) {
         return json;
     }
@@ -83,11 +83,11 @@ export function UpateMonetaryAccountAutoProcessRequestRulesInnerFromJSONTyped(js
     };
 }
 
-export function UpateMonetaryAccountAutoProcessRequestRulesInnerToJSON(json: any): UpateMonetaryAccountAutoProcessRequestRulesInner {
-    return UpateMonetaryAccountAutoProcessRequestRulesInnerToJSONTyped(json, false);
+export function CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSON(json: any): CreateMonetaryAccountAutoProcessBacktestRequestRulesInner {
+    return CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSONTyped(json, false);
 }
 
-export function UpateMonetaryAccountAutoProcessRequestRulesInnerToJSONTyped(value?: UpateMonetaryAccountAutoProcessRequestRulesInner | null, ignoreDiscriminator: boolean = false): any {
+export function CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSONTyped(value?: CreateMonetaryAccountAutoProcessBacktestRequestRulesInner | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
