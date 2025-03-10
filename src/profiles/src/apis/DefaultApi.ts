@@ -5733,7 +5733,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -7731,7 +7731,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -9659,7 +9659,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -9704,7 +9704,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -14023,7 +14023,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/auto-processes/{monetaryAccountAutoProcessId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountAutoProcessId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountAutoProcessId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
