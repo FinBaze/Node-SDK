@@ -24,6 +24,8 @@ src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
+src/models/GetJurisdictions200ResponseValue.ts
+src/models/GetJurisdictions200ResponseValueEu.ts
 src/models/InvalidRequestError.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts

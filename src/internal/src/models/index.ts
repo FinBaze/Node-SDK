@@ -18,6 +18,8 @@ export * from './Device';
 export * from './Employee';
 export * from './ExpenseCategory';
 export * from './ForbiddenError';
+export * from './GetJurisdictions200ResponseValue';
+export * from './GetJurisdictions200ResponseValueEu';
 export * from './InvalidRequestError';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';

@@ -21,6 +21,7 @@ import type {
   CreateSalesInvoicePublicPayment200Response,
   CreateSalesInvoicePublicPaymentRequest,
   Device,
+  GetJurisdictions200ResponseValue,
   ResetAccountPasswordRequest,
   SalesInvoicePublic,
   SendResetPasswordRequestRequest,
@@ -40,6 +41,8 @@ import {
     CreateSalesInvoicePublicPaymentRequestToJSON,
     DeviceFromJSON,
     DeviceToJSON,
+    GetJurisdictions200ResponseValueFromJSON,
+    GetJurisdictions200ResponseValueToJSON,
     ResetAccountPasswordRequestFromJSON,
     ResetAccountPasswordRequestToJSON,
     SalesInvoicePublicFromJSON,
@@ -225,6 +228,32 @@ export interface DefaultApiInterface {
      * Get all devices
      */
     getDevices(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Device>>;
+
+    /**
+     * Returns all jurisdictions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getJurisdictionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetJurisdictions200ResponseValue; }>>;
+
+    /**
+     * Returns all jurisdictions
+     */
+    getJurisdictions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetJurisdictions200ResponseValue; }>;
+
+    /**
+     * Returns all languages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getLanguagesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>>;
+
+    /**
+     * Returns all languages
+     */
+    getLanguages(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>>;
 
     /**
      * Returns a purchase invoice public data
@@ -629,6 +658,68 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getDevices(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Device>> {
         const response = await this.getDevicesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all jurisdictions
+     */
+    async getJurisdictionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetJurisdictions200ResponseValue; }>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/metadata/jurisdictions`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => runtime.mapValues(jsonValue, GetJurisdictions200ResponseValueFromJSON));
+    }
+
+    /**
+     * Returns all jurisdictions
+     */
+    async getJurisdictions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetJurisdictions200ResponseValue; }> {
+        const response = await this.getJurisdictionsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all languages
+     */
+    async getLanguagesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/metadata/languages`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Returns all languages
+     */
+    async getLanguages(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.getLanguagesRaw(initOverrides);
         return await response.value();
     }
 
