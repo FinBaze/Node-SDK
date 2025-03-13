@@ -33,6 +33,12 @@ export interface CreateProductRequest {
     name: string;
     /**
      * 
+     * @type {string}
+     * @memberof CreateProductRequest
+     */
+    sku?: string;
+    /**
+     * 
      * @type {number}
      * @memberof CreateProductRequest
      */
@@ -129,6 +135,7 @@ export function CreateProductRequestFromJSONTyped(json: any, ignoreDiscriminator
         
         'code': json['code'] == null ? undefined : json['code'],
         'name': json['name'],
+        'sku': json['sku'] == null ? undefined : json['sku'],
         'price': json['price'],
         'type': json['type'] == null ? undefined : json['type'],
         'taxCodes': json['tax-codes'],
@@ -153,6 +160,7 @@ export function CreateProductRequestToJSONTyped(value?: CreateProductRequest | n
         
         'code': value['code'],
         'name': value['name'],
+        'sku': value['sku'],
         'price': value['price'],
         'type': value['type'],
         'tax-codes': value['taxCodes'],

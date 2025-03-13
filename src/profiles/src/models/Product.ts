@@ -38,6 +38,12 @@ export interface Product {
      */
     code?: string;
     /**
+     * The code sku of the product
+     * @type {string}
+     * @memberof Product
+     */
+    sku?: string;
+    /**
      * The price of the product, exlcuding taxes
      * @type {number}
      * @memberof Product
@@ -157,6 +163,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'id': json['id'],
         'name': json['name'],
         'code': json['code'] == null ? undefined : json['code'],
+        'sku': json['sku'] == null ? undefined : json['sku'],
         'price': json['price'],
         'type': json['type'] == null ? undefined : json['type'],
         'stock': json['stock'] == null ? undefined : json['stock'],
@@ -184,6 +191,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'id'|'updated'|'created
         
         'name': value['name'],
         'code': value['code'],
+        'sku': value['sku'],
         'price': value['price'],
         'type': value['type'],
         'stock': value['stock'],

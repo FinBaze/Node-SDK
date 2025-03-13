@@ -1030,6 +1030,7 @@ export interface GetProductsRequest {
     page?: number;
     size?: number;
     name?: string;
+    sku?: string;
 }
 
 export interface GetProfileRequest {
@@ -3479,6 +3480,7 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [name] Product name
+     * @param {string} [sku] Product SKU
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -10493,6 +10495,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['name'] != null) {
             queryParameters['name'] = requestParameters['name'];
+        }
+
+        if (requestParameters['sku'] != null) {
+            queryParameters['sku'] = requestParameters['sku'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
