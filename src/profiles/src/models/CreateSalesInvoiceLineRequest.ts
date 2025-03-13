@@ -62,6 +62,12 @@ export interface CreateSalesInvoiceLineRequest {
      */
     taxCode?: CreateSalesInvoiceLineRequestTaxCodeEnum;
     /**
+     * Only use this when you really need to enter the total tax amount manually
+     * @type {number}
+     * @memberof CreateSalesInvoiceLineRequest
+     */
+    tax?: number;
+    /**
      * 
      * @type {number}
      * @memberof CreateSalesInvoiceLineRequest
@@ -129,6 +135,7 @@ export function CreateSalesInvoiceLineRequestFromJSONTyped(json: any, ignoreDisc
         'project': json['project'] == null ? undefined : json['project'],
         'revenueCategory': json['revenue-category'] == null ? undefined : json['revenue-category'],
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
+        'tax': json['tax'] == null ? undefined : json['tax'],
         'price': json['price'] == null ? undefined : json['price'],
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
@@ -154,6 +161,7 @@ export function CreateSalesInvoiceLineRequestToJSONTyped(value?: CreateSalesInvo
         'project': value['project'],
         'revenue-category': value['revenueCategory'],
         'tax-code': value['taxCode'],
+        'tax': value['tax'],
         'price': value['price'],
         'discount': value['discount'],
         'quantity': value['quantity'],
