@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Address } from './Address';
+import {
+    AddressFromJSON,
+    AddressFromJSONTyped,
+    AddressToJSON,
+    AddressToJSONTyped,
+} from './Address';
 import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
 import {
     CreateSalesInvoiceRequestPeriodFromJSON,
@@ -89,6 +96,12 @@ export interface CreateSalesInvoiceRequest {
     lastName?: string;
     /**
      * 
+     * @type {Address}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    address?: Address;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSalesInvoiceRequest
      */
@@ -134,6 +147,7 @@ export function CreateSalesInvoiceRequestFromJSONTyped(json: any, ignoreDiscrimi
         'firstName': json['first-name'] == null ? undefined : json['first-name'],
         'middleName': json['middle-name'] == null ? undefined : json['middle-name'],
         'lastName': json['last-name'] == null ? undefined : json['last-name'],
+        'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
         'memo': json['memo'] == null ? undefined : json['memo'],
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -161,6 +175,7 @@ export function CreateSalesInvoiceRequestToJSONTyped(value?: CreateSalesInvoiceR
         'first-name': value['firstName'],
         'middle-name': value['middleName'],
         'last-name': value['lastName'],
+        'address': AddressToJSON(value['address']),
         'memo': value['memo'],
         'footer': value['footer'],
         'metadata': value['metadata'],
