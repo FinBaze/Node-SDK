@@ -72,6 +72,7 @@ src/models/CreateRelationsImportRequest.ts
 src/models/CreateReminderRequest.ts
 src/models/CreateSalesInvoiceLineRequest.ts
 src/models/CreateSalesInvoiceRequest.ts
+src/models/CreateSalesInvoiceRequestEu.ts
 src/models/CreateSalesInvoiceRequestPeriod.ts
 src/models/CreateStockCategoryRequest.ts
 src/models/CreateSubscriptionBasedOnSalesInvoiceRequest.ts

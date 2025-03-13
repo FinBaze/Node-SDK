@@ -54,6 +54,12 @@ export interface ProcessDocument {
     processed?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof ProcessDocument
+     */
+    failed?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ProcessDocument
      */
@@ -131,6 +137,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'source': json['source'] == null ? undefined : json['source'],
         'processed': json['processed'] == null ? undefined : json['processed'],
+        'failed': json['failed'] == null ? undefined : json['failed'],
         'message': json['message'] == null ? undefined : json['message'],
         'email': json['email'] == null ? undefined : ProcessDocumentEmailFromJSON(json['email']),
         'attachments': json['attachments'] == null ? undefined : json['attachments'],
@@ -154,6 +161,7 @@ export function ProcessDocumentToJSONTyped(value?: Omit<ProcessDocument, 'id'|'u
         
         'source': value['source'],
         'processed': value['processed'],
+        'failed': value['failed'],
         'message': value['message'],
         'email': ProcessDocumentEmailToJSON(value['email']),
         'attachments': value['attachments'],

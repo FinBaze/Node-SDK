@@ -66,6 +66,7 @@ export * from './CreateRelationsImportRequest';
 export * from './CreateReminderRequest';
 export * from './CreateSalesInvoiceLineRequest';
 export * from './CreateSalesInvoiceRequest';
+export * from './CreateSalesInvoiceRequestEu';
 export * from './CreateSalesInvoiceRequestPeriod';
 export * from './CreateStockCategoryRequest';
 export * from './CreateSubscriptionBasedOnSalesInvoiceRequest';

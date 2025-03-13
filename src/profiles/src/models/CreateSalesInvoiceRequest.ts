@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { CreateSalesInvoiceRequestEu } from './CreateSalesInvoiceRequestEu';
+import {
+    CreateSalesInvoiceRequestEuFromJSON,
+    CreateSalesInvoiceRequestEuFromJSONTyped,
+    CreateSalesInvoiceRequestEuToJSON,
+    CreateSalesInvoiceRequestEuToJSONTyped,
+} from './CreateSalesInvoiceRequestEu';
 import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
 import {
     CreateSalesInvoiceRequestPeriodFromJSON,
@@ -102,6 +109,18 @@ export interface CreateSalesInvoiceRequest {
     address?: Address;
     /**
      * 
+     * @type {CreateSalesInvoiceRequestEu}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    eu?: CreateSalesInvoiceRequestEu;
+    /**
+     * 
+     * @type {CreateSalesInvoiceRequestEu}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    gb?: CreateSalesInvoiceRequestEu;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSalesInvoiceRequest
      */
@@ -148,6 +167,8 @@ export function CreateSalesInvoiceRequestFromJSONTyped(json: any, ignoreDiscrimi
         'middleName': json['middle-name'] == null ? undefined : json['middle-name'],
         'lastName': json['last-name'] == null ? undefined : json['last-name'],
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
+        'eu': json['eu'] == null ? undefined : CreateSalesInvoiceRequestEuFromJSON(json['eu']),
+        'gb': json['gb'] == null ? undefined : CreateSalesInvoiceRequestEuFromJSON(json['gb']),
         'memo': json['memo'] == null ? undefined : json['memo'],
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -176,6 +197,8 @@ export function CreateSalesInvoiceRequestToJSONTyped(value?: CreateSalesInvoiceR
         'middle-name': value['middleName'],
         'last-name': value['lastName'],
         'address': AddressToJSON(value['address']),
+        'eu': CreateSalesInvoiceRequestEuToJSON(value['eu']),
+        'gb': CreateSalesInvoiceRequestEuToJSON(value['gb']),
         'memo': value['memo'],
         'footer': value['footer'],
         'metadata': value['metadata'],

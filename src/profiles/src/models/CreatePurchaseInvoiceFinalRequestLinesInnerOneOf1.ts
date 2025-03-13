@@ -26,7 +26,7 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1 {
      */
     product: string;
     /**
-     * The price of one item in cents, excluding taxes, required if no product is provided
+     * The price of one item in cents, excluding taxes
      * @type {number}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1
      */
