@@ -21,6 +21,7 @@ src/models/CreateCreditLoanRequest.ts
 src/models/CreateCurrentAccountRequest.ts
 src/models/CreateDebitLoanRequest.ts
 src/models/CreateEmployeeRequest.ts
+src/models/CreateExpenseCategoryRequest.ts
 src/models/CreateMemorialEntryRequest.ts
 src/models/CreateMemorialEntryRequestItemsInner.ts
 src/models/CreateMonetaryAccountAutoProcessBacktestRequest.ts
@@ -123,6 +124,9 @@ src/models/GetPurchaseInvoicePaymentBatches200ResponseDataInner.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetQuotes200Response.ts
 src/models/GetRelations200Response.ts
+src/models/GetRelationsAutocomplete200Response.ts
+src/models/GetRelationsAutocomplete200ResponseDataInner.ts
+src/models/GetRelationsAutocomplete200ResponseDataInnerEu.ts
 src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
 src/models/GetSubscriptions200Response.ts
@@ -198,6 +202,7 @@ src/models/SubscriptionEmbedded.ts
 src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
+src/models/Type.ts
 src/models/UnauthorisedError.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts

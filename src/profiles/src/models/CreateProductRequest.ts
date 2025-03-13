@@ -39,6 +39,12 @@ export interface CreateProductRequest {
     price: number;
     /**
      * 
+     * @type {string}
+     * @memberof CreateProductRequest
+     */
+    type?: CreateProductRequestTypeEnum;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof CreateProductRequest
      */
@@ -79,6 +85,15 @@ export interface CreateProductRequest {
 /**
  * @export
  */
+export const CreateProductRequestTypeEnum = {
+    Goods: 'goods',
+    Services: 'services'
+} as const;
+export type CreateProductRequestTypeEnum = typeof CreateProductRequestTypeEnum[keyof typeof CreateProductRequestTypeEnum];
+
+/**
+ * @export
+ */
 export const CreateProductRequestTaxCodesEnum = {
     Nl2012High: 'NL_2012_HIGH',
     Nl2019Low: 'NL_2019_LOW',
@@ -115,6 +130,7 @@ export function CreateProductRequestFromJSONTyped(json: any, ignoreDiscriminator
         'code': json['code'] == null ? undefined : json['code'],
         'name': json['name'],
         'price': json['price'],
+        'type': json['type'] == null ? undefined : json['type'],
         'taxCodes': json['tax-codes'],
         'category': json['category'] == null ? undefined : json['category'],
         'expenseCategory': json['expense-category'] == null ? undefined : json['expense-category'],
@@ -138,6 +154,7 @@ export function CreateProductRequestToJSONTyped(value?: CreateProductRequest | n
         'code': value['code'],
         'name': value['name'],
         'price': value['price'],
+        'type': value['type'],
         'tax-codes': value['taxCodes'],
         'category': value['category'],
         'expense-category': value['expenseCategory'],

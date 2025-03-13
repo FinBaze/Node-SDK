@@ -18,10 +18,11 @@ import type {
   Account,
   CreateAccountMeZendeskToken200Response,
   CreateDeviceRequest,
-  CreateSalesInvoicePublicPayment200Response,
-  CreateSalesInvoicePublicPaymentRequest,
+  CreateSubscriptionPublicPaymentMethod200Response,
+  CreateSubscriptionPublicPaymentMethodRequest,
   Device,
   GetJurisdictions200ResponseValue,
+  GetSubscriptionPublic200Response,
   ResetAccountPasswordRequest,
   SalesInvoicePublic,
   SendResetPasswordRequestRequest,
@@ -35,14 +36,16 @@ import {
     CreateAccountMeZendeskToken200ResponseToJSON,
     CreateDeviceRequestFromJSON,
     CreateDeviceRequestToJSON,
-    CreateSalesInvoicePublicPayment200ResponseFromJSON,
-    CreateSalesInvoicePublicPayment200ResponseToJSON,
-    CreateSalesInvoicePublicPaymentRequestFromJSON,
-    CreateSalesInvoicePublicPaymentRequestToJSON,
+    CreateSubscriptionPublicPaymentMethod200ResponseFromJSON,
+    CreateSubscriptionPublicPaymentMethod200ResponseToJSON,
+    CreateSubscriptionPublicPaymentMethodRequestFromJSON,
+    CreateSubscriptionPublicPaymentMethodRequestToJSON,
     DeviceFromJSON,
     DeviceToJSON,
     GetJurisdictions200ResponseValueFromJSON,
     GetJurisdictions200ResponseValueToJSON,
+    GetSubscriptionPublic200ResponseFromJSON,
+    GetSubscriptionPublic200ResponseToJSON,
     ResetAccountPasswordRequestFromJSON,
     ResetAccountPasswordRequestToJSON,
     SalesInvoicePublicFromJSON,
@@ -59,10 +62,16 @@ export interface CreateDeviceOperationRequest {
     createDeviceRequest?: CreateDeviceRequest;
 }
 
-export interface CreateSalesInvoicePublicPaymentOperationRequest {
+export interface CreateSalesInvoicePublicPaymentRequest {
     profileId: string;
     salesInvoiceUUID: string;
-    createSalesInvoicePublicPaymentRequest?: CreateSalesInvoicePublicPaymentRequest;
+    createSubscriptionPublicPaymentMethodRequest?: CreateSubscriptionPublicPaymentMethodRequest;
+}
+
+export interface CreateSubscriptionPublicPaymentMethodOperationRequest {
+    profileId: string;
+    subscriptionUUID: string;
+    createSubscriptionPublicPaymentMethodRequest?: CreateSubscriptionPublicPaymentMethodRequest;
 }
 
 export interface DeleteDeviceRequest {
@@ -92,6 +101,11 @@ export interface GetSalesInvoicePublicHTMLRequest {
 export interface GetSalesInvoicePublicPDFRequest {
     profileId: string;
     salesInvoiceUUID: string;
+}
+
+export interface GetSubscriptionPublicRequest {
+    profileId: string;
+    subscriptionUUID: string;
 }
 
 export interface ResetAccountPasswordOperationRequest {
@@ -162,17 +176,33 @@ export interface DefaultApiInterface {
      * Creates an payment attempt for an sales invoice
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceUUID The uuid of the sales invoice
-     * @param {CreateSalesInvoicePublicPaymentRequest} [createSalesInvoicePublicPaymentRequest] 
+     * @param {CreateSubscriptionPublicPaymentMethodRequest} [createSubscriptionPublicPaymentMethodRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSalesInvoicePublicPayment200Response>>;
+    createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>>;
 
     /**
      * Creates an payment attempt for an sales invoice
      */
-    createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSalesInvoicePublicPayment200Response>;
+    createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response>;
+
+    /**
+     * Creates an payment method attempt for an subscription
+     * @param {string} profileId The id of the profile
+     * @param {string} subscriptionUUID The uuid of the subscription
+     * @param {CreateSubscriptionPublicPaymentMethodRequest} [createSubscriptionPublicPaymentMethodRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createSubscriptionPublicPaymentMethodRaw(requestParameters: CreateSubscriptionPublicPaymentMethodOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>>;
+
+    /**
+     * Creates an payment method attempt for an subscription
+     */
+    createSubscriptionPublicPaymentMethod(requestParameters: CreateSubscriptionPublicPaymentMethodOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response>;
 
     /**
      * Creates an device
@@ -314,6 +344,21 @@ export interface DefaultApiInterface {
      * Retrieves a preview of the PDF content of the invoice itself
      */
     getSalesInvoicePublicPDF(requestParameters: GetSalesInvoicePublicPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Returns a subscription
+     * @param {string} profileId The id of the profile
+     * @param {string} subscriptionUUID The uuid of the subscription
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getSubscriptionPublicRaw(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSubscriptionPublic200Response>>;
+
+    /**
+     * Returns a subscription
+     */
+    getSubscriptionPublic(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublic200Response>;
 
     /**
      * Returns an account
@@ -478,7 +523,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an payment attempt for an sales invoice
      */
-    async createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSalesInvoicePublicPayment200Response>> {
+    async createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -509,17 +554,65 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoicePublicPaymentRequestToJSON(requestParameters['createSalesInvoicePublicPaymentRequest']),
+            body: CreateSubscriptionPublicPaymentMethodRequestToJSON(requestParameters['createSubscriptionPublicPaymentMethodRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSalesInvoicePublicPayment200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSubscriptionPublicPaymentMethod200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates an payment attempt for an sales invoice
      */
-    async createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSalesInvoicePublicPayment200Response> {
+    async createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response> {
         const response = await this.createSalesInvoicePublicPaymentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an payment method attempt for an subscription
+     */
+    async createSubscriptionPublicPaymentMethodRaw(requestParameters: CreateSubscriptionPublicPaymentMethodOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createSubscriptionPublicPaymentMethod().'
+            );
+        }
+
+        if (requestParameters['subscriptionUUID'] == null) {
+            throw new runtime.RequiredError(
+                'subscriptionUUID',
+                'Required parameter "subscriptionUUID" was null or undefined when calling createSubscriptionPublicPaymentMethod().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/subscriptions/{profileId}/{salesInvoiceUUID}/payment-methods`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateSubscriptionPublicPaymentMethodRequestToJSON(requestParameters['createSubscriptionPublicPaymentMethodRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSubscriptionPublicPaymentMethod200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an payment method attempt for an subscription
+     */
+    async createSubscriptionPublicPaymentMethod(requestParameters: CreateSubscriptionPublicPaymentMethodOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response> {
+        const response = await this.createSubscriptionPublicPaymentMethodRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -904,6 +997,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getSalesInvoicePublicPDF(requestParameters: GetSalesInvoicePublicPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
         const response = await this.getSalesInvoicePublicPDFRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a subscription
+     */
+    async getSubscriptionPublicRaw(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSubscriptionPublic200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getSubscriptionPublic().'
+            );
+        }
+
+        if (requestParameters['subscriptionUUID'] == null) {
+            throw new runtime.RequiredError(
+                'subscriptionUUID',
+                'Required parameter "subscriptionUUID" was null or undefined when calling getSubscriptionPublic().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/subscriptions/{profileId}/{subscriptionUUID}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSubscriptionPublic200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a subscription
+     */
+    async getSubscriptionPublic(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublic200Response> {
+        const response = await this.getSubscriptionPublicRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

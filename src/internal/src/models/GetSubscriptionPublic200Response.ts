@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { SubscriptionEmbedded } from './SubscriptionEmbedded';
-import {
-    SubscriptionEmbeddedFromJSON,
-    SubscriptionEmbeddedFromJSONTyped,
-    SubscriptionEmbeddedToJSON,
-    SubscriptionEmbeddedToJSONTyped,
-} from './SubscriptionEmbedded';
 import type { GetSubscriptionPublic200ResponseAmounts } from './GetSubscriptionPublic200ResponseAmounts';
 import {
     GetSubscriptionPublic200ResponseAmountsFromJSON,
@@ -34,101 +27,108 @@ import {
     SubscriptionFrequencyToJSON,
     SubscriptionFrequencyToJSONTyped,
 } from './SubscriptionFrequency';
+import type { GetSubscriptionPublic200ResponseEmbedded } from './GetSubscriptionPublic200ResponseEmbedded';
+import {
+    GetSubscriptionPublic200ResponseEmbeddedFromJSON,
+    GetSubscriptionPublic200ResponseEmbeddedFromJSONTyped,
+    GetSubscriptionPublic200ResponseEmbeddedToJSON,
+    GetSubscriptionPublic200ResponseEmbeddedToJSONTyped,
+} from './GetSubscriptionPublic200ResponseEmbedded';
 
 /**
  * 
  * @export
- * @interface Subscription
+ * @interface GetSubscriptionPublic200Response
  */
-export interface Subscription {
+export interface GetSubscriptionPublic200Response {
     /**
      * 
      * @type {string}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     readonly uuid: string;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     currency: string;
     /**
      * 
      * @type {string}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
-    relation: string;
+    relation?: string;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     startDate: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     endDate?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     canceled?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     closed?: Date;
     /**
      * 
      * @type {GetSubscriptionPublic200ResponseAmounts}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     amounts: GetSubscriptionPublic200ResponseAmounts;
     /**
      * 
      * @type {SubscriptionFrequency}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     frequency: SubscriptionFrequency;
     /**
      * Free form key/ value pair
      * @type {object}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     metadata?: object;
     /**
      * 
-     * @type {SubscriptionEmbedded}
-     * @memberof Subscription
+     * @type {GetSubscriptionPublic200ResponseEmbedded}
+     * @memberof GetSubscriptionPublic200Response
      */
-    embedded: SubscriptionEmbedded;
+    embedded: GetSubscriptionPublic200ResponseEmbedded;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Subscription
+     * @memberof GetSubscriptionPublic200Response
      */
     readonly created: Date;
 }
@@ -136,14 +136,13 @@ export interface Subscription {
 
 
 /**
- * Check if a given object implements the Subscription interface.
+ * Check if a given object implements the GetSubscriptionPublic200Response interface.
  */
-export function instanceOfSubscription(value: object): value is Subscription {
+export function instanceOfGetSubscriptionPublic200Response(value: object): value is GetSubscriptionPublic200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('startDate' in value) || value['startDate'] === undefined) return false;
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('frequency' in value) || value['frequency'] === undefined) return false;
@@ -153,11 +152,11 @@ export function instanceOfSubscription(value: object): value is Subscription {
     return true;
 }
 
-export function SubscriptionFromJSON(json: any): Subscription {
-    return SubscriptionFromJSONTyped(json, false);
+export function GetSubscriptionPublic200ResponseFromJSON(json: any): GetSubscriptionPublic200Response {
+    return GetSubscriptionPublic200ResponseFromJSONTyped(json, false);
 }
 
-export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Subscription {
+export function GetSubscriptionPublic200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetSubscriptionPublic200Response {
     if (json == null) {
         return json;
     }
@@ -167,7 +166,7 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'uuid': json['uuid'],
         'currency': json['currency'],
         'name': json['name'],
-        'relation': json['relation'],
+        'relation': json['relation'] == null ? undefined : json['relation'],
         'startDate': (new Date(json['start-date'])),
         'endDate': json['end-date'] == null ? undefined : (new Date(json['end-date'])),
         'canceled': json['canceled'] == null ? undefined : (new Date(json['canceled'])),
@@ -175,17 +174,17 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'amounts': GetSubscriptionPublic200ResponseAmountsFromJSON(json['amounts']),
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': SubscriptionEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetSubscriptionPublic200ResponseEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
 }
 
-export function SubscriptionToJSON(json: any): Subscription {
-    return SubscriptionToJSONTyped(json, false);
+export function GetSubscriptionPublic200ResponseToJSON(json: any): GetSubscriptionPublic200Response {
+    return GetSubscriptionPublic200ResponseToJSONTyped(json, false);
 }
 
-export function SubscriptionToJSONTyped(value?: Omit<Subscription, 'id'|'uuid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetSubscriptionPublic200ResponseToJSONTyped(value?: Omit<GetSubscriptionPublic200Response, 'id'|'uuid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -202,7 +201,7 @@ export function SubscriptionToJSONTyped(value?: Omit<Subscription, 'id'|'uuid'|'
         'amounts': GetSubscriptionPublic200ResponseAmountsToJSON(value['amounts']),
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
-        '_embedded': SubscriptionEmbeddedToJSON(value['embedded']),
+        '_embedded': GetSubscriptionPublic200ResponseEmbeddedToJSON(value['embedded']),
     };
 }
 

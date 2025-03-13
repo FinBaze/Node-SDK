@@ -16,44 +16,44 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SubscriptionAmounts
+ * @interface GetSubscriptionPublic200ResponseAmounts
  */
-export interface SubscriptionAmounts {
+export interface GetSubscriptionPublic200ResponseAmounts {
     /**
      * 
      * @type {number}
-     * @memberof SubscriptionAmounts
+     * @memberof GetSubscriptionPublic200ResponseAmounts
      */
     total: number;
     /**
      * 
      * @type {number}
-     * @memberof SubscriptionAmounts
+     * @memberof GetSubscriptionPublic200ResponseAmounts
      */
     tax: number;
     /**
      * 
      * @type {number}
-     * @memberof SubscriptionAmounts
+     * @memberof GetSubscriptionPublic200ResponseAmounts
      */
     discount: number;
 }
 
 /**
- * Check if a given object implements the SubscriptionAmounts interface.
+ * Check if a given object implements the GetSubscriptionPublic200ResponseAmounts interface.
  */
-export function instanceOfSubscriptionAmounts(value: object): value is SubscriptionAmounts {
+export function instanceOfGetSubscriptionPublic200ResponseAmounts(value: object): value is GetSubscriptionPublic200ResponseAmounts {
     if (!('total' in value) || value['total'] === undefined) return false;
     if (!('tax' in value) || value['tax'] === undefined) return false;
     if (!('discount' in value) || value['discount'] === undefined) return false;
     return true;
 }
 
-export function SubscriptionAmountsFromJSON(json: any): SubscriptionAmounts {
-    return SubscriptionAmountsFromJSONTyped(json, false);
+export function GetSubscriptionPublic200ResponseAmountsFromJSON(json: any): GetSubscriptionPublic200ResponseAmounts {
+    return GetSubscriptionPublic200ResponseAmountsFromJSONTyped(json, false);
 }
 
-export function SubscriptionAmountsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubscriptionAmounts {
+export function GetSubscriptionPublic200ResponseAmountsFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetSubscriptionPublic200ResponseAmounts {
     if (json == null) {
         return json;
     }
@@ -65,11 +65,11 @@ export function SubscriptionAmountsFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function SubscriptionAmountsToJSON(json: any): SubscriptionAmounts {
-    return SubscriptionAmountsToJSONTyped(json, false);
+export function GetSubscriptionPublic200ResponseAmountsToJSON(json: any): GetSubscriptionPublic200ResponseAmounts {
+    return GetSubscriptionPublic200ResponseAmountsToJSONTyped(json, false);
 }
 
-export function SubscriptionAmountsToJSONTyped(value?: SubscriptionAmounts | null, ignoreDiscriminator: boolean = false): any {
+export function GetSubscriptionPublic200ResponseAmountsToJSONTyped(value?: GetSubscriptionPublic200ResponseAmounts | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

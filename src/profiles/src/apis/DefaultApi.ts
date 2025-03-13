@@ -25,6 +25,7 @@ import type {
   CreateCurrentAccountRequest,
   CreateDebitLoanRequest,
   CreateEmployeeRequest,
+  CreateExpenseCategoryRequest,
   CreateMemorialEntryRequest,
   CreateMonetaryAccountAutoProcessBacktestRequest,
   CreateMonetaryAccountBankPayment200Response,
@@ -91,6 +92,7 @@ import type {
   GetPurchaseInvoices200Response,
   GetQuotes200Response,
   GetRelations200Response,
+  GetRelationsAutocomplete200Response,
   GetReminders200Response,
   GetSalesInvoices200Response,
   GetSubscriptions200Response,
@@ -158,6 +160,8 @@ import {
     CreateDebitLoanRequestToJSON,
     CreateEmployeeRequestFromJSON,
     CreateEmployeeRequestToJSON,
+    CreateExpenseCategoryRequestFromJSON,
+    CreateExpenseCategoryRequestToJSON,
     CreateMemorialEntryRequestFromJSON,
     CreateMemorialEntryRequestToJSON,
     CreateMonetaryAccountAutoProcessBacktestRequestFromJSON,
@@ -290,6 +294,8 @@ import {
     GetQuotes200ResponseToJSON,
     GetRelations200ResponseFromJSON,
     GetRelations200ResponseToJSON,
+    GetRelationsAutocomplete200ResponseFromJSON,
+    GetRelationsAutocomplete200ResponseToJSON,
     GetReminders200ResponseFromJSON,
     GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
@@ -435,9 +441,9 @@ export interface CreateEmployeeOperationRequest {
     createEmployeeRequest?: Omit<CreateEmployeeRequest, 'id'>;
 }
 
-export interface CreateExpenseCategoryRequest {
+export interface CreateExpenseCategoryOperationRequest {
     profileId: string;
-    createStockCategoryRequest?: CreateStockCategoryRequest;
+    createExpenseCategoryRequest?: CreateExpenseCategoryRequest;
 }
 
 export interface CreateMemorialEntryOperationRequest {
@@ -1223,6 +1229,14 @@ export interface GetRelationsRequest {
     vatNumber?: string;
 }
 
+export interface GetRelationsAutocompleteRequest {
+    profileId: string;
+    name: string;
+    registrationCountry: any;
+    page?: number;
+    size?: number;
+}
+
 export interface GetReminderRequest {
     profileId: string;
     reminderId: string;
@@ -1828,17 +1842,17 @@ export interface DefaultApiInterface {
     /**
      * Creates an expense category
      * @param {string} profileId The id of the profile
-     * @param {CreateStockCategoryRequest} [createStockCategoryRequest] 
+     * @param {CreateExpenseCategoryRequest} [createExpenseCategoryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createExpenseCategoryRaw(requestParameters: CreateExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExpenseCategory>>>;
+    createExpenseCategoryRaw(requestParameters: CreateExpenseCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExpenseCategory>>>;
 
     /**
      * Creates an expense category
      */
-    createExpenseCategory(requestParameters: CreateExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExpenseCategory>>;
+    createExpenseCategory(requestParameters: CreateExpenseCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExpenseCategory>>;
 
     /**
      * Creates a memorial entry
@@ -4007,6 +4021,24 @@ export interface DefaultApiInterface {
     getRelations(requestParameters: GetRelationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelations200Response>;
 
     /**
+     * Returns all autocompleted relations
+     * @param {string} profileId The id of the profile
+     * @param {string} name Broad search on all the name fields to filter to
+     * @param {any} registrationCountry Registration country to look in which database
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getRelationsAutocompleteRaw(requestParameters: GetRelationsAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationsAutocomplete200Response>>;
+
+    /**
+     * Returns all autocompleted relations
+     */
+    getRelationsAutocomplete(requestParameters: GetRelationsAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationsAutocomplete200Response>;
+
+    /**
      * Returns a reminder
      * @param {string} profileId The id of the profile
      * @param {string} reminderId The id of the reminder
@@ -5583,7 +5615,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an expense category
      */
-    async createExpenseCategoryRaw(requestParameters: CreateExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExpenseCategory>>> {
+    async createExpenseCategoryRaw(requestParameters: CreateExpenseCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExpenseCategory>>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -5607,7 +5639,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateStockCategoryRequestToJSON(requestParameters['createStockCategoryRequest']),
+            body: CreateExpenseCategoryRequestToJSON(requestParameters['createExpenseCategoryRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ExpenseCategoryFromJSON));
@@ -5616,7 +5648,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an expense category
      */
-    async createExpenseCategory(requestParameters: CreateExpenseCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExpenseCategory>> {
+    async createExpenseCategory(requestParameters: CreateExpenseCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExpenseCategory>> {
         const response = await this.createExpenseCategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -12070,6 +12102,74 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getRelations(requestParameters: GetRelationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelations200Response> {
         const response = await this.getRelationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all autocompleted relations
+     */
+    async getRelationsAutocompleteRaw(requestParameters: GetRelationsAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationsAutocomplete200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getRelationsAutocomplete().'
+            );
+        }
+
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling getRelationsAutocomplete().'
+            );
+        }
+
+        if (requestParameters['registrationCountry'] == null) {
+            throw new runtime.RequiredError(
+                'registrationCountry',
+                'Required parameter "registrationCountry" was null or undefined when calling getRelationsAutocomplete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
+        }
+
+        if (requestParameters['registrationCountry'] != null) {
+            queryParameters['registration_country'] = requestParameters['registrationCountry'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/relations/autocomplete`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRelationsAutocomplete200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all autocompleted relations
+     */
+    async getRelationsAutocomplete(requestParameters: GetRelationsAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationsAutocomplete200Response> {
+        const response = await this.getRelationsAutocompleteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

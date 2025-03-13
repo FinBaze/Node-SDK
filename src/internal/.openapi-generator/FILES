@@ -13,10 +13,10 @@ src/models/Asset.ts
 src/models/Bookkeeper.ts
 src/models/CreateAccountMeZendeskToken200Response.ts
 src/models/CreateDeviceRequest.ts
-src/models/CreateSalesInvoicePublicPayment200Response.ts
-src/models/CreateSalesInvoicePublicPaymentRequest.ts
-src/models/CreateSalesInvoicePublicPaymentRequestData.ts
-src/models/CreateSalesInvoicePublicPaymentRequestDataOpenbanking.ts
+src/models/CreateSubscriptionPublicPaymentMethod200Response.ts
+src/models/CreateSubscriptionPublicPaymentMethodRequest.ts
+src/models/CreateSubscriptionPublicPaymentMethodRequestData.ts
+src/models/CreateSubscriptionPublicPaymentMethodRequestDataOpenbanking.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
@@ -26,6 +26,10 @@ src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
 src/models/GetJurisdictions200ResponseValue.ts
 src/models/GetJurisdictions200ResponseValueEu.ts
+src/models/GetSubscriptionPublic200Response.ts
+src/models/GetSubscriptionPublic200ResponseAmounts.ts
+src/models/GetSubscriptionPublic200ResponseEmbedded.ts
+src/models/GetSubscriptionPublic200ResponseEmbeddedLinesInner.ts
 src/models/InvalidRequestError.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
@@ -104,7 +108,6 @@ src/models/ServerError.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/Subscription.ts
-src/models/SubscriptionAmounts.ts
 src/models/SubscriptionEmbedded.ts
 src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts

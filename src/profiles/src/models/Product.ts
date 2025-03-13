@@ -44,6 +44,12 @@ export interface Product {
      */
     price: number;
     /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    type?: ProductTypeEnum;
+    /**
      * The amount of stock available for this product
      * @type {number}
      * @memberof Product
@@ -103,6 +109,15 @@ export interface Product {
 /**
  * @export
  */
+export const ProductTypeEnum = {
+    Goods: 'goods',
+    Services: 'services'
+} as const;
+export type ProductTypeEnum = typeof ProductTypeEnum[keyof typeof ProductTypeEnum];
+
+/**
+ * @export
+ */
 export const ProductTaxCodesEnum = {
     Nl2012High: 'NL_2012_HIGH',
     Nl2019Low: 'NL_2019_LOW',
@@ -143,6 +158,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'name': json['name'],
         'code': json['code'] == null ? undefined : json['code'],
         'price': json['price'],
+        'type': json['type'] == null ? undefined : json['type'],
         'stock': json['stock'] == null ? undefined : json['stock'],
         'taxCodes': json['tax-codes'],
         'category': json['category'] == null ? undefined : json['category'],
@@ -169,6 +185,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'id'|'updated'|'created
         'name': value['name'],
         'code': value['code'],
         'price': value['price'],
+        'type': value['type'],
         'stock': value['stock'],
         'tax-codes': value['taxCodes'],
         'category': value['category'],
