@@ -1318,6 +1318,7 @@ export interface GetSalesInvoicesRequest {
     profileId: string;
     page?: number;
     size?: number;
+    reference?: string;
     subscription?: string;
     relation?: string;
     product?: string;
@@ -4251,6 +4252,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [reference] Reference of the sales invoice
      * @param {string} [subscription] Subscription ID to filter to
      * @param {string} [relation] ID of the relation to filter to
      * @param {string} [product] Filter invoices that contain this product ID
@@ -12840,6 +12842,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['size'] != null) {
             queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['reference'] != null) {
+            queryParameters['reference'] = requestParameters['reference'];
         }
 
         if (requestParameters['subscription'] != null) {
