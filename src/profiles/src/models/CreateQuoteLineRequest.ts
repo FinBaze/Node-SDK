@@ -93,7 +93,11 @@ export const CreateQuoteLineRequestTaxCodeEnum = {
     Nl2024Exempt: 'NL_2024_EXEMPT',
     Nl2024Null: 'NL_2024_NULL',
     Nl2024Transfer: 'NL_2024_TRANSFER',
-    EuDirective2006112EcArticle40: 'EU_Directive_2006/112/EC_Article_40'
+    EuDirective2006112EcArticle40: 'EU_Directive_2006/112/EC_Article_40',
+    Gb2024Standard: 'GB_2024_STANDARD',
+    Gb2024Reduced: 'GB_2024_REDUCED',
+    Gb2024Zero: 'GB_2024_ZERO',
+    Gb2024Exempt: 'GB_2024_EXEMPT'
 } as const;
 export type CreateQuoteLineRequestTaxCodeEnum = typeof CreateQuoteLineRequestTaxCodeEnum[keyof typeof CreateQuoteLineRequestTaxCodeEnum];
 
