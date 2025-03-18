@@ -61,6 +61,18 @@ export interface GetProfileMetadata200Response {
      * @memberof GetProfileMetadata200Response
      */
     subscriptionCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetProfileMetadata200Response
+     */
+    processDocumentCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetProfileMetadata200Response
+     */
+    openTasks: number;
 }
 
 /**
@@ -74,6 +86,8 @@ export function instanceOfGetProfileMetadata200Response(value: object): value is
     if (!('monetaryPaymentCount' in value) || value['monetaryPaymentCount'] === undefined) return false;
     if (!('quoteCount' in value) || value['quoteCount'] === undefined) return false;
     if (!('subscriptionCount' in value) || value['subscriptionCount'] === undefined) return false;
+    if (!('processDocumentCount' in value) || value['processDocumentCount'] === undefined) return false;
+    if (!('openTasks' in value) || value['openTasks'] === undefined) return false;
     return true;
 }
 
@@ -94,6 +108,8 @@ export function GetProfileMetadata200ResponseFromJSONTyped(json: any, ignoreDisc
         'monetaryPaymentCount': json['monetary_payment_count'],
         'quoteCount': json['quote_count'],
         'subscriptionCount': json['subscription_count'],
+        'processDocumentCount': json['process_document_count'],
+        'openTasks': json['open_tasks'],
     };
 }
 
@@ -115,6 +131,8 @@ export function GetProfileMetadata200ResponseToJSONTyped(value?: GetProfileMetad
         'monetary_payment_count': value['monetaryPaymentCount'],
         'quote_count': value['quoteCount'],
         'subscription_count': value['subscriptionCount'],
+        'process_document_count': value['processDocumentCount'],
+        'open_tasks': value['openTasks'],
     };
 }
 
