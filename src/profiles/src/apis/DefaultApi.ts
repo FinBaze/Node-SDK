@@ -80,6 +80,7 @@ import type {
   GetProcessDocuments200Response,
   GetProducts200Response,
   GetProfileAccounts200Response,
+  GetProfileAnalyticsCreditors200Response,
   GetProfileAnalyticsDebtors200Response,
   GetProfileFinancialColumnBalance200Response,
   GetProfileFinancialLedger200ResponseInner,
@@ -271,6 +272,8 @@ import {
     GetProducts200ResponseToJSON,
     GetProfileAccounts200ResponseFromJSON,
     GetProfileAccounts200ResponseToJSON,
+    GetProfileAnalyticsCreditors200ResponseFromJSON,
+    GetProfileAnalyticsCreditors200ResponseToJSON,
     GetProfileAnalyticsDebtors200ResponseFromJSON,
     GetProfileAnalyticsDebtors200ResponseToJSON,
     GetProfileFinancialColumnBalance200ResponseFromJSON,
@@ -1073,6 +1076,11 @@ export interface GetProfileAnalyticsExpensesRequest {
     start?: Date;
     end?: Date;
     group?: GetProfileAnalyticsExpensesGroupEnum;
+}
+
+export interface GetProfileAnalyticsRelationDistributionRequest {
+    profileId: string;
+    date?: Date;
 }
 
 export interface GetProfileAnalyticsRevenueRequest {
@@ -3576,12 +3584,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getProfileAnalyticsCreditorsRaw(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileAnalyticsDebtors200Response>>;
+    getProfileAnalyticsCreditorsRaw(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileAnalyticsCreditors200Response>>;
 
     /**
      * Returns the creditors of a profiel
      */
-    getProfileAnalyticsCreditors(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileAnalyticsDebtors200Response>;
+    getProfileAnalyticsCreditors(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileAnalyticsCreditors200Response>;
 
     /**
      * Returns the debtors of a profiel
@@ -3614,6 +3622,21 @@ export interface DefaultApiInterface {
      * Returns the expenses of a profiel
      */
     getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileOutgoingPurchaseInvoices200ResponseValue; }>;
+
+    /**
+     * Returns the relation distribution
+     * @param {string} profileId The id of the profile
+     * @param {Date} [date] ISO date as date
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileAnalyticsRelationDistributionRaw(requestParameters: GetProfileAnalyticsRelationDistributionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>>;
+
+    /**
+     * Returns the relation distribution
+     */
+    getProfileAnalyticsRelationDistribution(requestParameters: GetProfileAnalyticsRelationDistributionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }>;
 
     /**
      * Returns the revenue of a profiel
@@ -10753,7 +10776,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns the creditors of a profiel
      */
-    async getProfileAnalyticsCreditorsRaw(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileAnalyticsDebtors200Response>> {
+    async getProfileAnalyticsCreditorsRaw(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileAnalyticsCreditors200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -10781,13 +10804,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileAnalyticsDebtors200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileAnalyticsCreditors200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns the creditors of a profiel
      */
-    async getProfileAnalyticsCreditors(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileAnalyticsDebtors200Response> {
+    async getProfileAnalyticsCreditors(requestParameters: GetProfileAnalyticsCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileAnalyticsCreditors200Response> {
         const response = await this.getProfileAnalyticsCreditorsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -10881,6 +10904,48 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getProfileAnalyticsExpenses(requestParameters: GetProfileAnalyticsExpensesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileOutgoingPurchaseInvoices200ResponseValue; }> {
         const response = await this.getProfileAnalyticsExpensesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the relation distribution
+     */
+    async getProfileAnalyticsRelationDistributionRaw(requestParameters: GetProfileAnalyticsRelationDistributionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileAnalyticsRelationDistribution().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/analytics/relation-distribution`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Returns the relation distribution
+     */
+    async getProfileAnalyticsRelationDistribution(requestParameters: GetProfileAnalyticsRelationDistributionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.getProfileAnalyticsRelationDistributionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

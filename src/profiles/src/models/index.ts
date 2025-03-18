@@ -104,6 +104,7 @@ export * from './GetNLVatData200ResponseSection5';
 export * from './GetProcessDocuments200Response';
 export * from './GetProducts200Response';
 export * from './GetProfileAccounts200Response';
+export * from './GetProfileAnalyticsCreditors200Response';
 export * from './GetProfileAnalyticsDebtors200Response';
 export * from './GetProfileAnalyticsDebtors200ResponseConcept';
 export * from './GetProfileFinancialColumnBalance200Response';
