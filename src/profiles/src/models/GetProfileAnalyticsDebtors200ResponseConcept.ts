@@ -16,44 +16,44 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface GetProfileDebtors200ResponseConcept
+ * @interface GetProfileAnalyticsDebtors200ResponseConcept
  */
-export interface GetProfileDebtors200ResponseConcept {
+export interface GetProfileAnalyticsDebtors200ResponseConcept {
     /**
      * 
      * @type {number}
-     * @memberof GetProfileDebtors200ResponseConcept
+     * @memberof GetProfileAnalyticsDebtors200ResponseConcept
      */
     amount: number;
     /**
      * 
      * @type {number}
-     * @memberof GetProfileDebtors200ResponseConcept
+     * @memberof GetProfileAnalyticsDebtors200ResponseConcept
      */
     count: number;
     /**
      * 
      * @type {number}
-     * @memberof GetProfileDebtors200ResponseConcept
+     * @memberof GetProfileAnalyticsDebtors200ResponseConcept
      */
     relations: number;
 }
 
 /**
- * Check if a given object implements the GetProfileDebtors200ResponseConcept interface.
+ * Check if a given object implements the GetProfileAnalyticsDebtors200ResponseConcept interface.
  */
-export function instanceOfGetProfileDebtors200ResponseConcept(value: object): value is GetProfileDebtors200ResponseConcept {
+export function instanceOfGetProfileAnalyticsDebtors200ResponseConcept(value: object): value is GetProfileAnalyticsDebtors200ResponseConcept {
     if (!('amount' in value) || value['amount'] === undefined) return false;
     if (!('count' in value) || value['count'] === undefined) return false;
     if (!('relations' in value) || value['relations'] === undefined) return false;
     return true;
 }
 
-export function GetProfileDebtors200ResponseConceptFromJSON(json: any): GetProfileDebtors200ResponseConcept {
-    return GetProfileDebtors200ResponseConceptFromJSONTyped(json, false);
+export function GetProfileAnalyticsDebtors200ResponseConceptFromJSON(json: any): GetProfileAnalyticsDebtors200ResponseConcept {
+    return GetProfileAnalyticsDebtors200ResponseConceptFromJSONTyped(json, false);
 }
 
-export function GetProfileDebtors200ResponseConceptFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProfileDebtors200ResponseConcept {
+export function GetProfileAnalyticsDebtors200ResponseConceptFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProfileAnalyticsDebtors200ResponseConcept {
     if (json == null) {
         return json;
     }
@@ -65,11 +65,11 @@ export function GetProfileDebtors200ResponseConceptFromJSONTyped(json: any, igno
     };
 }
 
-export function GetProfileDebtors200ResponseConceptToJSON(json: any): GetProfileDebtors200ResponseConcept {
-    return GetProfileDebtors200ResponseConceptToJSONTyped(json, false);
+export function GetProfileAnalyticsDebtors200ResponseConceptToJSON(json: any): GetProfileAnalyticsDebtors200ResponseConcept {
+    return GetProfileAnalyticsDebtors200ResponseConceptToJSONTyped(json, false);
 }
 
-export function GetProfileDebtors200ResponseConceptToJSONTyped(value?: GetProfileDebtors200ResponseConcept | null, ignoreDiscriminator: boolean = false): any {
+export function GetProfileAnalyticsDebtors200ResponseConceptToJSONTyped(value?: GetProfileAnalyticsDebtors200ResponseConcept | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

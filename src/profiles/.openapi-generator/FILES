@@ -110,8 +110,8 @@ src/models/GetNLVatData200ResponseSection5.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetProducts200Response.ts
 src/models/GetProfileAccounts200Response.ts
-src/models/GetProfileDebtors200Response.ts
-src/models/GetProfileDebtors200ResponseConcept.ts
+src/models/GetProfileAnalyticsDebtors200Response.ts
+src/models/GetProfileAnalyticsDebtors200ResponseConcept.ts
 src/models/GetProfileFinancialColumnBalance200Response.ts
 src/models/GetProfileFinancialLedger200ResponseInner.ts
 src/models/GetProfileLedgerChart200Response.ts
