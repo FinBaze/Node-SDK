@@ -1080,7 +1080,8 @@ export interface GetProfileAnalyticsExpensesRequest {
 
 export interface GetProfileAnalyticsRelationDistributionRequest {
     profileId: string;
-    date?: Date;
+    start?: Date;
+    end?: Date;
 }
 
 export interface GetProfileAnalyticsRevenueRequest {
@@ -3626,7 +3627,8 @@ export interface DefaultApiInterface {
     /**
      * Returns the relation distribution
      * @param {string} profileId The id of the profile
-     * @param {Date} [date] ISO date as date
+     * @param {Date} [start] ISO date as start date
+     * @param {Date} [end] ISO date as start date
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -10920,8 +10922,12 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const queryParameters: any = {};
 
-        if (requestParameters['date'] != null) {
-            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = (requestParameters['start'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['end'] != null) {
+            queryParameters['end'] = (requestParameters['end'] as any).toISOString().substring(0,10);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
