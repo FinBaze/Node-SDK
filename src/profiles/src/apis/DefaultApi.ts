@@ -80,6 +80,7 @@ import type {
   GetProcessDocuments200Response,
   GetProducts200Response,
   GetProfileAccounts200Response,
+  GetProfileDebtors200Response,
   GetProfileFinancialColumnBalance200Response,
   GetProfileFinancialLedger200ResponseInner,
   GetProfileLedgerChart200Response,
@@ -270,6 +271,8 @@ import {
     GetProducts200ResponseToJSON,
     GetProfileAccounts200ResponseFromJSON,
     GetProfileAccounts200ResponseToJSON,
+    GetProfileDebtors200ResponseFromJSON,
+    GetProfileDebtors200ResponseToJSON,
     GetProfileFinancialColumnBalance200ResponseFromJSON,
     GetProfileFinancialColumnBalance200ResponseToJSON,
     GetProfileFinancialLedger200ResponseInnerFromJSON,
@@ -1067,6 +1070,16 @@ export interface GetProfileAnalyticsRevenueRequest {
     start?: Date;
     end?: Date;
     group?: GetProfileAnalyticsRevenueGroupEnum;
+}
+
+export interface GetProfileCreditorsRequest {
+    profileId: string;
+    date?: Date;
+}
+
+export interface GetProfileDebtorsRequest {
+    profileId: string;
+    date?: Date;
 }
 
 export interface GetProfileFinancialColumnBalanceRequest {
@@ -3588,6 +3601,36 @@ export interface DefaultApiInterface {
      * Returns the revenue of a profiel
      */
     getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileOutgoingPurchaseInvoices200ResponseValue; }>;
+
+    /**
+     * Returns the creditors of a profiel
+     * @param {string} profileId The id of the profile
+     * @param {Date} [date] ISO date as date
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileCreditorsRaw(requestParameters: GetProfileCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileDebtors200Response>>;
+
+    /**
+     * Returns the creditors of a profiel
+     */
+    getProfileCreditors(requestParameters: GetProfileCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileDebtors200Response>;
+
+    /**
+     * Returns the debtors of a profiel
+     * @param {string} profileId The id of the profile
+     * @param {Date} [date] ISO date as date
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileDebtorsRaw(requestParameters: GetProfileDebtorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileDebtors200Response>>;
+
+    /**
+     * Returns the debtors of a profiel
+     */
+    getProfileDebtors(requestParameters: GetProfileDebtorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileDebtors200Response>;
 
     /**
      * Returns all aggregated financial statement column balance
@@ -10804,6 +10847,90 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getProfileAnalyticsRevenue(requestParameters: GetProfileAnalyticsRevenueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileOutgoingPurchaseInvoices200ResponseValue; }> {
         const response = await this.getProfileAnalyticsRevenueRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the creditors of a profiel
+     */
+    async getProfileCreditorsRaw(requestParameters: GetProfileCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileDebtors200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileCreditors().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/analytics/creditors`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileDebtors200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns the creditors of a profiel
+     */
+    async getProfileCreditors(requestParameters: GetProfileCreditorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileDebtors200Response> {
+        const response = await this.getProfileCreditorsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the debtors of a profiel
+     */
+    async getProfileDebtorsRaw(requestParameters: GetProfileDebtorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileDebtors200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileDebtors().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/analytics/debtors`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileDebtors200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns the debtors of a profiel
+     */
+    async getProfileDebtors(requestParameters: GetProfileDebtorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileDebtors200Response> {
+        const response = await this.getProfileDebtorsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
