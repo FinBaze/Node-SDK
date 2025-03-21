@@ -34,6 +34,24 @@ jobs:
       - run: npm version patch -m "[RELEASE] %s - version bump"
       - run: git push
 
+  publish-github:
+    needs: build
+    if: "!startsWith(github.event.head_commit.message, '[RELEASE]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@finbaze'
+      - run: npm install
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
   publish-npm:
     needs: build
     if: "!startsWith(github.event.head_commit.message, '[RELEASE]')"
