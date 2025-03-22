@@ -827,6 +827,8 @@ export interface GetAllMonetaryAccountPaymentsRequest {
     page?: number;
     size?: number;
     search?: boolean;
+    description?: boolean;
+    reference?: boolean;
     unprocessed?: boolean;
     amount?: number;
     relation?: string;
@@ -965,6 +967,8 @@ export interface GetMonetaryAccountPaymentsRequest {
     page?: number;
     size?: number;
     search?: boolean;
+    description?: boolean;
+    reference?: boolean;
     unprocessed?: boolean;
     amount?: number;
     relation?: string;
@@ -2950,6 +2954,8 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {boolean} [search] Filter for anything that includes the search criterea
+     * @param {boolean} [description] Filter based on the exact description
+     * @param {boolean} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
      * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
@@ -3318,6 +3324,8 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {boolean} [search] Filter for anything that includes the search criterea
+     * @param {boolean} [description] Filter based on the exact description
+     * @param {boolean} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
      * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
@@ -8870,6 +8878,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['search'] = requestParameters['search'];
         }
 
+        if (requestParameters['description'] != null) {
+            queryParameters['description'] = requestParameters['description'];
+        }
+
+        if (requestParameters['reference'] != null) {
+            queryParameters['reference'] = requestParameters['reference'];
+        }
+
         if (requestParameters['unprocessed'] != null) {
             queryParameters['unprocessed'] = requestParameters['unprocessed'];
         }
@@ -9977,6 +9993,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['search'] != null) {
             queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['description'] != null) {
+            queryParameters['description'] = requestParameters['description'];
+        }
+
+        if (requestParameters['reference'] != null) {
+            queryParameters['reference'] = requestParameters['reference'];
         }
 
         if (requestParameters['unprocessed'] != null) {
