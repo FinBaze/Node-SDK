@@ -66,6 +66,12 @@ export interface CreateSalesInvoiceRequest {
      */
     date?: Date;
     /**
+     * Invoice date
+     * @type {Date}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    paid?: Date;
+    /**
      * Due date
      * @type {Date}
      * @memberof CreateSalesInvoiceRequest
@@ -166,6 +172,7 @@ export function CreateSalesInvoiceRequestFromJSONTyped(json: any, ignoreDiscrimi
         'relation': json['relation'] == null ? undefined : json['relation'],
         'email': json['email'] == null ? undefined : json['email'],
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
+        'paid': json['paid'] == null ? undefined : (new Date(json['paid'])),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'reference': json['reference'] == null ? undefined : json['reference'],
@@ -197,6 +204,7 @@ export function CreateSalesInvoiceRequestToJSONTyped(value?: CreateSalesInvoiceR
         'relation': value['relation'],
         'email': value['email'],
         'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
+        'paid': value['paid'] == null ? undefined : ((value['paid']).toISOString().substring(0,10)),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'reference': value['reference'],
