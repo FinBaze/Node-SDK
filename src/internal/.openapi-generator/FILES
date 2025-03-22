@@ -42,6 +42,7 @@ src/models/MonetaryAccountFeatures.ts
 src/models/MonetaryAccountPayment.ts
 src/models/MonetaryAccountPaymentEmbedded.ts
 src/models/MonetaryAccountPaymentEmbeddedLedger.ts
+src/models/MonetaryAccountPaymentOriginal.ts
 src/models/MonetaryAccountPaymentSepa.ts
 src/models/MonetaryAccountType.ts
 src/models/NLVATFiling.ts

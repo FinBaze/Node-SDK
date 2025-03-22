@@ -101,6 +101,7 @@ import type {
   GetVehicleTrips200Response,
   GetVehicles200Response,
   ImportMonetaryAccountCAMT053Request,
+  ImportMonetaryAccountJSONRequest,
   ImportMonetaryAccountMT940Request,
   InstallApp200Response,
   MemorialEntry,
@@ -314,6 +315,8 @@ import {
     GetVehicles200ResponseToJSON,
     ImportMonetaryAccountCAMT053RequestFromJSON,
     ImportMonetaryAccountCAMT053RequestToJSON,
+    ImportMonetaryAccountJSONRequestFromJSON,
+    ImportMonetaryAccountJSONRequestToJSON,
     ImportMonetaryAccountMT940RequestFromJSON,
     ImportMonetaryAccountMT940RequestToJSON,
     InstallApp200ResponseFromJSON,
@@ -1419,6 +1422,12 @@ export interface ImportMonetaryAccountCAMT053OperationRequest {
     profileId: string;
     monetaryAccountId: string;
     importMonetaryAccountCAMT053Request?: ImportMonetaryAccountCAMT053Request;
+}
+
+export interface ImportMonetaryAccountJSONOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    importMonetaryAccountJSONRequest?: ImportMonetaryAccountJSONRequest;
 }
 
 export interface ImportMonetaryAccountMT940OperationRequest {
@@ -4519,6 +4528,22 @@ export interface DefaultApiInterface {
      * Imports an CAMT053 file into a monetary account
      */
     importMonetaryAccountCAMT053(requestParameters: ImportMonetaryAccountCAMT053OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Imports an JSON file into a monetary account
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {ImportMonetaryAccountJSONRequest} [importMonetaryAccountJSONRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    importMonetaryAccountJSONRaw(requestParameters: ImportMonetaryAccountJSONOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Imports an JSON file into a monetary account
+     */
+    importMonetaryAccountJSON(requestParameters: ImportMonetaryAccountJSONOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Imports an MT940 file into a monetary account
@@ -13651,6 +13676,53 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async importMonetaryAccountCAMT053(requestParameters: ImportMonetaryAccountCAMT053OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.importMonetaryAccountCAMT053Raw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Imports an JSON file into a monetary account
+     */
+    async importMonetaryAccountJSONRaw(requestParameters: ImportMonetaryAccountJSONOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling importMonetaryAccountJSON().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling importMonetaryAccountJSON().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/import-json`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ImportMonetaryAccountJSONRequestToJSON(requestParameters['importMonetaryAccountJSONRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Imports an JSON file into a monetary account
+     */
+    async importMonetaryAccountJSON(requestParameters: ImportMonetaryAccountJSONOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.importMonetaryAccountJSONRaw(requestParameters, initOverrides);
     }
 
     /**

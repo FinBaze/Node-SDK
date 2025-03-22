@@ -137,6 +137,7 @@ src/models/GetSubscriptions200Response.ts
 src/models/GetVehicleTrips200Response.ts
 src/models/GetVehicles200Response.ts
 src/models/ImportMonetaryAccountCAMT053Request.ts
+src/models/ImportMonetaryAccountJSONRequest.ts
 src/models/ImportMonetaryAccountMT940Request.ts
 src/models/InstallApp200Response.ts
 src/models/InvalidRequestError.ts
@@ -149,6 +150,7 @@ src/models/MonetaryAccountFeatures.ts
 src/models/MonetaryAccountPayment.ts
 src/models/MonetaryAccountPaymentEmbedded.ts
 src/models/MonetaryAccountPaymentEmbeddedLedger.ts
+src/models/MonetaryAccountPaymentOriginal.ts
 src/models/MonetaryAccountPaymentSepa.ts
 src/models/MonetaryAccountType.ts
 src/models/NLVATFiling.ts

@@ -24,6 +24,7 @@
     "devDependencies": {
         "@openapitools/openapi-generator-cli": "^2.15.3",
         "@types/jsonwebtoken": "^9.0.9",
+        "swagger-cli": "^4.0.4",
         "typescript": "^5.7.3"
     },
     "dependencies": {

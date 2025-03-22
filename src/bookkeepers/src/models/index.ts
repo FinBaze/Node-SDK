@@ -36,6 +36,7 @@ export * from './MonetaryAccountFeatures';
 export * from './MonetaryAccountPayment';
 export * from './MonetaryAccountPaymentEmbedded';
 export * from './MonetaryAccountPaymentEmbeddedLedger';
+export * from './MonetaryAccountPaymentOriginal';
 export * from './MonetaryAccountPaymentSepa';
 export * from './MonetaryAccountType';
 export * from './NLVATFiling';

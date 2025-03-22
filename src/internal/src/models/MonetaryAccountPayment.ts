@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { MonetaryAccountPaymentOriginal } from './MonetaryAccountPaymentOriginal';
+import {
+    MonetaryAccountPaymentOriginalFromJSON,
+    MonetaryAccountPaymentOriginalFromJSONTyped,
+    MonetaryAccountPaymentOriginalToJSON,
+    MonetaryAccountPaymentOriginalToJSONTyped,
+} from './MonetaryAccountPaymentOriginal';
 import type { MonetaryAccountPaymentSepa } from './MonetaryAccountPaymentSepa';
 import {
     MonetaryAccountPaymentSepaFromJSON,
@@ -58,6 +65,12 @@ export interface MonetaryAccountPayment {
      * @memberof MonetaryAccountPayment
      */
     amount: number;
+    /**
+     * 
+     * @type {MonetaryAccountPaymentOriginal}
+     * @memberof MonetaryAccountPayment
+     */
+    original?: MonetaryAccountPaymentOriginal;
     /**
      * 
      * @type {Date}
@@ -137,6 +150,7 @@ export function MonetaryAccountPaymentFromJSONTyped(json: any, ignoreDiscriminat
         'name': json['name'],
         'reference': json['reference'] == null ? undefined : json['reference'],
         'amount': json['amount'],
+        'original': json['original'] == null ? undefined : MonetaryAccountPaymentOriginalFromJSON(json['original']),
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
         'currency': json['currency'],
         'sepa': json['sepa'] == null ? undefined : MonetaryAccountPaymentSepaFromJSON(json['sepa']),
@@ -162,6 +176,7 @@ export function MonetaryAccountPaymentToJSONTyped(value?: Omit<MonetaryAccountPa
         'name': value['name'],
         'reference': value['reference'],
         'amount': value['amount'],
+        'original': MonetaryAccountPaymentOriginalToJSON(value['original']),
         'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
         'currency': value['currency'],
         'sepa': MonetaryAccountPaymentSepaToJSON(value['sepa']),
