@@ -73,6 +73,12 @@ export interface SalesInvoice {
      */
     reference?: string;
     /**
+     * Email of the recipient
+     * @type {string}
+     * @memberof SalesInvoice
+     */
+    email?: string;
+    /**
      * 
      * @type {SalesInvoicePeriod}
      * @memberof SalesInvoice
@@ -248,6 +254,7 @@ export function SalesInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'uuid': json['uuid'],
         'invoiceId': json['invoice_id'] == null ? undefined : json['invoice_id'],
         'reference': json['reference'] == null ? undefined : json['reference'],
+        'email': json['email'] == null ? undefined : json['email'],
         'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
@@ -287,6 +294,7 @@ export function SalesInvoiceToJSONTyped(value?: Omit<SalesInvoice, 'id'|'uuid'|'
     return {
         
         'reference': value['reference'],
+        'email': value['email'],
         'period': SalesInvoicePeriodToJSON(value['period']),
         'paid': value['paid'],
         'paid-on': value['paidOn'] == null ? undefined : ((value['paidOn']).toISOString().substring(0,10)),

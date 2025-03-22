@@ -54,6 +54,12 @@ export interface CreateSalesInvoiceRequest {
      */
     relation?: string;
     /**
+     * Email of the recipient
+     * @type {string}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    email?: string;
+    /**
      * Invoice date
      * @type {Date}
      * @memberof CreateSalesInvoiceRequest
@@ -158,6 +164,7 @@ export function CreateSalesInvoiceRequestFromJSONTyped(json: any, ignoreDiscrimi
         
         'currency': json['currency'] == null ? undefined : json['currency'],
         'relation': json['relation'] == null ? undefined : json['relation'],
+        'email': json['email'] == null ? undefined : json['email'],
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
@@ -188,6 +195,7 @@ export function CreateSalesInvoiceRequestToJSONTyped(value?: CreateSalesInvoiceR
         
         'currency': value['currency'],
         'relation': value['relation'],
+        'email': value['email'],
         'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
