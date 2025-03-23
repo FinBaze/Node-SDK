@@ -81,10 +81,10 @@ export interface QuoteLine {
     quantity: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof QuoteLine
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

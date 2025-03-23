@@ -93,10 +93,10 @@ export interface Product {
     revenueCategory?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof Product
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

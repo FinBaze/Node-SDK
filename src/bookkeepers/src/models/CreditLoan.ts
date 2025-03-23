@@ -93,10 +93,10 @@ export interface CreditLoan {
     amount: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreditLoan
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

@@ -78,10 +78,10 @@ export interface CreatePurchaseInvoiceRequest {
     due?: Date;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreatePurchaseInvoiceRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

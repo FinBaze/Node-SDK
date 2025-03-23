@@ -109,10 +109,10 @@ export interface GetSubscriptionPublic200Response {
     frequency: SubscriptionFrequency;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof GetSubscriptionPublic200Response
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {GetSubscriptionPublic200ResponseEmbedded}

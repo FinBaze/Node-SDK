@@ -53,10 +53,10 @@ export interface CreateMonetaryAccountRequest {
     currency: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateMonetaryAccountRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

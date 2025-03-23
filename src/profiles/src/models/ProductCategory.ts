@@ -33,10 +33,10 @@ export interface ProductCategory {
     name: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof ProductCategory
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

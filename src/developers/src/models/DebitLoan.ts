@@ -93,10 +93,10 @@ export interface DebitLoan {
     amount: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof DebitLoan
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

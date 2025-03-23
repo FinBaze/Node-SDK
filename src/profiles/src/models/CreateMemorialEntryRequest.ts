@@ -47,10 +47,10 @@ export interface CreateMemorialEntryRequest {
     date: Date;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateMemorialEntryRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

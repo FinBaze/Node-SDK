@@ -39,10 +39,10 @@ export interface CreateMemorialEntryRequestItemsInner {
     ledger: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateMemorialEntryRequestItemsInner
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

@@ -53,10 +53,10 @@ export interface MemorialEntry {
     createdBy?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof MemorialEntry
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {MemorialEntryEmbedded}

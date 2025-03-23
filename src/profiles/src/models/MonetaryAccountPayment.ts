@@ -97,10 +97,10 @@ export interface MonetaryAccountPayment {
     processed: boolean;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof MonetaryAccountPayment
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {MonetaryAccountPaymentEmbedded}

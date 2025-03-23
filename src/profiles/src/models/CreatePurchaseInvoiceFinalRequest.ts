@@ -85,10 +85,10 @@ export interface CreatePurchaseInvoiceFinalRequest {
     due: Date;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreatePurchaseInvoiceFinalRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Array<CreatePurchaseInvoiceFinalRequestLinesInner>}

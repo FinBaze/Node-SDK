@@ -84,10 +84,10 @@ export interface VehicleTrip {
     odometer?: VehicleTripOdometer;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof VehicleTrip
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

@@ -41,10 +41,10 @@ export interface ProcessDocumentTask {
     messages: Array<ProcessDocumentTaskMessagesInner>;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof ProcessDocumentTask
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

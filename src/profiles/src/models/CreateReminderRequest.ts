@@ -63,10 +63,10 @@ export interface CreateReminderRequest {
     content?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateReminderRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

@@ -157,10 +157,10 @@ export interface Quote {
     footer?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof Quote
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {QuoteEmbedded}

@@ -41,10 +41,10 @@ export interface CreateChat200Response {
     messages: Array<CreateChat200ResponseMessagesInner>;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateChat200Response
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

@@ -51,10 +51,10 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset {
     writeoffLedger: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

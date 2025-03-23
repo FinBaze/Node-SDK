@@ -72,10 +72,10 @@ export interface CreateSubscriptionRequest {
     frequency: SubscriptionFrequency;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateSubscriptionRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Array<SubscriptionLine>}

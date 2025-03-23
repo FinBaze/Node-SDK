@@ -145,10 +145,10 @@ export interface CreateSalesInvoiceRequest {
     footer?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateSalesInvoiceRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

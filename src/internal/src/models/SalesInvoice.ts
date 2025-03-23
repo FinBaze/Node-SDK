@@ -200,10 +200,10 @@ export interface SalesInvoice {
     footer?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof SalesInvoice
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {SalesInvoiceEmbedded}

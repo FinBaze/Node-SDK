@@ -84,10 +84,10 @@ export interface ProcessDocument {
     task?: CreateChat200Response;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof ProcessDocument
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

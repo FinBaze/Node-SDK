@@ -75,10 +75,10 @@ export interface CreateQuoteRequest {
     footer?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateQuoteRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

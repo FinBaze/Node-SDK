@@ -39,10 +39,10 @@ export interface CreateExpenseCategoryRequest {
     category?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateExpenseCategoryRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

@@ -75,10 +75,10 @@ export interface CreateQuoteLineRequest {
     quantity: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateQuoteLineRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

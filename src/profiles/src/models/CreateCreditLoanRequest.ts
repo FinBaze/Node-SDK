@@ -87,10 +87,10 @@ export interface CreateCreditLoanRequest {
     endDate?: Date;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateCreditLoanRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

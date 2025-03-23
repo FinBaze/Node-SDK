@@ -71,10 +71,10 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2 {
     quantity: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

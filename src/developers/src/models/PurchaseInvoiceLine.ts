@@ -107,10 +107,10 @@ export interface PurchaseInvoiceLine {
     booked: SalesInvoiceLineBooked;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof PurchaseInvoiceLine
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

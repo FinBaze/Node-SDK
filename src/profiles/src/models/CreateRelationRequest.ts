@@ -103,10 +103,10 @@ export interface CreateRelationRequest {
     eu?: CreateRelationRequestEu;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateRelationRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

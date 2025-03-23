@@ -63,10 +63,10 @@ export interface GetSubscriptionPublic200ResponseEmbeddedLinesInner {
     discount?: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof GetSubscriptionPublic200ResponseEmbeddedLinesInner
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

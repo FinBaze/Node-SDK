@@ -51,10 +51,10 @@ export interface CreateCurrentAccountRequest {
     currency: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateCurrentAccountRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

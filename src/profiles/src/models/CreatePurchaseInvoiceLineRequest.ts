@@ -89,10 +89,10 @@ export interface CreatePurchaseInvoiceLineRequest {
     quantity: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreatePurchaseInvoiceLineRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

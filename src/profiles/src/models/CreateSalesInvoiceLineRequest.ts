@@ -87,10 +87,10 @@ export interface CreateSalesInvoiceLineRequest {
     quantity: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateSalesInvoiceLineRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

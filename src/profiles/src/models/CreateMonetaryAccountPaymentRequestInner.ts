@@ -53,10 +53,10 @@ export interface CreateMonetaryAccountPaymentRequestInner {
     process?: CreateMonetaryAccountPaymentRequestInnerProcess;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateMonetaryAccountPaymentRequestInner
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**

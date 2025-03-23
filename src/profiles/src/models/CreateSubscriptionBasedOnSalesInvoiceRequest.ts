@@ -53,10 +53,10 @@ export interface CreateSubscriptionBasedOnSalesInvoiceRequest {
     frequency: SubscriptionFrequency;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateSubscriptionBasedOnSalesInvoiceRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

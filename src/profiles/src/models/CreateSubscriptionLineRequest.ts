@@ -75,10 +75,10 @@ export interface CreateSubscriptionLineRequest {
     discount?: number;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateSubscriptionLineRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}

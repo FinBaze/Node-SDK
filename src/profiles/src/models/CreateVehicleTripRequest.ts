@@ -72,10 +72,10 @@ export interface CreateVehicleTripRequest {
     odometer?: CreateVehicleTripRequestOdometer;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateVehicleTripRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

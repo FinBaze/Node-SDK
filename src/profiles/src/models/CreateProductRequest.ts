@@ -81,10 +81,10 @@ export interface CreateProductRequest {
     revenueCategory?: string;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateProductRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 

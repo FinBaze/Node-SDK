@@ -41,10 +41,10 @@ export interface CreateProcessDocumentRequest {
     attachments: Array<CreateProcessDocumentRequestFile>;
     /**
      * Free form key/ value pair
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof CreateProcessDocumentRequest
      */
-    metadata?: object;
+    metadata?: { [key: string]: any; };
 }
 
 /**
