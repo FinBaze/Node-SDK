@@ -32,37 +32,42 @@ export interface GetDebitLoans200Response {
      * @type {number}
      * @memberof GetDebitLoans200Response
      */
-    page?: number;
+    page: number;
     /**
      * The total number of pages
      * @type {number}
      * @memberof GetDebitLoans200Response
      */
-    pages?: number;
+    pages: number;
     /**
      * Size of the page returned
      * @type {number}
      * @memberof GetDebitLoans200Response
      */
-    size?: number;
+    size: number;
     /**
      * The total count of the resource
      * @type {number}
      * @memberof GetDebitLoans200Response
      */
-    count?: number;
+    count: number;
     /**
      * 
      * @type {Array<DebitLoan>}
      * @memberof GetDebitLoans200Response
      */
-    data?: Array<DebitLoan>;
+    data: Array<DebitLoan>;
 }
 
 /**
  * Check if a given object implements the GetDebitLoans200Response interface.
  */
 export function instanceOfGetDebitLoans200Response(value: object): value is GetDebitLoans200Response {
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('pages' in value) || value['pages'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('count' in value) || value['count'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -76,11 +81,11 @@ export function GetDebitLoans200ResponseFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'page': json['page'] == null ? undefined : json['page'],
-        'pages': json['pages'] == null ? undefined : json['pages'],
-        'size': json['size'] == null ? undefined : json['size'],
-        'count': json['count'] == null ? undefined : json['count'],
-        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(DebitLoanFromJSON)),
+        'page': json['page'],
+        'pages': json['pages'],
+        'size': json['size'],
+        'count': json['count'],
+        'data': ((json['data'] as Array<any>).map(DebitLoanFromJSON)),
     };
 }
 
@@ -99,7 +104,7 @@ export function GetDebitLoans200ResponseToJSONTyped(value?: GetDebitLoans200Resp
         'pages': value['pages'],
         'size': value['size'],
         'count': value['count'],
-        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(DebitLoanToJSON)),
+        'data': ((value['data'] as Array<any>).map(DebitLoanToJSON)),
     };
 }
 

@@ -32,37 +32,42 @@ export interface GetProcessDocuments200Response {
      * @type {number}
      * @memberof GetProcessDocuments200Response
      */
-    page?: number;
+    page: number;
     /**
      * The total number of pages
      * @type {number}
      * @memberof GetProcessDocuments200Response
      */
-    pages?: number;
+    pages: number;
     /**
      * Size of the page returned
      * @type {number}
      * @memberof GetProcessDocuments200Response
      */
-    size?: number;
+    size: number;
     /**
      * The total count of the resource
      * @type {number}
      * @memberof GetProcessDocuments200Response
      */
-    count?: number;
+    count: number;
     /**
      * 
      * @type {Array<ProcessDocument>}
      * @memberof GetProcessDocuments200Response
      */
-    data?: Array<ProcessDocument>;
+    data: Array<ProcessDocument>;
 }
 
 /**
  * Check if a given object implements the GetProcessDocuments200Response interface.
  */
 export function instanceOfGetProcessDocuments200Response(value: object): value is GetProcessDocuments200Response {
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('pages' in value) || value['pages'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('count' in value) || value['count'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -76,11 +81,11 @@ export function GetProcessDocuments200ResponseFromJSONTyped(json: any, ignoreDis
     }
     return {
         
-        'page': json['page'] == null ? undefined : json['page'],
-        'pages': json['pages'] == null ? undefined : json['pages'],
-        'size': json['size'] == null ? undefined : json['size'],
-        'count': json['count'] == null ? undefined : json['count'],
-        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(ProcessDocumentFromJSON)),
+        'page': json['page'],
+        'pages': json['pages'],
+        'size': json['size'],
+        'count': json['count'],
+        'data': ((json['data'] as Array<any>).map(ProcessDocumentFromJSON)),
     };
 }
 
@@ -99,7 +104,7 @@ export function GetProcessDocuments200ResponseToJSONTyped(value?: GetProcessDocu
         'pages': value['pages'],
         'size': value['size'],
         'count': value['count'],
-        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(ProcessDocumentToJSON)),
+        'data': ((value['data'] as Array<any>).map(ProcessDocumentToJSON)),
     };
 }
 
