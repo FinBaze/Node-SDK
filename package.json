@@ -9,12 +9,13 @@
     "sideEffects": false,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 0",
-        "build": "tsc && tsc -p tsconfig.esm.json",
+        "build": "tsc && tsc -p tsconfig.esm.json && npm run fiex",
         "install:openapi": "(cd ./openapi/; sh ./bundle.sh) && (npm run install:profiles & npm run install:developers & npm run install:bookkeepers & npm run install:internal) && npm i",
         "install:profiles": "rm -rf ./src/profiles && openapi-generator-cli generate -i ./openapi/_build/profiles.yaml -g typescript-fetch -o ./src/profiles --additional-properties=ngVersion=6.1.7,npmName=api-profiles,supportsES6=true,npmVersion=6.9.0,withInterfaces=true",
         "install:bookkeepers": "rm -rf ./src/bookkeepers && openapi-generator-cli generate -i ./openapi/_build/bookkeepers.yaml -g typescript-fetch -o ./src/bookkeepers --additional-properties=ngVersion=6.1.7,npmName=api-bookkeepers,supportsES6=true,npmVersion=6.9.0,withInterfaces=true",
         "install:developers": "rm -rf ./src/developers && openapi-generator-cli generate -i ./openapi/_build/developers.yaml -g typescript-fetch -o ./src/developers --additional-properties=ngVersion=6.1.7,npmName=api-developers,supportsES6=true,npmVersion=6.9.0,withInterfaces=true",
-        "install:internal": "rm -rf ./src/internal && openapi-generator-cli generate -i ./openapi/_build/internal.yaml -g typescript-fetch -o ./src/internal --additional-properties=ngVersion=6.1.7,npmName=api-internal,supportsES6=true,npmVersion=6.9.0,withInterfaces=true"
+        "install:internal": "rm -rf ./src/internal && openapi-generator-cli generate -i ./openapi/_build/internal.yaml -g typescript-fetch -o ./src/internal --additional-properties=ngVersion=6.1.7,npmName=api-internal,supportsES6=true,npmVersion=6.9.0,withInterfaces=true",
+        "fix": "fix-esm-import-path dist/esm/index.js"
     },
     "files": [
         "dist"
@@ -32,6 +33,7 @@
     "devDependencies": {
         "@openapitools/openapi-generator-cli": "^2.15.3",
         "@types/jsonwebtoken": "^9.0.9",
+        "fix-esm-import-path": "^1.10.1",
         "swagger-cli": "^4.0.4",
         "typescript": "^5.7.3"
     },
