@@ -149,7 +149,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
     }
 }
 
-class FinbazeAPI {
+export class FinbazeAPI {
 
     profiles: FinbazeProfilesApi;
     internal: FinbazeInternalApi;
