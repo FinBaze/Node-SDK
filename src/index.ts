@@ -3,7 +3,7 @@ import * as InternalApi from './internal/src/index';
 import * as BookkeepersApi from './bookkeepers/src/index';
 import * as DevelopersApi from './developers/src/index';
 
-import * as jsonwebtoken from "jsonwebtoken";
+import { verify, sign } from "jsonwebtoken";
 import { jwtDecode } from "jwt-decode";
 
 export enum EnvType {
@@ -116,7 +116,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
     private get password() {
         if (!this.finbaze.clientCredentials?.clientId || !this.finbaze.clientCredentials?.privateKey)
             return undefined;
-        return jsonwebtoken.sign({
+        return sign({
             sub: this.finbaze.clientCredentials.clientId,
         }, this.finbaze.clientCredentials.privateKey, {
             algorithm: 'RS512',
