@@ -48,6 +48,12 @@ export interface Account {
      * @type {string}
      * @memberof Account
      */
+    language?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Account
+     */
     email: string;
     /**
      * 
@@ -96,6 +102,7 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
         'firstName': json['first-name'],
         'middleName': json['middle-name'] == null ? undefined : json['middle-name'],
         'lastName': json['last-name'],
+        'language': json['language'] == null ? undefined : json['language'],
         'email': json['email'],
         'phone': json['phone'] == null ? undefined : json['phone'],
         'updated': (new Date(json['updated'])),
@@ -117,6 +124,7 @@ export function AccountToJSONTyped(value?: Omit<Account, 'id'|'updated'|'created
         'first-name': value['firstName'],
         'middle-name': value['middleName'],
         'last-name': value['lastName'],
+        'language': value['language'],
         'email': value['email'],
         'phone': value['phone'],
     };

@@ -4095,7 +4095,7 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [name] Broad search on all the name fields to filter to
-     * @param {Array<'supplier' | 'customer' | 'debtor' | 'creditor' | 'current'>} [tags] Filters the relations based on tags
+     * @param {Array<'supplier' | 'customer' | 'debtor' | 'creditor' | 'current' | 'active' | 'inactive' | 'finbaze' | 'tax-authority'>} [tags] Filters the relations based on tags
      * @param {string} [vatNumber] VAT number to filter to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -16021,6 +16021,10 @@ export const GetRelationsTagsEnum = {
     Customer: 'customer',
     Debtor: 'debtor',
     Creditor: 'creditor',
-    Current: 'current'
+    Current: 'current',
+    Active: 'active',
+    Inactive: 'inactive',
+    Finbaze: 'finbaze',
+    TaxAuthority: 'tax-authority'
 } as const;
 export type GetRelationsTagsEnum = typeof GetRelationsTagsEnum[keyof typeof GetRelationsTagsEnum];

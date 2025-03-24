@@ -54,6 +54,12 @@ export interface Relation {
      */
     readonly name?: string;
     /**
+     * Tags for the relation
+     * @type {Array<string>}
+     * @memberof Relation
+     */
+    tags: Array<RelationTagsEnum>;
+    /**
      * Registered number of the company
      * @type {string}
      * @memberof Relation
@@ -133,11 +139,30 @@ export interface Relation {
     readonly created: Date;
 }
 
+
+/**
+ * @export
+ */
+export const RelationTagsEnum = {
+    Supplier: 'supplier',
+    Customer: 'customer',
+    Debtor: 'debtor',
+    Creditor: 'creditor',
+    Current: 'current',
+    Active: 'active',
+    Inactive: 'inactive',
+    Finbaze: 'finbaze',
+    TaxAuthority: 'tax-authority'
+} as const;
+export type RelationTagsEnum = typeof RelationTagsEnum[keyof typeof RelationTagsEnum];
+
+
 /**
  * Check if a given object implements the Relation interface.
  */
 export function instanceOfRelation(value: object): value is Relation {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('tags' in value) || value['tags'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('firstName' in value) || value['firstName'] === undefined) return false;
     if (!('middleName' in value) || value['middleName'] === undefined) return false;
@@ -160,6 +185,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'id': json['id'],
         'name': json['name'] == null ? undefined : json['name'],
+        'tags': json['tags'],
         'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
         'email': json['email'] == null ? undefined : json['email'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
@@ -187,6 +213,7 @@ export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'name'|'updated'
 
     return {
         
+        'tags': value['tags'],
         'registered_number': value['registeredNumber'],
         'email': value['email'],
         'registration_country': value['registrationCountry'],
