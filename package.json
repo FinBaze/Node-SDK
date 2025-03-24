@@ -1,8 +1,9 @@
 {
     "name": "@finbaze/sdk",
     "private": false,
-    "version": "1.1.100",
+    "version": "1.1.101",
     "description": "",
+    "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "module": "./dist/esm/index.js",
