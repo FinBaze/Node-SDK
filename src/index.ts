@@ -113,6 +113,7 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
     private get username() {
         return this.finbaze.clientCredentials?.clientId;
     }
+    
     private get password() {
         if (!this.finbaze.clientCredentials?.clientId || !this.finbaze.clientCredentials?.privateKey)
             return undefined;
@@ -123,6 +124,15 @@ class FinbazeDevelopersApi extends DevelopersApi.DefaultApi {
             issuer: this.username,
             audience: 'api.finbaze.com',
             expiresIn: '5m'
+        });
+    }
+
+    public updateConfig() {
+        this.configuration = new DevelopersApi.Configuration({
+            basePath: FinbazeAPI.getURL(this.finbaze.env),
+            accessToken: this.accessToken,
+            username: this.username,
+            password: this.password,
         });
     }
 
@@ -227,6 +237,8 @@ export class FinbazeAPI {
     }
 
     public async getDeveloperAccessToken() {
+        this.developers.updateConfig();
+        
         const result = await this.developers.getOAuth2AccessToken({
             grantType: 'client_credentials',
         });
