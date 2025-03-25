@@ -104,6 +104,7 @@ import type {
   ImportMonetaryAccountJSONRequest,
   ImportMonetaryAccountMT940Request,
   InstallApp200Response,
+  InstallAppRequest,
   MemorialEntry,
   MonetaryAccount,
   MonetaryAccountAutoProcess,
@@ -321,6 +322,8 @@ import {
     ImportMonetaryAccountMT940RequestToJSON,
     InstallApp200ResponseFromJSON,
     InstallApp200ResponseToJSON,
+    InstallAppRequestFromJSON,
+    InstallAppRequestToJSON,
     MemorialEntryFromJSON,
     MemorialEntryToJSON,
     MonetaryAccountFromJSON,
@@ -1440,10 +1443,10 @@ export interface ImportMonetaryAccountMT940OperationRequest {
     importMonetaryAccountMT940Request?: ImportMonetaryAccountMT940Request;
 }
 
-export interface InstallAppRequest {
+export interface InstallAppOperationRequest {
     profileId: string;
     appId: string;
-    body?: object;
+    installAppRequest?: InstallAppRequest;
 }
 
 export interface ProcessMonetaryAccountPaymentCreditLoanOperationRequest {
@@ -4573,17 +4576,17 @@ export interface DefaultApiInterface {
      * Installs an app
      * @param {string} profileId The id of the profile
      * @param {string} appId The id of the app
-     * @param {object} [body] 
+     * @param {InstallAppRequest} [installAppRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    installAppRaw(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>>;
+    installAppRaw(requestParameters: InstallAppOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>>;
 
     /**
      * Installs an app
      */
-    installApp(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response>;
+    installApp(requestParameters: InstallAppOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response>;
 
     /**
      * Updates a monetary account
@@ -13799,7 +13802,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Installs an app
      */
-    async installAppRaw(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>> {
+    async installAppRaw(requestParameters: InstallAppOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InstallApp200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -13830,7 +13833,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: InstallAppRequestToJSON(requestParameters['installAppRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => InstallApp200ResponseFromJSON(jsonValue));
@@ -13839,7 +13842,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Installs an app
      */
-    async installApp(requestParameters: InstallAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response> {
+    async installApp(requestParameters: InstallAppOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InstallApp200Response> {
         const response = await this.installAppRaw(requestParameters, initOverrides);
         return await response.value();
     }
