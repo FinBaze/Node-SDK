@@ -184,6 +184,7 @@ src/models/Reminder.ts
 src/models/ReminderAmounts.ts
 src/models/ReminderAmountsBooked.ts
 src/models/ReminderEmbedded.ts
+src/models/ReopenPurchaseInvoiceRequest.ts
 src/models/RevenueCategory.ts
 src/models/SalesInvoice.ts
 src/models/SalesInvoiceAmounts.ts

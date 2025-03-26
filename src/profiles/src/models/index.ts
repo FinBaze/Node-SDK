@@ -178,6 +178,7 @@ export * from './Reminder';
 export * from './ReminderAmounts';
 export * from './ReminderAmountsBooked';
 export * from './ReminderEmbedded';
+export * from './ReopenPurchaseInvoiceRequest';
 export * from './RevenueCategory';
 export * from './SalesInvoice';
 export * from './SalesInvoiceAmounts';

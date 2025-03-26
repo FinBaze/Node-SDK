@@ -129,6 +129,7 @@ import type {
   QuoteLine,
   Relation,
   Reminder,
+  ReopenPurchaseInvoiceRequest,
   RevenueCategory,
   SalesInvoice,
   SalesInvoiceLine,
@@ -372,6 +373,8 @@ import {
     RelationToJSON,
     ReminderFromJSON,
     ReminderToJSON,
+    ReopenPurchaseInvoiceRequestFromJSON,
+    ReopenPurchaseInvoiceRequestToJSON,
     RevenueCategoryFromJSON,
     RevenueCategoryToJSON,
     SalesInvoiceFromJSON,
@@ -1503,6 +1506,12 @@ export interface ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest {
     monetaryAccountPaymentId: string;
     unprocess?: boolean;
     processMonetaryAccountPaymentSalesInvoiceRequest?: ProcessMonetaryAccountPaymentSalesInvoiceRequest;
+}
+
+export interface ReopenPurchaseInvoiceOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    reopenPurchaseInvoiceRequest?: ReopenPurchaseInvoiceRequest;
 }
 
 export interface SendQuoteRequest {
@@ -4713,6 +4722,22 @@ export interface DefaultApiInterface {
      * Updates a monetary account
      */
     processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Reopens a purchase invoice
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {ReopenPurchaseInvoiceRequest} [reopenPurchaseInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    reopenPurchaseInvoiceRaw(requestParameters: ReopenPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>>;
+
+    /**
+     * Reopens a purchase invoice
+     */
+    reopenPurchaseInvoice(requestParameters: ReopenPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
 
     /**
      * Send a quote via email
@@ -14251,6 +14276,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.processMonetaryAccountPaymentSalesInvoiceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Reopens a purchase invoice
+     */
+    async reopenPurchaseInvoiceRaw(requestParameters: ReopenPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling reopenPurchaseInvoice().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling reopenPurchaseInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/reopen`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ReopenPurchaseInvoiceRequestToJSON(requestParameters['reopenPurchaseInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceFromJSON(jsonValue));
+    }
+
+    /**
+     * Reopens a purchase invoice
+     */
+    async reopenPurchaseInvoice(requestParameters: ReopenPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
+        const response = await this.reopenPurchaseInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
