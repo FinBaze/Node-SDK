@@ -96,6 +96,12 @@ export interface PurchaseInvoice {
      */
     readonly closed?: Date;
     /**
+     * 
+     * @type {Date}
+     * @memberof PurchaseInvoice
+     */
+    readonly disputed?: Date;
+    /**
      * Date of payment of the invoice
      * @type {Date}
      * @memberof PurchaseInvoice
@@ -195,6 +201,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'date': (new Date(json['date'])),
         'batch': json['batch'] == null ? undefined : json['batch'],
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
+        'disputed': json['disputed'] == null ? undefined : (new Date(json['disputed'])),
         'paid': json['paid'] == null ? undefined : (new Date(json['paid'])),
         'overdue': json['overdue'],
         'concept': json['concept'],
@@ -212,7 +219,7 @@ export function PurchaseInvoiceToJSON(json: any): PurchaseInvoice {
     return PurchaseInvoiceToJSONTyped(json, false);
 }
 
-export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'uuid'|'closed'|'paid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'uuid'|'closed'|'disputed'|'paid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

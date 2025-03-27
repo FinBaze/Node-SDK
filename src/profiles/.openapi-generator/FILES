@@ -87,6 +87,7 @@ src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
 src/models/DeleteSubscriptionRequest.ts
 src/models/Device.ts
+src/models/DisputePurchaseInvoiceRequest.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
@@ -212,6 +213,7 @@ src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/Type.ts
 src/models/UnauthorisedError.ts
+src/models/UndisputePurchaseInvoiceRequest.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/UpdateProfileRequest.ts

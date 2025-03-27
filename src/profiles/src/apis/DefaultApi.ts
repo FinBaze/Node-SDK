@@ -64,6 +64,7 @@ import type {
   CurrentAccount,
   DebitLoan,
   DeleteSubscriptionRequest,
+  DisputePurchaseInvoiceRequest,
   Employee,
   ExpenseCategory,
   GetAllMonetaryAccountPayments200Response,
@@ -138,6 +139,7 @@ import type {
   SubmitProcessDocumentRequest,
   Subscription,
   SubscriptionLine,
+  UndisputePurchaseInvoiceRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
   UpdateProfileRequest,
@@ -243,6 +245,8 @@ import {
     DebitLoanToJSON,
     DeleteSubscriptionRequestFromJSON,
     DeleteSubscriptionRequestToJSON,
+    DisputePurchaseInvoiceRequestFromJSON,
+    DisputePurchaseInvoiceRequestToJSON,
     EmployeeFromJSON,
     EmployeeToJSON,
     ExpenseCategoryFromJSON,
@@ -391,6 +395,8 @@ import {
     SubscriptionToJSON,
     SubscriptionLineFromJSON,
     SubscriptionLineToJSON,
+    UndisputePurchaseInvoiceRequestFromJSON,
+    UndisputePurchaseInvoiceRequestToJSON,
     UpdateCreditLoanRequestFromJSON,
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
@@ -828,13 +834,19 @@ export interface DeleteVehicleTripRequest {
     vehicleTripId: string;
 }
 
+export interface DisputePurchaseInvoiceOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    disputePurchaseInvoiceRequest?: DisputePurchaseInvoiceRequest;
+}
+
 export interface GetAllMonetaryAccountPaymentsRequest {
     profileId: string;
     page?: number;
     size?: number;
-    search?: boolean;
-    description?: boolean;
-    reference?: boolean;
+    search?: string;
+    description?: string;
+    reference?: string;
     unprocessed?: boolean;
     amount?: number;
     relation?: string;
@@ -972,9 +984,9 @@ export interface GetMonetaryAccountPaymentsRequest {
     monetaryAccountId: string;
     page?: number;
     size?: number;
-    search?: boolean;
-    description?: boolean;
-    reference?: boolean;
+    search?: string;
+    description?: string;
+    reference?: string;
     unprocessed?: boolean;
     amount?: number;
     relation?: string;
@@ -1530,6 +1542,12 @@ export interface SubmitProcessDocumentOperationRequest {
     profileId: string;
     processDocumentId: string;
     submitProcessDocumentRequest?: SubmitProcessDocumentRequest;
+}
+
+export interface UndisputePurchaseInvoiceOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    undisputePurchaseInvoiceRequest?: UndisputePurchaseInvoiceRequest;
 }
 
 export interface UpateMonetaryAccountAutoProcessRequest {
@@ -2961,13 +2979,29 @@ export interface DefaultApiInterface {
     deleteVehicleTrip(requestParameters: DeleteVehicleTripRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Disputes an purchase invoice
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {DisputePurchaseInvoiceRequest} [disputePurchaseInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    disputePurchaseInvoiceRaw(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>>;
+
+    /**
+     * Disputes an purchase invoice
+     */
+    disputePurchaseInvoice(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
+
+    /**
      * Returns all monetary account payments
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
-     * @param {boolean} [search] Filter for anything that includes the search criterea
-     * @param {boolean} [description] Filter based on the exact description
-     * @param {boolean} [reference] Filter based on the exact reference
+     * @param {string} [search] Filter for anything that includes the search criterea
+     * @param {string} [description] Filter based on the exact description
+     * @param {string} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
      * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
@@ -3335,9 +3369,9 @@ export interface DefaultApiInterface {
      * @param {string} monetaryAccountId The ID of the monetary account
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
-     * @param {boolean} [search] Filter for anything that includes the search criterea
-     * @param {boolean} [description] Filter based on the exact description
-     * @param {boolean} [reference] Filter based on the exact reference
+     * @param {string} [search] Filter for anything that includes the search criterea
+     * @param {string} [description] Filter based on the exact description
+     * @param {string} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
      * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
@@ -4786,6 +4820,22 @@ export interface DefaultApiInterface {
      * Submits a process document for processing
      */
     submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument>;
+
+    /**
+     * Undisputes an purchase invoice
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {UndisputePurchaseInvoiceRequest} [undisputePurchaseInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    undisputePurchaseInvoiceRaw(requestParameters: UndisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>>;
+
+    /**
+     * Undisputes an purchase invoice
+     */
+    undisputePurchaseInvoice(requestParameters: UndisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
 
     /**
      * Updates a monetary account auto process
@@ -8879,6 +8929,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteVehicleTrip(requestParameters: DeleteVehicleTripRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteVehicleTripRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Disputes an purchase invoice
+     */
+    async disputePurchaseInvoiceRaw(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling disputePurchaseInvoice().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling disputePurchaseInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/dispute`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DisputePurchaseInvoiceRequestToJSON(requestParameters['disputePurchaseInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceFromJSON(jsonValue));
+    }
+
+    /**
+     * Disputes an purchase invoice
+     */
+    async disputePurchaseInvoice(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
+        const response = await this.disputePurchaseInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -14465,6 +14563,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument> {
         const response = await this.submitProcessDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Undisputes an purchase invoice
+     */
+    async undisputePurchaseInvoiceRaw(requestParameters: UndisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling undisputePurchaseInvoice().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling undisputePurchaseInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/undispute`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UndisputePurchaseInvoiceRequestToJSON(requestParameters['undisputePurchaseInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceFromJSON(jsonValue));
+    }
+
+    /**
+     * Undisputes an purchase invoice
+     */
+    async undisputePurchaseInvoice(requestParameters: UndisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
+        const response = await this.undisputePurchaseInvoiceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
