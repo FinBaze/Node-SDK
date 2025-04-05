@@ -116,6 +116,7 @@ import type {
   ProcessMonetaryAccountPaymentCurrentAccountRequest,
   ProcessMonetaryAccountPaymentDebitLoanRequest,
   ProcessMonetaryAccountPaymentLedgerRequest,
+  ProcessMonetaryAccountPaymentMemorialRequest,
   ProcessMonetaryAccountPaymentPurchaseInvoiceRequest,
   ProcessMonetaryAccountPaymentRelationRequest,
   ProcessMonetaryAccountPaymentSalesInvoiceRequest,
@@ -349,6 +350,8 @@ import {
     ProcessMonetaryAccountPaymentDebitLoanRequestToJSON,
     ProcessMonetaryAccountPaymentLedgerRequestFromJSON,
     ProcessMonetaryAccountPaymentLedgerRequestToJSON,
+    ProcessMonetaryAccountPaymentMemorialRequestFromJSON,
+    ProcessMonetaryAccountPaymentMemorialRequestToJSON,
     ProcessMonetaryAccountPaymentPurchaseInvoiceRequestFromJSON,
     ProcessMonetaryAccountPaymentPurchaseInvoiceRequestToJSON,
     ProcessMonetaryAccountPaymentRelationRequestFromJSON,
@@ -1494,6 +1497,14 @@ export interface ProcessMonetaryAccountPaymentLedgerOperationRequest {
     monetaryAccountPaymentId: string;
     unprocess?: boolean;
     processMonetaryAccountPaymentLedgerRequest?: ProcessMonetaryAccountPaymentLedgerRequest;
+}
+
+export interface ProcessMonetaryAccountPaymentMemorialOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    monetaryAccountPaymentId: string;
+    unprocess?: boolean;
+    processMonetaryAccountPaymentMemorialRequest?: ProcessMonetaryAccountPaymentMemorialRequest;
 }
 
 export interface ProcessMonetaryAccountPaymentPurchaseInvoiceOperationRequest {
@@ -4702,6 +4713,24 @@ export interface DefaultApiInterface {
      * Updates a monetary account
      */
     processMonetaryAccountPaymentLedger(requestParameters: ProcessMonetaryAccountPaymentLedgerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Updates a monetary account
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {string} monetaryAccountPaymentId The ID of the monetary account payment
+     * @param {boolean} [unprocess] If the payment is already processed, enter true to unprocess it before processing it again, otherwise you will get an error
+     * @param {ProcessMonetaryAccountPaymentMemorialRequest} [processMonetaryAccountPaymentMemorialRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    processMonetaryAccountPaymentMemorialRaw(requestParameters: ProcessMonetaryAccountPaymentMemorialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Updates a monetary account
+     */
+    processMonetaryAccountPaymentMemorial(requestParameters: ProcessMonetaryAccountPaymentMemorialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Updates a monetary account
@@ -14200,6 +14229,64 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async processMonetaryAccountPaymentLedger(requestParameters: ProcessMonetaryAccountPaymentLedgerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.processMonetaryAccountPaymentLedgerRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Updates a monetary account
+     */
+    async processMonetaryAccountPaymentMemorialRaw(requestParameters: ProcessMonetaryAccountPaymentMemorialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling processMonetaryAccountPaymentMemorial().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling processMonetaryAccountPaymentMemorial().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountPaymentId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountPaymentId',
+                'Required parameter "monetaryAccountPaymentId" was null or undefined when calling processMonetaryAccountPaymentMemorial().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['unprocess'] != null) {
+            queryParameters['unprocess'] = requestParameters['unprocess'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/payments/{monetaryAccountPaymentId}/memorial`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountPaymentId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountPaymentId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ProcessMonetaryAccountPaymentMemorialRequestToJSON(requestParameters['processMonetaryAccountPaymentMemorialRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Updates a monetary account
+     */
+    async processMonetaryAccountPaymentMemorial(requestParameters: ProcessMonetaryAccountPaymentMemorialOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.processMonetaryAccountPaymentMemorialRaw(requestParameters, initOverrides);
     }
 
     /**
