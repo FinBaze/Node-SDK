@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess } from './ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess';
+import {
+    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessFromJSON,
+    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessFromJSONTyped,
+    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessToJSON,
+    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessToJSONTyped,
+} from './ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess';
+
 /**
  * 
  * @export
@@ -24,43 +32,28 @@ export interface ProcessMonetaryAccountPaymentMemorialRequestItemsInner {
      * @type {string}
      * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
      */
-    purchaseInvoice?: string;
+    name: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
      */
-    salesInvoice?: string;
+    amount: number;
     /**
      * 
-     * @type {string}
+     * @type {ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess}
      * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
      */
-    relation?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
-     */
-    currentAccount?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
-     */
-    creditLoan?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProcessMonetaryAccountPaymentMemorialRequestItemsInner
-     */
-    debitLoan?: string;
+    process: ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess;
 }
 
 /**
  * Check if a given object implements the ProcessMonetaryAccountPaymentMemorialRequestItemsInner interface.
  */
 export function instanceOfProcessMonetaryAccountPaymentMemorialRequestItemsInner(value: object): value is ProcessMonetaryAccountPaymentMemorialRequestItemsInner {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('process' in value) || value['process'] === undefined) return false;
     return true;
 }
 
@@ -74,12 +67,9 @@ export function ProcessMonetaryAccountPaymentMemorialRequestItemsInnerFromJSONTy
     }
     return {
         
-        'purchaseInvoice': json['purchase-invoice'] == null ? undefined : json['purchase-invoice'],
-        'salesInvoice': json['sales-invoice'] == null ? undefined : json['sales-invoice'],
-        'relation': json['relation'] == null ? undefined : json['relation'],
-        'currentAccount': json['current-account'] == null ? undefined : json['current-account'],
-        'creditLoan': json['credit-loan'] == null ? undefined : json['credit-loan'],
-        'debitLoan': json['debit-loan'] == null ? undefined : json['debit-loan'],
+        'name': json['name'],
+        'amount': json['amount'],
+        'process': ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessFromJSON(json['process']),
     };
 }
 
@@ -94,12 +84,9 @@ export function ProcessMonetaryAccountPaymentMemorialRequestItemsInnerToJSONType
 
     return {
         
-        'purchase-invoice': value['purchaseInvoice'],
-        'sales-invoice': value['salesInvoice'],
-        'relation': value['relation'],
-        'current-account': value['currentAccount'],
-        'credit-loan': value['creditLoan'],
-        'debit-loan': value['debitLoan'],
+        'name': value['name'],
+        'amount': value['amount'],
+        'process': ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcessToJSON(value['process']),
     };
 }
 

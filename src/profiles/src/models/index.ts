@@ -159,6 +159,7 @@ export * from './ProcessMonetaryAccountPaymentDebitLoanRequest';
 export * from './ProcessMonetaryAccountPaymentLedgerRequest';
 export * from './ProcessMonetaryAccountPaymentMemorialRequest';
 export * from './ProcessMonetaryAccountPaymentMemorialRequestItemsInner';
+export * from './ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess';
 export * from './ProcessMonetaryAccountPaymentPurchaseInvoiceRequest';
 export * from './ProcessMonetaryAccountPaymentRelationRequest';
 export * from './ProcessMonetaryAccountPaymentSalesInvoiceRequest';
