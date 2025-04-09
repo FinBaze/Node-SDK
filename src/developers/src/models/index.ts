@@ -56,6 +56,7 @@ export * from './ProfileSettingsPurchaseInvoice';
 export * from './ProfileSettingsReminder';
 export * from './ProfileSettingsSalesInvoice';
 export * from './Project';
+export * from './ProjectEmbedded';
 export * from './ProjectTime';
 export * from './PurchaseInvoice';
 export * from './PurchaseInvoiceEmbedded';

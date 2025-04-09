@@ -62,6 +62,7 @@ src/models/ProfileSettingsPurchaseInvoice.ts
 src/models/ProfileSettingsReminder.ts
 src/models/ProfileSettingsSalesInvoice.ts
 src/models/Project.ts
+src/models/ProjectEmbedded.ts
 src/models/ProjectTime.ts
 src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts

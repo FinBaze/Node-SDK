@@ -44,6 +44,12 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf {
      */
     taxCode: CreatePurchaseInvoiceFinalRequestLinesInnerOneOfTaxCodeEnum;
     /**
+     * 
+     * @type {any}
+     * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
+     */
+    includingTax?: any | null;
+    /**
      * The price of one item in cents, excluding taxes, required if no product is provided
      * @type {number}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
@@ -243,6 +249,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOfFromJSONTyped(js
         'description': json['description'] == null ? undefined : json['description'],
         'expenseCategory': json['expense-category'],
         'taxCode': json['tax-code'],
+        'includingTax': json['including_tax'] == null ? undefined : json['including_tax'],
         'price': json['price'],
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
@@ -265,6 +272,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOfToJSONTyped(valu
         'description': value['description'],
         'expense-category': value['expenseCategory'],
         'tax-code': value['taxCode'],
+        'including_tax': value['includingTax'],
         'price': value['price'],
         'discount': value['discount'],
         'quantity': value['quantity'],

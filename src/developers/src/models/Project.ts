@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProjectEmbedded } from './ProjectEmbedded';
+import {
+    ProjectEmbeddedFromJSON,
+    ProjectEmbeddedFromJSONTyped,
+    ProjectEmbeddedToJSON,
+    ProjectEmbeddedToJSONTyped,
+} from './ProjectEmbedded';
+
 /**
  * Employee
  * @export
@@ -43,6 +51,12 @@ export interface Project {
      * @memberof Project
      */
     end?: Date;
+    /**
+     * 
+     * @type {ProjectEmbedded}
+     * @memberof Project
+     */
+    embedded?: ProjectEmbedded;
     /**
      * 
      * @type {Date}
@@ -82,6 +96,7 @@ export function ProjectFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'name': json['name'],
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'embedded': json['_embedded'] == null ? undefined : ProjectEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -101,6 +116,7 @@ export function ProjectToJSONTyped(value?: Omit<Project, 'id'|'updated'|'created
         'name': value['name'],
         'start': value['start'] == null ? undefined : ((value['start']).toISOString().substring(0,10)),
         'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),
+        '_embedded': ProjectEmbeddedToJSON(value['embedded']),
     };
 }
 

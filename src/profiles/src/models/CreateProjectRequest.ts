@@ -26,6 +26,12 @@ export interface CreateProjectRequest {
      */
     name: string;
     /**
+     * ID of the relation to attach this project to
+     * @type {string}
+     * @memberof CreateProjectRequest
+     */
+    relation?: string;
+    /**
      * 
      * @type {Date}
      * @memberof CreateProjectRequest
@@ -58,6 +64,7 @@ export function CreateProjectRequestFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'name': json['name'],
+        'relation': json['relation'] == null ? undefined : json['relation'],
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
     };
@@ -75,6 +82,7 @@ export function CreateProjectRequestToJSONTyped(value?: CreateProjectRequest | n
     return {
         
         'name': value['name'],
+        'relation': value['relation'],
         'start': value['start'] == null ? undefined : ((value['start']).toISOString().substring(0,10)),
         'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),
     };

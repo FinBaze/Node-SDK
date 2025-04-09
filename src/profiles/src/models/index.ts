@@ -170,6 +170,7 @@ export * from './ProfileFeatures';
 export * from './ProfileSettings';
 export * from './ProfileSettingsBranding';
 export * from './Project';
+export * from './ProjectEmbedded';
 export * from './ProjectTime';
 export * from './PurchaseInvoice';
 export * from './PurchaseInvoiceEmbedded';
