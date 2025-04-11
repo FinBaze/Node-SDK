@@ -85,7 +85,10 @@ export const GetProfileLedgerChart200ResponseLedgersValueTagsEnum = {
     DebitLoan: 'debit_loan',
     CreditLoan: 'credit_loan',
     AssetValue: 'asset_value',
-    BankingFees: 'banking_fees'
+    BankingFees: 'banking_fees',
+    SmallDifferenceWriteOff: 'small_difference_write_off',
+    BankingInterestCredit: 'banking_interest_credit',
+    BankingInterestDebit: 'banking_interest_debit'
 } as const;
 export type GetProfileLedgerChart200ResponseLedgersValueTagsEnum = typeof GetProfileLedgerChart200ResponseLedgersValueTagsEnum[keyof typeof GetProfileLedgerChart200ResponseLedgersValueTagsEnum];
 
