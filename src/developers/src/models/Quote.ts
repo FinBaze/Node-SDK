@@ -27,13 +27,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
-import type { SalesInvoicePublicAmounts } from './SalesInvoicePublicAmounts';
+import type { SalesInvoiceAmountsBooked } from './SalesInvoiceAmountsBooked';
 import {
-    SalesInvoicePublicAmountsFromJSON,
-    SalesInvoicePublicAmountsFromJSONTyped,
-    SalesInvoicePublicAmountsToJSON,
-    SalesInvoicePublicAmountsToJSONTyped,
-} from './SalesInvoicePublicAmounts';
+    SalesInvoiceAmountsBookedFromJSON,
+    SalesInvoiceAmountsBookedFromJSONTyped,
+    SalesInvoiceAmountsBookedToJSON,
+    SalesInvoiceAmountsBookedToJSONTyped,
+} from './SalesInvoiceAmountsBooked';
 
 /**
  * 
@@ -97,10 +97,10 @@ export interface Quote {
     concept: boolean;
     /**
      * 
-     * @type {SalesInvoicePublicAmounts}
+     * @type {SalesInvoiceAmountsBooked}
      * @memberof Quote
      */
-    amounts: SalesInvoicePublicAmounts;
+    amounts: SalesInvoiceAmountsBooked;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
@@ -216,7 +216,7 @@ export function QuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): Quo
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
         'overdue': json['overdue'],
         'concept': json['concept'],
-        'amounts': SalesInvoicePublicAmountsFromJSON(json['amounts']),
+        'amounts': SalesInvoiceAmountsBookedFromJSON(json['amounts']),
         'currency': json['currency'],
         'legalName': json['legal-name'] == null ? undefined : json['legal-name'],
         'firstName': json['first-name'] == null ? undefined : json['first-name'],
@@ -247,7 +247,7 @@ export function QuoteToJSONTyped(value?: Omit<Quote, 'id'|'uuid'|'quote_id'|'dat
         'reference': value['reference'],
         'overdue': value['overdue'],
         'concept': value['concept'],
-        'amounts': SalesInvoicePublicAmountsToJSON(value['amounts']),
+        'amounts': SalesInvoiceAmountsBookedToJSON(value['amounts']),
         'currency': value['currency'],
         'legal-name': value['legalName'],
         'first-name': value['firstName'],

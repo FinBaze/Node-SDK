@@ -194,7 +194,6 @@ export * from './SalesInvoiceEmbedded';
 export * from './SalesInvoiceLine';
 export * from './SalesInvoiceLineBooked';
 export * from './SalesInvoicePublic';
-export * from './SalesInvoicePublicAmounts';
 export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';
 export * from './SalesInvoicePublicEmbeddedProfile';

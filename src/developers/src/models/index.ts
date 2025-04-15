@@ -82,7 +82,6 @@ export * from './SalesInvoiceLine';
 export * from './SalesInvoiceLineBooked';
 export * from './SalesInvoicePeriod';
 export * from './SalesInvoicePublic';
-export * from './SalesInvoicePublicAmounts';
 export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';
 export * from './SalesInvoicePublicEmbeddedProfile';

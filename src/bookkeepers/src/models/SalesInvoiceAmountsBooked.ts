@@ -43,6 +43,12 @@ export interface SalesInvoiceAmountsBooked {
      * @memberof SalesInvoiceAmountsBooked
      */
     discount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesInvoiceAmountsBooked
+     */
+    payments: number;
 }
 
 /**
@@ -53,6 +59,7 @@ export function instanceOfSalesInvoiceAmountsBooked(value: object): value is Sal
     if (!('subTotal' in value) || value['subTotal'] === undefined) return false;
     if (!('tax' in value) || value['tax'] === undefined) return false;
     if (!('discount' in value) || value['discount'] === undefined) return false;
+    if (!('payments' in value) || value['payments'] === undefined) return false;
     return true;
 }
 
@@ -70,6 +77,7 @@ export function SalesInvoiceAmountsBookedFromJSONTyped(json: any, ignoreDiscrimi
         'subTotal': json['sub-total'],
         'tax': json['tax'],
         'discount': json['discount'],
+        'payments': json['payments'],
     };
 }
 
@@ -88,6 +96,7 @@ export function SalesInvoiceAmountsBookedToJSONTyped(value?: SalesInvoiceAmounts
         'sub-total': value['subTotal'],
         'tax': value['tax'],
         'discount': value['discount'],
+        'payments': value['payments'],
     };
 }
 

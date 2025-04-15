@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { SalesInvoiceAmountsBooked } from './SalesInvoiceAmountsBooked';
+import {
+    SalesInvoiceAmountsBookedFromJSON,
+    SalesInvoiceAmountsBookedFromJSONTyped,
+    SalesInvoiceAmountsBookedToJSON,
+    SalesInvoiceAmountsBookedToJSONTyped,
+} from './SalesInvoiceAmountsBooked';
 import type { SalesInvoicePublicEmbedded } from './SalesInvoicePublicEmbedded';
 import {
     SalesInvoicePublicEmbeddedFromJSON,
@@ -34,13 +41,6 @@ import {
     CreateSalesInvoiceRequestPeriodToJSON,
     CreateSalesInvoiceRequestPeriodToJSONTyped,
 } from './CreateSalesInvoiceRequestPeriod';
-import type { SalesInvoicePublicAmounts } from './SalesInvoicePublicAmounts';
-import {
-    SalesInvoicePublicAmountsFromJSON,
-    SalesInvoicePublicAmountsFromJSONTyped,
-    SalesInvoicePublicAmountsToJSON,
-    SalesInvoicePublicAmountsToJSONTyped,
-} from './SalesInvoicePublicAmounts';
 
 /**
  * 
@@ -110,10 +110,10 @@ export interface SalesInvoicePublic {
     overdue: boolean;
     /**
      * 
-     * @type {SalesInvoicePublicAmounts}
+     * @type {SalesInvoiceAmountsBooked}
      * @memberof SalesInvoicePublic
      */
-    amounts: SalesInvoicePublicAmounts;
+    amounts: SalesInvoiceAmountsBooked;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
@@ -217,7 +217,7 @@ export function SalesInvoicePublicFromJSONTyped(json: any, ignoreDiscriminator: 
         'paid': json['paid'] == null ? undefined : json['paid'],
         'paidOn': json['paid_on'] == null ? undefined : (new Date(json['paid_on'])),
         'overdue': json['overdue'],
-        'amounts': SalesInvoicePublicAmountsFromJSON(json['amounts']),
+        'amounts': SalesInvoiceAmountsBookedFromJSON(json['amounts']),
         'currency': json['currency'],
         'legalName': json['legal-name'] == null ? undefined : json['legal-name'],
         'firstName': json['first-name'] == null ? undefined : json['first-name'],
@@ -248,7 +248,7 @@ export function SalesInvoicePublicToJSONTyped(value?: Omit<SalesInvoicePublic, '
         'paid': value['paid'],
         'paid_on': value['paidOn'] == null ? undefined : ((value['paidOn']).toISOString().substring(0,10)),
         'overdue': value['overdue'],
-        'amounts': SalesInvoicePublicAmountsToJSON(value['amounts']),
+        'amounts': SalesInvoiceAmountsBookedToJSON(value['amounts']),
         'currency': value['currency'],
         'legal-name': value['legalName'],
         'first-name': value['firstName'],
