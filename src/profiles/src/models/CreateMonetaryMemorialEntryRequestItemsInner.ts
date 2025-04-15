@@ -44,7 +44,7 @@ export interface CreateMonetaryMemorialEntryRequestItemsInner {
      * @type {number}
      * @memberof CreateMonetaryMemorialEntryRequestItemsInner
      */
-    booked?: number;
+    original?: number;
     /**
      * 
      * @type {CreateMonetaryMemorialEntryRequestItemsInnerProcess}
@@ -75,7 +75,7 @@ export function CreateMonetaryMemorialEntryRequestItemsInnerFromJSONTyped(json: 
         
         'name': json['name'],
         'amount': json['amount'],
-        'booked': json['booked'] == null ? undefined : json['booked'],
+        'original': json['original'] == null ? undefined : json['original'],
         'process': CreateMonetaryMemorialEntryRequestItemsInnerProcessFromJSON(json['process']),
     };
 }
@@ -93,7 +93,7 @@ export function CreateMonetaryMemorialEntryRequestItemsInnerToJSONTyped(value?: 
         
         'name': value['name'],
         'amount': value['amount'],
-        'booked': value['booked'],
+        'original': value['original'],
         'process': CreateMonetaryMemorialEntryRequestItemsInnerProcessToJSON(value['process']),
     };
 }

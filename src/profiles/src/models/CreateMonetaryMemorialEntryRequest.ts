@@ -34,6 +34,12 @@ export interface CreateMonetaryMemorialEntryRequest {
      */
     name: string;
     /**
+     * ISO 3166-1 alpha-2 currency code
+     * @type {string}
+     * @memberof CreateMonetaryMemorialEntryRequest
+     */
+    currency?: string;
+    /**
      * Date of the memroail entry
      * @type {Date}
      * @memberof CreateMonetaryMemorialEntryRequest
@@ -68,6 +74,7 @@ export function CreateMonetaryMemorialEntryRequestFromJSONTyped(json: any, ignor
     return {
         
         'name': json['name'],
+        'currency': json['currency'] == null ? undefined : json['currency'],
         'date': (new Date(json['date'])),
         'items': ((json['items'] as Array<any>).map(CreateMonetaryMemorialEntryRequestItemsInnerFromJSON)),
     };
@@ -85,6 +92,7 @@ export function CreateMonetaryMemorialEntryRequestToJSONTyped(value?: CreateMone
     return {
         
         'name': value['name'],
+        'currency': value['currency'],
         'date': ((value['date']).toISOString().substring(0,10)),
         'items': ((value['items'] as Array<any>).map(CreateMonetaryMemorialEntryRequestItemsInnerToJSON)),
     };
