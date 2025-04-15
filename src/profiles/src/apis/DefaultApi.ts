@@ -34,6 +34,7 @@ import type {
   CreateMonetaryAccountOpenbankingAuthorisationRequest,
   CreateMonetaryAccountPaymentRequestInner,
   CreateMonetaryAccountRequest,
+  CreateMonetaryMemorialEntryRequest,
   CreateProcessDocumentRequest,
   CreateProductCategoryRequest,
   CreateProductRequest,
@@ -186,6 +187,8 @@ import {
     CreateMonetaryAccountPaymentRequestInnerToJSON,
     CreateMonetaryAccountRequestFromJSON,
     CreateMonetaryAccountRequestToJSON,
+    CreateMonetaryMemorialEntryRequestFromJSON,
+    CreateMonetaryMemorialEntryRequestToJSON,
     CreateProcessDocumentRequestFromJSON,
     CreateProcessDocumentRequestToJSON,
     CreateProductCategoryRequestFromJSON,
@@ -508,6 +511,11 @@ export interface CreateMonetaryAccountPaymentRequest {
     profileId: string;
     monetaryAccountId: string;
     createMonetaryAccountPaymentRequestInner?: Array<CreateMonetaryAccountPaymentRequestInner>;
+}
+
+export interface CreateMonetaryMemorialEntryOperationRequest {
+    profileId: string;
+    createMonetaryMemorialEntryRequest?: CreateMonetaryMemorialEntryRequest;
 }
 
 export interface CreateNLVATFilingRequest {
@@ -1218,6 +1226,7 @@ export interface GetPurchaseInvoicesRequest {
     invoiceId?: string;
     date?: Date;
     overdue?: boolean;
+    product?: string;
     project?: string;
     batch?: string;
     paid?: boolean;
@@ -2041,6 +2050,21 @@ export interface DefaultApiInterface {
      * Creates a monetary account payment, pass an array if you are booking the payments on a suspense account.
      */
     createMonetaryAccountPayment(requestParameters: CreateMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountPayment>>;
+
+    /**
+     * Create monetary memorial entry
+     * @param {string} profileId The id of the profile
+     * @param {CreateMonetaryMemorialEntryRequest} [createMonetaryMemorialEntryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createMonetaryMemorialEntryRaw(requestParameters: CreateMonetaryMemorialEntryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Create monetary memorial entry
+     */
+    createMonetaryMemorialEntry(requestParameters: CreateMonetaryMemorialEntryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Returns the VAT filing data
@@ -4004,6 +4028,7 @@ export interface DefaultApiInterface {
      * @param {string} [invoiceId] Invoice ID to filter
      * @param {Date} [date] Invoice date to filter
      * @param {boolean} [overdue] If the invoice is overdue to filter
+     * @param {string} [product] Filter invoices that contain this product ID
      * @param {string} [project] Filter invoices that contain this project ID
      * @param {string} [batch] Filter invoices that are in this batch
      * @param {boolean} [paid] If the invoice is paid to filter
@@ -6185,6 +6210,46 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     async createMonetaryAccountPayment(requestParameters: CreateMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MonetaryAccountPayment>> {
         const response = await this.createMonetaryAccountPaymentRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Create monetary memorial entry
+     */
+    async createMonetaryMemorialEntryRaw(requestParameters: CreateMonetaryMemorialEntryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createMonetaryMemorialEntry().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-memorial-entries`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateMonetaryMemorialEntryRequestToJSON(requestParameters['createMonetaryMemorialEntryRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Create monetary memorial entry
+     */
+    async createMonetaryMemorialEntry(requestParameters: CreateMonetaryMemorialEntryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createMonetaryMemorialEntryRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -12018,6 +12083,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['overdue'] != null) {
             queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
         }
 
         if (requestParameters['project'] != null) {

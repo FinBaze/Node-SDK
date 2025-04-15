@@ -34,6 +34,9 @@ src/models/CreateMonetaryAccountOpenbankingAuthorisationRequest.ts
 src/models/CreateMonetaryAccountPaymentRequestInner.ts
 src/models/CreateMonetaryAccountPaymentRequestInnerProcess.ts
 src/models/CreateMonetaryAccountRequest.ts
+src/models/CreateMonetaryMemorialEntryRequest.ts
+src/models/CreateMonetaryMemorialEntryRequestItemsInner.ts
+src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcess.ts
 src/models/CreateProcessDocumentRequest.ts
 src/models/CreateProcessDocumentRequestFile.ts
 src/models/CreateProductCategoryRequest.ts
@@ -164,8 +167,6 @@ src/models/ProcessMonetaryAccountPaymentCurrentAccountRequest.ts
 src/models/ProcessMonetaryAccountPaymentDebitLoanRequest.ts
 src/models/ProcessMonetaryAccountPaymentLedgerRequest.ts
 src/models/ProcessMonetaryAccountPaymentMemorialRequest.ts
-src/models/ProcessMonetaryAccountPaymentMemorialRequestItemsInner.ts
-src/models/ProcessMonetaryAccountPaymentMemorialRequestItemsInnerProcess.ts
 src/models/ProcessMonetaryAccountPaymentPurchaseInvoiceRequest.ts
 src/models/ProcessMonetaryAccountPaymentRelationRequest.ts
 src/models/ProcessMonetaryAccountPaymentSalesInvoiceRequest.ts

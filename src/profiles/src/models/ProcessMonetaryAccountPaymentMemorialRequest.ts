@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { ProcessMonetaryAccountPaymentMemorialRequestItemsInner } from './ProcessMonetaryAccountPaymentMemorialRequestItemsInner';
+import type { CreateMonetaryMemorialEntryRequestItemsInner } from './CreateMonetaryMemorialEntryRequestItemsInner';
 import {
-    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerFromJSON,
-    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerFromJSONTyped,
-    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerToJSON,
-    ProcessMonetaryAccountPaymentMemorialRequestItemsInnerToJSONTyped,
-} from './ProcessMonetaryAccountPaymentMemorialRequestItemsInner';
+    CreateMonetaryMemorialEntryRequestItemsInnerFromJSON,
+    CreateMonetaryMemorialEntryRequestItemsInnerFromJSONTyped,
+    CreateMonetaryMemorialEntryRequestItemsInnerToJSON,
+    CreateMonetaryMemorialEntryRequestItemsInnerToJSONTyped,
+} from './CreateMonetaryMemorialEntryRequestItemsInner';
 
 /**
  * 
@@ -29,10 +29,10 @@ import {
 export interface ProcessMonetaryAccountPaymentMemorialRequest {
     /**
      * 
-     * @type {Array<ProcessMonetaryAccountPaymentMemorialRequestItemsInner>}
+     * @type {Array<CreateMonetaryMemorialEntryRequestItemsInner>}
      * @memberof ProcessMonetaryAccountPaymentMemorialRequest
      */
-    items: Array<ProcessMonetaryAccountPaymentMemorialRequestItemsInner>;
+    items: Array<CreateMonetaryMemorialEntryRequestItemsInner>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function ProcessMonetaryAccountPaymentMemorialRequestFromJSONTyped(json: 
     }
     return {
         
-        'items': ((json['items'] as Array<any>).map(ProcessMonetaryAccountPaymentMemorialRequestItemsInnerFromJSON)),
+        'items': ((json['items'] as Array<any>).map(CreateMonetaryMemorialEntryRequestItemsInnerFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function ProcessMonetaryAccountPaymentMemorialRequestToJSONTyped(value?: 
 
     return {
         
-        'items': ((value['items'] as Array<any>).map(ProcessMonetaryAccountPaymentMemorialRequestItemsInnerToJSON)),
+        'items': ((value['items'] as Array<any>).map(CreateMonetaryMemorialEntryRequestItemsInnerToJSON)),
     };
 }
 

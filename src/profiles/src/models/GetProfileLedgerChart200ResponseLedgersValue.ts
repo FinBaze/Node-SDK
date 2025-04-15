@@ -88,7 +88,8 @@ export const GetProfileLedgerChart200ResponseLedgersValueTagsEnum = {
     BankingFees: 'banking_fees',
     SmallDifferenceWriteOff: 'small_difference_write_off',
     BankingInterestCredit: 'banking_interest_credit',
-    BankingInterestDebit: 'banking_interest_debit'
+    BankingInterestDebit: 'banking_interest_debit',
+    CurrencyConversion: 'currency_conversion'
 } as const;
 export type GetProfileLedgerChart200ResponseLedgersValueTagsEnum = typeof GetProfileLedgerChart200ResponseLedgersValueTagsEnum[keyof typeof GetProfileLedgerChart200ResponseLedgersValueTagsEnum];
 
