@@ -37,6 +37,7 @@ src/models/CreateMonetaryAccountRequest.ts
 src/models/CreateMonetaryMemorialEntryRequest.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInner.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcess.ts
+src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger.ts
 src/models/CreateProcessDocumentRequest.ts
 src/models/CreateProcessDocumentRequestFile.ts
 src/models/CreateProductCategoryRequest.ts

@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger } from './CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger';
+import {
+    CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerFromJSON,
+    CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerFromJSONTyped,
+    CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerToJSON,
+    CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerToJSONTyped,
+} from './CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger';
+
 /**
  * 
  * @export
@@ -55,6 +63,12 @@ export interface CreateMonetaryMemorialEntryRequestItemsInnerProcess {
      * @memberof CreateMonetaryMemorialEntryRequestItemsInnerProcess
      */
     debitLoan?: string;
+    /**
+     * 
+     * @type {CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger}
+     * @memberof CreateMonetaryMemorialEntryRequestItemsInnerProcess
+     */
+    ledger?: CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger;
 }
 
 /**
@@ -80,6 +94,7 @@ export function CreateMonetaryMemorialEntryRequestItemsInnerProcessFromJSONTyped
         'currentAccount': json['current-account'] == null ? undefined : json['current-account'],
         'creditLoan': json['credit-loan'] == null ? undefined : json['credit-loan'],
         'debitLoan': json['debit-loan'] == null ? undefined : json['debit-loan'],
+        'ledger': json['ledger'] == null ? undefined : CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerFromJSON(json['ledger']),
     };
 }
 
@@ -100,6 +115,7 @@ export function CreateMonetaryMemorialEntryRequestItemsInnerProcessToJSONTyped(v
         'current-account': value['currentAccount'],
         'credit-loan': value['creditLoan'],
         'debit-loan': value['debitLoan'],
+        'ledger': CreateMonetaryMemorialEntryRequestItemsInnerProcessLedgerToJSON(value['ledger']),
     };
 }
 

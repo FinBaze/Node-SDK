@@ -31,6 +31,7 @@ export * from './CreateMonetaryAccountRequest';
 export * from './CreateMonetaryMemorialEntryRequest';
 export * from './CreateMonetaryMemorialEntryRequestItemsInner';
 export * from './CreateMonetaryMemorialEntryRequestItemsInnerProcess';
+export * from './CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger';
 export * from './CreateProcessDocumentRequest';
 export * from './CreateProcessDocumentRequestFile';
 export * from './CreateProductCategoryRequest';
