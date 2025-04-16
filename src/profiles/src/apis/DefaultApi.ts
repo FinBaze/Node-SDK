@@ -1292,9 +1292,10 @@ export interface GetRelationsRequest {
 export interface GetRelationsAutocompleteRequest {
     profileId: string;
     name: string;
-    registrationCountry: any;
+    registrationCountry: string;
     page?: number;
     size?: number;
+    registrationNumber?: string;
 }
 
 export interface GetReminderRequest {
@@ -4194,9 +4195,10 @@ export interface DefaultApiInterface {
      * Returns all autocompleted relations
      * @param {string} profileId The id of the profile
      * @param {string} name Broad search on all the name fields to filter to
-     * @param {any} registrationCountry Registration country to look in which database
+     * @param {string} registrationCountry Registration country to look in which database
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [registrationNumber] Registration number to look in which database, only one or none results are returned if this parameter is specified
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -12621,6 +12623,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['name'] != null) {
             queryParameters['name'] = requestParameters['name'];
+        }
+
+        if (requestParameters['registrationNumber'] != null) {
+            queryParameters['registration_number'] = requestParameters['registrationNumber'];
         }
 
         if (requestParameters['registrationCountry'] != null) {
