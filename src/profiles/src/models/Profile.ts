@@ -90,7 +90,7 @@ export interface Profile {
      * @type {Language}
      * @memberof Profile
      */
-    language?: Language;
+    language: Language;
     /**
      * 
      * @type {string}
@@ -173,6 +173,7 @@ export function instanceOfProfile(value: object): value is Profile {
     if (!('ledgerChart' in value) || value['ledgerChart'] === undefined) return false;
     if (!('features' in value) || value['features'] === undefined) return false;
     if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('language' in value) || value['language'] === undefined) return false;
     if (!('timezone' in value) || value['timezone'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('distanceUnit' in value) || value['distanceUnit'] === undefined) return false;
@@ -198,7 +199,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'ledgerChart': json['ledger-chart'],
         'features': ProfileFeaturesFromJSON(json['features']),
         'url': json['url'],
-        'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
+        'language': LanguageFromJSON(json['language']),
         'timezone': json['timezone'],
         'name': json['name'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
