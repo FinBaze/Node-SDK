@@ -25,6 +25,12 @@ export interface GetRelationVerifyVATNumber200Response {
      * @memberof GetRelationVerifyVATNumber200Response
      */
     valid: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRelationVerifyVATNumber200Response
+     */
+    name?: string;
 }
 
 /**
@@ -46,6 +52,7 @@ export function GetRelationVerifyVATNumber200ResponseFromJSONTyped(json: any, ig
     return {
         
         'valid': json['valid'],
+        'name': json['name'] == null ? undefined : json['name'],
     };
 }
 
@@ -61,6 +68,7 @@ export function GetRelationVerifyVATNumber200ResponseToJSONTyped(value?: GetRela
     return {
         
         'valid': value['valid'],
+        'name': value['name'],
     };
 }
 
