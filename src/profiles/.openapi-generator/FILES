@@ -132,6 +132,7 @@ src/models/GetPurchaseInvoicePaymentBatches200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200ResponseDataInner.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetQuotes200Response.ts
+src/models/GetRelationVerifyVATNumber200Response.ts
 src/models/GetRelations200Response.ts
 src/models/GetRelationsAutocomplete200Response.ts
 src/models/GetRelationsAutocomplete200ResponseDataInner.ts

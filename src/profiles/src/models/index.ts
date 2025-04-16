@@ -126,6 +126,7 @@ export * from './GetPurchaseInvoicePaymentBatches200Response';
 export * from './GetPurchaseInvoicePaymentBatches200ResponseDataInner';
 export * from './GetPurchaseInvoices200Response';
 export * from './GetQuotes200Response';
+export * from './GetRelationVerifyVATNumber200Response';
 export * from './GetRelations200Response';
 export * from './GetRelationsAutocomplete200Response';
 export * from './GetRelationsAutocomplete200ResponseDataInner';

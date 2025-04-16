@@ -95,6 +95,7 @@ import type {
   GetPurchaseInvoicePaymentBatches200ResponseDataInner,
   GetPurchaseInvoices200Response,
   GetQuotes200Response,
+  GetRelationVerifyVATNumber200Response,
   GetRelations200Response,
   GetRelationsAutocomplete200Response,
   GetReminders200Response,
@@ -309,6 +310,8 @@ import {
     GetPurchaseInvoices200ResponseToJSON,
     GetQuotes200ResponseFromJSON,
     GetQuotes200ResponseToJSON,
+    GetRelationVerifyVATNumber200ResponseFromJSON,
+    GetRelationVerifyVATNumber200ResponseToJSON,
     GetRelations200ResponseFromJSON,
     GetRelations200ResponseToJSON,
     GetRelationsAutocomplete200ResponseFromJSON,
@@ -1278,6 +1281,11 @@ export interface GetQuotesRequest {
 export interface GetRelationRequest {
     profileId: string;
     relationId: string;
+}
+
+export interface GetRelationVerifyVATNumberRequest {
+    profileId: string;
+    vatNumber: string;
 }
 
 export interface GetRelationsRequest {
@@ -4171,6 +4179,21 @@ export interface DefaultApiInterface {
      * Returns a relations
      */
     getRelation(requestParameters: GetRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation>;
+
+    /**
+     * Verify an VAT number
+     * @param {string} profileId The id of the profile
+     * @param {string} vatNumber VAT Number to verifuy
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getRelationVerifyVATNumberRaw(requestParameters: GetRelationVerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationVerifyVATNumber200Response>>;
+
+    /**
+     * Verify an VAT number
+     */
+    getRelationVerifyVATNumber(requestParameters: GetRelationVerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationVerifyVATNumber200Response>;
 
     /**
      * Returns all relations
@@ -12525,6 +12548,55 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getRelation(requestParameters: GetRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation> {
         const response = await this.getRelationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Verify an VAT number
+     */
+    async getRelationVerifyVATNumberRaw(requestParameters: GetRelationVerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationVerifyVATNumber200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getRelationVerifyVATNumber().'
+            );
+        }
+
+        if (requestParameters['vatNumber'] == null) {
+            throw new runtime.RequiredError(
+                'vatNumber',
+                'Required parameter "vatNumber" was null or undefined when calling getRelationVerifyVATNumber().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['vatNumber'] != null) {
+            queryParameters['vat-number'] = requestParameters['vatNumber'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/relations/verify-vat-number`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRelationVerifyVATNumber200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Verify an VAT number
+     */
+    async getRelationVerifyVATNumber(requestParameters: GetRelationVerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationVerifyVATNumber200Response> {
+        const response = await this.getRelationVerifyVATNumberRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
