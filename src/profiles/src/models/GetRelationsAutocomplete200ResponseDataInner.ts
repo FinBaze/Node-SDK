@@ -51,7 +51,7 @@ export interface GetRelationsAutocomplete200ResponseDataInner {
      * @type {string}
      * @memberof GetRelationsAutocomplete200ResponseDataInner
      */
-    registeredNumber?: string;
+    registrationNumber?: string;
     /**
      * ISO 3166-1 alpha-2 country code
      * @type {string}
@@ -91,7 +91,7 @@ export function GetRelationsAutocomplete200ResponseDataInnerFromJSONTyped(json: 
         
         'name': json['name'] == null ? undefined : json['name'],
         'legalName': json['legal_name'] == null ? undefined : json['legal_name'],
-        'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
+        'registrationNumber': json['registration_number'] == null ? undefined : json['registration_number'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
         'eu': json['eu'] == null ? undefined : GetRelationsAutocomplete200ResponseDataInnerEuFromJSON(json['eu']),
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
@@ -110,7 +110,7 @@ export function GetRelationsAutocomplete200ResponseDataInnerToJSONTyped(value?: 
     return {
         
         'legal_name': value['legalName'],
-        'registered_number': value['registeredNumber'],
+        'registration_number': value['registrationNumber'],
         'registration_country': value['registrationCountry'],
         'eu': GetRelationsAutocomplete200ResponseDataInnerEuToJSON(value['eu']),
         'address': AddressToJSON(value['address']),
