@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
 import type { CreateBookkeeperProfileRequestNl } from './CreateBookkeeperProfileRequestNl';
 import {
     CreateBookkeeperProfileRequestNlFromJSON,
@@ -78,6 +85,12 @@ export interface Profile {
      * @memberof Profile
      */
     url: string;
+    /**
+     * 
+     * @type {Language}
+     * @memberof Profile
+     */
+    language?: Language;
     /**
      * 
      * @type {string}
@@ -185,6 +198,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'ledgerChart': json['ledger-chart'],
         'features': ProfileFeaturesFromJSON(json['features']),
         'url': json['url'],
+        'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
         'timezone': json['timezone'],
         'name': json['name'],
         'nl': json['nl'] == null ? undefined : CreateBookkeeperProfileRequestNlFromJSON(json['nl']),
@@ -213,6 +227,7 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
         'ledger-chart': value['ledgerChart'],
         'features': ProfileFeaturesToJSON(value['features']),
         'url': value['url'],
+        'language': LanguageToJSON(value['language']),
         'timezone': value['timezone'],
         'name': value['name'],
         'nl': CreateBookkeeperProfileRequestNlToJSON(value['nl']),

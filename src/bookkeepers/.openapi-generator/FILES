@@ -31,6 +31,7 @@ src/models/ForbiddenError.ts
 src/models/GetBookkeeperAccounts200Response.ts
 src/models/GetBookkeeperProfiles200Response.ts
 src/models/InvalidRequestError.ts
+src/models/Language.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts

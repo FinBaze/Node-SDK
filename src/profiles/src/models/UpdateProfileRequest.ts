@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
 import type { CreateProfileRequestSettings } from './CreateProfileRequestSettings';
 import {
     CreateProfileRequestSettingsFromJSON,
@@ -59,6 +66,12 @@ export interface UpdateProfileRequest {
      * @memberof UpdateProfileRequest
      */
     timezone?: string;
+    /**
+     * 
+     * @type {Language}
+     * @memberof UpdateProfileRequest
+     */
+    language?: Language;
     /**
      * 
      * @type {CreateProfileRequestNl}
@@ -128,6 +141,7 @@ export function UpdateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'legalName': json['legal_name'] == null ? undefined : json['legal_name'],
         'name': json['name'] == null ? undefined : json['name'],
         'timezone': json['timezone'] == null ? undefined : json['timezone'],
+        'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'] == null ? undefined : json['distance-unit'],
@@ -151,6 +165,7 @@ export function UpdateProfileRequestToJSONTyped(value?: UpdateProfileRequest | n
         'legal_name': value['legalName'],
         'name': value['name'],
         'timezone': value['timezone'],
+        'language': LanguageToJSON(value['language']),
         'nl': CreateProfileRequestNlToJSON(value['nl']),
         'settings': CreateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

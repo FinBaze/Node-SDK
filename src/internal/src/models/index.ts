@@ -25,6 +25,7 @@ export * from './GetSubscriptionPublic200ResponseAmounts';
 export * from './GetSubscriptionPublic200ResponseEmbedded';
 export * from './GetSubscriptionPublic200ResponseEmbeddedLinesInner';
 export * from './InvalidRequestError';
+export * from './Language';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';
 export * from './MemorialEntryItem';

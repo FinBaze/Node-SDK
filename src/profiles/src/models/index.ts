@@ -142,6 +142,7 @@ export * from './ImportMonetaryAccountMT940Request';
 export * from './InstallApp200Response';
 export * from './InstallAppRequest';
 export * from './InvalidRequestError';
+export * from './Language';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';
 export * from './MemorialEntryItem';

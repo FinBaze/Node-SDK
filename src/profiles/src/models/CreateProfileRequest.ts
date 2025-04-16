@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
 import type { CreateProfileRequestSettings } from './CreateProfileRequestSettings';
 import {
     CreateProfileRequestSettingsFromJSON,
@@ -59,6 +66,12 @@ export interface CreateProfileRequest {
      * @memberof CreateProfileRequest
      */
     timezone: string;
+    /**
+     * 
+     * @type {Language}
+     * @memberof CreateProfileRequest
+     */
+    language: Language;
     /**
      * 
      * @type {CreateProfileRequestNl}
@@ -115,6 +128,7 @@ export function instanceOfCreateProfileRequest(value: object): value is CreatePr
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('timezone' in value) || value['timezone'] === undefined) return false;
+    if (!('language' in value) || value['language'] === undefined) return false;
     if (!('distanceUnit' in value) || value['distanceUnit'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
@@ -134,6 +148,7 @@ export function CreateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'legalName': json['legal_name'],
         'name': json['name'],
         'timezone': json['timezone'],
+        'language': LanguageFromJSON(json['language']),
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'],
@@ -157,6 +172,7 @@ export function CreateProfileRequestToJSONTyped(value?: CreateProfileRequest | n
         'legal_name': value['legalName'],
         'name': value['name'],
         'timezone': value['timezone'],
+        'language': LanguageToJSON(value['language']),
         'nl': CreateProfileRequestNlToJSON(value['nl']),
         'settings': CreateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

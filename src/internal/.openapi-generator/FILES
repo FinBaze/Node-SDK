@@ -31,6 +31,7 @@ src/models/GetSubscriptionPublic200ResponseAmounts.ts
 src/models/GetSubscriptionPublic200ResponseEmbedded.ts
 src/models/GetSubscriptionPublic200ResponseEmbeddedLinesInner.ts
 src/models/InvalidRequestError.ts
+src/models/Language.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts

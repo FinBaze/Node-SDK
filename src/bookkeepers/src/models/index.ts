@@ -25,6 +25,7 @@ export * from './ForbiddenError';
 export * from './GetBookkeeperAccounts200Response';
 export * from './GetBookkeeperProfiles200Response';
 export * from './InvalidRequestError';
+export * from './Language';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';
 export * from './MemorialEntryItem';

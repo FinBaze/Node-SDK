@@ -27,6 +27,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
 import type { CreateRelationRequestEu } from './CreateRelationRequestEu';
 import {
     CreateRelationRequestEuFromJSON,
@@ -73,6 +80,12 @@ export interface CreateRelationRequest {
     lastName?: string;
     /**
      * 
+     * @type {Language}
+     * @memberof CreateRelationRequest
+     */
+    language?: Language;
+    /**
+     * 
      * @type {Address}
      * @memberof CreateRelationRequest
      */
@@ -109,6 +122,8 @@ export interface CreateRelationRequest {
     metadata?: { [key: string]: any; };
 }
 
+
+
 /**
  * Check if a given object implements the CreateRelationRequest interface.
  */
@@ -131,6 +146,7 @@ export function CreateRelationRequestFromJSONTyped(json: any, ignoreDiscriminato
         'firstName': json['first_name'] == null ? undefined : json['first_name'],
         'middleName': json['middle_name'] == null ? undefined : json['middle_name'],
         'lastName': json['last_name'] == null ? undefined : json['last_name'],
+        'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
         'registrationNumber': json['registration_number'] == null ? undefined : json['registration_number'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
@@ -156,6 +172,7 @@ export function CreateRelationRequestToJSONTyped(value?: CreateRelationRequest |
         'first_name': value['firstName'],
         'middle_name': value['middleName'],
         'last_name': value['lastName'],
+        'language': LanguageToJSON(value['language']),
         'address': AddressToJSON(value['address']),
         'registration_number': value['registrationNumber'],
         'registration_country': value['registrationCountry'],

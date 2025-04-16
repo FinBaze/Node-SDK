@@ -21,6 +21,7 @@ src/models/ForbiddenError.ts
 src/models/GetApps200Response.ts
 src/models/GetOAuth2AccessToken200Response.ts
 src/models/InvalidRequestError.ts
+src/models/Language.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts

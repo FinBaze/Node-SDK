@@ -15,6 +15,7 @@ export * from './ForbiddenError';
 export * from './GetApps200Response';
 export * from './GetOAuth2AccessToken200Response';
 export * from './InvalidRequestError';
+export * from './Language';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';
 export * from './MemorialEntryItem';

@@ -34,6 +34,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
 
 /**
  * 
@@ -65,6 +72,12 @@ export interface Relation {
      * @memberof Relation
      */
     registeredNumber?: string;
+    /**
+     * 
+     * @type {Language}
+     * @memberof Relation
+     */
+    language?: Language;
     /**
      * Email address for communication with the client
      * @type {string}
@@ -187,6 +200,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'name': json['name'] == null ? undefined : json['name'],
         'tags': json['tags'],
         'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
+        'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
         'email': json['email'] == null ? undefined : json['email'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
         'bank': json['bank'] == null ? undefined : RelationBankFromJSON(json['bank']),
@@ -215,6 +229,7 @@ export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'name'|'updated'
         
         'tags': value['tags'],
         'registered_number': value['registeredNumber'],
+        'language': LanguageToJSON(value['language']),
         'email': value['email'],
         'registration_country': value['registrationCountry'],
         'bank': RelationBankToJSON(value['bank']),
