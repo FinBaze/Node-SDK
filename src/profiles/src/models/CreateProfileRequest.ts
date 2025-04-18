@@ -74,6 +74,18 @@ export interface CreateProfileRequest {
     language: Language;
     /**
      * 
+     * @type {string}
+     * @memberof CreateProfileRequest
+     */
+    registrationNumber: string;
+    /**
+     * ISO 3166-1 alpha-2 country code
+     * @type {string}
+     * @memberof CreateProfileRequest
+     */
+    registrationCountry: string;
+    /**
+     * 
      * @type {CreateProfileRequestNl}
      * @memberof CreateProfileRequest
      */
@@ -129,6 +141,8 @@ export function instanceOfCreateProfileRequest(value: object): value is CreatePr
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('timezone' in value) || value['timezone'] === undefined) return false;
     if (!('language' in value) || value['language'] === undefined) return false;
+    if (!('registrationNumber' in value) || value['registrationNumber'] === undefined) return false;
+    if (!('registrationCountry' in value) || value['registrationCountry'] === undefined) return false;
     if (!('distanceUnit' in value) || value['distanceUnit'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
@@ -149,6 +163,8 @@ export function CreateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'name': json['name'],
         'timezone': json['timezone'],
         'language': LanguageFromJSON(json['language']),
+        'registrationNumber': json['registration-number'],
+        'registrationCountry': json['registration-country'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'],
@@ -173,6 +189,8 @@ export function CreateProfileRequestToJSONTyped(value?: CreateProfileRequest | n
         'name': value['name'],
         'timezone': value['timezone'],
         'language': LanguageToJSON(value['language']),
+        'registration-number': value['registrationNumber'],
+        'registration-country': value['registrationCountry'],
         'nl': CreateProfileRequestNlToJSON(value['nl']),
         'settings': CreateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

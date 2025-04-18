@@ -24,8 +24,12 @@ src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
+src/models/GetCompaniesAutocomplete200Response.ts
+src/models/GetCompaniesAutocomplete200ResponseDataInner.ts
+src/models/GetCompaniesAutocomplete200ResponseDataInnerEu.ts
 src/models/GetJurisdictions200ResponseValue.ts
 src/models/GetJurisdictions200ResponseValueEu.ts
+src/models/GetJurisdictions200ResponseValueLegal.ts
 src/models/GetSubscriptionPublic200Response.ts
 src/models/GetSubscriptionPublic200ResponseAmounts.ts
 src/models/GetSubscriptionPublic200ResponseEmbedded.ts
@@ -120,6 +124,7 @@ src/models/UpdateDeviceRequest.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/VehicleTripOdometer.ts
+src/models/VerifyVATNumber200Response.ts
 src/models/index.ts
 src/runtime.ts
 tsconfig.esm.json

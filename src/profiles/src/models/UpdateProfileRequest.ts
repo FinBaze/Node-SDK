@@ -74,6 +74,18 @@ export interface UpdateProfileRequest {
     language?: Language;
     /**
      * 
+     * @type {string}
+     * @memberof UpdateProfileRequest
+     */
+    registrationNumber?: string;
+    /**
+     * ISO 3166-1 alpha-2 country code
+     * @type {string}
+     * @memberof UpdateProfileRequest
+     */
+    registrationCountry?: string;
+    /**
+     * 
      * @type {CreateProfileRequestNl}
      * @memberof UpdateProfileRequest
      */
@@ -142,6 +154,8 @@ export function UpdateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'name': json['name'] == null ? undefined : json['name'],
         'timezone': json['timezone'] == null ? undefined : json['timezone'],
         'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
+        'registrationNumber': json['registration-number'] == null ? undefined : json['registration-number'],
+        'registrationCountry': json['registration-country'] == null ? undefined : json['registration-country'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'] == null ? undefined : json['distance-unit'],
@@ -166,6 +180,8 @@ export function UpdateProfileRequestToJSONTyped(value?: UpdateProfileRequest | n
         'name': value['name'],
         'timezone': value['timezone'],
         'language': LanguageToJSON(value['language']),
+        'registration-number': value['registrationNumber'],
+        'registration-country': value['registrationCountry'],
         'nl': CreateProfileRequestNlToJSON(value['nl']),
         'settings': CreateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

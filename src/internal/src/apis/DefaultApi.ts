@@ -21,6 +21,7 @@ import type {
   CreateSubscriptionPublicPaymentMethod200Response,
   CreateSubscriptionPublicPaymentMethodRequest,
   Device,
+  GetCompaniesAutocomplete200Response,
   GetJurisdictions200ResponseValue,
   GetSubscriptionPublic200Response,
   ResetAccountPasswordRequest,
@@ -28,6 +29,7 @@ import type {
   SendResetPasswordRequestRequest,
   UpdateAccountMeRequest,
   UpdateDeviceRequest,
+  VerifyVATNumber200Response,
 } from '../models/index';
 import {
     AccountFromJSON,
@@ -42,6 +44,8 @@ import {
     CreateSubscriptionPublicPaymentMethodRequestToJSON,
     DeviceFromJSON,
     DeviceToJSON,
+    GetCompaniesAutocomplete200ResponseFromJSON,
+    GetCompaniesAutocomplete200ResponseToJSON,
     GetJurisdictions200ResponseValueFromJSON,
     GetJurisdictions200ResponseValueToJSON,
     GetSubscriptionPublic200ResponseFromJSON,
@@ -56,6 +60,8 @@ import {
     UpdateAccountMeRequestToJSON,
     UpdateDeviceRequestFromJSON,
     UpdateDeviceRequestToJSON,
+    VerifyVATNumber200ResponseFromJSON,
+    VerifyVATNumber200ResponseToJSON,
 } from '../models/index';
 
 export interface CreateDeviceOperationRequest {
@@ -81,6 +87,14 @@ export interface DeleteDeviceRequest {
 export interface GetAccountRequest {
     id?: string;
     email?: string;
+}
+
+export interface GetCompaniesAutocompleteRequest {
+    name: string;
+    registrationCountry: string;
+    page?: number;
+    size?: number;
+    registrationNumber?: string;
 }
 
 export interface GetPurchaseInvoicePublicRequest {
@@ -123,6 +137,10 @@ export interface UpdateAccountMeOperationRequest {
 export interface UpdateDeviceOperationRequest {
     deviceId: string;
     updateDeviceRequest?: UpdateDeviceRequest;
+}
+
+export interface VerifyVATNumberRequest {
+    vatNumber: string;
 }
 
 /**
@@ -245,6 +263,24 @@ export interface DefaultApiInterface {
      * Returns an account
      */
     getAccountMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+
+    /**
+     * Returns all autocompleted companies
+     * @param {string} name Broad search on all the name fields to filter to
+     * @param {string} registrationCountry Registration country to look in which database
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [registrationNumber] Registration number to look in which database, only one or none results are returned if this parameter is specified
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getCompaniesAutocompleteRaw(requestParameters: GetCompaniesAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCompaniesAutocomplete200Response>>;
+
+    /**
+     * Returns all autocompleted companies
+     */
+    getCompaniesAutocomplete(requestParameters: GetCompaniesAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCompaniesAutocomplete200Response>;
 
     /**
      * Get all devices
@@ -416,6 +452,20 @@ export interface DefaultApiInterface {
      * Creates an device
      */
     updateDevice(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device>;
+
+    /**
+     * Verify an VAT number
+     * @param {string} vatNumber VAT Number to verifuy
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    verifyVATNumberRaw(requestParameters: VerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VerifyVATNumber200Response>>;
+
+    /**
+     * Verify an VAT number
+     */
+    verifyVATNumber(requestParameters: VerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VerifyVATNumber200Response>;
 
 }
 
@@ -720,6 +770,71 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getAccountMe(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
         const response = await this.getAccountMeRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all autocompleted companies
+     */
+    async getCompaniesAutocompleteRaw(requestParameters: GetCompaniesAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCompaniesAutocomplete200Response>> {
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling getCompaniesAutocomplete().'
+            );
+        }
+
+        if (requestParameters['registrationCountry'] == null) {
+            throw new runtime.RequiredError(
+                'registrationCountry',
+                'Required parameter "registrationCountry" was null or undefined when calling getCompaniesAutocomplete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
+        }
+
+        if (requestParameters['registrationNumber'] != null) {
+            queryParameters['registration_number'] = requestParameters['registrationNumber'];
+        }
+
+        if (requestParameters['registrationCountry'] != null) {
+            queryParameters['registration_country'] = requestParameters['registrationCountry'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/metadata/companies/autocomplete`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetCompaniesAutocomplete200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all autocompleted companies
+     */
+    async getCompaniesAutocomplete(requestParameters: GetCompaniesAutocompleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCompaniesAutocomplete200Response> {
+        const response = await this.getCompaniesAutocompleteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1183,6 +1298,48 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateDevice(requestParameters: UpdateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device> {
         const response = await this.updateDeviceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Verify an VAT number
+     */
+    async verifyVATNumberRaw(requestParameters: VerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VerifyVATNumber200Response>> {
+        if (requestParameters['vatNumber'] == null) {
+            throw new runtime.RequiredError(
+                'vatNumber',
+                'Required parameter "vatNumber" was null or undefined when calling verifyVATNumber().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['vatNumber'] != null) {
+            queryParameters['vat-number'] = requestParameters['vatNumber'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/metadata/vat-number/verify`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VerifyVATNumber200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Verify an VAT number
+     */
+    async verifyVATNumber(requestParameters: VerifyVATNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VerifyVATNumber200Response> {
+        const response = await this.verifyVATNumberRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

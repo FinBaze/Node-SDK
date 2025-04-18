@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetJurisdictions200ResponseValueLegal } from './GetJurisdictions200ResponseValueLegal';
+import {
+    GetJurisdictions200ResponseValueLegalFromJSON,
+    GetJurisdictions200ResponseValueLegalFromJSONTyped,
+    GetJurisdictions200ResponseValueLegalToJSON,
+    GetJurisdictions200ResponseValueLegalToJSONTyped,
+} from './GetJurisdictions200ResponseValueLegal';
 import type { Address } from './Address';
 import {
     AddressFromJSON,
@@ -54,6 +61,12 @@ export interface GetJurisdictions200ResponseValue {
     registrationCountry: string;
     /**
      * 
+     * @type {GetJurisdictions200ResponseValueLegal}
+     * @memberof GetJurisdictions200ResponseValue
+     */
+    legal: GetJurisdictions200ResponseValueLegal;
+    /**
+     * 
      * @type {Address}
      * @memberof GetJurisdictions200ResponseValue
      */
@@ -79,6 +92,7 @@ export function instanceOfGetJurisdictions200ResponseValue(value: object): value
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('registrationNumber' in value) || value['registrationNumber'] === undefined) return false;
     if (!('registrationCountry' in value) || value['registrationCountry'] === undefined) return false;
+    if (!('legal' in value) || value['legal'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
     return true;
 }
@@ -96,6 +110,7 @@ export function GetJurisdictions200ResponseValueFromJSONTyped(json: any, ignoreD
         'legalName': json['legal-name'],
         'registrationNumber': json['registration-number'],
         'registrationCountry': json['registration-country'],
+        'legal': GetJurisdictions200ResponseValueLegalFromJSON(json['legal']),
         'address': AddressFromJSON(json['address']),
         'eu': json['eu'] == null ? undefined : GetJurisdictions200ResponseValueEuFromJSON(json['eu']),
         'gb': json['gb'] == null ? undefined : GetJurisdictions200ResponseValueEuFromJSON(json['gb']),
@@ -116,6 +131,7 @@ export function GetJurisdictions200ResponseValueToJSONTyped(value?: GetJurisdict
         'legal-name': value['legalName'],
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
+        'legal': GetJurisdictions200ResponseValueLegalToJSON(value['legal']),
         'address': AddressToJSON(value['address']),
         'eu': GetJurisdictions200ResponseValueEuToJSON(value['eu']),
         'gb': GetJurisdictions200ResponseValueEuToJSON(value['gb']),
