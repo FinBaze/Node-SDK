@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Account,
   CreateAccountMeZendeskToken200Response,
+  CreateAccountRequest,
   CreateDeviceRequest,
   CreateSubscriptionPublicPaymentMethod200Response,
   CreateSubscriptionPublicPaymentMethodRequest,
@@ -36,6 +37,8 @@ import {
     AccountToJSON,
     CreateAccountMeZendeskToken200ResponseFromJSON,
     CreateAccountMeZendeskToken200ResponseToJSON,
+    CreateAccountRequestFromJSON,
+    CreateAccountRequestToJSON,
     CreateDeviceRequestFromJSON,
     CreateDeviceRequestToJSON,
     CreateSubscriptionPublicPaymentMethod200ResponseFromJSON,
@@ -63,6 +66,10 @@ import {
     VerifyVATNumber200ResponseFromJSON,
     VerifyVATNumber200ResponseToJSON,
 } from '../models/index';
+
+export interface CreateAccountOperationRequest {
+    createAccountRequest?: CreateAccountRequest;
+}
 
 export interface CreateDeviceOperationRequest {
     createDeviceRequest?: CreateDeviceRequest;
@@ -150,6 +157,20 @@ export interface VerifyVATNumberRequest {
  * @interface DefaultApiInterface
  */
 export interface DefaultApiInterface {
+    /**
+     * Registers an account
+     * @param {CreateAccountRequest} [createAccountRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
+
+    /**
+     * Registers an account
+     */
+    createAccount(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+
     /**
      * Creates an Zendesk app token
      * @param {*} [options] Override http request option.
@@ -473,6 +494,35 @@ export interface DefaultApiInterface {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
+
+    /**
+     * Registers an account
+     */
+    async createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/accounts`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateAccountRequestToJSON(requestParameters['createAccountRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountFromJSON(jsonValue));
+    }
+
+    /**
+     * Registers an account
+     */
+    async createAccount(requestParameters: CreateAccountOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
+        const response = await this.createAccountRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates an Zendesk app token

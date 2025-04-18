@@ -6,6 +6,7 @@ export * from './App';
 export * from './Asset';
 export * from './Bookkeeper';
 export * from './CreateAccountMeZendeskToken200Response';
+export * from './CreateAccountRequest';
 export * from './CreateDeviceRequest';
 export * from './CreateSubscriptionPublicPaymentMethod200Response';
 export * from './CreateSubscriptionPublicPaymentMethodRequest';

@@ -12,6 +12,7 @@ src/models/App.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
 src/models/CreateAccountMeZendeskToken200Response.ts
+src/models/CreateAccountRequest.ts
 src/models/CreateDeviceRequest.ts
 src/models/CreateSubscriptionPublicPaymentMethod200Response.ts
 src/models/CreateSubscriptionPublicPaymentMethodRequest.ts
