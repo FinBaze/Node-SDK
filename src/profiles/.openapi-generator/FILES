@@ -126,6 +126,9 @@ src/models/GetProfileLedgerChart200ResponseLedgersValue.ts
 src/models/GetProfileLedgerChart200ResponseSectionsValue.ts
 src/models/GetProfileMetadata200Response.ts
 src/models/GetProfileOutgoingPurchaseInvoices200ResponseValue.ts
+src/models/GetProfilePlan200Response.ts
+src/models/GetProfilePlan200ResponseEmbedded.ts
+src/models/GetProfilePlan200ResponseEmbeddedPlan.ts
 src/models/GetProjects200Response.ts
 src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200Response.ts
@@ -212,12 +215,9 @@ src/models/ServerError.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/SubmitProcessDocumentRequest.ts
-src/models/SubscribeProfile201Response.ts
-src/models/SubscribeProfile201ResponsePlan.ts
-src/models/SubscribeProfile201ResponsePlanEmbedded.ts
-src/models/SubscribeProfile201ResponsePlanEmbeddedPlan.ts
-src/models/SubscribeProfileRequest.ts
-src/models/SubscribeProfileRequestOpenbanking.ts
+src/models/SubscribeProfilePlan201Response.ts
+src/models/SubscribeProfilePlanRequest.ts
+src/models/SubscribeProfilePlanRequestOpenbanking.ts
 src/models/Subscription.ts
 src/models/SubscriptionAmounts.ts
 src/models/SubscriptionEmbedded.ts

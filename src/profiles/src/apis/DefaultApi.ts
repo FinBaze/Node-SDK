@@ -89,6 +89,7 @@ import type {
   GetProfileLedgerChart200Response,
   GetProfileMetadata200Response,
   GetProfileOutgoingPurchaseInvoices200ResponseValue,
+  GetProfilePlan200Response,
   GetProjects200Response,
   GetProjectsTimes200Response,
   GetPurchaseInvoicePaymentBatches200Response,
@@ -140,8 +141,8 @@ import type {
   SendSalesInvoiceRequest,
   StockCategory,
   SubmitProcessDocumentRequest,
-  SubscribeProfile201Response,
-  SubscribeProfileRequest,
+  SubscribeProfilePlan201Response,
+  SubscribeProfilePlanRequest,
   Subscription,
   SubscriptionLine,
   UndisputePurchaseInvoiceRequest,
@@ -300,6 +301,8 @@ import {
     GetProfileMetadata200ResponseToJSON,
     GetProfileOutgoingPurchaseInvoices200ResponseValueFromJSON,
     GetProfileOutgoingPurchaseInvoices200ResponseValueToJSON,
+    GetProfilePlan200ResponseFromJSON,
+    GetProfilePlan200ResponseToJSON,
     GetProjects200ResponseFromJSON,
     GetProjects200ResponseToJSON,
     GetProjectsTimes200ResponseFromJSON,
@@ -402,10 +405,10 @@ import {
     StockCategoryToJSON,
     SubmitProcessDocumentRequestFromJSON,
     SubmitProcessDocumentRequestToJSON,
-    SubscribeProfile201ResponseFromJSON,
-    SubscribeProfile201ResponseToJSON,
-    SubscribeProfileRequestFromJSON,
-    SubscribeProfileRequestToJSON,
+    SubscribeProfilePlan201ResponseFromJSON,
+    SubscribeProfilePlan201ResponseToJSON,
+    SubscribeProfilePlanRequestFromJSON,
+    SubscribeProfilePlanRequestToJSON,
     SubscriptionFromJSON,
     SubscriptionToJSON,
     SubscriptionLineFromJSON,
@@ -423,6 +426,10 @@ import {
     VehicleTripFromJSON,
     VehicleTripToJSON,
 } from '../models/index';
+
+export interface CancelProfilePlanRequest {
+    profileId: string;
+}
 
 export interface ClosePurchaseInvoiceRequest {
     profileId: string;
@@ -1174,6 +1181,10 @@ export interface GetProfileOutgoingPurchaseInvoicesRequest {
     group?: GetProfileOutgoingPurchaseInvoicesGroupEnum;
 }
 
+export interface GetProfilePlanRequest {
+    profileId: string;
+}
+
 export interface GetProjectRequest {
     profileId: string;
     projectId: string;
@@ -1579,9 +1590,9 @@ export interface SubmitProcessDocumentOperationRequest {
     submitProcessDocumentRequest?: SubmitProcessDocumentRequest;
 }
 
-export interface SubscribeProfileOperationRequest {
+export interface SubscribeProfilePlanOperationRequest {
     profileId: string;
-    subscribeProfileRequest: SubscribeProfileRequest;
+    subscribeProfilePlanRequest: SubscribeProfilePlanRequest;
 }
 
 export interface UndisputePurchaseInvoiceOperationRequest {
@@ -1793,6 +1804,20 @@ export interface UpdateVehicleTripRequest {
  * @interface DefaultApiInterface
  */
 export interface DefaultApiInterface {
+    /**
+     * Cancels an plan
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    cancelProfilePlanRaw(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Cancels an plan
+     */
+    cancelProfilePlan(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
     /**
      * Closes a purchase invoice
      * @param {string} profileId The id of the profile
@@ -3884,6 +3909,20 @@ export interface DefaultApiInterface {
     getProfileOutgoingPurchaseInvoices(requestParameters: GetProfileOutgoingPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: GetProfileOutgoingPurchaseInvoices200ResponseValue; }>;
 
     /**
+     * Retrieves the current subscription of an profile
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfilePlanRaw(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfilePlan200Response>>;
+
+    /**
+     * Retrieves the current subscription of an profile
+     */
+    getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response>;
+
+    /**
      * Returns a list of all the profiles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4912,19 +4951,19 @@ export interface DefaultApiInterface {
     submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument>;
 
     /**
-     * Creates a new profile
+     * Creates a new profile plan
      * @param {string} profileId The id of the profile
-     * @param {SubscribeProfileRequest} subscribeProfileRequest 
+     * @param {SubscribeProfilePlanRequest} subscribeProfilePlanRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    subscribeProfileRaw(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfile201Response>>;
+    subscribeProfilePlanRaw(requestParameters: SubscribeProfilePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfilePlan201Response>>;
 
     /**
-     * Creates a new profile
+     * Creates a new profile plan
      */
-    subscribeProfile(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfile201Response>;
+    subscribeProfilePlan(requestParameters: SubscribeProfilePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfilePlan201Response>;
 
     /**
      * Undisputes an purchase invoice
@@ -5464,6 +5503,43 @@ export interface DefaultApiInterface {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
+
+    /**
+     * Cancels an plan
+     */
+    async cancelProfilePlanRaw(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling cancelProfilePlan().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/subscription`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Cancels an plan
+     */
+    async cancelProfilePlan(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.cancelProfilePlanRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Closes a purchase invoice
@@ -11632,6 +11708,44 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Retrieves the current subscription of an profile
+     */
+    async getProfilePlanRaw(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfilePlan200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfilePlan().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/subscription`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfilePlan200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retrieves the current subscription of an profile
+     */
+    async getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response> {
+        const response = await this.getProfilePlanRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of all the profiles
      */
     async getProfilesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Profile>>> {
@@ -14827,20 +14941,20 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Creates a new profile
+     * Creates a new profile plan
      */
-    async subscribeProfileRaw(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfile201Response>> {
+    async subscribeProfilePlanRaw(requestParameters: SubscribeProfilePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfilePlan201Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
-                'Required parameter "profileId" was null or undefined when calling subscribeProfile().'
+                'Required parameter "profileId" was null or undefined when calling subscribeProfilePlan().'
             );
         }
 
-        if (requestParameters['subscribeProfileRequest'] == null) {
+        if (requestParameters['subscribeProfilePlanRequest'] == null) {
             throw new runtime.RequiredError(
-                'subscribeProfileRequest',
-                'Required parameter "subscribeProfileRequest" was null or undefined when calling subscribeProfile().'
+                'subscribeProfilePlanRequest',
+                'Required parameter "subscribeProfilePlanRequest" was null or undefined when calling subscribeProfilePlan().'
             );
         }
 
@@ -14856,21 +14970,21 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/subscribe`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            path: `/v1/profiles/{profileId}/subscription`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SubscribeProfileRequestToJSON(requestParameters['subscribeProfileRequest']),
+            body: SubscribeProfilePlanRequestToJSON(requestParameters['subscribeProfilePlanRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => SubscribeProfile201ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => SubscribeProfilePlan201ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Creates a new profile
+     * Creates a new profile plan
      */
-    async subscribeProfile(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfile201Response> {
-        const response = await this.subscribeProfileRaw(requestParameters, initOverrides);
+    async subscribeProfilePlan(requestParameters: SubscribeProfilePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfilePlan201Response> {
+        const response = await this.subscribeProfilePlanRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

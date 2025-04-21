@@ -16,45 +16,45 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SubscribeProfile201ResponsePlanEmbeddedPlan
+ * @interface GetProfilePlan200ResponseEmbeddedPlan
  */
-export interface SubscribeProfile201ResponsePlanEmbeddedPlan {
+export interface GetProfilePlan200ResponseEmbeddedPlan {
     /**
      * 
      * @type {string}
-     * @memberof SubscribeProfile201ResponsePlanEmbeddedPlan
+     * @memberof GetProfilePlan200ResponseEmbeddedPlan
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof SubscribeProfile201ResponsePlanEmbeddedPlan
+     * @memberof GetProfilePlan200ResponseEmbeddedPlan
      */
     readonly uuid: string;
     /**
      * 
      * @type {string}
-     * @memberof SubscribeProfile201ResponsePlanEmbeddedPlan
+     * @memberof GetProfilePlan200ResponseEmbeddedPlan
      */
     readonly name: string;
     /**
      * 
      * @type {number}
-     * @memberof SubscribeProfile201ResponsePlanEmbeddedPlan
+     * @memberof GetProfilePlan200ResponseEmbeddedPlan
      */
     readonly price: number;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
-     * @memberof SubscribeProfile201ResponsePlanEmbeddedPlan
+     * @memberof GetProfilePlan200ResponseEmbeddedPlan
      */
     currency: string;
 }
 
 /**
- * Check if a given object implements the SubscribeProfile201ResponsePlanEmbeddedPlan interface.
+ * Check if a given object implements the GetProfilePlan200ResponseEmbeddedPlan interface.
  */
-export function instanceOfSubscribeProfile201ResponsePlanEmbeddedPlan(value: object): value is SubscribeProfile201ResponsePlanEmbeddedPlan {
+export function instanceOfGetProfilePlan200ResponseEmbeddedPlan(value: object): value is GetProfilePlan200ResponseEmbeddedPlan {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
@@ -63,11 +63,11 @@ export function instanceOfSubscribeProfile201ResponsePlanEmbeddedPlan(value: obj
     return true;
 }
 
-export function SubscribeProfile201ResponsePlanEmbeddedPlanFromJSON(json: any): SubscribeProfile201ResponsePlanEmbeddedPlan {
-    return SubscribeProfile201ResponsePlanEmbeddedPlanFromJSONTyped(json, false);
+export function GetProfilePlan200ResponseEmbeddedPlanFromJSON(json: any): GetProfilePlan200ResponseEmbeddedPlan {
+    return GetProfilePlan200ResponseEmbeddedPlanFromJSONTyped(json, false);
 }
 
-export function SubscribeProfile201ResponsePlanEmbeddedPlanFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubscribeProfile201ResponsePlanEmbeddedPlan {
+export function GetProfilePlan200ResponseEmbeddedPlanFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProfilePlan200ResponseEmbeddedPlan {
     if (json == null) {
         return json;
     }
@@ -81,11 +81,11 @@ export function SubscribeProfile201ResponsePlanEmbeddedPlanFromJSONTyped(json: a
     };
 }
 
-export function SubscribeProfile201ResponsePlanEmbeddedPlanToJSON(json: any): SubscribeProfile201ResponsePlanEmbeddedPlan {
-    return SubscribeProfile201ResponsePlanEmbeddedPlanToJSONTyped(json, false);
+export function GetProfilePlan200ResponseEmbeddedPlanToJSON(json: any): GetProfilePlan200ResponseEmbeddedPlan {
+    return GetProfilePlan200ResponseEmbeddedPlanToJSONTyped(json, false);
 }
 
-export function SubscribeProfile201ResponsePlanEmbeddedPlanToJSONTyped(value?: Omit<SubscribeProfile201ResponsePlanEmbeddedPlan, 'id'|'uuid'|'name'|'price'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetProfilePlan200ResponseEmbeddedPlanToJSONTyped(value?: Omit<GetProfilePlan200ResponseEmbeddedPlan, 'id'|'uuid'|'name'|'price'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
