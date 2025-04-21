@@ -212,6 +212,11 @@ src/models/ServerError.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/SubmitProcessDocumentRequest.ts
+src/models/SubscribeProfile201Response.ts
+src/models/SubscribeProfile201ResponsePlan.ts
+src/models/SubscribeProfile201ResponsePlanEmbedded.ts
+src/models/SubscribeProfile201ResponsePlanEmbeddedPlan.ts
+src/models/SubscribeProfileRequest.ts
 src/models/Subscription.ts
 src/models/SubscriptionAmounts.ts
 src/models/SubscriptionEmbedded.ts

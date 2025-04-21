@@ -140,6 +140,8 @@ import type {
   SendSalesInvoiceRequest,
   StockCategory,
   SubmitProcessDocumentRequest,
+  SubscribeProfile201Response,
+  SubscribeProfileRequest,
   Subscription,
   SubscriptionLine,
   UndisputePurchaseInvoiceRequest,
@@ -400,6 +402,10 @@ import {
     StockCategoryToJSON,
     SubmitProcessDocumentRequestFromJSON,
     SubmitProcessDocumentRequestToJSON,
+    SubscribeProfile201ResponseFromJSON,
+    SubscribeProfile201ResponseToJSON,
+    SubscribeProfileRequestFromJSON,
+    SubscribeProfileRequestToJSON,
     SubscriptionFromJSON,
     SubscriptionToJSON,
     SubscriptionLineFromJSON,
@@ -1571,6 +1577,11 @@ export interface SubmitProcessDocumentOperationRequest {
     profileId: string;
     processDocumentId: string;
     submitProcessDocumentRequest?: SubmitProcessDocumentRequest;
+}
+
+export interface SubscribeProfileOperationRequest {
+    profileId: string;
+    subscribeProfileRequest: SubscribeProfileRequest;
 }
 
 export interface UndisputePurchaseInvoiceOperationRequest {
@@ -4899,6 +4910,21 @@ export interface DefaultApiInterface {
      * Submits a process document for processing
      */
     submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument>;
+
+    /**
+     * Creates a new profile
+     * @param {string} profileId The id of the profile
+     * @param {SubscribeProfileRequest} subscribeProfileRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    subscribeProfileRaw(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfile201Response>>;
+
+    /**
+     * Creates a new profile
+     */
+    subscribeProfile(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfile201Response>;
 
     /**
      * Undisputes an purchase invoice
@@ -14797,6 +14823,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async submitProcessDocument(requestParameters: SubmitProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument> {
         const response = await this.submitProcessDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a new profile
+     */
+    async subscribeProfileRaw(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeProfile201Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling subscribeProfile().'
+            );
+        }
+
+        if (requestParameters['subscribeProfileRequest'] == null) {
+            throw new runtime.RequiredError(
+                'subscribeProfileRequest',
+                'Required parameter "subscribeProfileRequest" was null or undefined when calling subscribeProfile().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/subscribe`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SubscribeProfileRequestToJSON(requestParameters['subscribeProfileRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SubscribeProfile201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a new profile
+     */
+    async subscribeProfile(requestParameters: SubscribeProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeProfile201Response> {
+        const response = await this.subscribeProfileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
