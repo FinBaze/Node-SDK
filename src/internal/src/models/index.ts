@@ -5,6 +5,8 @@ export * from './Address';
 export * from './App';
 export * from './Asset';
 export * from './Bookkeeper';
+export * from './CreateAccount200Response';
+export * from './CreateAccount200ResponseToken';
 export * from './CreateAccountMeZendeskToken200Response';
 export * from './CreateAccountRequest';
 export * from './CreateDeviceRequest';

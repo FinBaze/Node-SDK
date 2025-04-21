@@ -11,6 +11,8 @@ src/models/Address.ts
 src/models/App.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
+src/models/CreateAccount200Response.ts
+src/models/CreateAccount200ResponseToken.ts
 src/models/CreateAccountMeZendeskToken200Response.ts
 src/models/CreateAccountRequest.ts
 src/models/CreateDeviceRequest.ts

@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   Account,
+  CreateAccount200Response,
   CreateAccountMeZendeskToken200Response,
   CreateAccountRequest,
   CreateDeviceRequest,
@@ -35,6 +36,8 @@ import type {
 import {
     AccountFromJSON,
     AccountToJSON,
+    CreateAccount200ResponseFromJSON,
+    CreateAccount200ResponseToJSON,
     CreateAccountMeZendeskToken200ResponseFromJSON,
     CreateAccountMeZendeskToken200ResponseToJSON,
     CreateAccountRequestFromJSON,
@@ -164,12 +167,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>>;
+    createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateAccount200Response>>;
 
     /**
      * Registers an account
      */
-    createAccount(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any>;
+    createAccount(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccount200Response>;
 
     /**
      * Creates an Zendesk app token
@@ -498,7 +501,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Registers an account
      */
-    async createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async createAccountRaw(requestParameters: CreateAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateAccount200Response>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -513,17 +516,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateAccountRequestToJSON(requestParameters['createAccountRequest']),
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateAccount200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Registers an account
      */
-    async createAccount(requestParameters: CreateAccountOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async createAccount(requestParameters: CreateAccountOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccount200Response> {
         const response = await this.createAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }
