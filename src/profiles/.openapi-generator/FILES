@@ -217,6 +217,7 @@ src/models/SubscribeProfile201ResponsePlan.ts
 src/models/SubscribeProfile201ResponsePlanEmbedded.ts
 src/models/SubscribeProfile201ResponsePlanEmbeddedPlan.ts
 src/models/SubscribeProfileRequest.ts
+src/models/SubscribeProfileRequestOpenbanking.ts
 src/models/Subscription.ts
 src/models/SubscriptionAmounts.ts
 src/models/SubscriptionEmbedded.ts

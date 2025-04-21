@@ -211,6 +211,7 @@ export * from './SubscribeProfile201ResponsePlan';
 export * from './SubscribeProfile201ResponsePlanEmbedded';
 export * from './SubscribeProfile201ResponsePlanEmbeddedPlan';
 export * from './SubscribeProfileRequest';
+export * from './SubscribeProfileRequestOpenbanking';
 export * from './Subscription';
 export * from './SubscriptionAmounts';
 export * from './SubscriptionEmbedded';

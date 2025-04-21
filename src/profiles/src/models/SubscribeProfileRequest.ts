@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { SubscribeProfileRequestOpenbanking } from './SubscribeProfileRequestOpenbanking';
+import {
+    SubscribeProfileRequestOpenbankingFromJSON,
+    SubscribeProfileRequestOpenbankingFromJSONTyped,
+    SubscribeProfileRequestOpenbankingToJSON,
+    SubscribeProfileRequestOpenbankingToJSONTyped,
+} from './SubscribeProfileRequestOpenbanking';
 import type { SubscriptionFrequency } from './SubscriptionFrequency';
 import {
     SubscriptionFrequencyFromJSON,
@@ -32,6 +39,12 @@ export interface SubscribeProfileRequest {
      * @type {string}
      * @memberof SubscribeProfileRequest
      */
+    plan: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscribeProfileRequest
+     */
     method: SubscribeProfileRequestMethodEnum;
     /**
      * 
@@ -39,6 +52,12 @@ export interface SubscribeProfileRequest {
      * @memberof SubscribeProfileRequest
      */
     frequency?: SubscriptionFrequency;
+    /**
+     * 
+     * @type {SubscribeProfileRequestOpenbanking}
+     * @memberof SubscribeProfileRequest
+     */
+    openbanking?: SubscribeProfileRequestOpenbanking;
 }
 
 
@@ -56,6 +75,7 @@ export type SubscribeProfileRequestMethodEnum = typeof SubscribeProfileRequestMe
  * Check if a given object implements the SubscribeProfileRequest interface.
  */
 export function instanceOfSubscribeProfileRequest(value: object): value is SubscribeProfileRequest {
+    if (!('plan' in value) || value['plan'] === undefined) return false;
     if (!('method' in value) || value['method'] === undefined) return false;
     return true;
 }
@@ -70,8 +90,10 @@ export function SubscribeProfileRequestFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
+        'plan': json['plan'],
         'method': json['method'],
         'frequency': json['frequency'] == null ? undefined : SubscriptionFrequencyFromJSON(json['frequency']),
+        'openbanking': json['openbanking'] == null ? undefined : SubscribeProfileRequestOpenbankingFromJSON(json['openbanking']),
     };
 }
 
@@ -86,8 +108,10 @@ export function SubscribeProfileRequestToJSONTyped(value?: SubscribeProfileReque
 
     return {
         
+        'plan': value['plan'],
         'method': value['method'],
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
+        'openbanking': SubscribeProfileRequestOpenbankingToJSON(value['openbanking']),
     };
 }
 
