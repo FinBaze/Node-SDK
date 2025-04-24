@@ -1566,6 +1566,12 @@ export interface ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest {
     processMonetaryAccountPaymentSalesInvoiceRequest?: ProcessMonetaryAccountPaymentSalesInvoiceRequest;
 }
 
+export interface PullMonetaryAccountRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    installApp200Response?: InstallApp200Response;
+}
+
 export interface ReopenPurchaseInvoiceOperationRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -4885,6 +4891,22 @@ export interface DefaultApiInterface {
      * Updates a monetary account
      */
     processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Create an pull request for an monetary account
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {InstallApp200Response} [installApp200Response] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Create an pull request for an monetary account
+     */
+    pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Reopens a purchase invoice
@@ -14748,6 +14770,53 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.processMonetaryAccountPaymentSalesInvoiceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Create an pull request for an monetary account
+     */
+    async pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling pullMonetaryAccount().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling pullMonetaryAccount().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/pull`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: InstallApp200ResponseToJSON(requestParameters['installApp200Response']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Create an pull request for an monetary account
+     */
+    async pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.pullMonetaryAccountRaw(requestParameters, initOverrides);
     }
 
     /**
