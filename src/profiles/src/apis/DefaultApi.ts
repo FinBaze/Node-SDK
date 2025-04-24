@@ -128,6 +128,7 @@ import type {
   Profile,
   Project,
   ProjectTime,
+  PullMonetaryAccount200Response,
   PurchaseInvoice,
   PurchaseInvoiceLine,
   Quote,
@@ -379,6 +380,8 @@ import {
     ProjectToJSON,
     ProjectTimeFromJSON,
     ProjectTimeToJSON,
+    PullMonetaryAccount200ResponseFromJSON,
+    PullMonetaryAccount200ResponseToJSON,
     PurchaseInvoiceFromJSON,
     PurchaseInvoiceToJSON,
     PurchaseInvoiceLineFromJSON,
@@ -1569,7 +1572,6 @@ export interface ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest {
 export interface PullMonetaryAccountRequest {
     profileId: string;
     monetaryAccountId: string;
-    installApp200Response?: InstallApp200Response;
 }
 
 export interface ReopenPurchaseInvoiceOperationRequest {
@@ -4896,17 +4898,16 @@ export interface DefaultApiInterface {
      * Create an pull request for an monetary account
      * @param {string} profileId The id of the profile
      * @param {string} monetaryAccountId The ID of the monetary account
-     * @param {InstallApp200Response} [installApp200Response] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+    pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PullMonetaryAccount200Response>>;
 
     /**
      * Create an pull request for an monetary account
      */
-    pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+    pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PullMonetaryAccount200Response>;
 
     /**
      * Reopens a purchase invoice
@@ -14775,7 +14776,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Create an pull request for an monetary account
      */
-    async pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async pullMonetaryAccountRaw(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PullMonetaryAccount200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -14794,8 +14795,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
-
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
@@ -14806,17 +14805,17 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: InstallApp200ResponseToJSON(requestParameters['installApp200Response']),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => PullMonetaryAccount200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Create an pull request for an monetary account
      */
-    async pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.pullMonetaryAccountRaw(requestParameters, initOverrides);
+    async pullMonetaryAccount(requestParameters: PullMonetaryAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PullMonetaryAccount200Response> {
+        const response = await this.pullMonetaryAccountRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

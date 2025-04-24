@@ -185,6 +185,7 @@ src/models/ProfileSettingsBranding.ts
 src/models/Project.ts
 src/models/ProjectEmbedded.ts
 src/models/ProjectTime.ts
+src/models/PullMonetaryAccount200Response.ts
 src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts
 src/models/PurchaseInvoiceLine.ts
