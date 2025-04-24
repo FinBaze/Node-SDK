@@ -56,6 +56,12 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf {
      */
     price: number;
     /**
+     * The total amount of taxes of this item of one item in cents
+     * @type {number}
+     * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
+     */
+    tax?: number;
+    /**
      * The total discount in cents of the one x quantity of the line, do not use a 0 or non positive values.
      * @type {number}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
@@ -251,6 +257,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOfFromJSONTyped(js
         'taxCode': json['tax-code'],
         'includingTax': json['including_tax'] == null ? undefined : json['including_tax'],
         'price': json['price'],
+        'tax': json['tax'] == null ? undefined : json['tax'],
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -274,6 +281,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOfToJSONTyped(valu
         'tax-code': value['taxCode'],
         'including_tax': value['includingTax'],
         'price': value['price'],
+        'tax': value['tax'],
         'discount': value['discount'],
         'quantity': value['quantity'],
         'metadata': value['metadata'],

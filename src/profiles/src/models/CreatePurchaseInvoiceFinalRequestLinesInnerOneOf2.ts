@@ -44,7 +44,7 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2 {
      * @type {CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2
      */
-    asset?: CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset;
+    asset: CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2Asset;
     /**
      * ISO 3166-1 alpha-2 country code
      * @type {string}
@@ -52,11 +52,17 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2 {
      */
     taxCode?: CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2TaxCodeEnum;
     /**
+     * The total amount of taxes of this item of one item in cents
+     * @type {number}
+     * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2
+     */
+    tax?: number;
+    /**
      * The price of one item in cents, excluding taxes, required if no product is provided
      * @type {number}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2
      */
-    price?: number;
+    price: number;
     /**
      * The total discount in cents of the one x quantity of the line, do not use a 0 or non positive values.
      * @type {number}
@@ -229,6 +235,8 @@ export type CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2TaxCodeEnum = typeo
  * Check if a given object implements the CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2 interface.
  */
 export function instanceOfCreatePurchaseInvoiceFinalRequestLinesInnerOneOf2(value: object): value is CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2 {
+    if (!('asset' in value) || value['asset'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     return true;
 }
@@ -245,9 +253,10 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2FromJSONTyped(j
         
         'name': json['name'] == null ? undefined : json['name'],
         'description': json['description'] == null ? undefined : json['description'],
-        'asset': json['asset'] == null ? undefined : CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetFromJSON(json['asset']),
+        'asset': CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetFromJSON(json['asset']),
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
-        'price': json['price'] == null ? undefined : json['price'],
+        'tax': json['tax'] == null ? undefined : json['tax'],
+        'price': json['price'],
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -269,6 +278,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2ToJSONTyped(val
         'description': value['description'],
         'asset': CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetToJSON(value['asset']),
         'tax-code': value['taxCode'],
+        'tax': value['tax'],
         'price': value['price'],
         'discount': value['discount'],
         'quantity': value['quantity'],
