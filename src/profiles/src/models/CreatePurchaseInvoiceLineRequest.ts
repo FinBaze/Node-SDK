@@ -70,6 +70,12 @@ export interface CreatePurchaseInvoiceLineRequest {
      */
     taxCode?: CreatePurchaseInvoiceLineRequestTaxCodeEnum;
     /**
+     * The total amount of taxes of this item of one item in cents
+     * @type {number}
+     * @memberof CreatePurchaseInvoiceLineRequest
+     */
+    tax?: number;
+    /**
      * The price of one item in cents, excluding taxes, required if no product is provided
      * @type {number}
      * @memberof CreatePurchaseInvoiceLineRequest
@@ -81,6 +87,12 @@ export interface CreatePurchaseInvoiceLineRequest {
      * @memberof CreatePurchaseInvoiceLineRequest
      */
     discount?: number;
+    /**
+     * 
+     * @type {any}
+     * @memberof CreatePurchaseInvoiceLineRequest
+     */
+    includingTax?: any | null;
     /**
      * Quantity of the line
      * @type {number}
@@ -268,8 +280,10 @@ export function CreatePurchaseInvoiceLineRequestFromJSONTyped(json: any, ignoreD
         'expenseCategory': json['expense-category'] == null ? undefined : json['expense-category'],
         'asset': json['asset'] == null ? undefined : CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetFromJSON(json['asset']),
         'taxCode': json['tax-code'] == null ? undefined : json['tax-code'],
+        'tax': json['tax'] == null ? undefined : json['tax'],
         'price': json['price'] == null ? undefined : json['price'],
         'discount': json['discount'] == null ? undefined : json['discount'],
+        'includingTax': json['including_tax'] == null ? undefined : json['including_tax'],
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
@@ -293,8 +307,10 @@ export function CreatePurchaseInvoiceLineRequestToJSONTyped(value?: CreatePurcha
         'expense-category': value['expenseCategory'],
         'asset': CreatePurchaseInvoiceFinalRequestLinesInnerOneOf2AssetToJSON(value['asset']),
         'tax-code': value['taxCode'],
+        'tax': value['tax'],
         'price': value['price'],
         'discount': value['discount'],
+        'including_tax': value['includingTax'],
         'quantity': value['quantity'],
         'metadata': value['metadata'],
     };
