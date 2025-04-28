@@ -211,6 +211,9 @@ src/models/SalesInvoicePublicEmbeddedLinesInner.ts
 src/models/SalesInvoicePublicEmbeddedProfile.ts
 src/models/SalesInvoicePublicEmbeddedProfileNl.ts
 src/models/SalesInvoicePublicEmbeddedProfileNlVat.ts
+src/models/SalesInvoicePublicEmbeddedSubscription.ts
+src/models/SalesInvoicePublicEmbeddedSubscriptionEmbedded.ts
+src/models/SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner.ts
 src/models/SendSalesInvoiceRequest.ts
 src/models/ServerError.ts
 src/models/StockCategory.ts

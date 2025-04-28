@@ -27,6 +27,13 @@ import {
     SalesInvoicePublicEmbeddedLinesInnerToJSON,
     SalesInvoicePublicEmbeddedLinesInnerToJSONTyped,
 } from './SalesInvoicePublicEmbeddedLinesInner';
+import type { GetSubscriptionPublic200Response } from './GetSubscriptionPublic200Response';
+import {
+    GetSubscriptionPublic200ResponseFromJSON,
+    GetSubscriptionPublic200ResponseFromJSONTyped,
+    GetSubscriptionPublic200ResponseToJSON,
+    GetSubscriptionPublic200ResponseToJSONTyped,
+} from './GetSubscriptionPublic200Response';
 
 /**
  * 
@@ -46,6 +53,12 @@ export interface SalesInvoicePublicEmbedded {
      * @memberof SalesInvoicePublicEmbedded
      */
     profile: SalesInvoicePublicEmbeddedProfile;
+    /**
+     * 
+     * @type {GetSubscriptionPublic200Response}
+     * @memberof SalesInvoicePublicEmbedded
+     */
+    subscription?: GetSubscriptionPublic200Response;
 }
 
 /**
@@ -69,6 +82,7 @@ export function SalesInvoicePublicEmbeddedFromJSONTyped(json: any, ignoreDiscrim
         
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerFromJSON)),
         'profile': SalesInvoicePublicEmbeddedProfileFromJSON(json['profile']),
+        'subscription': json['subscription'] == null ? undefined : GetSubscriptionPublic200ResponseFromJSON(json['subscription']),
     };
 }
 
@@ -85,6 +99,7 @@ export function SalesInvoicePublicEmbeddedToJSONTyped(value?: SalesInvoicePublic
         
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerToJSON)),
         'profile': SalesInvoicePublicEmbeddedProfileToJSON(value['profile']),
+        'subscription': GetSubscriptionPublic200ResponseToJSON(value['subscription']),
     };
 }
 
