@@ -41,6 +41,24 @@ export interface CreateMonetaryAccountRequest {
     ledger?: string;
     /**
      * 
+     * @type {number}
+     * @memberof CreateMonetaryAccountRequest
+     */
+    initialBalance?: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateMonetaryAccountRequest
+     */
+    start?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateMonetaryAccountRequest
+     */
+    end?: Date;
+    /**
+     * 
      * @type {MonetaryAccountType}
      * @memberof CreateMonetaryAccountRequest
      */
@@ -83,6 +101,9 @@ export function CreateMonetaryAccountRequestFromJSONTyped(json: any, ignoreDiscr
         
         'name': json['name'],
         'ledger': json['ledger'] == null ? undefined : json['ledger'],
+        'initialBalance': json['initial-balance'] == null ? undefined : json['initial-balance'],
+        'start': json['start'] == null ? undefined : (new Date(json['start'])),
+        'end': json['end'] == null ? undefined : (new Date(json['end'])),
         'type': MonetaryAccountTypeFromJSON(json['type']),
         'currency': json['currency'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -102,6 +123,9 @@ export function CreateMonetaryAccountRequestToJSONTyped(value?: CreateMonetaryAc
         
         'name': value['name'],
         'ledger': value['ledger'],
+        'initial-balance': value['initialBalance'],
+        'start': value['start'] == null ? undefined : ((value['start']).toISOString().substring(0,10)),
+        'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),
         'type': MonetaryAccountTypeToJSON(value['type']),
         'currency': value['currency'],
         'metadata': value['metadata'],

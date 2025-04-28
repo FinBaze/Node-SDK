@@ -112,6 +112,7 @@ export interface CreatePurchaseInvoiceLineRequest {
  * @export
  */
 export const CreatePurchaseInvoiceLineRequestTaxCodeEnum = {
+    None: 'NONE',
     Nl2012High: 'NL_2012_HIGH',
     Nl2019Low: 'NL_2019_LOW',
     Nl2001High: 'NL_2001_HIGH',

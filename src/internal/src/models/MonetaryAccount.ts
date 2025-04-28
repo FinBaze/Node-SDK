@@ -53,6 +53,24 @@ export interface MonetaryAccount {
      */
     features: MonetaryAccountFeatures;
     /**
+     * The initial balance of the monetary account, we will book this balance in addition to the balance shown.
+     * @type {number}
+     * @memberof MonetaryAccount
+     */
+    initialBalance?: number;
+    /**
+     * The start date of the monetary account, all transaction before this date will be ignored.
+     * @type {Date}
+     * @memberof MonetaryAccount
+     */
+    start?: Date;
+    /**
+     * The End date of the monetary account, all transaction after this date will be ignored.
+     * @type {Date}
+     * @memberof MonetaryAccount
+     */
+    end?: Date;
+    /**
      * 
      * @type {number}
      * @memberof MonetaryAccount
@@ -125,6 +143,9 @@ export function MonetaryAccountFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'name': json['name'],
         'features': MonetaryAccountFeaturesFromJSON(json['features']),
+        'initialBalance': json['initial-balance'] == null ? undefined : json['initial-balance'],
+        'start': json['start'] == null ? undefined : (new Date(json['start'])),
+        'end': json['end'] == null ? undefined : (new Date(json['end'])),
         'balance': json['balance'] == null ? undefined : json['balance'],
         'ledger': json['ledger'] == null ? undefined : json['ledger'],
         'type': MonetaryAccountTypeFromJSON(json['type']),
@@ -148,6 +169,9 @@ export function MonetaryAccountToJSONTyped(value?: Omit<MonetaryAccount, 'id'|'u
         
         'name': value['name'],
         'features': MonetaryAccountFeaturesToJSON(value['features']),
+        'initial-balance': value['initialBalance'],
+        'start': value['start'] == null ? undefined : ((value['start']).toISOString().substring(0,10)),
+        'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),
         'balance': value['balance'],
         'ledger': value['ledger'],
         'type': MonetaryAccountTypeToJSON(value['type']),
