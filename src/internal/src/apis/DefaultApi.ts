@@ -132,6 +132,13 @@ export interface GetSubscriptionPublicRequest {
     subscriptionUUID: string;
 }
 
+export interface GetSubscriptionPublicInvoicesRequest {
+    profileId: string;
+    subscriptionUUID: string;
+    page?: number;
+    size?: number;
+}
+
 export interface ResetAccountPasswordOperationRequest {
     resetAccountPasswordRequest?: ResetAccountPasswordRequest;
 }
@@ -419,6 +426,23 @@ export interface DefaultApiInterface {
      * Returns a subscription
      */
     getSubscriptionPublic(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublic200Response>;
+
+    /**
+     * Returns a subscription invoices
+     * @param {string} profileId The id of the profile
+     * @param {string} subscriptionUUID The uuid of the subscription
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SalesInvoicePublic>>>;
+
+    /**
+     * Returns a subscription invoices
+     */
+    getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SalesInvoicePublic>>;
 
     /**
      * Returns an account
@@ -1210,6 +1234,59 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getSubscriptionPublic(requestParameters: GetSubscriptionPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublic200Response> {
         const response = await this.getSubscriptionPublicRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a subscription invoices
+     */
+    async getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SalesInvoicePublic>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getSubscriptionPublicInvoices().'
+            );
+        }
+
+        if (requestParameters['subscriptionUUID'] == null) {
+            throw new runtime.RequiredError(
+                'subscriptionUUID',
+                'Required parameter "subscriptionUUID" was null or undefined when calling getSubscriptionPublicInvoices().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/subscriptions/{profileId}/{salesInvoiceUUID}/invoices`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(SalesInvoicePublicFromJSON));
+    }
+
+    /**
+     * Returns a subscription invoices
+     */
+    async getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SalesInvoicePublic>> {
+        const response = await this.getSubscriptionPublicInvoicesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
