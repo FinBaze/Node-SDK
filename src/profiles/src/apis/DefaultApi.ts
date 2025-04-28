@@ -870,6 +870,17 @@ export interface DisputePurchaseInvoiceOperationRequest {
     disputePurchaseInvoiceRequest?: DisputePurchaseInvoiceRequest;
 }
 
+export interface ExportMonetaryAccountPaymentsRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    createRelationsImportRequest?: CreateRelationsImportRequest;
+}
+
+export interface ExportPurchaseInvoicesRequest {
+    profileId: string;
+    createRelationsImportRequest?: CreateRelationsImportRequest;
+}
+
 export interface GetAllMonetaryAccountPaymentsRequest {
     profileId: string;
     page?: number;
@@ -3081,6 +3092,37 @@ export interface DefaultApiInterface {
      * Disputes an purchase invoice
      */
     disputePurchaseInvoice(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
+
+    /**
+     * Creates an monetary account payments export
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {CreateRelationsImportRequest} [createRelationsImportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    exportMonetaryAccountPaymentsRaw(requestParameters: ExportMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Creates an monetary account payments export
+     */
+    exportMonetaryAccountPayments(requestParameters: ExportMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Creates an purchaseInvoices export
+     * @param {string} profileId The id of the profile
+     * @param {CreateRelationsImportRequest} [createRelationsImportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    exportPurchaseInvoicesRaw(requestParameters: ExportPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Creates an purchaseInvoices export
+     */
+    exportPurchaseInvoices(requestParameters: ExportPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
 
     /**
      * Returns all monetary account payments
@@ -9220,6 +9262,95 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async disputePurchaseInvoice(requestParameters: DisputePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
         const response = await this.disputePurchaseInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an monetary account payments export
+     */
+    async exportMonetaryAccountPaymentsRaw(requestParameters: ExportMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling exportMonetaryAccountPayments().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling exportMonetaryAccountPayments().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/payments/export`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateRelationsImportRequestToJSON(requestParameters['createRelationsImportRequest']),
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Creates an monetary account payments export
+     */
+    async exportMonetaryAccountPayments(requestParameters: ExportMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.exportMonetaryAccountPaymentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an purchaseInvoices export
+     */
+    async exportPurchaseInvoicesRaw(requestParameters: ExportPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling exportPurchaseInvoices().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/export`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateRelationsImportRequestToJSON(requestParameters['createRelationsImportRequest']),
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Creates an purchaseInvoices export
+     */
+    async exportPurchaseInvoices(requestParameters: ExportPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.exportPurchaseInvoicesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
