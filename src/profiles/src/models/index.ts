@@ -174,6 +174,8 @@ export * from './Product';
 export * from './ProductCategory';
 export * from './Profile';
 export * from './ProfileFeatures';
+export * from './ProfileNl';
+export * from './ProfileNlVat';
 export * from './ProfileSettings';
 export * from './ProfileSettingsBranding';
 export * from './Project';

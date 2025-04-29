@@ -20,6 +20,13 @@ import {
     GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSON,
     GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSONTyped,
 } from './GetSubscriptionPublic200ResponseEmbeddedLinesInner';
+import type { Profile } from './Profile';
+import {
+    ProfileFromJSON,
+    ProfileFromJSONTyped,
+    ProfileToJSON,
+    ProfileToJSONTyped,
+} from './Profile';
 
 /**
  * 
@@ -33,6 +40,12 @@ export interface GetSubscriptionPublic200ResponseEmbedded {
      * @memberof GetSubscriptionPublic200ResponseEmbedded
      */
     lines: Array<GetSubscriptionPublic200ResponseEmbeddedLinesInner>;
+    /**
+     * 
+     * @type {Profile}
+     * @memberof GetSubscriptionPublic200ResponseEmbedded
+     */
+    profile?: Profile;
 }
 
 /**
@@ -54,6 +67,7 @@ export function GetSubscriptionPublic200ResponseEmbeddedFromJSONTyped(json: any,
     return {
         
         'lines': ((json['lines'] as Array<any>).map(GetSubscriptionPublic200ResponseEmbeddedLinesInnerFromJSON)),
+        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
     };
 }
 
@@ -69,6 +83,7 @@ export function GetSubscriptionPublic200ResponseEmbeddedToJSONTyped(value?: GetS
     return {
         
         'lines': ((value['lines'] as Array<any>).map(GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSON)),
+        'profile': ProfileToJSON(value['profile']),
     };
 }
 

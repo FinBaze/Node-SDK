@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProfileNl } from './ProfileNl';
+import {
+    ProfileNlFromJSON,
+    ProfileNlFromJSONTyped,
+    ProfileNlToJSON,
+    ProfileNlToJSONTyped,
+} from './ProfileNl';
 import type { Address } from './Address';
 import {
     AddressFromJSON,
@@ -20,34 +27,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
-import type { Language } from './Language';
+import type { ProfileSettingsBranding } from './ProfileSettingsBranding';
 import {
-    LanguageFromJSON,
-    LanguageFromJSONTyped,
-    LanguageToJSON,
-    LanguageToJSONTyped,
-} from './Language';
-import type { CreateBookkeeperProfileRequestNl } from './CreateBookkeeperProfileRequestNl';
-import {
-    CreateBookkeeperProfileRequestNlFromJSON,
-    CreateBookkeeperProfileRequestNlFromJSONTyped,
-    CreateBookkeeperProfileRequestNlToJSON,
-    CreateBookkeeperProfileRequestNlToJSONTyped,
-} from './CreateBookkeeperProfileRequestNl';
-import type { ProfileFeatures } from './ProfileFeatures';
-import {
-    ProfileFeaturesFromJSON,
-    ProfileFeaturesFromJSONTyped,
-    ProfileFeaturesToJSON,
-    ProfileFeaturesToJSONTyped,
-} from './ProfileFeatures';
-import type { ProfileSettings } from './ProfileSettings';
-import {
-    ProfileSettingsFromJSON,
-    ProfileSettingsFromJSONTyped,
-    ProfileSettingsToJSON,
-    ProfileSettingsToJSONTyped,
-} from './ProfileSettings';
+    ProfileSettingsBrandingFromJSON,
+    ProfileSettingsBrandingFromJSONTyped,
+    ProfileSettingsBrandingToJSON,
+    ProfileSettingsBrandingToJSONTyped,
+} from './ProfileSettingsBranding';
 
 /**
  * 
@@ -72,67 +58,19 @@ export interface Profile {
      * @type {string}
      * @memberof Profile
      */
-    ledgerChart: string;
-    /**
-     * 
-     * @type {ProfileFeatures}
-     * @memberof Profile
-     */
-    features: ProfileFeatures;
-    /**
-     * 
-     * @type {string}
-     * @memberof Profile
-     */
-    url: string;
-    /**
-     * 
-     * @type {Language}
-     * @memberof Profile
-     */
-    language: Language;
-    /**
-     * 
-     * @type {string}
-     * @memberof Profile
-     */
-    registrationNumber: string;
-    /**
-     * ISO 3166-1 alpha-2 country code
-     * @type {string}
-     * @memberof Profile
-     */
-    registrationCountry: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Profile
-     */
-    timezone: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Profile
-     */
     name: string;
     /**
      * 
-     * @type {CreateBookkeeperProfileRequestNl}
+     * @type {ProfileNl}
      * @memberof Profile
      */
-    nl?: CreateBookkeeperProfileRequestNl;
+    nl?: ProfileNl;
     /**
      * 
-     * @type {ProfileSettings}
+     * @type {ProfileSettingsBranding}
      * @memberof Profile
      */
-    settings?: ProfileSettings;
-    /**
-     * 
-     * @type {string}
-     * @memberof Profile
-     */
-    distanceUnit: ProfileDistanceUnitEnum;
+    branding?: ProfileSettingsBranding;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
@@ -145,36 +83,7 @@ export interface Profile {
      * @memberof Profile
      */
     address: Address;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Profile
-     */
-    readonly updated: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Profile
-     */
-    readonly created: Date;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Profile
-     */
-    metadata?: { [key: string]: any; };
 }
-
-
-/**
- * @export
- */
-export const ProfileDistanceUnitEnum = {
-    Kilometers: 'kilometers',
-    Miles: 'miles'
-} as const;
-export type ProfileDistanceUnitEnum = typeof ProfileDistanceUnitEnum[keyof typeof ProfileDistanceUnitEnum];
-
 
 /**
  * Check if a given object implements the Profile interface.
@@ -182,19 +91,9 @@ export type ProfileDistanceUnitEnum = typeof ProfileDistanceUnitEnum[keyof typeo
 export function instanceOfProfile(value: object): value is Profile {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
-    if (!('ledgerChart' in value) || value['ledgerChart'] === undefined) return false;
-    if (!('features' in value) || value['features'] === undefined) return false;
-    if (!('url' in value) || value['url'] === undefined) return false;
-    if (!('language' in value) || value['language'] === undefined) return false;
-    if (!('registrationNumber' in value) || value['registrationNumber'] === undefined) return false;
-    if (!('registrationCountry' in value) || value['registrationCountry'] === undefined) return false;
-    if (!('timezone' in value) || value['timezone'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('distanceUnit' in value) || value['distanceUnit'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('updated' in value) || value['updated'] === undefined) return false;
-    if (!('created' in value) || value['created'] === undefined) return false;
     return true;
 }
 
@@ -209,23 +108,12 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
     return {
         
         'id': json['id'],
-        'legalName': json['legal-name'],
-        'ledgerChart': json['ledger-chart'],
-        'features': ProfileFeaturesFromJSON(json['features']),
-        'url': json['url'],
-        'language': LanguageFromJSON(json['language']),
-        'registrationNumber': json['registration-number'],
-        'registrationCountry': json['registration-country'],
-        'timezone': json['timezone'],
+        'legalName': json['legal_name'],
         'name': json['name'],
-        'nl': json['nl'] == null ? undefined : CreateBookkeeperProfileRequestNlFromJSON(json['nl']),
-        'settings': json['settings'] == null ? undefined : ProfileSettingsFromJSON(json['settings']),
-        'distanceUnit': json['distance-unit'],
+        'nl': json['nl'] == null ? undefined : ProfileNlFromJSON(json['nl']),
+        'branding': json['branding'] == null ? undefined : ProfileSettingsBrandingFromJSON(json['branding']),
         'currency': json['currency'],
         'address': AddressFromJSON(json['address']),
-        'updated': (new Date(json['updated'])),
-        'created': (new Date(json['created'])),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
 
@@ -233,28 +121,19 @@ export function ProfileToJSON(json: any): Profile {
     return ProfileToJSONTyped(json, false);
 }
 
-export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function ProfileToJSONTyped(value?: Omit<Profile, 'id'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'legal-name': value['legalName'],
-        'ledger-chart': value['ledgerChart'],
-        'features': ProfileFeaturesToJSON(value['features']),
-        'url': value['url'],
-        'language': LanguageToJSON(value['language']),
-        'registration-number': value['registrationNumber'],
-        'registration-country': value['registrationCountry'],
-        'timezone': value['timezone'],
+        'legal_name': value['legalName'],
         'name': value['name'],
-        'nl': CreateBookkeeperProfileRequestNlToJSON(value['nl']),
-        'settings': ProfileSettingsToJSON(value['settings']),
-        'distance-unit': value['distanceUnit'],
+        'nl': ProfileNlToJSON(value['nl']),
+        'branding': ProfileSettingsBrandingToJSON(value['branding']),
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
-        'metadata': value['metadata'],
     };
 }
 

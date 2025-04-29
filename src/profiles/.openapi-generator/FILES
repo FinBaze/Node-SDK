@@ -180,6 +180,8 @@ src/models/Product.ts
 src/models/ProductCategory.ts
 src/models/Profile.ts
 src/models/ProfileFeatures.ts
+src/models/ProfileNl.ts
+src/models/ProfileNlVat.ts
 src/models/ProfileSettings.ts
 src/models/ProfileSettingsBranding.ts
 src/models/Project.ts

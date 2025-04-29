@@ -20,6 +20,13 @@ import {
     SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSON,
     SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped,
 } from './SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner';
+import type { Profile } from './Profile';
+import {
+    ProfileFromJSON,
+    ProfileFromJSONTyped,
+    ProfileToJSON,
+    ProfileToJSONTyped,
+} from './Profile';
 
 /**
  * 
@@ -33,6 +40,12 @@ export interface SalesInvoicePublicEmbeddedSubscriptionEmbedded {
      * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbedded
      */
     lines: Array<SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner>;
+    /**
+     * 
+     * @type {Profile}
+     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbedded
+     */
+    profile?: Profile;
 }
 
 /**
@@ -54,6 +67,7 @@ export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedFromJSONTyped(json
     return {
         
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSON)),
+        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
     };
 }
 
@@ -69,6 +83,7 @@ export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedToJSONTyped(value?
     return {
         
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSON)),
+        'profile': ProfileToJSON(value['profile']),
     };
 }
 

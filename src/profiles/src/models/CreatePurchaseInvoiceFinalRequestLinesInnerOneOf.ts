@@ -48,7 +48,7 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf {
      * @type {any}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
      */
-    includingTax?: any | null;
+    includingTax: any | null;
     /**
      * The price of one item in cents, excluding taxes, required if no product is provided
      * @type {number}
@@ -237,6 +237,7 @@ export function instanceOfCreatePurchaseInvoiceFinalRequestLinesInnerOneOf(value
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('expenseCategory' in value) || value['expenseCategory'] === undefined) return false;
     if (!('taxCode' in value) || value['taxCode'] === undefined) return false;
+    if (!('includingTax' in value) || value['includingTax'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     return true;
@@ -256,7 +257,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOfFromJSONTyped(js
         'description': json['description'] == null ? undefined : json['description'],
         'expenseCategory': json['expense-category'],
         'taxCode': json['tax-code'],
-        'includingTax': json['including_tax'] == null ? undefined : json['including_tax'],
+        'includingTax': json['including_tax'],
         'price': json['price'],
         'tax': json['tax'] == null ? undefined : json['tax'],
         'discount': json['discount'] == null ? undefined : json['discount'],

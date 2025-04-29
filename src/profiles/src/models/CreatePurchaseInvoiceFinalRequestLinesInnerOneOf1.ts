@@ -42,7 +42,7 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1 {
      * @type {any}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1
      */
-    includingTax?: any | null;
+    includingTax: any | null;
     /**
      * The total amount of taxes of this item of one item in cents
      * @type {number}
@@ -225,6 +225,7 @@ export function instanceOfCreatePurchaseInvoiceFinalRequestLinesInnerOneOf1(valu
     if (!('product' in value) || value['product'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('taxCode' in value) || value['taxCode'] === undefined) return false;
+    if (!('includingTax' in value) || value['includingTax'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     return true;
 }
@@ -242,7 +243,7 @@ export function CreatePurchaseInvoiceFinalRequestLinesInnerOneOf1FromJSONTyped(j
         'product': json['product'],
         'price': json['price'],
         'taxCode': json['tax-code'],
-        'includingTax': json['including_tax'] == null ? undefined : json['including_tax'],
+        'includingTax': json['including_tax'],
         'tax': json['tax'] == null ? undefined : json['tax'],
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
