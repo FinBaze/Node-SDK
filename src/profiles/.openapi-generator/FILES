@@ -38,6 +38,8 @@ src/models/CreateMonetaryMemorialEntryRequest.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInner.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcess.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger.ts
+src/models/CreateObligationRequest.ts
+src/models/CreateObligationRequestItemsInner.ts
 src/models/CreateProcessDocumentRequest.ts
 src/models/CreateProcessDocumentRequestFile.ts
 src/models/CreateProductCategoryRequest.ts
@@ -89,6 +91,7 @@ src/models/CreditLoan.ts
 src/models/CreditSalesInvoiceRequest.ts
 src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
+src/models/DeleteObligationRequest.ts
 src/models/DeleteSubscriptionRequest.ts
 src/models/Device.ts
 src/models/DisputePurchaseInvoiceRequest.ts
@@ -112,6 +115,7 @@ src/models/GetNLVatData200ResponseSection2.ts
 src/models/GetNLVatData200ResponseSection3.ts
 src/models/GetNLVatData200ResponseSection4.ts
 src/models/GetNLVatData200ResponseSection5.ts
+src/models/GetObligations200Response.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetProducts200Response.ts
 src/models/GetProfileAccounts200Response.ts
@@ -166,6 +170,9 @@ src/models/MonetaryAccountPaymentSepa.ts
 src/models/MonetaryAccountType.ts
 src/models/NLVATFiling.ts
 src/models/NotFoundError.ts
+src/models/Obligation.ts
+src/models/ObligationEmbedded.ts
+src/models/ObligationLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessMonetaryAccountPaymentCreditLoanRequest.ts

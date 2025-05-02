@@ -34,11 +34,11 @@ export interface CreateMonetaryAccountRequest {
      */
     name: string;
     /**
-     * 
-     * @type {string}
+     * Wheter or not to display this monetary account as active
+     * @type {boolean}
      * @memberof CreateMonetaryAccountRequest
      */
-    ledger?: string;
+    active?: boolean;
     /**
      * 
      * @type {number}
@@ -100,7 +100,7 @@ export function CreateMonetaryAccountRequestFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'name': json['name'],
-        'ledger': json['ledger'] == null ? undefined : json['ledger'],
+        'active': json['active'] == null ? undefined : json['active'],
         'initialBalance': json['initial-balance'] == null ? undefined : json['initial-balance'],
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
@@ -122,7 +122,7 @@ export function CreateMonetaryAccountRequestToJSONTyped(value?: CreateMonetaryAc
     return {
         
         'name': value['name'],
-        'ledger': value['ledger'],
+        'active': value['active'],
         'initial-balance': value['initialBalance'],
         'start': value['start'] == null ? undefined : ((value['start']).toISOString().substring(0,10)),
         'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),

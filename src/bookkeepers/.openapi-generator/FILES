@@ -55,6 +55,9 @@ src/models/NLVATFilingDataSection3.ts
 src/models/NLVATFilingDataSection4.ts
 src/models/NLVATFilingDataSection5.ts
 src/models/NotFoundError.ts
+src/models/Obligation.ts
+src/models/ObligationEmbedded.ts
+src/models/ObligationLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentTask.ts

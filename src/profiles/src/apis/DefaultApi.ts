@@ -35,6 +35,8 @@ import type {
   CreateMonetaryAccountPaymentRequestInner,
   CreateMonetaryAccountRequest,
   CreateMonetaryMemorialEntryRequest,
+  CreateObligationRequest,
+  CreateObligationRequestItemsInner,
   CreateProcessDocumentRequest,
   CreateProductCategoryRequest,
   CreateProductRequest,
@@ -64,6 +66,7 @@ import type {
   CreditSalesInvoiceRequest,
   CurrentAccount,
   DebitLoan,
+  DeleteObligationRequest,
   DeleteSubscriptionRequest,
   DisputePurchaseInvoiceRequest,
   Employee,
@@ -79,6 +82,7 @@ import type {
   GetMemorialEntries200Response,
   GetMonetaryAccountOpenbankingAuthorisation200Response,
   GetNLVatData200Response,
+  GetObligations200Response,
   GetProcessDocuments200Response,
   GetProducts200Response,
   GetProfileAccounts200Response,
@@ -114,6 +118,8 @@ import type {
   MonetaryAccountAutoProcess,
   MonetaryAccountPayment,
   NLVATFiling,
+  Obligation,
+  ObligationLine,
   ProcessDocument,
   ProcessMonetaryAccountPaymentCreditLoanRequest,
   ProcessMonetaryAccountPaymentCurrentAccountRequest,
@@ -194,6 +200,10 @@ import {
     CreateMonetaryAccountRequestToJSON,
     CreateMonetaryMemorialEntryRequestFromJSON,
     CreateMonetaryMemorialEntryRequestToJSON,
+    CreateObligationRequestFromJSON,
+    CreateObligationRequestToJSON,
+    CreateObligationRequestItemsInnerFromJSON,
+    CreateObligationRequestItemsInnerToJSON,
     CreateProcessDocumentRequestFromJSON,
     CreateProcessDocumentRequestToJSON,
     CreateProductCategoryRequestFromJSON,
@@ -252,6 +262,8 @@ import {
     CurrentAccountToJSON,
     DebitLoanFromJSON,
     DebitLoanToJSON,
+    DeleteObligationRequestFromJSON,
+    DeleteObligationRequestToJSON,
     DeleteSubscriptionRequestFromJSON,
     DeleteSubscriptionRequestToJSON,
     DisputePurchaseInvoiceRequestFromJSON,
@@ -282,6 +294,8 @@ import {
     GetMonetaryAccountOpenbankingAuthorisation200ResponseToJSON,
     GetNLVatData200ResponseFromJSON,
     GetNLVatData200ResponseToJSON,
+    GetObligations200ResponseFromJSON,
+    GetObligations200ResponseToJSON,
     GetProcessDocuments200ResponseFromJSON,
     GetProcessDocuments200ResponseToJSON,
     GetProducts200ResponseFromJSON,
@@ -352,6 +366,10 @@ import {
     MonetaryAccountPaymentToJSON,
     NLVATFilingFromJSON,
     NLVATFilingToJSON,
+    ObligationFromJSON,
+    ObligationToJSON,
+    ObligationLineFromJSON,
+    ObligationLineToJSON,
     ProcessDocumentFromJSON,
     ProcessDocumentToJSON,
     ProcessMonetaryAccountPaymentCreditLoanRequestFromJSON,
@@ -432,6 +450,11 @@ import {
 
 export interface CancelProfilePlanRequest {
     profileId: string;
+}
+
+export interface CloseObligationRequest {
+    profileId: string;
+    obligationId: string;
 }
 
 export interface ClosePurchaseInvoiceRequest {
@@ -541,6 +564,17 @@ export interface CreateNLVATFilingRequest {
     profileId: string;
     from: Date;
     to: Date;
+}
+
+export interface CreateObligationOperationRequest {
+    profileId: string;
+    createObligationRequest?: CreateObligationRequest;
+}
+
+export interface CreateObligationLineRequest {
+    profileId: string;
+    obligationId: string;
+    createObligationRequestItemsInner?: CreateObligationRequestItemsInner;
 }
 
 export interface CreateProcessDocumentOperationRequest {
@@ -756,6 +790,12 @@ export interface DeleteMonetaryAccountPaymentRequest {
     profileId: string;
     monetaryAccountId: string;
     monetaryAccountPaymentId: string;
+}
+
+export interface DeleteObligationOperationRequest {
+    profileId: string;
+    obligationId: string;
+    deleteObligationRequest?: DeleteObligationRequest;
 }
 
 export interface DeleteProcessDocumentRequest {
@@ -1062,6 +1102,29 @@ export interface GetNLVatDataRequest {
     to: Date;
     page?: number;
     size?: number;
+}
+
+export interface GetObligationRequest {
+    profileId: string;
+    obligationId: string;
+}
+
+export interface GetObligationLineRequest {
+    profileId: string;
+    obligationId: string;
+    obligationLineId: string;
+}
+
+export interface GetObligationLinesRequest {
+    profileId: string;
+    obligationId: string;
+}
+
+export interface GetObligationsRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    relation?: string;
 }
 
 export interface GetProcessDocumentRequest {
@@ -1687,6 +1750,19 @@ export interface UpdateMonetaryAccountPaymentRequest {
     createMonetaryAccountPaymentRequestInner?: CreateMonetaryAccountPaymentRequestInner;
 }
 
+export interface UpdateObligationRequest {
+    profileId: string;
+    obligationId: string;
+    createObligationRequest?: CreateObligationRequest;
+}
+
+export interface UpdateObligationLineRequest {
+    profileId: string;
+    obligationId: string;
+    obligationLineId: string;
+    createObligationRequestItemsInner?: CreateObligationRequestItemsInner;
+}
+
 export interface UpdateProcessDocumentRequest {
     profileId: string;
     processDocumentId: string;
@@ -1836,6 +1912,21 @@ export interface DefaultApiInterface {
      * Cancels an plan
      */
     cancelProfilePlan(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Closes a obligation
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    closeObligationRaw(requestParameters: CloseObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>>;
+
+    /**
+     * Closes a obligation
+     */
+    closeObligation(requestParameters: CloseObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation>;
 
     /**
      * Closes a purchase invoice
@@ -2145,6 +2236,37 @@ export interface DefaultApiInterface {
      * Returns the VAT filing data
      */
     createNLVATFiling(requestParameters: CreateNLVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NLVATFiling>;
+
+    /**
+     * Creates a obligation
+     * @param {string} profileId The id of the profile
+     * @param {CreateObligationRequest} [createObligationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createObligationRaw(requestParameters: CreateObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Obligation>>>;
+
+    /**
+     * Creates a obligation
+     */
+    createObligation(requestParameters: CreateObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Obligation>>;
+
+    /**
+     * Creates a obligation line
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {CreateObligationRequestItemsInner} [createObligationRequestItemsInner] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createObligationLineRaw(requestParameters: CreateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ObligationLine>>>;
+
+    /**
+     * Creates a obligation line
+     */
+    createObligationLine(requestParameters: CreateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ObligationLine>>;
 
     /**
      * Creates a process document
@@ -2770,6 +2892,22 @@ export interface DefaultApiInterface {
      * Deletes a monetary account payment
      */
     deleteMonetaryAccountPayment(requestParameters: DeleteMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a Obligation
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {DeleteObligationRequest} [deleteObligationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteObligationRaw(requestParameters: DeleteObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a Obligation
+     */
+    deleteObligation(requestParameters: DeleteObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a process document
@@ -3596,6 +3734,69 @@ export interface DefaultApiInterface {
      * Returns the VAT filing data
      */
     getNLVatData(requestParameters: GetNLVatDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNLVatData200Response>;
+
+    /**
+     * Returns a subscriptioobligationn
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getObligationRaw(requestParameters: GetObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>>;
+
+    /**
+     * Returns a subscriptioobligationn
+     */
+    getObligation(requestParameters: GetObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation>;
+
+    /**
+     * Returns a obligation line
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {string} obligationLineId The ID of the obligation line
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getObligationLineRaw(requestParameters: GetObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ObligationLine>>;
+
+    /**
+     * Returns a obligation line
+     */
+    getObligationLine(requestParameters: GetObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ObligationLine>;
+
+    /**
+     * Returns all obligation lines
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getObligationLinesRaw(requestParameters: GetObligationLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ObligationLine>>>;
+
+    /**
+     * Returns all obligation lines
+     */
+    getObligationLines(requestParameters: GetObligationLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ObligationLine>>;
+
+    /**
+     * Returns all obligations
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [relation] Relation ID to filter to
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getObligationsRaw(requestParameters: GetObligationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetObligations200Response>>;
+
+    /**
+     * Returns all obligations
+     */
+    getObligations(requestParameters: GetObligationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetObligations200Response>;
 
     /**
      * Returns a process document
@@ -5224,6 +5425,39 @@ export interface DefaultApiInterface {
     updateMonetaryAccountPayment(requestParameters: UpdateMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountPayment>;
 
     /**
+     * Updates a obligation
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {CreateObligationRequest} [createObligationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateObligationRaw(requestParameters: UpdateObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>>;
+
+    /**
+     * Updates a obligation
+     */
+    updateObligation(requestParameters: UpdateObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation>;
+
+    /**
+     * Updates a obligation line
+     * @param {string} profileId The id of the profile
+     * @param {string} obligationId The ID of the obligation
+     * @param {string} obligationLineId The ID of the obligation line
+     * @param {CreateObligationRequestItemsInner} [createObligationRequestItemsInner] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateObligationLineRaw(requestParameters: UpdateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ObligationLine>>;
+
+    /**
+     * Updates a obligation line
+     */
+    updateObligationLine(requestParameters: UpdateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ObligationLine>;
+
+    /**
      * Updates a process document
      * @param {string} profileId The id of the profile
      * @param {string} processDocumentId The ID of the process document
@@ -5604,6 +5838,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async cancelProfilePlan(requestParameters: CancelProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.cancelProfilePlanRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Closes a obligation
+     */
+    async closeObligationRaw(requestParameters: CloseObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling closeObligation().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling closeObligation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationFromJSON(jsonValue));
+    }
+
+    /**
+     * Closes a obligation
+     */
+    async closeObligation(requestParameters: CloseObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation> {
+        const response = await this.closeObligationRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -6501,6 +6780,95 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createNLVATFiling(requestParameters: CreateNLVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NLVATFiling> {
         const response = await this.createNLVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a obligation
+     */
+    async createObligationRaw(requestParameters: CreateObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Obligation>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createObligation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateObligationRequestToJSON(requestParameters['createObligationRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ObligationFromJSON));
+    }
+
+    /**
+     * Creates a obligation
+     */
+    async createObligation(requestParameters: CreateObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Obligation>> {
+        const response = await this.createObligationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a obligation line
+     */
+    async createObligationLineRaw(requestParameters: CreateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ObligationLine>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createObligationLine().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling createObligationLine().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}/lines`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateObligationRequestItemsInnerToJSON(requestParameters['createObligationRequestItemsInner']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ObligationLineFromJSON));
+    }
+
+    /**
+     * Creates a obligation line
+     */
+    async createObligationLine(requestParameters: CreateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ObligationLine>> {
+        const response = await this.createObligationLineRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -8297,6 +8665,53 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteMonetaryAccountPayment(requestParameters: DeleteMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteMonetaryAccountPaymentRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a Obligation
+     */
+    async deleteObligationRaw(requestParameters: DeleteObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteObligation().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling deleteObligation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DeleteObligationRequestToJSON(requestParameters['deleteObligationRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a Obligation
+     */
+    async deleteObligation(requestParameters: DeleteObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteObligationRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -10806,6 +11221,198 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getNLVatData(requestParameters: GetNLVatDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNLVatData200Response> {
         const response = await this.getNLVatDataRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a subscriptioobligationn
+     */
+    async getObligationRaw(requestParameters: GetObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getObligation().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling getObligation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a subscriptioobligationn
+     */
+    async getObligation(requestParameters: GetObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation> {
+        const response = await this.getObligationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a obligation line
+     */
+    async getObligationLineRaw(requestParameters: GetObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ObligationLine>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getObligationLine().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling getObligationLine().'
+            );
+        }
+
+        if (requestParameters['obligationLineId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationLineId',
+                'Required parameter "obligationLineId" was null or undefined when calling getObligationLine().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}/lines/{obligationLineId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))).replace(`{${"obligationLineId"}}`, encodeURIComponent(String(requestParameters['obligationLineId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationLineFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a obligation line
+     */
+    async getObligationLine(requestParameters: GetObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ObligationLine> {
+        const response = await this.getObligationLineRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all obligation lines
+     */
+    async getObligationLinesRaw(requestParameters: GetObligationLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ObligationLine>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getObligationLines().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling getObligationLines().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}/lines`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ObligationLineFromJSON));
+    }
+
+    /**
+     * Returns all obligation lines
+     */
+    async getObligationLines(requestParameters: GetObligationLinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ObligationLine>> {
+        const response = await this.getObligationLinesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all obligations
+     */
+    async getObligationsRaw(requestParameters: GetObligationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetObligations200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getObligations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetObligations200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all obligations
+     */
+    async getObligations(requestParameters: GetObligationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetObligations200Response> {
+        const response = await this.getObligationsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -15771,6 +16378,109 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateMonetaryAccountPayment(requestParameters: UpdateMonetaryAccountPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MonetaryAccountPayment> {
         const response = await this.updateMonetaryAccountPaymentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a obligation
+     */
+    async updateObligationRaw(requestParameters: UpdateObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateObligation().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling updateObligation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateObligationRequestToJSON(requestParameters['createObligationRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a obligation
+     */
+    async updateObligation(requestParameters: UpdateObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation> {
+        const response = await this.updateObligationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a obligation line
+     */
+    async updateObligationLineRaw(requestParameters: UpdateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ObligationLine>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateObligationLine().'
+            );
+        }
+
+        if (requestParameters['obligationId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationId',
+                'Required parameter "obligationId" was null or undefined when calling updateObligationLine().'
+            );
+        }
+
+        if (requestParameters['obligationLineId'] == null) {
+            throw new runtime.RequiredError(
+                'obligationLineId',
+                'Required parameter "obligationLineId" was null or undefined when calling updateObligationLine().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/obligations/{obligationId}/lines/{obligationLineId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"obligationId"}}`, encodeURIComponent(String(requestParameters['obligationId']))).replace(`{${"obligationLineId"}}`, encodeURIComponent(String(requestParameters['obligationLineId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateObligationRequestItemsInnerToJSON(requestParameters['createObligationRequestItemsInner']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationLineFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a obligation line
+     */
+    async updateObligationLine(requestParameters: UpdateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ObligationLine> {
+        const response = await this.updateObligationLineRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
