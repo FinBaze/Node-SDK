@@ -1321,6 +1321,7 @@ export interface GetPurchaseInvoicesRequest {
     size?: number;
     relation?: string;
     invoiceId?: string;
+    file?: boolean;
     date?: Date;
     overdue?: boolean;
     product?: string;
@@ -4336,6 +4337,7 @@ export interface DefaultApiInterface {
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [relation] Non empty string with the ID of the relation to filter
      * @param {string} [invoiceId] Invoice ID to filter
+     * @param {boolean} [file] If the purchase invoice has an uploaded file
      * @param {Date} [date] Invoice date to filter
      * @param {boolean} [overdue] If the invoice is overdue to filter
      * @param {string} [product] Filter invoices that contain this product ID
@@ -13001,6 +13003,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['invoiceId'] != null) {
             queryParameters['invoice_id'] = requestParameters['invoiceId'];
+        }
+
+        if (requestParameters['file'] != null) {
+            queryParameters['file'] = requestParameters['file'];
         }
 
         if (requestParameters['date'] != null) {
