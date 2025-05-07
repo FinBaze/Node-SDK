@@ -84,6 +84,12 @@ export interface PurchaseInvoice {
      */
     date: Date;
     /**
+     * Wheter or not an file has been uploaded, true for yes, and false for no.
+     * @type {boolean}
+     * @memberof PurchaseInvoice
+     */
+    file: boolean;
+    /**
      * ID of the purchase invoice payment batch where this purchase invoice is included
      * @type {string}
      * @memberof PurchaseInvoice
@@ -171,6 +177,7 @@ export function instanceOfPurchaseInvoice(value: object): value is PurchaseInvoi
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('invoiceId' in value) || value['invoiceId'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
+    if (!('file' in value) || value['file'] === undefined) return false;
     if (!('overdue' in value) || value['overdue'] === undefined) return false;
     if (!('concept' in value) || value['concept'] === undefined) return false;
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
@@ -199,6 +206,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'scheduled': json['scheduled'] == null ? undefined : (new Date(json['scheduled'])),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
+        'file': json['file'],
         'batch': json['batch'] == null ? undefined : json['batch'],
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
         'disputed': json['disputed'] == null ? undefined : (new Date(json['disputed'])),
@@ -231,6 +239,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
         'scheduled': value['scheduled'] == null ? undefined : ((value['scheduled']).toISOString().substring(0,10)),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'date': ((value['date']).toISOString().substring(0,10)),
+        'file': value['file'],
         'batch': value['batch'],
         'overdue': value['overdue'],
         'concept': value['concept'],
