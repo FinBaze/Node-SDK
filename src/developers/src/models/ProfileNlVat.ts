@@ -24,14 +24,39 @@ export interface ProfileNlVat {
      * @type {string}
      * @memberof ProfileNlVat
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileNlVat
+     */
     number: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileNlVat
+     */
+    timeframe: ProfileNlVatTimeframeEnum;
 }
+
+
+/**
+ * @export
+ */
+export const ProfileNlVatTimeframeEnum = {
+    Month: 'month',
+    Quarter: 'quarter',
+    Year: 'year'
+} as const;
+export type ProfileNlVatTimeframeEnum = typeof ProfileNlVatTimeframeEnum[keyof typeof ProfileNlVatTimeframeEnum];
+
 
 /**
  * Check if a given object implements the ProfileNlVat interface.
  */
 export function instanceOfProfileNlVat(value: object): value is ProfileNlVat {
     if (!('number' in value) || value['number'] === undefined) return false;
+    if (!('timeframe' in value) || value['timeframe'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +70,9 @@ export function ProfileNlVatFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
+        'id': json['id'] == null ? undefined : json['id'],
         'number': json['number'],
+        'timeframe': json['timeframe'],
     };
 }
 
@@ -60,7 +87,9 @@ export function ProfileNlVatToJSONTyped(value?: ProfileNlVat | null, ignoreDiscr
 
     return {
         
+        'id': value['id'],
         'number': value['number'],
+        'timeframe': value['timeframe'],
     };
 }
 

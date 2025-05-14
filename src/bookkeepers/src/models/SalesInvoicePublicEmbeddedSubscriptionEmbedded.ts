@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProfilePublic } from './ProfilePublic';
+import {
+    ProfilePublicFromJSON,
+    ProfilePublicFromJSONTyped,
+    ProfilePublicToJSON,
+    ProfilePublicToJSONTyped,
+} from './ProfilePublic';
 import type { SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner } from './SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner';
 import {
     SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSON,
@@ -20,13 +27,6 @@ import {
     SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSON,
     SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped,
 } from './SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner';
-import type { Profile } from './Profile';
-import {
-    ProfileFromJSON,
-    ProfileFromJSONTyped,
-    ProfileToJSON,
-    ProfileToJSONTyped,
-} from './Profile';
 
 /**
  * 
@@ -42,10 +42,10 @@ export interface SalesInvoicePublicEmbeddedSubscriptionEmbedded {
     lines: Array<SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner>;
     /**
      * 
-     * @type {Profile}
+     * @type {ProfilePublic}
      * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbedded
      */
-    profile?: Profile;
+    profile?: ProfilePublic;
 }
 
 /**
@@ -67,7 +67,7 @@ export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedFromJSONTyped(json
     return {
         
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSON)),
-        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
+        'profile': json['profile'] == null ? undefined : ProfilePublicFromJSON(json['profile']),
     };
 }
 
@@ -83,7 +83,7 @@ export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedToJSONTyped(value?
     return {
         
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSON)),
-        'profile': ProfileToJSON(value['profile']),
+        'profile': ProfilePublicToJSON(value['profile']),
     };
 }
 

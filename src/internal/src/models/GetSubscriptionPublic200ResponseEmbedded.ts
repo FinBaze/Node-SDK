@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProfilePublic } from './ProfilePublic';
+import {
+    ProfilePublicFromJSON,
+    ProfilePublicFromJSONTyped,
+    ProfilePublicToJSON,
+    ProfilePublicToJSONTyped,
+} from './ProfilePublic';
 import type { GetSubscriptionPublic200ResponseEmbeddedLinesInner } from './GetSubscriptionPublic200ResponseEmbeddedLinesInner';
 import {
     GetSubscriptionPublic200ResponseEmbeddedLinesInnerFromJSON,
@@ -20,13 +27,6 @@ import {
     GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSON,
     GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSONTyped,
 } from './GetSubscriptionPublic200ResponseEmbeddedLinesInner';
-import type { Profile } from './Profile';
-import {
-    ProfileFromJSON,
-    ProfileFromJSONTyped,
-    ProfileToJSON,
-    ProfileToJSONTyped,
-} from './Profile';
 
 /**
  * 
@@ -42,10 +42,10 @@ export interface GetSubscriptionPublic200ResponseEmbedded {
     lines: Array<GetSubscriptionPublic200ResponseEmbeddedLinesInner>;
     /**
      * 
-     * @type {Profile}
+     * @type {ProfilePublic}
      * @memberof GetSubscriptionPublic200ResponseEmbedded
      */
-    profile?: Profile;
+    profile?: ProfilePublic;
 }
 
 /**
@@ -67,7 +67,7 @@ export function GetSubscriptionPublic200ResponseEmbeddedFromJSONTyped(json: any,
     return {
         
         'lines': ((json['lines'] as Array<any>).map(GetSubscriptionPublic200ResponseEmbeddedLinesInnerFromJSON)),
-        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
+        'profile': json['profile'] == null ? undefined : ProfilePublicFromJSON(json['profile']),
     };
 }
 
@@ -83,7 +83,7 @@ export function GetSubscriptionPublic200ResponseEmbeddedToJSONTyped(value?: GetS
     return {
         
         'lines': ((value['lines'] as Array<any>).map(GetSubscriptionPublic200ResponseEmbeddedLinesInnerToJSON)),
-        'profile': ProfileToJSON(value['profile']),
+        'profile': ProfilePublicToJSON(value['profile']),
     };
 }
 

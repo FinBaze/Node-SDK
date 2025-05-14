@@ -76,6 +76,9 @@ src/models/Profile.ts
 src/models/ProfileFeatures.ts
 src/models/ProfileNl.ts
 src/models/ProfileNlVat.ts
+src/models/ProfilePublic.ts
+src/models/ProfilePublicNl.ts
+src/models/ProfilePublicNlVat.ts
 src/models/ProfileSettings.ts
 src/models/ProfileSettingsBranding.ts
 src/models/ProfileSettingsEmail.ts
@@ -112,9 +115,6 @@ src/models/SalesInvoicePeriod.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
-src/models/SalesInvoicePublicEmbeddedProfile.ts
-src/models/SalesInvoicePublicEmbeddedProfileNl.ts
-src/models/SalesInvoicePublicEmbeddedProfileNlVat.ts
 src/models/SendResetPasswordRequestRequest.ts
 src/models/ServerError.ts
 src/models/StockCategory.ts

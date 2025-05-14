@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { SalesInvoicePublicEmbeddedProfile } from './SalesInvoicePublicEmbeddedProfile';
+import type { ProfilePublic } from './ProfilePublic';
 import {
-    SalesInvoicePublicEmbeddedProfileFromJSON,
-    SalesInvoicePublicEmbeddedProfileFromJSONTyped,
-    SalesInvoicePublicEmbeddedProfileToJSON,
-    SalesInvoicePublicEmbeddedProfileToJSONTyped,
-} from './SalesInvoicePublicEmbeddedProfile';
+    ProfilePublicFromJSON,
+    ProfilePublicFromJSONTyped,
+    ProfilePublicToJSON,
+    ProfilePublicToJSONTyped,
+} from './ProfilePublic';
 import type { SalesInvoicePublicEmbeddedSubscription } from './SalesInvoicePublicEmbeddedSubscription';
 import {
     SalesInvoicePublicEmbeddedSubscriptionFromJSON,
@@ -49,10 +49,10 @@ export interface SalesInvoicePublicEmbedded {
     lines: Array<SalesInvoicePublicEmbeddedLinesInner>;
     /**
      * 
-     * @type {SalesInvoicePublicEmbeddedProfile}
+     * @type {ProfilePublic}
      * @memberof SalesInvoicePublicEmbedded
      */
-    profile: SalesInvoicePublicEmbeddedProfile;
+    profile: ProfilePublic;
     /**
      * 
      * @type {SalesInvoicePublicEmbeddedSubscription}
@@ -81,7 +81,7 @@ export function SalesInvoicePublicEmbeddedFromJSONTyped(json: any, ignoreDiscrim
     return {
         
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerFromJSON)),
-        'profile': SalesInvoicePublicEmbeddedProfileFromJSON(json['profile']),
+        'profile': ProfilePublicFromJSON(json['profile']),
         'subscription': json['subscription'] == null ? undefined : SalesInvoicePublicEmbeddedSubscriptionFromJSON(json['subscription']),
     };
 }
@@ -98,7 +98,7 @@ export function SalesInvoicePublicEmbeddedToJSONTyped(value?: SalesInvoicePublic
     return {
         
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerToJSON)),
-        'profile': SalesInvoicePublicEmbeddedProfileToJSON(value['profile']),
+        'profile': ProfilePublicToJSON(value['profile']),
         'subscription': SalesInvoicePublicEmbeddedSubscriptionToJSON(value['subscription']),
     };
 }
