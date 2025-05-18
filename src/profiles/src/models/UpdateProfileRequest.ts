@@ -74,6 +74,12 @@ export interface UpdateProfileRequest {
     language?: Language;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof UpdateProfileRequest
+     */
+    currencies?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof UpdateProfileRequest
      */
@@ -154,6 +160,7 @@ export function UpdateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'name': json['name'] == null ? undefined : json['name'],
         'timezone': json['timezone'] == null ? undefined : json['timezone'],
         'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
+        'currencies': json['currencies'] == null ? undefined : json['currencies'],
         'registrationNumber': json['registration-number'] == null ? undefined : json['registration-number'],
         'registrationCountry': json['registration-country'] == null ? undefined : json['registration-country'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
@@ -180,6 +187,7 @@ export function UpdateProfileRequestToJSONTyped(value?: UpdateProfileRequest | n
         'name': value['name'],
         'timezone': value['timezone'],
         'language': LanguageToJSON(value['language']),
+        'currencies': value['currencies'],
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
         'nl': CreateProfileRequestNlToJSON(value['nl']),

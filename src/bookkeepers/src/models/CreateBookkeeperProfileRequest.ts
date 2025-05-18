@@ -86,6 +86,12 @@ export interface CreateBookkeeperProfileRequest {
     registrationCountry: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof CreateBookkeeperProfileRequest
+     */
+    currencies?: Array<string>;
+    /**
+     * 
      * @type {CreateBookkeeperProfileRequestNl}
      * @memberof CreateBookkeeperProfileRequest
      */
@@ -165,6 +171,7 @@ export function CreateBookkeeperProfileRequestFromJSONTyped(json: any, ignoreDis
         'language': LanguageFromJSON(json['language']),
         'registrationNumber': json['registration-number'],
         'registrationCountry': json['registration-country'],
+        'currencies': json['currencies'] == null ? undefined : json['currencies'],
         'nl': json['nl'] == null ? undefined : CreateBookkeeperProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateBookkeeperProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'],
@@ -191,6 +198,7 @@ export function CreateBookkeeperProfileRequestToJSONTyped(value?: CreateBookkeep
         'language': LanguageToJSON(value['language']),
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
+        'currencies': value['currencies'],
         'nl': CreateBookkeeperProfileRequestNlToJSON(value['nl']),
         'settings': CreateBookkeeperProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

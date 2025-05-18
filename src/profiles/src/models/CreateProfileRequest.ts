@@ -86,6 +86,12 @@ export interface CreateProfileRequest {
     registrationCountry: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof CreateProfileRequest
+     */
+    currencies?: Array<string>;
+    /**
+     * 
      * @type {CreateProfileRequestNl}
      * @memberof CreateProfileRequest
      */
@@ -165,6 +171,7 @@ export function CreateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'language': LanguageFromJSON(json['language']),
         'registrationNumber': json['registration-number'],
         'registrationCountry': json['registration-country'],
+        'currencies': json['currencies'] == null ? undefined : json['currencies'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'],
@@ -191,6 +198,7 @@ export function CreateProfileRequestToJSONTyped(value?: CreateProfileRequest | n
         'language': LanguageToJSON(value['language']),
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
+        'currencies': value['currencies'],
         'nl': CreateProfileRequestNlToJSON(value['nl']),
         'settings': CreateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],

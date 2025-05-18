@@ -134,6 +134,12 @@ export interface Profile {
      */
     distanceUnit: ProfileDistanceUnitEnum;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof Profile
+     */
+    currencies?: Array<string>;
+    /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
      * @memberof Profile
@@ -221,6 +227,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'nl': json['nl'] == null ? undefined : CreateBookkeeperProfileRequestNlFromJSON(json['nl']),
         'settings': json['settings'] == null ? undefined : ProfileSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'],
+        'currencies': json['currencies'] == null ? undefined : json['currencies'],
         'currency': json['currency'],
         'address': AddressFromJSON(json['address']),
         'updated': (new Date(json['updated'])),
@@ -252,6 +259,7 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
         'nl': CreateBookkeeperProfileRequestNlToJSON(value['nl']),
         'settings': ProfileSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],
+        'currencies': value['currencies'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
         'metadata': value['metadata'],
