@@ -25,6 +25,12 @@ export interface CreateSubscriptionPublicPaymentMethodRequestDataOpenbanking {
      * @memberof CreateSubscriptionPublicPaymentMethodRequestDataOpenbanking
      */
     bic: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSubscriptionPublicPaymentMethodRequestDataOpenbanking
+     */
+    country?: string;
 }
 
 /**
@@ -46,6 +52,7 @@ export function CreateSubscriptionPublicPaymentMethodRequestDataOpenbankingFromJ
     return {
         
         'bic': json['bic'],
+        'country': json['country'] == null ? undefined : json['country'],
     };
 }
 
@@ -61,6 +68,7 @@ export function CreateSubscriptionPublicPaymentMethodRequestDataOpenbankingToJSO
     return {
         
         'bic': value['bic'],
+        'country': value['country'],
     };
 }
 
