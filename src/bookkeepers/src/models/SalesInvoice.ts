@@ -27,6 +27,13 @@ import {
     SalesInvoiceEmbeddedToJSON,
     SalesInvoiceEmbeddedToJSONTyped,
 } from './SalesInvoiceEmbedded';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { SalesInvoiceAmounts } from './SalesInvoiceAmounts';
 import {
     SalesInvoiceAmountsFromJSON,
@@ -205,11 +212,11 @@ export interface SalesInvoice {
      */
     metadata?: { [key: string]: any; };
     /**
-     * An account that represents a user
-     * @type {object}
+     * 
+     * @type {Links}
      * @memberof SalesInvoice
      */
-    links?: object;
+    links: Links;
     /**
      * 
      * @type {SalesInvoiceEmbedded}
@@ -240,6 +247,7 @@ export function instanceOfSalesInvoice(value: object): value is SalesInvoice {
     if (!('concept' in value) || value['concept'] === undefined) return false;
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
@@ -282,7 +290,7 @@ export function SalesInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'memo': json['memo'] == null ? undefined : json['memo'],
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : json['_links'],
+        'links': LinksFromJSON(json['_links']),
         'embedded': SalesInvoiceEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
@@ -320,7 +328,7 @@ export function SalesInvoiceToJSONTyped(value?: Omit<SalesInvoice, 'id'|'uuid'|'
         'memo': value['memo'],
         'footer': value['footer'],
         'metadata': value['metadata'],
-        '_links': value['links'],
+        '_links': LinksToJSON(value['links']),
         '_embedded': SalesInvoiceEmbeddedToJSON(value['embedded']),
     };
 }
