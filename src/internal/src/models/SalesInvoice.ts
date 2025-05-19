@@ -205,6 +205,12 @@ export interface SalesInvoice {
      */
     metadata?: { [key: string]: any; };
     /**
+     * An account that represents a user
+     * @type {object}
+     * @memberof SalesInvoice
+     */
+    links?: object;
+    /**
      * 
      * @type {SalesInvoiceEmbedded}
      * @memberof SalesInvoice
@@ -276,6 +282,7 @@ export function SalesInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'memo': json['memo'] == null ? undefined : json['memo'],
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : json['_links'],
         'embedded': SalesInvoiceEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
@@ -313,6 +320,7 @@ export function SalesInvoiceToJSONTyped(value?: Omit<SalesInvoice, 'id'|'uuid'|'
         'memo': value['memo'],
         'footer': value['footer'],
         'metadata': value['metadata'],
+        '_links': value['links'],
         '_embedded': SalesInvoiceEmbeddedToJSON(value['embedded']),
     };
 }
