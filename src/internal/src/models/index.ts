@@ -9,6 +9,7 @@ export * from './CreateAccount200Response';
 export * from './CreateAccount200ResponseToken';
 export * from './CreateAccountMeZendeskToken200Response';
 export * from './CreateAccountRequest';
+export * from './CreateBankingServiceOnboarding200Response';
 export * from './CreateDeviceRequest';
 export * from './CreateSubscriptionPublicPaymentMethod200Response';
 export * from './CreateSubscriptionPublicPaymentMethodRequest';

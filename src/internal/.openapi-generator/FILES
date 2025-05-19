@@ -15,6 +15,7 @@ src/models/CreateAccount200Response.ts
 src/models/CreateAccount200ResponseToken.ts
 src/models/CreateAccountMeZendeskToken200Response.ts
 src/models/CreateAccountRequest.ts
+src/models/CreateBankingServiceOnboarding200Response.ts
 src/models/CreateDeviceRequest.ts
 src/models/CreateSubscriptionPublicPaymentMethod200Response.ts
 src/models/CreateSubscriptionPublicPaymentMethodRequest.ts

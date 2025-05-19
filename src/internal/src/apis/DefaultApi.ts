@@ -19,6 +19,7 @@ import type {
   CreateAccount200Response,
   CreateAccountMeZendeskToken200Response,
   CreateAccountRequest,
+  CreateBankingServiceOnboarding200Response,
   CreateDeviceRequest,
   CreateSubscriptionPublicPaymentMethod200Response,
   CreateSubscriptionPublicPaymentMethodRequest,
@@ -42,6 +43,8 @@ import {
     CreateAccountMeZendeskToken200ResponseToJSON,
     CreateAccountRequestFromJSON,
     CreateAccountRequestToJSON,
+    CreateBankingServiceOnboarding200ResponseFromJSON,
+    CreateBankingServiceOnboarding200ResponseToJSON,
     CreateDeviceRequestFromJSON,
     CreateDeviceRequestToJSON,
     CreateSubscriptionPublicPaymentMethod200ResponseFromJSON,
@@ -72,6 +75,10 @@ import {
 
 export interface CreateAccountOperationRequest {
     createAccountRequest?: CreateAccountRequest;
+}
+
+export interface CreateBankingServiceOnboardingRequest {
+    profileId: string;
 }
 
 export interface CreateDeviceOperationRequest {
@@ -206,6 +213,20 @@ export interface DefaultApiInterface {
      * Creates an Zendesk token
      */
     createAccountMeZendeskToken(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccountMeZendeskToken200Response>;
+
+    /**
+     * Creates an banking service onboarding link
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createBankingServiceOnboardingRaw(requestParameters: CreateBankingServiceOnboardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBankingServiceOnboarding200Response>>;
+
+    /**
+     * Creates an banking service onboarding link
+     */
+    createBankingServiceOnboarding(requestParameters: CreateBankingServiceOnboardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateBankingServiceOnboarding200Response>;
 
     /**
      * Creates an device
@@ -610,6 +631,44 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createAccountMeZendeskToken(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccountMeZendeskToken200Response> {
         const response = await this.createAccountMeZendeskTokenRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an banking service onboarding link
+     */
+    async createBankingServiceOnboardingRaw(requestParameters: CreateBankingServiceOnboardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBankingServiceOnboarding200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createBankingServiceOnboarding().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/bankingservice/onboarding`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateBankingServiceOnboarding200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an banking service onboarding link
+     */
+    async createBankingServiceOnboarding(requestParameters: CreateBankingServiceOnboardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateBankingServiceOnboarding200Response> {
+        const response = await this.createBankingServiceOnboardingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
