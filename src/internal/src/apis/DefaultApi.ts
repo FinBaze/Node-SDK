@@ -784,7 +784,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/subscriptions/{profileId}/{salesInvoiceUUID}/payment-methods`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
+            path: `/v1/subscriptions/{profileId}/{subscriptionUUID}/payment-methods`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1332,7 +1332,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/subscriptions/{profileId}/{salesInvoiceUUID}/invoices`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
+            path: `/v1/subscriptions/{profileId}/{subscriptionUUID}/invoices`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"subscriptionUUID"}}`, encodeURIComponent(String(requestParameters['subscriptionUUID']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
