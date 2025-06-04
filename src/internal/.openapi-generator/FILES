@@ -38,6 +38,7 @@ src/models/GetSubscriptionPublic200Response.ts
 src/models/GetSubscriptionPublic200ResponseAmounts.ts
 src/models/GetSubscriptionPublic200ResponseEmbedded.ts
 src/models/GetSubscriptionPublic200ResponseEmbeddedLinesInner.ts
+src/models/GetSubscriptionPublicInvoices200Response.ts
 src/models/InvalidRequestError.ts
 src/models/Language.ts
 src/models/Links.ts

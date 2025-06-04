@@ -27,6 +27,7 @@ import type {
   GetCompaniesAutocomplete200Response,
   GetJurisdictions200ResponseValue,
   GetSubscriptionPublic200Response,
+  GetSubscriptionPublicInvoices200Response,
   ResetAccountPasswordRequest,
   SalesInvoicePublic,
   SendResetPasswordRequestRequest,
@@ -59,6 +60,8 @@ import {
     GetJurisdictions200ResponseValueToJSON,
     GetSubscriptionPublic200ResponseFromJSON,
     GetSubscriptionPublic200ResponseToJSON,
+    GetSubscriptionPublicInvoices200ResponseFromJSON,
+    GetSubscriptionPublicInvoices200ResponseToJSON,
     ResetAccountPasswordRequestFromJSON,
     ResetAccountPasswordRequestToJSON,
     SalesInvoicePublicFromJSON,
@@ -458,12 +461,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SalesInvoicePublic>>>;
+    getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSubscriptionPublicInvoices200Response>>;
 
     /**
      * Returns a subscription invoices
      */
-    getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SalesInvoicePublic>>;
+    getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublicInvoices200Response>;
 
     /**
      * Returns an account
@@ -1299,7 +1302,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns a subscription invoices
      */
-    async getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SalesInvoicePublic>>> {
+    async getSubscriptionPublicInvoicesRaw(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSubscriptionPublicInvoices200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -1338,13 +1341,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(SalesInvoicePublicFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSubscriptionPublicInvoices200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a subscription invoices
      */
-    async getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SalesInvoicePublic>> {
+    async getSubscriptionPublicInvoices(requestParameters: GetSubscriptionPublicInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptionPublicInvoices200Response> {
         const response = await this.getSubscriptionPublicInvoicesRaw(requestParameters, initOverrides);
         return await response.value();
     }

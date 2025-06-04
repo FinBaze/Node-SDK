@@ -32,6 +32,7 @@ export * from './GetSubscriptionPublic200Response';
 export * from './GetSubscriptionPublic200ResponseAmounts';
 export * from './GetSubscriptionPublic200ResponseEmbedded';
 export * from './GetSubscriptionPublic200ResponseEmbeddedLinesInner';
+export * from './GetSubscriptionPublicInvoices200Response';
 export * from './InvalidRequestError';
 export * from './Language';
 export * from './Links';
