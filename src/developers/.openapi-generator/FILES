@@ -53,6 +53,7 @@ src/models/ObligationEmbedded.ts
 src/models/ObligationLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
+src/models/ProcessDocumentEmbedded.ts
 src/models/ProcessDocumentTask.ts
 src/models/ProcessDocumentTaskMessagesInner.ts
 src/models/ProcessDocumentTaskMessagesInnerFunctionsValueInner.ts

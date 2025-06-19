@@ -34,6 +34,13 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
+import type { ProcessDocumentEmbedded } from './ProcessDocumentEmbedded';
+import {
+    ProcessDocumentEmbeddedFromJSON,
+    ProcessDocumentEmbeddedFromJSONTyped,
+    ProcessDocumentEmbeddedToJSON,
+    ProcessDocumentEmbeddedToJSONTyped,
+} from './ProcessDocumentEmbedded';
 
 /**
  * 
@@ -103,6 +110,12 @@ export interface ProcessDocument {
     links: Links;
     /**
      * 
+     * @type {ProcessDocumentEmbedded}
+     * @memberof ProcessDocument
+     */
+    embedded: ProcessDocumentEmbedded;
+    /**
+     * 
      * @type {Date}
      * @memberof ProcessDocument
      */
@@ -133,6 +146,7 @@ export type ProcessDocumentSourceEnum = typeof ProcessDocumentSourceEnum[keyof t
 export function instanceOfProcessDocument(value: object): value is ProcessDocument {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('links' in value) || value['links'] === undefined) return false;
+    if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -158,6 +172,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'task': json['task'] == null ? undefined : ProcessDocumentTaskFromJSON(json['task']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
+        'embedded': ProcessDocumentEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -183,6 +198,7 @@ export function ProcessDocumentToJSONTyped(value?: Omit<ProcessDocument, 'id'|'u
         'task': ProcessDocumentTaskToJSON(value['task']),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
+        '_embedded': ProcessDocumentEmbeddedToJSON(value['embedded']),
     };
 }
 

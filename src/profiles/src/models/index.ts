@@ -172,6 +172,7 @@ export * from './ObligationEmbedded';
 export * from './ObligationLine';
 export * from './ProcessDocument';
 export * from './ProcessDocumentEmail';
+export * from './ProcessDocumentEmbedded';
 export * from './ProcessMonetaryAccountPaymentCreditLoanRequest';
 export * from './ProcessMonetaryAccountPaymentCurrentAccountRequest';
 export * from './ProcessMonetaryAccountPaymentDebitLoanRequest';

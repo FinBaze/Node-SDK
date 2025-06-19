@@ -50,6 +50,12 @@ import {
 export interface SalesInvoiceEmbedded {
     /**
      * 
+     * @type {Profile}
+     * @memberof SalesInvoiceEmbedded
+     */
+    profile: Profile;
+    /**
+     * 
      * @type {Array<SalesInvoiceLine>}
      * @memberof SalesInvoiceEmbedded
      */
@@ -72,18 +78,13 @@ export interface SalesInvoiceEmbedded {
      * @memberof SalesInvoiceEmbedded
      */
     payments: Array<MonetaryAccountPayment>;
-    /**
-     * 
-     * @type {Profile}
-     * @memberof SalesInvoiceEmbedded
-     */
-    profile?: Profile;
 }
 
 /**
  * Check if a given object implements the SalesInvoiceEmbedded interface.
  */
 export function instanceOfSalesInvoiceEmbedded(value: object): value is SalesInvoiceEmbedded {
+    if (!('profile' in value) || value['profile'] === undefined) return false;
     if (!('lines' in value) || value['lines'] === undefined) return false;
     if (!('attachedInvoices' in value) || value['attachedInvoices'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
@@ -100,11 +101,11 @@ export function SalesInvoiceEmbeddedFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'profile': ProfileFromJSON(json['profile']),
         'lines': ((json['lines'] as Array<any>).map(SalesInvoiceLineFromJSON)),
         'initialInvoice': json['initial-invoice'] == null ? undefined : SalesInvoiceFromJSON(json['initial-invoice']),
         'attachedInvoices': ((json['attached-invoices'] as Array<any>).map(SalesInvoiceFromJSON)),
         'payments': ((json['payments'] as Array<any>).map(MonetaryAccountPaymentFromJSON)),
-        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
     };
 }
 
@@ -119,11 +120,11 @@ export function SalesInvoiceEmbeddedToJSONTyped(value?: SalesInvoiceEmbedded | n
 
     return {
         
+        'profile': ProfileToJSON(value['profile']),
         'lines': ((value['lines'] as Array<any>).map(SalesInvoiceLineToJSON)),
         'initial-invoice': SalesInvoiceToJSON(value['initialInvoice']),
         'attached-invoices': ((value['attachedInvoices'] as Array<any>).map(SalesInvoiceToJSON)),
         'payments': ((value['payments'] as Array<any>).map(MonetaryAccountPaymentToJSON)),
-        'profile': ProfileToJSON(value['profile']),
     };
 }
 

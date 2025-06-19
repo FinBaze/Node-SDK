@@ -34,6 +34,13 @@ import {
     PurchaseInvoiceLineToJSON,
     PurchaseInvoiceLineToJSONTyped,
 } from './PurchaseInvoiceLine';
+import type { Profile } from './Profile';
+import {
+    ProfileFromJSON,
+    ProfileFromJSONTyped,
+    ProfileToJSON,
+    ProfileToJSONTyped,
+} from './Profile';
 
 /**
  * 
@@ -41,6 +48,12 @@ import {
  * @interface PurchaseInvoiceEmbedded
  */
 export interface PurchaseInvoiceEmbedded {
+    /**
+     * 
+     * @type {Profile}
+     * @memberof PurchaseInvoiceEmbedded
+     */
+    profile: Profile;
     /**
      * 
      * @type {Relation}
@@ -65,6 +78,7 @@ export interface PurchaseInvoiceEmbedded {
  * Check if a given object implements the PurchaseInvoiceEmbedded interface.
  */
 export function instanceOfPurchaseInvoiceEmbedded(value: object): value is PurchaseInvoiceEmbedded {
+    if (!('profile' in value) || value['profile'] === undefined) return false;
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('lines' in value) || value['lines'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
@@ -81,6 +95,7 @@ export function PurchaseInvoiceEmbeddedFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
+        'profile': ProfileFromJSON(json['profile']),
         'relation': RelationFromJSON(json['relation']),
         'lines': ((json['lines'] as Array<any>).map(PurchaseInvoiceLineFromJSON)),
         'payments': ((json['payments'] as Array<any>).map(MonetaryAccountPaymentFromJSON)),
@@ -98,6 +113,7 @@ export function PurchaseInvoiceEmbeddedToJSONTyped(value?: PurchaseInvoiceEmbedd
 
     return {
         
+        'profile': ProfileToJSON(value['profile']),
         'relation': RelationToJSON(value['relation']),
         'lines': ((value['lines'] as Array<any>).map(PurchaseInvoiceLineToJSON)),
         'payments': ((value['payments'] as Array<any>).map(MonetaryAccountPaymentToJSON)),

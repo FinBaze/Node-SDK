@@ -69,6 +69,13 @@ import {
     MonetaryAccountPaymentEmbeddedLedgerToJSON,
     MonetaryAccountPaymentEmbeddedLedgerToJSONTyped,
 } from './MonetaryAccountPaymentEmbeddedLedger';
+import type { Profile } from './Profile';
+import {
+    ProfileFromJSON,
+    ProfileFromJSONTyped,
+    ProfileToJSON,
+    ProfileToJSONTyped,
+} from './Profile';
 
 /**
  * 
@@ -76,6 +83,12 @@ import {
  * @interface MonetaryAccountPaymentEmbedded
  */
 export interface MonetaryAccountPaymentEmbedded {
+    /**
+     * 
+     * @type {Profile}
+     * @memberof MonetaryAccountPaymentEmbedded
+     */
+    profile: Profile;
     /**
      * 
      * @type {MonetaryAccount}
@@ -130,6 +143,7 @@ export interface MonetaryAccountPaymentEmbedded {
  * Check if a given object implements the MonetaryAccountPaymentEmbedded interface.
  */
 export function instanceOfMonetaryAccountPaymentEmbedded(value: object): value is MonetaryAccountPaymentEmbedded {
+    if (!('profile' in value) || value['profile'] === undefined) return false;
     if (!('monetaryAccount' in value) || value['monetaryAccount'] === undefined) return false;
     return true;
 }
@@ -144,6 +158,7 @@ export function MonetaryAccountPaymentEmbeddedFromJSONTyped(json: any, ignoreDis
     }
     return {
         
+        'profile': ProfileFromJSON(json['profile']),
         'monetaryAccount': MonetaryAccountFromJSON(json['monetary-account']),
         'ledger': json['ledger'] == null ? undefined : MonetaryAccountPaymentEmbeddedLedgerFromJSON(json['ledger']),
         'debitLoan': json['debit-loan'] == null ? undefined : DebitLoanFromJSON(json['debit-loan']),
@@ -166,6 +181,7 @@ export function MonetaryAccountPaymentEmbeddedToJSONTyped(value?: MonetaryAccoun
 
     return {
         
+        'profile': ProfileToJSON(value['profile']),
         'monetary-account': MonetaryAccountToJSON(value['monetaryAccount']),
         'ledger': MonetaryAccountPaymentEmbeddedLedgerToJSON(value['ledger']),
         'debit-loan': DebitLoanToJSON(value['debitLoan']),

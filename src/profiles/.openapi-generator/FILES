@@ -178,6 +178,7 @@ src/models/ObligationEmbedded.ts
 src/models/ObligationLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
+src/models/ProcessDocumentEmbedded.ts
 src/models/ProcessMonetaryAccountPaymentCreditLoanRequest.ts
 src/models/ProcessMonetaryAccountPaymentCurrentAccountRequest.ts
 src/models/ProcessMonetaryAccountPaymentDebitLoanRequest.ts

@@ -47,6 +47,7 @@ export * from './ObligationEmbedded';
 export * from './ObligationLine';
 export * from './ProcessDocument';
 export * from './ProcessDocumentEmail';
+export * from './ProcessDocumentEmbedded';
 export * from './ProcessDocumentTask';
 export * from './ProcessDocumentTaskMessagesInner';
 export * from './ProcessDocumentTaskMessagesInnerFunctionsValueInner';
