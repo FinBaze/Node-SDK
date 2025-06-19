@@ -146,6 +146,7 @@ import type {
   SalesInvoice,
   SalesInvoiceLine,
   SendSalesInvoiceRequest,
+  SoftclosePurchaseInvoiceRequest,
   StockCategory,
   SubmitProcessDocumentRequest,
   SubscribeProfilePlan201Response,
@@ -422,6 +423,8 @@ import {
     SalesInvoiceLineToJSON,
     SendSalesInvoiceRequestFromJSON,
     SendSalesInvoiceRequestToJSON,
+    SoftclosePurchaseInvoiceRequestFromJSON,
+    SoftclosePurchaseInvoiceRequestToJSON,
     StockCategoryFromJSON,
     StockCategoryToJSON,
     SubmitProcessDocumentRequestFromJSON,
@@ -1665,6 +1668,12 @@ export interface SendSalesInvoiceOperationRequest {
     profileId: string;
     salesInvoiceId: string;
     sendSalesInvoiceRequest?: SendSalesInvoiceRequest;
+}
+
+export interface SoftclosePurchaseInvoiceOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    softclosePurchaseInvoiceRequest?: SoftclosePurchaseInvoiceRequest;
 }
 
 export interface SubmitProcessDocumentOperationRequest {
@@ -5201,6 +5210,22 @@ export interface DefaultApiInterface {
      * Send a sales invoice via email
      */
     sendSalesInvoice(requestParameters: SendSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {SoftclosePurchaseInvoiceRequest} [softclosePurchaseInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    softclosePurchaseInvoiceRaw(requestParameters: SoftclosePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>>;
+
+    /**
+     * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
+     */
+    softclosePurchaseInvoice(requestParameters: SoftclosePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
 
     /**
      * Submits a process document for processing
@@ -15702,6 +15727,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async sendSalesInvoice(requestParameters: SendSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.sendSalesInvoiceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
+     */
+    async softclosePurchaseInvoiceRaw(requestParameters: SoftclosePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling softclosePurchaseInvoice().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling softclosePurchaseInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/softclose`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SoftclosePurchaseInvoiceRequestToJSON(requestParameters['softclosePurchaseInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceFromJSON(jsonValue));
+    }
+
+    /**
+     * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
+     */
+    async softclosePurchaseInvoice(requestParameters: SoftclosePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
+        const response = await this.softclosePurchaseInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

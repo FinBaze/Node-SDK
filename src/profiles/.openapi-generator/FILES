@@ -228,6 +228,8 @@ src/models/SalesInvoicePublicEmbeddedSubscriptionEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner.ts
 src/models/SendSalesInvoiceRequest.ts
 src/models/ServerError.ts
+src/models/SoftclosePurchaseInvoiceRequest.ts
+src/models/SoftclosePurchaseInvoiceRequestTotals.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/SubmitProcessDocumentRequest.ts

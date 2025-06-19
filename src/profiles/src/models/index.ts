@@ -222,6 +222,8 @@ export * from './SalesInvoicePublicEmbeddedSubscriptionEmbedded';
 export * from './SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner';
 export * from './SendSalesInvoiceRequest';
 export * from './ServerError';
+export * from './SoftclosePurchaseInvoiceRequest';
+export * from './SoftclosePurchaseInvoiceRequestTotals';
 export * from './StockCategory';
 export * from './StockLocation';
 export * from './SubmitProcessDocumentRequest';
