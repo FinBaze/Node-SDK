@@ -85,6 +85,7 @@ export * from './ProjectTime';
 export * from './PurchaseInvoice';
 export * from './PurchaseInvoiceEmbedded';
 export * from './PurchaseInvoiceLine';
+export * from './PurchaseInvoiceLineEmbedded';
 export * from './Quote';
 export * from './QuoteEmbedded';
 export * from './QuoteLine';

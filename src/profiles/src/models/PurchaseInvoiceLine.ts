@@ -27,6 +27,13 @@ import {
     SalesInvoiceLineBookedToJSON,
     SalesInvoiceLineBookedToJSONTyped,
 } from './SalesInvoiceLineBooked';
+import type { PurchaseInvoiceLineEmbedded } from './PurchaseInvoiceLineEmbedded';
+import {
+    PurchaseInvoiceLineEmbeddedFromJSON,
+    PurchaseInvoiceLineEmbeddedFromJSONTyped,
+    PurchaseInvoiceLineEmbeddedToJSON,
+    PurchaseInvoiceLineEmbeddedToJSONTyped,
+} from './PurchaseInvoiceLineEmbedded';
 
 /**
  * 
@@ -124,6 +131,12 @@ export interface PurchaseInvoiceLine {
      * @memberof PurchaseInvoiceLine
      */
     links: Links;
+    /**
+     * 
+     * @type {PurchaseInvoiceLineEmbedded}
+     * @memberof PurchaseInvoiceLine
+     */
+    embedded: PurchaseInvoiceLineEmbedded;
     /**
      * 
      * @type {Date}
@@ -299,6 +312,7 @@ export function instanceOfPurchaseInvoiceLine(value: object): value is PurchaseI
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     if (!('booked' in value) || value['booked'] === undefined) return false;
     if (!('links' in value) || value['links'] === undefined) return false;
+    if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -329,6 +343,7 @@ export function PurchaseInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator:
         'booked': SalesInvoiceLineBookedFromJSON(json['booked']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
+        'embedded': PurchaseInvoiceLineEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -359,6 +374,7 @@ export function PurchaseInvoiceLineToJSONTyped(value?: Omit<PurchaseInvoiceLine,
         'booked': SalesInvoiceLineBookedToJSON(value['booked']),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
+        '_embedded': PurchaseInvoiceLineEmbeddedToJSON(value['embedded']),
     };
 }
 
