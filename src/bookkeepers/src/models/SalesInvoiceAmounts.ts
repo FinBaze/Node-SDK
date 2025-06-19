@@ -56,13 +56,13 @@ export interface SalesInvoiceAmounts {
      * @type {number}
      * @memberof SalesInvoiceAmounts
      */
-    discount: number;
+    payments: number;
     /**
      * 
      * @type {number}
      * @memberof SalesInvoiceAmounts
      */
-    payments: number;
+    discount: number;
 }
 
 /**
@@ -73,8 +73,8 @@ export function instanceOfSalesInvoiceAmounts(value: object): value is SalesInvo
     if (!('total' in value) || value['total'] === undefined) return false;
     if (!('subTotal' in value) || value['subTotal'] === undefined) return false;
     if (!('tax' in value) || value['tax'] === undefined) return false;
-    if (!('discount' in value) || value['discount'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
+    if (!('discount' in value) || value['discount'] === undefined) return false;
     return true;
 }
 
@@ -92,8 +92,8 @@ export function SalesInvoiceAmountsFromJSONTyped(json: any, ignoreDiscriminator:
         'total': json['total'],
         'subTotal': json['sub-total'],
         'tax': json['tax'],
-        'discount': json['discount'],
         'payments': json['payments'],
+        'discount': json['discount'],
     };
 }
 
@@ -112,8 +112,8 @@ export function SalesInvoiceAmountsToJSONTyped(value?: SalesInvoiceAmounts | nul
         'total': value['total'],
         'sub-total': value['subTotal'],
         'tax': value['tax'],
-        'discount': value['discount'],
         'payments': value['payments'],
+        'discount': value['discount'],
     };
 }
 

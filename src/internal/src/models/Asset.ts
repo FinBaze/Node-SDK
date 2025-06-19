@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -81,6 +89,12 @@ export interface Asset {
     metadata?: { [key: string]: any; };
     /**
      * 
+     * @type {Links}
+     * @memberof Asset
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Asset
      */
@@ -128,6 +142,7 @@ export function AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ass
         'writeoffLedger': json['writeoff-ledger'] == null ? undefined : json['writeoff-ledger'],
         'date': (new Date(json['date'])),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -153,6 +168,7 @@ export function AssetToJSONTyped(value?: Omit<Asset, 'id'|'updated'|'created'> |
         'writeoff-ledger': value['writeoffLedger'],
         'date': ((value['date']).toISOString().substring(0,10)),
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

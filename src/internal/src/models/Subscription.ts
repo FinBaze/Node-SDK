@@ -27,6 +27,13 @@ import {
     GetSubscriptionPublic200ResponseAmountsToJSON,
     GetSubscriptionPublic200ResponseAmountsToJSONTyped,
 } from './GetSubscriptionPublic200ResponseAmounts';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { SubscriptionFrequency } from './SubscriptionFrequency';
 import {
     SubscriptionFrequencyFromJSON,
@@ -121,6 +128,12 @@ export interface Subscription {
     embedded: SubscriptionEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof Subscription
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Subscription
      */
@@ -176,6 +189,7 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': SubscriptionEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -203,6 +217,7 @@ export function SubscriptionToJSONTyped(value?: Omit<Subscription, 'id'|'uuid'|'
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
         '_embedded': SubscriptionEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

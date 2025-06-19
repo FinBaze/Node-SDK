@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { PurchaseInvoiceEmbedded } from './PurchaseInvoiceEmbedded';
 import {
     PurchaseInvoiceEmbeddedFromJSON,
@@ -27,13 +34,13 @@ import {
     SalesInvoiceAmountsToJSON,
     SalesInvoiceAmountsToJSONTyped,
 } from './SalesInvoiceAmounts';
-import type { SalesInvoicePeriod } from './SalesInvoicePeriod';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
 import {
-    SalesInvoicePeriodFromJSON,
-    SalesInvoicePeriodFromJSONTyped,
-    SalesInvoicePeriodToJSON,
-    SalesInvoicePeriodToJSONTyped,
-} from './SalesInvoicePeriod';
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -61,10 +68,10 @@ export interface PurchaseInvoice {
     invoiceId: string;
     /**
      * 
-     * @type {SalesInvoicePeriod}
+     * @type {CreateSalesInvoiceRequestPeriod}
      * @memberof PurchaseInvoice
      */
-    period?: SalesInvoicePeriod;
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * Date that the invoice is scheduled to be paid
      * @type {Date}
@@ -157,6 +164,12 @@ export interface PurchaseInvoice {
     embedded: PurchaseInvoiceEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof PurchaseInvoice
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof PurchaseInvoice
      */
@@ -202,7 +215,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'uuid': json['uuid'],
         'invoiceId': json['invoice_id'],
-        'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'scheduled': json['scheduled'] == null ? undefined : (new Date(json['scheduled'])),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
@@ -218,6 +231,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'relation': json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': PurchaseInvoiceEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -235,7 +249,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
     return {
         
         'invoice_id': value['invoiceId'],
-        'period': SalesInvoicePeriodToJSON(value['period']),
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'scheduled': value['scheduled'] == null ? undefined : ((value['scheduled']).toISOString().substring(0,10)),
         'due': value['due'] == null ? undefined : ((value['due']).toISOString().substring(0,10)),
         'date': ((value['date']).toISOString().substring(0,10)),
@@ -248,6 +262,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
         'relation': value['relation'],
         'metadata': value['metadata'],
         '_embedded': PurchaseInvoiceEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

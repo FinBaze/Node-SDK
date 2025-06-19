@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { MemorialEntryEmbedded } from './MemorialEntryEmbedded';
 import {
     MemorialEntryEmbeddedFromJSON,
@@ -65,6 +72,12 @@ export interface MemorialEntry {
     embedded: MemorialEntryEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof MemorialEntry
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof MemorialEntry
      */
@@ -106,6 +119,7 @@ export function MemorialEntryFromJSONTyped(json: any, ignoreDiscriminator: boole
         'createdBy': json['created-by'] == null ? undefined : json['created-by'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': MemorialEntryEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -126,6 +140,7 @@ export function MemorialEntryToJSONTyped(value?: Omit<MemorialEntry, 'id'|'date'
         'created-by': value['createdBy'],
         'metadata': value['metadata'],
         '_embedded': MemorialEntryEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { PurchaseInvoiceEmbedded } from './PurchaseInvoiceEmbedded';
 import {
     PurchaseInvoiceEmbeddedFromJSON,
@@ -157,6 +164,12 @@ export interface PurchaseInvoice {
     embedded: PurchaseInvoiceEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof PurchaseInvoice
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof PurchaseInvoice
      */
@@ -218,6 +231,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'relation': json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': PurchaseInvoiceEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -248,6 +262,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
         'relation': value['relation'],
         'metadata': value['metadata'],
         '_embedded': PurchaseInvoiceEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

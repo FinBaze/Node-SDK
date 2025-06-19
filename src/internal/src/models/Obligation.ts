@@ -20,6 +20,13 @@ import {
     GetSubscriptionPublic200ResponseAmountsToJSON,
     GetSubscriptionPublic200ResponseAmountsToJSONTyped,
 } from './GetSubscriptionPublic200ResponseAmounts';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { SubscriptionFrequency } from './SubscriptionFrequency';
 import {
     SubscriptionFrequencyFromJSON,
@@ -127,6 +134,12 @@ export interface Obligation {
     embedded: ObligationEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof Obligation
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Obligation
      */
@@ -183,6 +196,7 @@ export function ObligationFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': ObligationEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -211,6 +225,7 @@ export function ObligationToJSONTyped(value?: Omit<Obligation, 'id'|'uuid'|'upda
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
         '_embedded': ObligationEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

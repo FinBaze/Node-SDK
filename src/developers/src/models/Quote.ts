@@ -34,6 +34,13 @@ import {
     SalesInvoiceAmountsBookedToJSON,
     SalesInvoiceAmountsBookedToJSONTyped,
 } from './SalesInvoiceAmountsBooked';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -169,6 +176,12 @@ export interface Quote {
     embedded: QuoteEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof Quote
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Quote
      */
@@ -228,6 +241,7 @@ export function QuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): Quo
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': QuoteEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -259,6 +273,7 @@ export function QuoteToJSONTyped(value?: Omit<Quote, 'id'|'uuid'|'quote_id'|'dat
         'footer': value['footer'],
         'metadata': value['metadata'],
         '_embedded': QuoteEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

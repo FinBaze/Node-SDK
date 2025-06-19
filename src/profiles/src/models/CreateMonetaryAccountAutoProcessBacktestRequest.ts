@@ -58,18 +58,6 @@ export interface CreateMonetaryAccountAutoProcessBacktestRequest {
      * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
      */
     process: CreateMonetaryAccountAutoProcessBacktestRequestProcess;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
-     */
-    readonly updated: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateMonetaryAccountAutoProcessBacktestRequest
-     */
-    readonly created: Date;
 }
 
 /**
@@ -80,8 +68,6 @@ export function instanceOfCreateMonetaryAccountAutoProcessBacktestRequest(value:
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('rules' in value) || value['rules'] === undefined) return false;
     if (!('process' in value) || value['process'] === undefined) return false;
-    if (!('updated' in value) || value['updated'] === undefined) return false;
-    if (!('created' in value) || value['created'] === undefined) return false;
     return true;
 }
 
@@ -99,8 +85,6 @@ export function CreateMonetaryAccountAutoProcessBacktestRequestFromJSONTyped(jso
         'name': json['name'],
         'rules': ((json['rules'] as Array<any>).map(CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerFromJSON)),
         'process': CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSON(json['process']),
-        'updated': (new Date(json['updated'])),
-        'created': (new Date(json['created'])),
     };
 }
 
@@ -108,7 +92,7 @@ export function CreateMonetaryAccountAutoProcessBacktestRequestToJSON(json: any)
     return CreateMonetaryAccountAutoProcessBacktestRequestToJSONTyped(json, false);
 }
 
-export function CreateMonetaryAccountAutoProcessBacktestRequestToJSONTyped(value?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function CreateMonetaryAccountAutoProcessBacktestRequestToJSONTyped(value?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

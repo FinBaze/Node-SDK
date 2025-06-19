@@ -121,7 +121,7 @@ export interface CreateProfileRequest {
      */
     address: Address;
     /**
-     * 
+     * Free form key/ value pair
      * @type {{ [key: string]: any; }}
      * @memberof CreateProfileRequest
      */

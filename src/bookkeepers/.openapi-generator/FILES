@@ -21,6 +21,11 @@ src/models/CreateBookkeeperProfileRequestSettingsEmail.ts
 src/models/CreateBookkeeperProfileRequestSettingsPurchaseInvoice.ts
 src/models/CreateBookkeeperProfileRequestSettingsReminder.ts
 src/models/CreateBookkeeperProfileRequestSettingsSalesInvoice.ts
+src/models/CreateProcessDocumentRequest.ts
+src/models/CreateProcessDocumentRequestFile.ts
+src/models/CreateSalesInvoiceRequest.ts
+src/models/CreateSalesInvoiceRequestEu.ts
+src/models/CreateSalesInvoiceRequestPeriod.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts
 src/models/DebitLoan.ts
@@ -28,8 +33,12 @@ src/models/Device.ts
 src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
+src/models/GetAllMonetaryAccountPayments200Response.ts
 src/models/GetBookkeeperAccounts200Response.ts
 src/models/GetBookkeeperProfiles200Response.ts
+src/models/GetProcessDocuments200Response.ts
+src/models/GetPurchaseInvoices200Response.ts
+src/models/GetSalesInvoices200Response.ts
 src/models/InvalidRequestError.ts
 src/models/Language.ts
 src/models/Links.ts
@@ -100,7 +109,6 @@ src/models/SalesInvoiceAmountsBooked.ts
 src/models/SalesInvoiceEmbedded.ts
 src/models/SalesInvoiceLine.ts
 src/models/SalesInvoiceLineBooked.ts
-src/models/SalesInvoicePeriod.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts

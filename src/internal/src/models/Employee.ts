@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * Employee
@@ -71,6 +78,12 @@ export interface Employee {
     phone?: string;
     /**
      * 
+     * @type {Links}
+     * @memberof Employee
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Employee
      */
@@ -113,6 +126,7 @@ export function EmployeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'email': json['email'],
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
         'phone': json['phone'] == null ? undefined : json['phone'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -135,6 +149,7 @@ export function EmployeeToJSONTyped(value?: Omit<Employee, 'id'|'updated'|'creat
         'email': value['email'],
         'address': AddressToJSON(value['address']),
         'phone': value['phone'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

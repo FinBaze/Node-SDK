@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -99,6 +107,12 @@ export interface CreditLoan {
     metadata?: { [key: string]: any; };
     /**
      * 
+     * @type {Links}
+     * @memberof CreditLoan
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof CreditLoan
      */
@@ -151,6 +165,7 @@ export function CreditLoanFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'currency': json['currency'],
         'amount': json['amount'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -179,6 +194,7 @@ export function CreditLoanToJSONTyped(value?: Omit<CreditLoan, 'id'|'updated'|'c
         'currency': value['currency'],
         'amount': value['amount'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

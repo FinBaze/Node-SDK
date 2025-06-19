@@ -27,6 +27,13 @@ import {
     MonetaryAccountAutoProcessRulesInnerToJSON,
     MonetaryAccountAutoProcessRulesInnerToJSONTyped,
 } from './MonetaryAccountAutoProcessRulesInner';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -58,6 +65,12 @@ export interface MonetaryAccountAutoProcess {
      * @memberof MonetaryAccountAutoProcess
      */
     process: MonetaryAccountAutoProcessProcess;
+    /**
+     * 
+     * @type {Links}
+     * @memberof MonetaryAccountAutoProcess
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -99,6 +112,7 @@ export function MonetaryAccountAutoProcessFromJSONTyped(json: any, ignoreDiscrim
         'name': json['name'],
         'rules': ((json['rules'] as Array<any>).map(MonetaryAccountAutoProcessRulesInnerFromJSON)),
         'process': MonetaryAccountAutoProcessProcessFromJSON(json['process']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -118,6 +132,7 @@ export function MonetaryAccountAutoProcessToJSONTyped(value?: Omit<MonetaryAccou
         'name': value['name'],
         'rules': ((value['rules'] as Array<any>).map(MonetaryAccountAutoProcessRulesInnerToJSON)),
         'process': MonetaryAccountAutoProcessProcessToJSON(value['process']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

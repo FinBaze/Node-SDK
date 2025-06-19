@@ -19,12 +19,20 @@ import type {
   Bookkeeper,
   CreateBookkeeperAccountRequest,
   CreateBookkeeperProfileRequest,
+  CreateProcessDocumentRequest,
+  CreateSalesInvoiceRequest,
   ForbiddenError,
+  GetAllMonetaryAccountPayments200Response,
   GetBookkeeperAccounts200Response,
   GetBookkeeperProfiles200Response,
+  GetProcessDocuments200Response,
+  GetPurchaseInvoices200Response,
+  GetSalesInvoices200Response,
   InvalidRequestError,
   NotFoundError,
+  ProcessDocument,
   Profile,
+  SalesInvoice,
   ServerError,
   UnauthorisedError,
 } from '../models/index';
@@ -37,18 +45,34 @@ import {
     CreateBookkeeperAccountRequestToJSON,
     CreateBookkeeperProfileRequestFromJSON,
     CreateBookkeeperProfileRequestToJSON,
+    CreateProcessDocumentRequestFromJSON,
+    CreateProcessDocumentRequestToJSON,
+    CreateSalesInvoiceRequestFromJSON,
+    CreateSalesInvoiceRequestToJSON,
     ForbiddenErrorFromJSON,
     ForbiddenErrorToJSON,
+    GetAllMonetaryAccountPayments200ResponseFromJSON,
+    GetAllMonetaryAccountPayments200ResponseToJSON,
     GetBookkeeperAccounts200ResponseFromJSON,
     GetBookkeeperAccounts200ResponseToJSON,
     GetBookkeeperProfiles200ResponseFromJSON,
     GetBookkeeperProfiles200ResponseToJSON,
+    GetProcessDocuments200ResponseFromJSON,
+    GetProcessDocuments200ResponseToJSON,
+    GetPurchaseInvoices200ResponseFromJSON,
+    GetPurchaseInvoices200ResponseToJSON,
+    GetSalesInvoices200ResponseFromJSON,
+    GetSalesInvoices200ResponseToJSON,
     InvalidRequestErrorFromJSON,
     InvalidRequestErrorToJSON,
     NotFoundErrorFromJSON,
     NotFoundErrorToJSON,
+    ProcessDocumentFromJSON,
+    ProcessDocumentToJSON,
     ProfileFromJSON,
     ProfileToJSON,
+    SalesInvoiceFromJSON,
+    SalesInvoiceToJSON,
     ServerErrorFromJSON,
     ServerErrorToJSON,
     UnauthorisedErrorFromJSON,
@@ -65,9 +89,34 @@ export interface CreateBookkeeperProfileOperationRequest {
     createBookkeeperProfileRequest: CreateBookkeeperProfileRequest;
 }
 
+export interface CreateProcessDocumentOperationRequest {
+    profileId: string;
+    createProcessDocumentRequest?: CreateProcessDocumentRequest;
+}
+
+export interface CreateSalesInvoiceOperationRequest {
+    profileId: string;
+    createSalesInvoiceRequest?: CreateSalesInvoiceRequest;
+}
+
 export interface DeleteBookkeeperAccountRequest {
     bookkeeperId: string;
     accountId: string;
+}
+
+export interface GetAllMonetaryAccountPaymentsRequest {
+    bookkeeperId: string;
+    page?: number;
+    size?: number;
+    search?: string;
+    description?: string;
+    reference?: string;
+    unprocessed?: boolean;
+    amount?: number;
+    relation?: string;
+    creditLoan?: string;
+    debitLoan?: string;
+    currentAccount?: string;
 }
 
 export interface GetBookkeeperRequest {
@@ -90,6 +139,52 @@ export interface GetBookkeeperProfilesRequest {
     bookkeeperId: string;
     page?: number;
     size?: number;
+}
+
+export interface GetProcessDocumentsRequest {
+    bookkeeperId: string;
+    page?: number;
+    size?: number;
+    processed?: boolean;
+    processing?: boolean;
+}
+
+export interface GetPurchaseInvoicesRequest {
+    bookkeeperId: string;
+    page?: number;
+    size?: number;
+    relation?: string;
+    invoiceId?: string;
+    file?: boolean;
+    date?: Date;
+    overdue?: boolean;
+    product?: string;
+    project?: string;
+    batch?: string;
+    paid?: boolean;
+    concept?: boolean;
+}
+
+export interface GetSalesInvoicesRequest {
+    bookkeeperId: string;
+    page?: number;
+    size?: number;
+    reference?: string;
+    subscription?: string;
+    relation?: string;
+    product?: string;
+    project?: string;
+    invoiceId?: string;
+    date?: Date;
+    overdue?: boolean;
+    paid?: boolean;
+    credit?: boolean;
+    credited?: boolean;
+    concept?: boolean;
+    currency?: string;
+    amount?: number;
+    amountLte?: number;
+    amountGte?: number;
 }
 
 /**
@@ -130,6 +225,36 @@ export interface DefaultApiInterface {
     createBookkeeperProfile(requestParameters: CreateBookkeeperProfileOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Profile>;
 
     /**
+     * Creates a process document
+     * @param {string} profileId The id of the profile
+     * @param {CreateProcessDocumentRequest} [createProcessDocumentRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createProcessDocumentRaw(requestParameters: CreateProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessDocument>>;
+
+    /**
+     * Creates a process document
+     */
+    createProcessDocument(requestParameters: CreateProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument>;
+
+    /**
+     * creates a sales invoice
+     * @param {string} profileId The id of the profile
+     * @param {CreateSalesInvoiceRequest} [createSalesInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createSalesInvoiceRaw(requestParameters: CreateSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoice>>;
+
+    /**
+     * creates a sales invoice
+     */
+    createSalesInvoice(requestParameters: CreateSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoice>;
+
+    /**
      * Deletes a bookkeeper account
      * @param {string} bookkeeperId The id of the bookkeeper
      * @param {string} accountId The ID of the account
@@ -143,6 +268,31 @@ export interface DefaultApiInterface {
      * Deletes a bookkeeper account
      */
     deleteBookkeeperAccount(requestParameters: DeleteBookkeeperAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Returns all monetary account payments
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [search] Filter for anything that includes the search criterea
+     * @param {string} [description] Filter based on the exact description
+     * @param {string} [reference] Filter based on the exact reference
+     * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
+     * @param {number} [amount] the amount of the payment
+     * @param {string} [relation] Relation that is connected to this payment
+     * @param {string} [creditLoan] Credit loan Id that is connected to this payment
+     * @param {string} [debitLoan] Debit loan Id that is connected to this payment
+     * @param {string} [currentAccount] Current account Id that is connected to this payment
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAllMonetaryAccountPaymentsRaw(requestParameters: GetAllMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllMonetaryAccountPayments200Response>>;
+
+    /**
+     * Returns all monetary account payments
+     */
+    getAllMonetaryAccountPayments(requestParameters: GetAllMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllMonetaryAccountPayments200Response>;
 
     /**
      * Returns a bookkeper
@@ -218,6 +368,82 @@ export interface DefaultApiInterface {
      * Returns a list of all the bookkeepers
      */
     getBookkeepers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Bookkeeper>>;
+
+    /**
+     * Returns all process documents
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {boolean} [processed] Boolean type to indicate if the document is processing
+     * @param {boolean} [processing] Boolean type to indicate if the document is processing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProcessDocumentsRaw(requestParameters: GetProcessDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProcessDocuments200Response>>;
+
+    /**
+     * Returns all process documents
+     */
+    getProcessDocuments(requestParameters: GetProcessDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProcessDocuments200Response>;
+
+    /**
+     * Returns all purchase invoices
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [relation] Non empty string with the ID of the relation to filter
+     * @param {string} [invoiceId] Invoice ID to filter
+     * @param {boolean} [file] If the purchase invoice has an uploaded file
+     * @param {Date} [date] Invoice date to filter
+     * @param {boolean} [overdue] If the invoice is overdue to filter
+     * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [project] Filter invoices that contain this project ID
+     * @param {string} [batch] Filter invoices that are in this batch
+     * @param {boolean} [paid] If the invoice is paid to filter
+     * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoicesRaw(requestParameters: GetPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoices200Response>>;
+
+    /**
+     * Returns all purchase invoices
+     */
+    getPurchaseInvoices(requestParameters: GetPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoices200Response>;
+
+    /**
+     * Returns all sales invoices
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [reference] Reference of the sales invoice
+     * @param {string} [subscription] Subscription ID to filter to
+     * @param {string} [relation] ID of the relation to filter to
+     * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [project] Filter invoices that contain this project ID
+     * @param {string} [invoiceId] Invoice ID to search
+     * @param {Date} [date] Invoice date
+     * @param {boolean} [overdue] If the invoice is overdue
+     * @param {boolean} [paid] If the invoice is paid
+     * @param {boolean} [credit] If the invoice is an credit invoice
+     * @param {boolean} [credited] If the invoice has already been credited
+     * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {string} [currency] The currency of the sales invoice
+     * @param {number} [amount] The amount the invoice should equal to
+     * @param {number} [amountLte] The amount the invoice should be less than or equal to
+     * @param {number} [amountGte] The amount the invoice should be greater than or equal to
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getSalesInvoicesRaw(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSalesInvoices200Response>>;
+
+    /**
+     * Returns all sales invoices
+     */
+    getSalesInvoices(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSalesInvoices200Response>;
 
 }
 
@@ -316,6 +542,88 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates a process document
+     */
+    async createProcessDocumentRaw(requestParameters: CreateProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessDocument>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createProcessDocument().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/process-documents`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateProcessDocumentRequestToJSON(requestParameters['createProcessDocumentRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProcessDocumentFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a process document
+     */
+    async createProcessDocument(requestParameters: CreateProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProcessDocument> {
+        const response = await this.createProcessDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * creates a sales invoice
+     */
+    async createSalesInvoiceRaw(requestParameters: CreateSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoice>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createSalesInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/sales-invoices`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateSalesInvoiceRequestToJSON(requestParameters['createSalesInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceFromJSON(jsonValue));
+    }
+
+    /**
+     * creates a sales invoice
+     */
+    async createSalesInvoice(requestParameters: CreateSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoice> {
+        const response = await this.createSalesInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Deletes a bookkeeper account
      */
     async deleteBookkeeperAccountRaw(requestParameters: DeleteBookkeeperAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -357,6 +665,88 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteBookkeeperAccount(requestParameters: DeleteBookkeeperAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteBookkeeperAccountRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Returns all monetary account payments
+     */
+    async getAllMonetaryAccountPaymentsRaw(requestParameters: GetAllMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllMonetaryAccountPayments200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getAllMonetaryAccountPayments().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['description'] != null) {
+            queryParameters['description'] = requestParameters['description'];
+        }
+
+        if (requestParameters['reference'] != null) {
+            queryParameters['reference'] = requestParameters['reference'];
+        }
+
+        if (requestParameters['unprocessed'] != null) {
+            queryParameters['unprocessed'] = requestParameters['unprocessed'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['creditLoan'] != null) {
+            queryParameters['credit-loan'] = requestParameters['creditLoan'];
+        }
+
+        if (requestParameters['debitLoan'] != null) {
+            queryParameters['debit-loan'] = requestParameters['debitLoan'];
+        }
+
+        if (requestParameters['currentAccount'] != null) {
+            queryParameters['current-account'] = requestParameters['currentAccount'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/monetary-account-payments`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetAllMonetaryAccountPayments200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all monetary account payments
+     */
+    async getAllMonetaryAccountPayments(requestParameters: GetAllMonetaryAccountPaymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllMonetaryAccountPayments200Response> {
+        const response = await this.getAllMonetaryAccountPaymentsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -566,6 +956,256 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getBookkeepers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Bookkeeper>> {
         const response = await this.getBookkeepersRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all process documents
+     */
+    async getProcessDocumentsRaw(requestParameters: GetProcessDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProcessDocuments200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getProcessDocuments().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['processed'] != null) {
+            queryParameters['processed'] = requestParameters['processed'];
+        }
+
+        if (requestParameters['processing'] != null) {
+            queryParameters['processing'] = requestParameters['processing'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/process-documents`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProcessDocuments200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all process documents
+     */
+    async getProcessDocuments(requestParameters: GetProcessDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProcessDocuments200Response> {
+        const response = await this.getProcessDocumentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all purchase invoices
+     */
+    async getPurchaseInvoicesRaw(requestParameters: GetPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseInvoices200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getPurchaseInvoices().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['invoiceId'] != null) {
+            queryParameters['invoice_id'] = requestParameters['invoiceId'];
+        }
+
+        if (requestParameters['file'] != null) {
+            queryParameters['file'] = requestParameters['file'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['overdue'] != null) {
+            queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
+        }
+
+        if (requestParameters['batch'] != null) {
+            queryParameters['batch'] = requestParameters['batch'];
+        }
+
+        if (requestParameters['paid'] != null) {
+            queryParameters['paid'] = requestParameters['paid'];
+        }
+
+        if (requestParameters['concept'] != null) {
+            queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/purchase-invoices`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseInvoices200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all purchase invoices
+     */
+    async getPurchaseInvoices(requestParameters: GetPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoices200Response> {
+        const response = await this.getPurchaseInvoicesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all sales invoices
+     */
+    async getSalesInvoicesRaw(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSalesInvoices200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getSalesInvoices().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['reference'] != null) {
+            queryParameters['reference'] = requestParameters['reference'];
+        }
+
+        if (requestParameters['subscription'] != null) {
+            queryParameters['subscription'] = requestParameters['subscription'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
+        }
+
+        if (requestParameters['invoiceId'] != null) {
+            queryParameters['invoice_id'] = requestParameters['invoiceId'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['overdue'] != null) {
+            queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['paid'] != null) {
+            queryParameters['paid'] = requestParameters['paid'];
+        }
+
+        if (requestParameters['credit'] != null) {
+            queryParameters['credit'] = requestParameters['credit'];
+        }
+
+        if (requestParameters['credited'] != null) {
+            queryParameters['credited'] = requestParameters['credited'];
+        }
+
+        if (requestParameters['concept'] != null) {
+            queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        if (requestParameters['currency'] != null) {
+            queryParameters['currency'] = requestParameters['currency'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
+        }
+
+        if (requestParameters['amountLte'] != null) {
+            queryParameters['amount_lte'] = requestParameters['amountLte'];
+        }
+
+        if (requestParameters['amountGte'] != null) {
+            queryParameters['amount_gte'] = requestParameters['amountGte'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/sales-invoices`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSalesInvoices200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all sales invoices
+     */
+    async getSalesInvoices(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSalesInvoices200Response> {
+        const response = await this.getSalesInvoicesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

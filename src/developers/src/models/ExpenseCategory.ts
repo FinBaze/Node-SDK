@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -49,6 +57,12 @@ export interface ExpenseCategory {
      * @memberof ExpenseCategory
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof ExpenseCategory
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -91,6 +105,7 @@ export function ExpenseCategoryFromJSONTyped(json: any, ignoreDiscriminator: boo
         'ledger': json['ledger'],
         'category': json['category'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -111,6 +126,7 @@ export function ExpenseCategoryToJSONTyped(value?: Omit<ExpenseCategory, 'id'|'u
         'ledger': value['ledger'],
         'category': value['category'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

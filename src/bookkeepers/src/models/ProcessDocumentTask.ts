@@ -20,6 +20,13 @@ import {
     ProcessDocumentTaskMessagesInnerToJSON,
     ProcessDocumentTaskMessagesInnerToJSONTyped,
 } from './ProcessDocumentTaskMessagesInner';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -45,6 +52,12 @@ export interface ProcessDocumentTask {
      * @memberof ProcessDocumentTask
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof ProcessDocumentTask
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -83,6 +96,7 @@ export function ProcessDocumentTaskFromJSONTyped(json: any, ignoreDiscriminator:
         'id': json['id'],
         'messages': ((json['messages'] as Array<any>).map(ProcessDocumentTaskMessagesInnerFromJSON)),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -101,6 +115,7 @@ export function ProcessDocumentTaskToJSONTyped(value?: Omit<ProcessDocumentTask,
         
         'messages': ((value['messages'] as Array<any>).map(ProcessDocumentTaskMessagesInnerToJSON)),
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

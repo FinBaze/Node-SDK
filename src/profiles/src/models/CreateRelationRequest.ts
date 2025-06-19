@@ -50,10 +50,10 @@ import {
 export interface CreateRelationRequest {
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof CreateRelationRequest
      */
-    email?: string;
+    emails?: Array<string>;
     /**
      * 
      * @type {string}
@@ -141,7 +141,7 @@ export function CreateRelationRequestFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'email': json['email'] == null ? undefined : json['email'],
+        'emails': json['emails'] == null ? undefined : json['emails'],
         'legalName': json['legal_name'] == null ? undefined : json['legal_name'],
         'firstName': json['first_name'] == null ? undefined : json['first_name'],
         'middleName': json['middle_name'] == null ? undefined : json['middle_name'],
@@ -167,7 +167,7 @@ export function CreateRelationRequestToJSONTyped(value?: CreateRelationRequest |
 
     return {
         
-        'email': value['email'],
+        'emails': value['emails'],
         'legal_name': value['legalName'],
         'first_name': value['firstName'],
         'middle_name': value['middleName'],

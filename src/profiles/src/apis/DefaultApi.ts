@@ -528,13 +528,13 @@ export interface CreateMonetaryAccountOperationRequest {
 export interface CreateMonetaryAccountAutoProcessRequest {
     profileId: string;
     monetaryAccountId: string;
-    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'|'updated'|'created'>;
+    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'>;
 }
 
 export interface CreateMonetaryAccountAutoProcessBacktestOperationRequest {
     profileId: string;
     monetaryAccountId: string;
-    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'|'updated'|'created'>;
+    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'>;
 }
 
 export interface CreateMonetaryAccountBankPaymentOperationRequest {
@@ -1688,7 +1688,7 @@ export interface UpateMonetaryAccountAutoProcessRequest {
     profileId: string;
     monetaryAccountId: string;
     monetaryAccountAutoProcessId: string;
-    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'|'updated'|'created'>;
+    createMonetaryAccountAutoProcessBacktestRequest?: Omit<CreateMonetaryAccountAutoProcessBacktestRequest, 'id'>;
 }
 
 export interface UpdateAssetRequest {

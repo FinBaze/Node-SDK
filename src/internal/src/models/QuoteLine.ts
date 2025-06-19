@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -85,6 +93,12 @@ export interface QuoteLine {
      * @memberof QuoteLine
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof QuoteLine
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -284,6 +298,7 @@ export function QuoteLineFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -310,6 +325,7 @@ export function QuoteLineToJSONTyped(value?: Omit<QuoteLine, 'id'|'updated'|'cre
         'discount': value['discount'],
         'quantity': value['quantity'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

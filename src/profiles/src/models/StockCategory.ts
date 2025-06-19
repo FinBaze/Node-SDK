@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -43,6 +51,12 @@ export interface StockCategory {
      * @memberof StockCategory
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof StockCategory
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -83,6 +97,7 @@ export function StockCategoryFromJSONTyped(json: any, ignoreDiscriminator: boole
         'name': json['name'],
         'ledger': json['ledger'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -102,6 +117,7 @@ export function StockCategoryToJSONTyped(value?: Omit<StockCategory, 'id'|'updat
         'name': value['name'],
         'ledger': value['ledger'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

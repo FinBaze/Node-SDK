@@ -34,6 +34,13 @@ import {
     CreateBookkeeperProfileRequestNlToJSON,
     CreateBookkeeperProfileRequestNlToJSONTyped,
 } from './CreateBookkeeperProfileRequestNl';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { ProfileFeatures } from './ProfileFeatures';
 import {
     ProfileFeaturesFromJSON,
@@ -165,6 +172,12 @@ export interface Profile {
     readonly created: Date;
     /**
      * 
+     * @type {Links}
+     * @memberof Profile
+     */
+    links?: Links;
+    /**
+     * Free form key/ value pair
      * @type {{ [key: string]: any; }}
      * @memberof Profile
      */
@@ -232,6 +245,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'address': AddressFromJSON(json['address']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
@@ -262,6 +276,7 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
         'currencies': value['currencies'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
+        '_links': LinksToJSON(value['links']),
         'metadata': value['metadata'],
     };
 }

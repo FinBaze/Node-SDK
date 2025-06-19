@@ -41,13 +41,13 @@ import {
     SalesInvoiceAmountsToJSON,
     SalesInvoiceAmountsToJSONTyped,
 } from './SalesInvoiceAmounts';
-import type { SalesInvoicePeriod } from './SalesInvoicePeriod';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
 import {
-    SalesInvoicePeriodFromJSON,
-    SalesInvoicePeriodFromJSONTyped,
-    SalesInvoicePeriodToJSON,
-    SalesInvoicePeriodToJSONTyped,
-} from './SalesInvoicePeriod';
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -87,10 +87,10 @@ export interface SalesInvoice {
     email?: string;
     /**
      * 
-     * @type {SalesInvoicePeriod}
+     * @type {CreateSalesInvoiceRequestPeriod}
      * @memberof SalesInvoice
      */
-    period?: SalesInvoicePeriod;
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * 
      * @type {Date}
@@ -269,7 +269,7 @@ export function SalesInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'invoiceId': json['invoice_id'] == null ? undefined : json['invoice_id'],
         'reference': json['reference'] == null ? undefined : json['reference'],
         'email': json['email'] == null ? undefined : json['email'],
-        'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
@@ -310,7 +310,7 @@ export function SalesInvoiceToJSONTyped(value?: Omit<SalesInvoice, 'id'|'uuid'|'
         
         'reference': value['reference'],
         'email': value['email'],
-        'period': SalesInvoicePeriodToJSON(value['period']),
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'paid': value['paid'],
         'paid-on': value['paidOn'] == null ? undefined : ((value['paidOn']).toISOString().substring(0,10)),
         'overdue': value['overdue'],

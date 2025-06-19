@@ -20,6 +20,13 @@ import {
     MonetaryAccountTypeToJSON,
     MonetaryAccountTypeToJSONTyped,
 } from './MonetaryAccountType';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { MonetaryAccountFeatures } from './MonetaryAccountFeatures';
 import {
     MonetaryAccountFeaturesFromJSON,
@@ -102,6 +109,12 @@ export interface MonetaryAccount {
     metadata?: { [key: string]: any; };
     /**
      * 
+     * @type {Links}
+     * @memberof MonetaryAccount
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof MonetaryAccount
      */
@@ -151,6 +164,7 @@ export function MonetaryAccountFromJSONTyped(json: any, ignoreDiscriminator: boo
         'type': MonetaryAccountTypeFromJSON(json['type']),
         'currency': json['currency'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -177,6 +191,7 @@ export function MonetaryAccountToJSONTyped(value?: Omit<MonetaryAccount, 'id'|'u
         'type': MonetaryAccountTypeToJSON(value['type']),
         'currency': value['currency'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

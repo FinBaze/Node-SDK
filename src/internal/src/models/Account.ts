@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * An account that represents a user
  * @export
@@ -63,6 +71,12 @@ export interface Account {
     phone?: string;
     /**
      * 
+     * @type {Links}
+     * @memberof Account
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Account
      */
@@ -105,6 +119,7 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
         'language': json['language'] == null ? undefined : json['language'],
         'email': json['email'],
         'phone': json['phone'] == null ? undefined : json['phone'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -127,6 +142,7 @@ export function AccountToJSONTyped(value?: Omit<Account, 'id'|'updated'|'created
         'language': value['language'],
         'email': value['email'],
         'phone': value['phone'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

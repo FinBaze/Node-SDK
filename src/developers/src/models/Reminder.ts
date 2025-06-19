@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { ReminderEmbedded } from './ReminderEmbedded';
 import {
     ReminderEmbeddedFromJSON,
@@ -181,6 +188,12 @@ export interface Reminder {
     embedded: ReminderEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof Reminder
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof Reminder
      */
@@ -242,6 +255,7 @@ export function ReminderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'relation': json['relation'] == null ? undefined : json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': ReminderEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -275,6 +289,7 @@ export function ReminderToJSONTyped(value?: Omit<Reminder, 'id'|'uuid'|'reminder
         'relation': value['relation'],
         'metadata': value['metadata'],
         '_embedded': ReminderEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

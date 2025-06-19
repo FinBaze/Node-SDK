@@ -34,13 +34,13 @@ import {
     SalesInvoicePublicEmbeddedToJSON,
     SalesInvoicePublicEmbeddedToJSONTyped,
 } from './SalesInvoicePublicEmbedded';
-import type { SalesInvoicePeriod } from './SalesInvoicePeriod';
+import type { CreateSalesInvoiceRequestPeriod } from './CreateSalesInvoiceRequestPeriod';
 import {
-    SalesInvoicePeriodFromJSON,
-    SalesInvoicePeriodFromJSONTyped,
-    SalesInvoicePeriodToJSON,
-    SalesInvoicePeriodToJSONTyped,
-} from './SalesInvoicePeriod';
+    CreateSalesInvoiceRequestPeriodFromJSON,
+    CreateSalesInvoiceRequestPeriodFromJSONTyped,
+    CreateSalesInvoiceRequestPeriodToJSON,
+    CreateSalesInvoiceRequestPeriodToJSONTyped,
+} from './CreateSalesInvoiceRequestPeriod';
 
 /**
  * 
@@ -86,10 +86,10 @@ export interface SalesInvoicePublic {
     reference?: string;
     /**
      * 
-     * @type {SalesInvoicePeriod}
+     * @type {CreateSalesInvoiceRequestPeriod}
      * @memberof SalesInvoicePublic
      */
-    period?: SalesInvoicePeriod;
+    period?: CreateSalesInvoiceRequestPeriod;
     /**
      * 
      * @type {string}
@@ -213,7 +213,7 @@ export function SalesInvoicePublicFromJSONTyped(json: any, ignoreDiscriminator: 
         'due': json['due'] == null ? undefined : (new Date(json['due'])),
         'date': (new Date(json['date'])),
         'reference': json['reference'] == null ? undefined : json['reference'],
-        'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
+        'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'paid': json['paid'] == null ? undefined : json['paid'],
         'paidOn': json['paid_on'] == null ? undefined : (new Date(json['paid_on'])),
         'overdue': json['overdue'],
@@ -244,7 +244,7 @@ export function SalesInvoicePublicToJSONTyped(value?: Omit<SalesInvoicePublic, '
     return {
         
         'reference': value['reference'],
-        'period': SalesInvoicePeriodToJSON(value['period']),
+        'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'paid': value['paid'],
         'paid_on': value['paidOn'] == null ? undefined : ((value['paidOn']).toISOString().substring(0,10)),
         'overdue': value['overdue'],

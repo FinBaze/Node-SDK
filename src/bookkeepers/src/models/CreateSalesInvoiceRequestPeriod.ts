@@ -16,37 +16,37 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SalesInvoicePeriod
+ * @interface CreateSalesInvoiceRequestPeriod
  */
-export interface SalesInvoicePeriod {
+export interface CreateSalesInvoiceRequestPeriod {
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePeriod
+     * @memberof CreateSalesInvoiceRequestPeriod
      */
     from: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePeriod
+     * @memberof CreateSalesInvoiceRequestPeriod
      */
     to: Date;
 }
 
 /**
- * Check if a given object implements the SalesInvoicePeriod interface.
+ * Check if a given object implements the CreateSalesInvoiceRequestPeriod interface.
  */
-export function instanceOfSalesInvoicePeriod(value: object): value is SalesInvoicePeriod {
+export function instanceOfCreateSalesInvoiceRequestPeriod(value: object): value is CreateSalesInvoiceRequestPeriod {
     if (!('from' in value) || value['from'] === undefined) return false;
     if (!('to' in value) || value['to'] === undefined) return false;
     return true;
 }
 
-export function SalesInvoicePeriodFromJSON(json: any): SalesInvoicePeriod {
-    return SalesInvoicePeriodFromJSONTyped(json, false);
+export function CreateSalesInvoiceRequestPeriodFromJSON(json: any): CreateSalesInvoiceRequestPeriod {
+    return CreateSalesInvoiceRequestPeriodFromJSONTyped(json, false);
 }
 
-export function SalesInvoicePeriodFromJSONTyped(json: any, ignoreDiscriminator: boolean): SalesInvoicePeriod {
+export function CreateSalesInvoiceRequestPeriodFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSalesInvoiceRequestPeriod {
     if (json == null) {
         return json;
     }
@@ -57,11 +57,11 @@ export function SalesInvoicePeriodFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SalesInvoicePeriodToJSON(json: any): SalesInvoicePeriod {
-    return SalesInvoicePeriodToJSONTyped(json, false);
+export function CreateSalesInvoiceRequestPeriodToJSON(json: any): CreateSalesInvoiceRequestPeriod {
+    return CreateSalesInvoiceRequestPeriodToJSONTyped(json, false);
 }
 
-export function SalesInvoicePeriodToJSONTyped(value?: SalesInvoicePeriod | null, ignoreDiscriminator: boolean = false): any {
+export function CreateSalesInvoiceRequestPeriodToJSONTyped(value?: CreateSalesInvoiceRequestPeriod | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { SalesInvoiceLineBooked } from './SalesInvoiceLineBooked';
 import {
     SalesInvoiceLineBookedFromJSON,
@@ -111,6 +118,12 @@ export interface PurchaseInvoiceLine {
      * @memberof PurchaseInvoiceLine
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof PurchaseInvoiceLine
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -314,6 +327,7 @@ export function PurchaseInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator:
         'quantity': json['quantity'],
         'booked': SalesInvoiceLineBookedFromJSON(json['booked']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -343,6 +357,7 @@ export function PurchaseInvoiceLineToJSONTyped(value?: Omit<PurchaseInvoiceLine,
         'quantity': value['quantity'],
         'booked': SalesInvoiceLineBookedToJSON(value['booked']),
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

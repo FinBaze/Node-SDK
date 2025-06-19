@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * Bookkeeper
  * @export
@@ -37,6 +45,12 @@ export interface Bookkeeper {
      * @memberof Bookkeeper
      */
     name: string;
+    /**
+     * 
+     * @type {Links}
+     * @memberof Bookkeeper
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -76,6 +90,7 @@ export function BookkeeperFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': json['id'],
         'legalName': json['legal-name'],
         'name': json['name'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -94,6 +109,7 @@ export function BookkeeperToJSONTyped(value?: Omit<Bookkeeper, 'id'|'updated'|'c
         
         'legal-name': value['legalName'],
         'name': value['name'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

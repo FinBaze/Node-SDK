@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -97,6 +105,12 @@ export interface Product {
      * @memberof Product
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof Product
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -305,6 +319,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'balanceCategory': json['balance-category'] == null ? undefined : json['balance-category'],
         'revenueCategory': json['revenue-category'] == null ? undefined : json['revenue-category'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -333,6 +348,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'id'|'updated'|'created
         'balance-category': value['balanceCategory'],
         'revenue-category': value['revenueCategory'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

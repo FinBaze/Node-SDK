@@ -121,7 +121,7 @@ export interface CreateBookkeeperProfileRequest {
      */
     address: Address;
     /**
-     * 
+     * Free form key/ value pair
      * @type {{ [key: string]: any; }}
      * @memberof CreateBookkeeperProfileRequest
      */

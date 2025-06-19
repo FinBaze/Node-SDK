@@ -20,6 +20,13 @@ import {
     CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSON,
     CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSONTyped,
 } from './CreateMonetaryAccountAutoProcessBacktestRequestRulesInner';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { CreateMonetaryAccountAutoProcessBacktestRequestProcess } from './CreateMonetaryAccountAutoProcessBacktestRequestProcess';
 import {
     CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSON,
@@ -58,6 +65,12 @@ export interface MonetaryAccountAutoProcess {
      * @memberof MonetaryAccountAutoProcess
      */
     process: CreateMonetaryAccountAutoProcessBacktestRequestProcess;
+    /**
+     * 
+     * @type {Links}
+     * @memberof MonetaryAccountAutoProcess
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -99,6 +112,7 @@ export function MonetaryAccountAutoProcessFromJSONTyped(json: any, ignoreDiscrim
         'name': json['name'],
         'rules': ((json['rules'] as Array<any>).map(CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerFromJSON)),
         'process': CreateMonetaryAccountAutoProcessBacktestRequestProcessFromJSON(json['process']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -118,6 +132,7 @@ export function MonetaryAccountAutoProcessToJSONTyped(value?: Omit<MonetaryAccou
         'name': value['name'],
         'rules': ((value['rules'] as Array<any>).map(CreateMonetaryAccountAutoProcessBacktestRequestRulesInnerToJSON)),
         'process': CreateMonetaryAccountAutoProcessBacktestRequestProcessToJSON(value['process']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -37,6 +45,12 @@ export interface ProductCategory {
      * @memberof ProductCategory
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof ProductCategory
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -75,6 +89,7 @@ export function ProductCategoryFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'name': json['name'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -94,6 +109,7 @@ export function ProductCategoryToJSONTyped(value?: Omit<ProductCategory, 'update
         'id': value['id'],
         'name': value['name'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

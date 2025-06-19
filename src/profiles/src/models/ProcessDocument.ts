@@ -27,6 +27,13 @@ import {
     ProcessDocumentEmailToJSON,
     ProcessDocumentEmailToJSONTyped,
 } from './ProcessDocumentEmail';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -90,6 +97,12 @@ export interface ProcessDocument {
     metadata?: { [key: string]: any; };
     /**
      * 
+     * @type {Links}
+     * @memberof ProcessDocument
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof ProcessDocument
      */
@@ -143,6 +156,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'attachments': json['attachments'] == null ? undefined : json['attachments'],
         'task': json['task'] == null ? undefined : CreateChat200ResponseFromJSON(json['task']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -167,6 +181,7 @@ export function ProcessDocumentToJSONTyped(value?: Omit<ProcessDocument, 'id'|'u
         'attachments': value['attachments'],
         'task': CreateChat200ResponseToJSON(value['task']),
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

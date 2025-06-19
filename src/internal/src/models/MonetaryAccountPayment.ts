@@ -34,6 +34,13 @@ import {
     MonetaryAccountPaymentEmbeddedToJSON,
     MonetaryAccountPaymentEmbeddedToJSONTyped,
 } from './MonetaryAccountPaymentEmbedded';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -109,6 +116,12 @@ export interface MonetaryAccountPayment {
     embedded: MonetaryAccountPaymentEmbedded;
     /**
      * 
+     * @type {Links}
+     * @memberof MonetaryAccountPayment
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof MonetaryAccountPayment
      */
@@ -157,6 +170,7 @@ export function MonetaryAccountPaymentFromJSONTyped(json: any, ignoreDiscriminat
         'processed': json['processed'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': MonetaryAccountPaymentEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -183,6 +197,7 @@ export function MonetaryAccountPaymentToJSONTyped(value?: Omit<MonetaryAccountPa
         'processed': value['processed'],
         'metadata': value['metadata'],
         '_embedded': MonetaryAccountPaymentEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

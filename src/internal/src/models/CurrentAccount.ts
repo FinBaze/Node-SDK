@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -63,6 +71,12 @@ export interface CurrentAccount {
     metadata?: { [key: string]: any; };
     /**
      * 
+     * @type {Links}
+     * @memberof CurrentAccount
+     */
+    links?: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof CurrentAccount
      */
@@ -106,6 +120,7 @@ export function CurrentAccountFromJSONTyped(json: any, ignoreDiscriminator: bool
         'interest': json['interest'],
         'currency': json['currency'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -128,6 +143,7 @@ export function CurrentAccountToJSONTyped(value?: Omit<CurrentAccount, 'id'|'upd
         'interest': value['interest'],
         'currency': value['currency'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

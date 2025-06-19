@@ -20,6 +20,13 @@ import {
     GetProfilePlan200ResponseEmbeddedToJSON,
     GetProfilePlan200ResponseEmbeddedToJSONTyped,
 } from './GetProfilePlan200ResponseEmbedded';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 
 /**
  * 
@@ -51,6 +58,12 @@ export interface GetProfilePlan200Response {
      * @memberof GetProfilePlan200Response
      */
     embedded: GetProfilePlan200ResponseEmbedded;
+    /**
+     * 
+     * @type {Links}
+     * @memberof GetProfilePlan200Response
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -90,6 +103,7 @@ export function GetProfilePlan200ResponseFromJSONTyped(json: any, ignoreDiscrimi
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
         'embedded': GetProfilePlan200ResponseEmbeddedFromJSON(json['_embedded']),
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -109,6 +123,7 @@ export function GetProfilePlan200ResponseToJSONTyped(value?: Omit<GetProfilePlan
         'start': value['start'] == null ? undefined : ((value['start']).toISOString()),
         'end': value['end'] == null ? undefined : ((value['end']).toISOString()),
         '_embedded': GetProfilePlan200ResponseEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 

@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -43,6 +51,12 @@ export interface Vehicle {
      * @memberof Vehicle
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof Vehicle
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -82,6 +96,7 @@ export function VehicleFromJSONTyped(json: any, ignoreDiscriminator: boolean): V
         'name': json['name'],
         'license': json['license'] == null ? undefined : json['license'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -101,6 +116,7 @@ export function VehicleToJSONTyped(value?: Omit<Vehicle, 'id'|'updated'|'created
         'name': value['name'],
         'license': value['license'],
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

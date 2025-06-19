@@ -34,6 +34,13 @@ import {
     LanguageToJSON,
     LanguageToJSONTyped,
 } from './Language';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { CreateRelationRequestEu } from './CreateRelationRequestEu';
 import {
     CreateRelationRequestEuFromJSON,
@@ -79,11 +86,11 @@ export interface Relation {
      */
     language?: Language;
     /**
-     * Email address for communication with the client
-     * @type {string}
+     * 
+     * @type {Array<string>}
      * @memberof Relation
      */
-    email?: string;
+    emails?: Array<string>;
     /**
      * ISO 3166-1 alpha-2 country code
      * @type {string}
@@ -138,6 +145,12 @@ export interface Relation {
      * @memberof Relation
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Links}
+     * @memberof Relation
+     */
+    links?: Links;
     /**
      * 
      * @type {Date}
@@ -201,7 +214,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'tags': json['tags'],
         'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
         'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
-        'email': json['email'] == null ? undefined : json['email'],
+        'emails': json['emails'] == null ? undefined : json['emails'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
         'bank': json['bank'] == null ? undefined : CreateRelationRequestBankFromJSON(json['bank']),
         'eu': json['eu'] == null ? undefined : CreateRelationRequestEuFromJSON(json['eu']),
@@ -211,6 +224,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'lastName': json['last_name'],
         'address': AddressFromJSON(json['address']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -230,7 +244,7 @@ export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'name'|'updated'
         'tags': value['tags'],
         'registered_number': value['registeredNumber'],
         'language': LanguageToJSON(value['language']),
-        'email': value['email'],
+        'emails': value['emails'],
         'registration_country': value['registrationCountry'],
         'bank': CreateRelationRequestBankToJSON(value['bank']),
         'eu': CreateRelationRequestEuToJSON(value['eu']),
@@ -240,6 +254,7 @@ export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'name'|'updated'
         'last_name': value['lastName'],
         'address': AddressToJSON(value['address']),
         'metadata': value['metadata'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 
