@@ -131,7 +131,7 @@ export interface Subscription {
      * @type {Links}
      * @memberof Subscription
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -161,6 +161,7 @@ export function instanceOfSubscription(value: object): value is Subscription {
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('frequency' in value) || value['frequency'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -189,7 +190,7 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': SubscriptionEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

@@ -62,7 +62,7 @@ export interface ExpenseCategory {
      * @type {Links}
      * @memberof ExpenseCategory
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -85,6 +85,7 @@ export function instanceOfExpenseCategory(value: object): value is ExpenseCatego
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('ledger' in value) || value['ledger'] === undefined) return false;
     if (!('category' in value) || value['category'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -105,7 +106,7 @@ export function ExpenseCategoryFromJSONTyped(json: any, ignoreDiscriminator: boo
         'ledger': json['ledger'],
         'category': json['category'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

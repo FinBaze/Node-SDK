@@ -123,7 +123,7 @@ export interface PurchaseInvoiceLine {
      * @type {Links}
      * @memberof PurchaseInvoiceLine
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -298,6 +298,7 @@ export function instanceOfPurchaseInvoiceLine(value: object): value is PurchaseI
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     if (!('booked' in value) || value['booked'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -327,7 +328,7 @@ export function PurchaseInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator:
         'quantity': json['quantity'],
         'booked': SalesInvoiceLineBookedFromJSON(json['booked']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

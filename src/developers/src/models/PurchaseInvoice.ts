@@ -167,7 +167,7 @@ export interface PurchaseInvoice {
      * @type {Links}
      * @memberof PurchaseInvoice
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -197,6 +197,7 @@ export function instanceOfPurchaseInvoice(value: object): value is PurchaseInvoi
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -231,7 +232,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'relation': json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': PurchaseInvoiceEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

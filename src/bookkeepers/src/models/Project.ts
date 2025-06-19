@@ -63,13 +63,13 @@ export interface Project {
      * @type {ProjectEmbedded}
      * @memberof Project
      */
-    embedded?: ProjectEmbedded;
+    embedded: ProjectEmbedded;
     /**
      * 
      * @type {Links}
      * @memberof Project
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -90,6 +90,8 @@ export interface Project {
 export function instanceOfProject(value: object): value is Project {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -109,8 +111,8 @@ export function ProjectFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'name': json['name'],
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
-        'embedded': json['_embedded'] == null ? undefined : ProjectEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'embedded': ProjectEmbeddedFromJSON(json['_embedded']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

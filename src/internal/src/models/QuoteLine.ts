@@ -98,7 +98,7 @@ export interface QuoteLine {
      * @type {Links}
      * @memberof QuoteLine
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -272,6 +272,7 @@ export function instanceOfQuoteLine(value: object): value is QuoteLine {
     if (!('tax' in value) || value['tax'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -298,7 +299,7 @@ export function QuoteLineFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'discount': json['discount'] == null ? undefined : json['discount'],
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

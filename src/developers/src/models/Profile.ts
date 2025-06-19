@@ -175,7 +175,7 @@ export interface Profile {
      * @type {Links}
      * @memberof Profile
      */
-    links?: Links;
+    links: Links;
     /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
@@ -214,6 +214,7 @@ export function instanceOfProfile(value: object): value is Profile {
     if (!('address' in value) || value['address'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     return true;
 }
 
@@ -245,7 +246,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'address': AddressFromJSON(json['address']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }

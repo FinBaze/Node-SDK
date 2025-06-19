@@ -63,7 +63,7 @@ export interface GetProfilePlan200Response {
      * @type {Links}
      * @memberof GetProfilePlan200Response
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -84,6 +84,7 @@ export interface GetProfilePlan200Response {
 export function instanceOfGetProfilePlan200Response(value: object): value is GetProfilePlan200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -103,7 +104,7 @@ export function GetProfilePlan200ResponseFromJSONTyped(json: any, ignoreDiscrimi
         'start': json['start'] == null ? undefined : (new Date(json['start'])),
         'end': json['end'] == null ? undefined : (new Date(json['end'])),
         'embedded': GetProfilePlan200ResponseEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

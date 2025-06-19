@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
+
 /**
  * 
  * @export
@@ -33,6 +41,12 @@ export interface GetPurchaseInvoicePaymentBatches200ResponseDataInner {
     date: string;
     /**
      * 
+     * @type {Links}
+     * @memberof GetPurchaseInvoicePaymentBatches200ResponseDataInner
+     */
+    links: Links;
+    /**
+     * 
      * @type {Date}
      * @memberof GetPurchaseInvoicePaymentBatches200ResponseDataInner
      */
@@ -51,6 +65,7 @@ export interface GetPurchaseInvoicePaymentBatches200ResponseDataInner {
 export function instanceOfGetPurchaseInvoicePaymentBatches200ResponseDataInner(value: object): value is GetPurchaseInvoicePaymentBatches200ResponseDataInner {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -68,6 +83,7 @@ export function GetPurchaseInvoicePaymentBatches200ResponseDataInnerFromJSONType
         
         'id': json['id'],
         'date': json['date'],
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -85,6 +101,7 @@ export function GetPurchaseInvoicePaymentBatches200ResponseDataInnerToJSONTyped(
     return {
         
         'date': value['date'],
+        '_links': LinksToJSON(value['links']),
     };
 }
 

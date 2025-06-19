@@ -50,7 +50,7 @@ export interface StockLocation {
      * @type {Links}
      * @memberof StockLocation
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -71,6 +71,7 @@ export interface StockLocation {
 export function instanceOfStockLocation(value: object): value is StockLocation {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -89,7 +90,7 @@ export function StockLocationFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'name': json['name'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

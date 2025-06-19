@@ -74,7 +74,7 @@ export interface CurrentAccount {
      * @type {Links}
      * @memberof CurrentAccount
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -98,6 +98,7 @@ export function instanceOfCurrentAccount(value: object): value is CurrentAccount
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('interest' in value) || value['interest'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -120,7 +121,7 @@ export function CurrentAccountFromJSONTyped(json: any, ignoreDiscriminator: bool
         'interest': json['interest'],
         'currency': json['currency'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

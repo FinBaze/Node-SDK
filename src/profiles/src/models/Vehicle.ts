@@ -56,7 +56,7 @@ export interface Vehicle {
      * @type {Links}
      * @memberof Vehicle
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -77,6 +77,7 @@ export interface Vehicle {
 export function instanceOfVehicle(value: object): value is Vehicle {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -96,7 +97,7 @@ export function VehicleFromJSONTyped(json: any, ignoreDiscriminator: boolean): V
         'name': json['name'],
         'license': json['license'] == null ? undefined : json['license'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

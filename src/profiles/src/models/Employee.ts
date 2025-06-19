@@ -81,7 +81,7 @@ export interface Employee {
      * @type {Links}
      * @memberof Employee
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -104,6 +104,7 @@ export function instanceOfEmployee(value: object): value is Employee {
     if (!('firstName' in value) || value['firstName'] === undefined) return false;
     if (!('lastName' in value) || value['lastName'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -126,7 +127,7 @@ export function EmployeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'email': json['email'],
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
         'phone': json['phone'] == null ? undefined : json['phone'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

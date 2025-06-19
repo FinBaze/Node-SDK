@@ -57,7 +57,7 @@ export interface CreateChat200Response {
      * @type {Links}
      * @memberof CreateChat200Response
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -78,6 +78,7 @@ export interface CreateChat200Response {
 export function instanceOfCreateChat200Response(value: object): value is CreateChat200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('messages' in value) || value['messages'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -96,7 +97,7 @@ export function CreateChat200ResponseFromJSONTyped(json: any, ignoreDiscriminato
         'id': json['id'],
         'messages': ((json['messages'] as Array<any>).map(CreateChat200ResponseMessagesInnerFromJSON)),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

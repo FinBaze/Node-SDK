@@ -74,7 +74,7 @@ export interface Account {
      * @type {Links}
      * @memberof Account
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -97,6 +97,7 @@ export function instanceOfAccount(value: object): value is Account {
     if (!('firstName' in value) || value['firstName'] === undefined) return false;
     if (!('lastName' in value) || value['lastName'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -119,7 +120,7 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
         'language': json['language'] == null ? undefined : json['language'],
         'email': json['email'],
         'phone': json['phone'] == null ? undefined : json['phone'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

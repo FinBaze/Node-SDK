@@ -100,7 +100,7 @@ export interface ProcessDocument {
      * @type {Links}
      * @memberof ProcessDocument
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -132,6 +132,7 @@ export type ProcessDocumentSourceEnum = typeof ProcessDocumentSourceEnum[keyof t
  */
 export function instanceOfProcessDocument(value: object): value is ProcessDocument {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -156,7 +157,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'attachments': json['attachments'] == null ? undefined : json['attachments'],
         'task': json['task'] == null ? undefined : ProcessDocumentTaskFromJSON(json['task']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

@@ -110,7 +110,7 @@ export interface CreditLoan {
      * @type {Links}
      * @memberof CreditLoan
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -137,6 +137,7 @@ export function instanceOfCreditLoan(value: object): value is CreditLoan {
     if (!('interest' in value) || value['interest'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -165,7 +166,7 @@ export function CreditLoanFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'currency': json['currency'],
         'amount': json['amount'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

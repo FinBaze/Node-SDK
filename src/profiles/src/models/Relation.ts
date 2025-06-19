@@ -150,7 +150,7 @@ export interface Relation {
      * @type {Links}
      * @memberof Relation
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -194,6 +194,7 @@ export function instanceOfRelation(value: object): value is Relation {
     if (!('middleName' in value) || value['middleName'] === undefined) return false;
     if (!('lastName' in value) || value['lastName'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -224,7 +225,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'lastName': json['last_name'],
         'address': AddressFromJSON(json['address']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

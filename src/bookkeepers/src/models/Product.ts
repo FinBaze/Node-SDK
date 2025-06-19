@@ -110,7 +110,7 @@ export interface Product {
      * @type {Links}
      * @memberof Product
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -291,6 +291,7 @@ export function instanceOfProduct(value: object): value is Product {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('taxCodes' in value) || value['taxCodes'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -319,7 +320,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'balanceCategory': json['balance-category'] == null ? undefined : json['balance-category'],
         'revenueCategory': json['revenue-category'] == null ? undefined : json['revenue-category'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

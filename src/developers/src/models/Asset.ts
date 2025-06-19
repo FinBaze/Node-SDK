@@ -92,7 +92,7 @@ export interface Asset {
      * @type {Links}
      * @memberof Asset
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -117,6 +117,7 @@ export function instanceOfAsset(value: object): value is Asset {
     if (!('value' in value) || value['value'] === undefined) return false;
     if (!('ledger' in value) || value['ledger'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -142,7 +143,7 @@ export function AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ass
         'writeoffLedger': json['writeoff-ledger'] == null ? undefined : json['writeoff-ledger'],
         'date': (new Date(json['date'])),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

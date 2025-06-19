@@ -112,7 +112,7 @@ export interface MonetaryAccount {
      * @type {Links}
      * @memberof MonetaryAccount
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -138,6 +138,7 @@ export function instanceOfMonetaryAccount(value: object): value is MonetaryAccou
     if (!('features' in value) || value['features'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -164,7 +165,7 @@ export function MonetaryAccountFromJSONTyped(json: any, ignoreDiscriminator: boo
         'type': MonetaryAccountTypeFromJSON(json['type']),
         'currency': json['currency'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

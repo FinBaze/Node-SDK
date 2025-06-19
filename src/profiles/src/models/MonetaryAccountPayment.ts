@@ -119,7 +119,7 @@ export interface MonetaryAccountPayment {
      * @type {Links}
      * @memberof MonetaryAccountPayment
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -144,6 +144,7 @@ export function instanceOfMonetaryAccountPayment(value: object): value is Moneta
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('processed' in value) || value['processed'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -170,7 +171,7 @@ export function MonetaryAccountPaymentFromJSONTyped(json: any, ignoreDiscriminat
         'processed': json['processed'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': MonetaryAccountPaymentEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

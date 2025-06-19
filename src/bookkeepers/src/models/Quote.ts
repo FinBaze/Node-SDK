@@ -179,7 +179,7 @@ export interface Quote {
      * @type {Links}
      * @memberof Quote
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -205,6 +205,7 @@ export function instanceOfQuote(value: object): value is Quote {
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -241,7 +242,7 @@ export function QuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): Quo
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': QuoteEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };

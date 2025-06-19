@@ -191,7 +191,7 @@ export interface Reminder {
      * @type {Links}
      * @memberof Reminder
      */
-    links?: Links;
+    links: Links;
     /**
      * 
      * @type {Date}
@@ -217,6 +217,7 @@ export function instanceOfReminder(value: object): value is Reminder {
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -255,7 +256,7 @@ export function ReminderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'relation': json['relation'] == null ? undefined : json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': ReminderEmbeddedFromJSON(json['_embedded']),
-        'links': json['_links'] == null ? undefined : LinksFromJSON(json['_links']),
+        'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
