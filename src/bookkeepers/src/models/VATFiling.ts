@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetCredits200ResponseValueInnerEmbedded } from './GetCredits200ResponseValueInnerEmbedded';
+import {
+    GetCredits200ResponseValueInnerEmbeddedFromJSON,
+    GetCredits200ResponseValueInnerEmbeddedFromJSONTyped,
+    GetCredits200ResponseValueInnerEmbeddedToJSON,
+    GetCredits200ResponseValueInnerEmbeddedToJSONTyped,
+} from './GetCredits200ResponseValueInnerEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -20,13 +27,6 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
-import type { ProcessDocumentEmbedded } from './ProcessDocumentEmbedded';
-import {
-    ProcessDocumentEmbeddedFromJSON,
-    ProcessDocumentEmbeddedFromJSONTyped,
-    ProcessDocumentEmbeddedToJSON,
-    ProcessDocumentEmbeddedToJSONTyped,
-} from './ProcessDocumentEmbedded';
 import type { VATFilingType } from './VATFilingType';
 import {
     VATFilingTypeFromJSON,
@@ -91,10 +91,10 @@ export interface VATFiling {
     metadata?: { [key: string]: any; };
     /**
      * 
-     * @type {ProcessDocumentEmbedded}
+     * @type {GetCredits200ResponseValueInnerEmbedded}
      * @memberof VATFiling
      */
-    embedded: ProcessDocumentEmbedded;
+    embedded: GetCredits200ResponseValueInnerEmbedded;
     /**
      * 
      * @type {Links}
@@ -152,7 +152,7 @@ export function VATFilingFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'error': json['error'],
         'data': json['data'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': ProcessDocumentEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetCredits200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
         'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
@@ -175,7 +175,7 @@ export function VATFilingToJSONTyped(value?: Omit<VATFiling, 'id'|'from'|'to'|'u
         'error': value['error'],
         'data': value['data'],
         'metadata': value['metadata'],
-        '_embedded': ProcessDocumentEmbeddedToJSON(value['embedded']),
+        '_embedded': GetCredits200ResponseValueInnerEmbeddedToJSON(value['embedded']),
         '_links': LinksToJSON(value['links']),
     };
 }

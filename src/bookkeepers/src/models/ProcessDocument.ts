@@ -27,6 +27,13 @@ import {
     ProcessDocumentTaskToJSON,
     ProcessDocumentTaskToJSONTyped,
 } from './ProcessDocumentTask';
+import type { GetCredits200ResponseValueInnerEmbedded } from './GetCredits200ResponseValueInnerEmbedded';
+import {
+    GetCredits200ResponseValueInnerEmbeddedFromJSON,
+    GetCredits200ResponseValueInnerEmbeddedFromJSONTyped,
+    GetCredits200ResponseValueInnerEmbeddedToJSON,
+    GetCredits200ResponseValueInnerEmbeddedToJSONTyped,
+} from './GetCredits200ResponseValueInnerEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -34,13 +41,6 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
-import type { ProcessDocumentEmbedded } from './ProcessDocumentEmbedded';
-import {
-    ProcessDocumentEmbeddedFromJSON,
-    ProcessDocumentEmbeddedFromJSONTyped,
-    ProcessDocumentEmbeddedToJSON,
-    ProcessDocumentEmbeddedToJSONTyped,
-} from './ProcessDocumentEmbedded';
 
 /**
  * 
@@ -110,10 +110,10 @@ export interface ProcessDocument {
     links: Links;
     /**
      * 
-     * @type {ProcessDocumentEmbedded}
+     * @type {GetCredits200ResponseValueInnerEmbedded}
      * @memberof ProcessDocument
      */
-    embedded: ProcessDocumentEmbedded;
+    embedded: GetCredits200ResponseValueInnerEmbedded;
     /**
      * 
      * @type {Date}
@@ -172,7 +172,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'task': json['task'] == null ? undefined : ProcessDocumentTaskFromJSON(json['task']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
-        'embedded': ProcessDocumentEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetCredits200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -198,7 +198,7 @@ export function ProcessDocumentToJSONTyped(value?: Omit<ProcessDocument, 'id'|'u
         'task': ProcessDocumentTaskToJSON(value['task']),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
-        '_embedded': ProcessDocumentEmbeddedToJSON(value['embedded']),
+        '_embedded': GetCredits200ResponseValueInnerEmbeddedToJSON(value['embedded']),
     };
 }
 
