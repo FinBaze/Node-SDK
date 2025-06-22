@@ -248,6 +248,9 @@ src/models/UndisputePurchaseInvoiceRequest.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/UpdateProfileRequest.ts
+src/models/VATFiling.ts
+src/models/VATFilingEmbedded.ts
+src/models/VATFilingType.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/index.ts

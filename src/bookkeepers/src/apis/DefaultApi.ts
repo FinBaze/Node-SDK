@@ -36,6 +36,7 @@ import type {
   SalesInvoice,
   ServerError,
   UnauthorisedError,
+  VATFilingType,
 } from '../models/index';
 import {
     AccountFromJSON,
@@ -80,6 +81,8 @@ import {
     ServerErrorToJSON,
     UnauthorisedErrorFromJSON,
     UnauthorisedErrorToJSON,
+    VATFilingTypeFromJSON,
+    VATFilingTypeToJSON,
 } from '../models/index';
 
 export interface CreateBookkeeperAccountOperationRequest {
@@ -194,7 +197,8 @@ export interface GetVATFilingsRequest {
     bookkeeperId: string;
     page?: number;
     size?: number;
-    type?: GetVATFilingsTypeEnum;
+    type?: VATFilingType;
+    profile?: string;
 }
 
 /**
@@ -460,7 +464,8 @@ export interface DefaultApiInterface {
      * @param {string} bookkeeperId The id of the bookkeeper
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
-     * @param {'nl_vat' | 'nl_oss'} [type] Type of the VAT filing
+     * @param {VATFilingType} [type] Type of the VAT filing
+     * @param {string} [profile] Profile ID to filter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -1261,6 +1266,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['type'] = requestParameters['type'];
         }
 
+        if (requestParameters['profile'] != null) {
+            queryParameters['profile'] = requestParameters['profile'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.accessToken) {
@@ -1287,12 +1296,3 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
 }
-
-/**
- * @export
- */
-export const GetVATFilingsTypeEnum = {
-    Vat: 'nl_vat',
-    Oss: 'nl_oss'
-} as const;
-export type GetVATFilingsTypeEnum = typeof GetVATFilingsTypeEnum[keyof typeof GetVATFilingsTypeEnum];

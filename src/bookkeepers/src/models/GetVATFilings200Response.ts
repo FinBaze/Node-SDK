@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GetVATFilings200ResponseDataInner } from './GetVATFilings200ResponseDataInner';
+import type { VATFiling } from './VATFiling';
 import {
-    GetVATFilings200ResponseDataInnerFromJSON,
-    GetVATFilings200ResponseDataInnerFromJSONTyped,
-    GetVATFilings200ResponseDataInnerToJSON,
-    GetVATFilings200ResponseDataInnerToJSONTyped,
-} from './GetVATFilings200ResponseDataInner';
+    VATFilingFromJSON,
+    VATFilingFromJSONTyped,
+    VATFilingToJSON,
+    VATFilingToJSONTyped,
+} from './VATFiling';
 
 /**
  * 
@@ -53,10 +53,10 @@ export interface GetVATFilings200Response {
     count: number;
     /**
      * 
-     * @type {Array<GetVATFilings200ResponseDataInner>}
+     * @type {Array<VATFiling>}
      * @memberof GetVATFilings200Response
      */
-    data: Array<GetVATFilings200ResponseDataInner>;
+    data: Array<VATFiling>;
 }
 
 /**
@@ -85,7 +85,7 @@ export function GetVATFilings200ResponseFromJSONTyped(json: any, ignoreDiscrimin
         'pages': json['pages'],
         'size': json['size'],
         'count': json['count'],
-        'data': ((json['data'] as Array<any>).map(GetVATFilings200ResponseDataInnerFromJSON)),
+        'data': ((json['data'] as Array<any>).map(VATFilingFromJSON)),
     };
 }
 
@@ -104,7 +104,7 @@ export function GetVATFilings200ResponseToJSONTyped(value?: GetVATFilings200Resp
         'pages': value['pages'],
         'size': value['size'],
         'count': value['count'],
-        'data': ((value['data'] as Array<any>).map(GetVATFilings200ResponseDataInnerToJSON)),
+        'data': ((value['data'] as Array<any>).map(VATFilingToJSON)),
     };
 }
 

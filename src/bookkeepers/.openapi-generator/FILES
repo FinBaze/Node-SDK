@@ -40,8 +40,6 @@ src/models/GetProcessDocuments200Response.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetSalesInvoices200Response.ts
 src/models/GetVATFilings200Response.ts
-src/models/GetVATFilings200ResponseDataInner.ts
-src/models/GetVATFilings200ResponseDataInnerEmbedded.ts
 src/models/InvalidRequestError.ts
 src/models/Language.ts
 src/models/Links.ts
@@ -130,6 +128,9 @@ src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/UnauthorisedError.ts
+src/models/VATFiling.ts
+src/models/VATFilingEmbedded.ts
+src/models/VATFilingType.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts
 src/models/VehicleTripOdometer.ts
