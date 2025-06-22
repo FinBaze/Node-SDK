@@ -20,6 +20,13 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
+import type { ProcessDocumentEmbedded } from './ProcessDocumentEmbedded';
+import {
+    ProcessDocumentEmbeddedFromJSON,
+    ProcessDocumentEmbeddedFromJSONTyped,
+    ProcessDocumentEmbeddedToJSON,
+    ProcessDocumentEmbeddedToJSONTyped,
+} from './ProcessDocumentEmbedded';
 import type { VATFilingType } from './VATFilingType';
 import {
     VATFilingTypeFromJSON,
@@ -27,13 +34,6 @@ import {
     VATFilingTypeToJSON,
     VATFilingTypeToJSONTyped,
 } from './VATFilingType';
-import type { VATFilingEmbedded } from './VATFilingEmbedded';
-import {
-    VATFilingEmbeddedFromJSON,
-    VATFilingEmbeddedFromJSONTyped,
-    VATFilingEmbeddedToJSON,
-    VATFilingEmbeddedToJSONTyped,
-} from './VATFilingEmbedded';
 
 /**
  * 
@@ -70,7 +70,7 @@ export interface VATFiling {
      * @type {any}
      * @memberof VATFiling
      */
-    data?: any | null;
+    data: any | null;
     /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
@@ -79,10 +79,10 @@ export interface VATFiling {
     metadata?: { [key: string]: any; };
     /**
      * 
-     * @type {VATFilingEmbedded}
+     * @type {ProcessDocumentEmbedded}
      * @memberof VATFiling
      */
-    embedded: VATFilingEmbedded;
+    embedded: ProcessDocumentEmbedded;
     /**
      * 
      * @type {Links}
@@ -112,6 +112,7 @@ export function instanceOfVATFiling(value: object): value is VATFiling {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('from' in value) || value['from'] === undefined) return false;
     if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('links' in value) || value['links'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
@@ -133,9 +134,9 @@ export function VATFilingFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'type': json['type'] == null ? undefined : VATFilingTypeFromJSON(json['type']),
         'from': (new Date(json['from'])),
         'to': (new Date(json['to'])),
-        'data': json['data'] == null ? undefined : json['data'],
+        'data': json['data'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': VATFilingEmbeddedFromJSON(json['_embedded']),
+        'embedded': ProcessDocumentEmbeddedFromJSON(json['_embedded']),
         'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
@@ -156,7 +157,7 @@ export function VATFilingToJSONTyped(value?: Omit<VATFiling, 'id'|'from'|'to'|'u
         'type': VATFilingTypeToJSON(value['type']),
         'data': value['data'],
         'metadata': value['metadata'],
-        '_embedded': VATFilingEmbeddedToJSON(value['embedded']),
+        '_embedded': ProcessDocumentEmbeddedToJSON(value['embedded']),
         '_links': LinksToJSON(value['links']),
     };
 }

@@ -123,7 +123,6 @@ export * from './SubscriptionLine';
 export * from './TaxCode';
 export * from './UnauthorisedError';
 export * from './VATFiling';
-export * from './VATFilingEmbedded';
 export * from './VATFilingType';
 export * from './Vehicle';
 export * from './VehicleTrip';

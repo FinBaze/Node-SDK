@@ -243,7 +243,6 @@ export * from './UpdateCreditLoanRequest';
 export * from './UpdateCurrentAccountRequest';
 export * from './UpdateProfileRequest';
 export * from './VATFiling';
-export * from './VATFilingEmbedded';
 export * from './VATFilingType';
 export * from './Vehicle';
 export * from './VehicleTrip';

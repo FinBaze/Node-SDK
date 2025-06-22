@@ -135,7 +135,6 @@ src/models/UnauthorisedError.ts
 src/models/UpdateAccountMeRequest.ts
 src/models/UpdateDeviceRequest.ts
 src/models/VATFiling.ts
-src/models/VATFilingEmbedded.ts
 src/models/VATFilingType.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts

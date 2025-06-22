@@ -116,7 +116,6 @@ src/models/SubscriptionLine.ts
 src/models/TaxCode.ts
 src/models/UnauthorisedError.ts
 src/models/VATFiling.ts
-src/models/VATFilingEmbedded.ts
 src/models/VATFilingType.ts
 src/models/Vehicle.ts
 src/models/VehicleTrip.ts

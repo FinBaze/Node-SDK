@@ -129,7 +129,6 @@ export * from './UnauthorisedError';
 export * from './UpdateAccountMeRequest';
 export * from './UpdateDeviceRequest';
 export * from './VATFiling';
-export * from './VATFilingEmbedded';
 export * from './VATFilingType';
 export * from './Vehicle';
 export * from './VehicleTrip';
