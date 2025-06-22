@@ -27,13 +27,13 @@ import {
     ProcessDocumentTaskToJSON,
     ProcessDocumentTaskToJSONTyped,
 } from './ProcessDocumentTask';
-import type { GetCredits200ResponseValueInnerEmbedded } from './GetCredits200ResponseValueInnerEmbedded';
+import type { GetCreditsAnalytics200ResponseValueInnerEmbedded } from './GetCreditsAnalytics200ResponseValueInnerEmbedded';
 import {
-    GetCredits200ResponseValueInnerEmbeddedFromJSON,
-    GetCredits200ResponseValueInnerEmbeddedFromJSONTyped,
-    GetCredits200ResponseValueInnerEmbeddedToJSON,
-    GetCredits200ResponseValueInnerEmbeddedToJSONTyped,
-} from './GetCredits200ResponseValueInnerEmbedded';
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSON,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSONTyped,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSON,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSONTyped,
+} from './GetCreditsAnalytics200ResponseValueInnerEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -110,10 +110,10 @@ export interface ProcessDocument {
     links: Links;
     /**
      * 
-     * @type {GetCredits200ResponseValueInnerEmbedded}
+     * @type {GetCreditsAnalytics200ResponseValueInnerEmbedded}
      * @memberof ProcessDocument
      */
-    embedded: GetCredits200ResponseValueInnerEmbedded;
+    embedded: GetCreditsAnalytics200ResponseValueInnerEmbedded;
     /**
      * 
      * @type {Date}
@@ -172,7 +172,7 @@ export function ProcessDocumentFromJSONTyped(json: any, ignoreDiscriminator: boo
         'task': json['task'] == null ? undefined : ProcessDocumentTaskFromJSON(json['task']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
-        'embedded': GetCredits200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -198,7 +198,7 @@ export function ProcessDocumentToJSONTyped(value?: Omit<ProcessDocument, 'id'|'u
         'task': ProcessDocumentTaskToJSON(value['task']),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
-        '_embedded': GetCredits200ResponseValueInnerEmbeddedToJSON(value['embedded']),
+        '_embedded': GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSON(value['embedded']),
     };
 }
 

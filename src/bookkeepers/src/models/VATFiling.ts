@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GetCredits200ResponseValueInnerEmbedded } from './GetCredits200ResponseValueInnerEmbedded';
+import type { GetCreditsAnalytics200ResponseValueInnerEmbedded } from './GetCreditsAnalytics200ResponseValueInnerEmbedded';
 import {
-    GetCredits200ResponseValueInnerEmbeddedFromJSON,
-    GetCredits200ResponseValueInnerEmbeddedFromJSONTyped,
-    GetCredits200ResponseValueInnerEmbeddedToJSON,
-    GetCredits200ResponseValueInnerEmbeddedToJSONTyped,
-} from './GetCredits200ResponseValueInnerEmbedded';
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSON,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSONTyped,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSON,
+    GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSONTyped,
+} from './GetCreditsAnalytics200ResponseValueInnerEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -91,10 +91,10 @@ export interface VATFiling {
     metadata?: { [key: string]: any; };
     /**
      * 
-     * @type {GetCredits200ResponseValueInnerEmbedded}
+     * @type {GetCreditsAnalytics200ResponseValueInnerEmbedded}
      * @memberof VATFiling
      */
-    embedded: GetCredits200ResponseValueInnerEmbedded;
+    embedded: GetCreditsAnalytics200ResponseValueInnerEmbedded;
     /**
      * 
      * @type {Links}
@@ -152,7 +152,7 @@ export function VATFilingFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'error': json['error'],
         'data': json['data'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': GetCredits200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetCreditsAnalytics200ResponseValueInnerEmbeddedFromJSON(json['_embedded']),
         'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
@@ -175,7 +175,7 @@ export function VATFilingToJSONTyped(value?: Omit<VATFiling, 'id'|'from'|'to'|'u
         'error': value['error'],
         'data': value['data'],
         'metadata': value['metadata'],
-        '_embedded': GetCredits200ResponseValueInnerEmbeddedToJSON(value['embedded']),
+        '_embedded': GetCreditsAnalytics200ResponseValueInnerEmbeddedToJSON(value['embedded']),
         '_links': LinksToJSON(value['links']),
     };
 }

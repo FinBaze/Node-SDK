@@ -36,8 +36,10 @@ src/models/ForbiddenError.ts
 src/models/GetAllMonetaryAccountPayments200Response.ts
 src/models/GetBookkeeperAccounts200Response.ts
 src/models/GetBookkeeperProfiles200Response.ts
-src/models/GetCredits200ResponseValueInner.ts
-src/models/GetCredits200ResponseValueInnerEmbedded.ts
+src/models/GetCredits200Response.ts
+src/models/GetCreditsAnalytics200ResponseValueInner.ts
+src/models/GetCreditsAnalytics200ResponseValueInnerEmbedded.ts
+src/models/GetCreditsPurchases200Response.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetSalesInvoices200Response.ts

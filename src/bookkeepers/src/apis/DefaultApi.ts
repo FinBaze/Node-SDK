@@ -25,7 +25,9 @@ import type {
   GetAllMonetaryAccountPayments200Response,
   GetBookkeeperAccounts200Response,
   GetBookkeeperProfiles200Response,
-  GetCredits200ResponseValueInner,
+  GetCredits200Response,
+  GetCreditsAnalytics200ResponseValueInner,
+  GetCreditsPurchases200Response,
   GetProcessDocuments200Response,
   GetPurchaseInvoices200Response,
   GetSalesInvoices200Response,
@@ -60,8 +62,12 @@ import {
     GetBookkeeperAccounts200ResponseToJSON,
     GetBookkeeperProfiles200ResponseFromJSON,
     GetBookkeeperProfiles200ResponseToJSON,
-    GetCredits200ResponseValueInnerFromJSON,
-    GetCredits200ResponseValueInnerToJSON,
+    GetCredits200ResponseFromJSON,
+    GetCredits200ResponseToJSON,
+    GetCreditsAnalytics200ResponseValueInnerFromJSON,
+    GetCreditsAnalytics200ResponseValueInnerToJSON,
+    GetCreditsPurchases200ResponseFromJSON,
+    GetCreditsPurchases200ResponseToJSON,
     GetProcessDocuments200ResponseFromJSON,
     GetProcessDocuments200ResponseToJSON,
     GetPurchaseInvoices200ResponseFromJSON,
@@ -151,6 +157,17 @@ export interface GetBookkeeperProfilesRequest {
 }
 
 export interface GetCreditsRequest {
+    bookkeeperId: string;
+    date: Date;
+}
+
+export interface GetCreditsAnalyticsRequest {
+    bookkeeperId: string;
+    from: Date;
+    to: Date;
+}
+
+export interface GetCreditsPurchasesRequest {
     bookkeeperId: string;
     from: Date;
     to: Date;
@@ -395,6 +412,21 @@ export interface DefaultApiInterface {
     getBookkeepers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Bookkeeper>>;
 
     /**
+     * Returns an list of current credits
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {Date} date Date from to start with only year is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getCreditsRaw(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCredits200Response>>;
+
+    /**
+     * Returns an list of current credits
+     */
+    getCredits(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCredits200Response>;
+
+    /**
      * Returns a list of used credits
      * @param {string} bookkeeperId The id of the bookkeeper
      * @param {Date} from Date from to start with
@@ -403,12 +435,28 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getCreditsRaw(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<GetCredits200ResponseValueInner>; }>>;
+    getCreditsAnalyticsRaw(requestParameters: GetCreditsAnalyticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<GetCreditsAnalytics200ResponseValueInner>; }>>;
 
     /**
      * Returns a list of used credits
      */
-    getCredits(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<GetCredits200ResponseValueInner>; }>;
+    getCreditsAnalytics(requestParameters: GetCreditsAnalyticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<GetCreditsAnalytics200ResponseValueInner>; }>;
+
+    /**
+     * Returns a list of used credits
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {Date} from Date from to start with
+     * @param {Date} to Date to to end with
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getCreditsPurchasesRaw(requestParameters: GetCreditsPurchasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCreditsPurchases200Response>>;
+
+    /**
+     * Returns a list of used credits
+     */
+    getCreditsPurchases(requestParameters: GetCreditsPurchasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCreditsPurchases200Response>;
 
     /**
      * Returns all process documents
@@ -1021,9 +1069,9 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Returns a list of used credits
+     * Returns an list of current credits
      */
-    async getCreditsRaw(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<GetCredits200ResponseValueInner>; }>> {
+    async getCreditsRaw(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCredits200Response>> {
         if (requestParameters['bookkeeperId'] == null) {
             throw new runtime.RequiredError(
                 'bookkeeperId',
@@ -1031,17 +1079,66 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             );
         }
 
+        if (requestParameters['date'] == null) {
+            throw new runtime.RequiredError(
+                'date',
+                'Required parameter "date" was null or undefined when calling getCredits().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/credits`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetCredits200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns an list of current credits
+     */
+    async getCredits(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCredits200Response> {
+        const response = await this.getCreditsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of used credits
+     */
+    async getCreditsAnalyticsRaw(requestParameters: GetCreditsAnalyticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<GetCreditsAnalytics200ResponseValueInner>; }>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getCreditsAnalytics().'
+            );
+        }
+
         if (requestParameters['from'] == null) {
             throw new runtime.RequiredError(
                 'from',
-                'Required parameter "from" was null or undefined when calling getCredits().'
+                'Required parameter "from" was null or undefined when calling getCreditsAnalytics().'
             );
         }
 
         if (requestParameters['to'] == null) {
             throw new runtime.RequiredError(
                 'to',
-                'Required parameter "to" was null or undefined when calling getCredits().'
+                'Required parameter "to" was null or undefined when calling getCreditsAnalytics().'
             );
         }
 
@@ -1063,7 +1160,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/bookkeepers/{bookkeeperId}/credits`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            path: `/v1/bookkeepers/{bookkeeperId}/credits/analytics`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1075,8 +1172,68 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns a list of used credits
      */
-    async getCredits(requestParameters: GetCreditsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<GetCredits200ResponseValueInner>; }> {
-        const response = await this.getCreditsRaw(requestParameters, initOverrides);
+    async getCreditsAnalytics(requestParameters: GetCreditsAnalyticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<GetCreditsAnalytics200ResponseValueInner>; }> {
+        const response = await this.getCreditsAnalyticsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of used credits
+     */
+    async getCreditsPurchasesRaw(requestParameters: GetCreditsPurchasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCreditsPurchases200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getCreditsPurchases().'
+            );
+        }
+
+        if (requestParameters['from'] == null) {
+            throw new runtime.RequiredError(
+                'from',
+                'Required parameter "from" was null or undefined when calling getCreditsPurchases().'
+            );
+        }
+
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling getCreditsPurchases().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['from'] != null) {
+            queryParameters['from'] = (requestParameters['from'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['to'] != null) {
+            queryParameters['to'] = (requestParameters['to'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/credits/purchases`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetCreditsPurchases200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of used credits
+     */
+    async getCreditsPurchases(requestParameters: GetCreditsPurchasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetCreditsPurchases200Response> {
+        const response = await this.getCreditsPurchasesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
