@@ -28,6 +28,7 @@ import type {
   GetProcessDocuments200Response,
   GetPurchaseInvoices200Response,
   GetSalesInvoices200Response,
+  GetVATFilings200Response,
   InvalidRequestError,
   NotFoundError,
   ProcessDocument,
@@ -63,6 +64,8 @@ import {
     GetPurchaseInvoices200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
+    GetVATFilings200ResponseFromJSON,
+    GetVATFilings200ResponseToJSON,
     InvalidRequestErrorFromJSON,
     InvalidRequestErrorToJSON,
     NotFoundErrorFromJSON,
@@ -185,6 +188,13 @@ export interface GetSalesInvoicesRequest {
     amount?: number;
     amountLte?: number;
     amountGte?: number;
+}
+
+export interface GetVATFilingsRequest {
+    bookkeeperId: string;
+    page?: number;
+    size?: number;
+    type?: GetVATFilingsTypeEnum;
 }
 
 /**
@@ -444,6 +454,23 @@ export interface DefaultApiInterface {
      * Returns all sales invoices
      */
     getSalesInvoices(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSalesInvoices200Response>;
+
+    /**
+     * Returns all vat filings
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {'nl_vat' | 'nl_oss'} [type] Type of the VAT filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getVATFilingsRaw(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVATFilings200Response>>;
+
+    /**
+     * Returns all vat filings
+     */
+    getVATFilings(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVATFilings200Response>;
 
 }
 
@@ -1209,4 +1236,63 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         return await response.value();
     }
 
+    /**
+     * Returns all vat filings
+     */
+    async getVATFilingsRaw(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVATFilings200Response>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling getVATFilings().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/vat-filings`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetVATFilings200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all vat filings
+     */
+    async getVATFilings(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVATFilings200Response> {
+        const response = await this.getVATFilingsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
 }
+
+/**
+ * @export
+ */
+export const GetVATFilingsTypeEnum = {
+    Vat: 'nl_vat',
+    Oss: 'nl_oss'
+} as const;
+export type GetVATFilingsTypeEnum = typeof GetVATFilingsTypeEnum[keyof typeof GetVATFilingsTypeEnum];

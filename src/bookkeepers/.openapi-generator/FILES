@@ -39,6 +39,9 @@ src/models/GetBookkeeperProfiles200Response.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetPurchaseInvoices200Response.ts
 src/models/GetSalesInvoices200Response.ts
+src/models/GetVATFilings200Response.ts
+src/models/GetVATFilings200ResponseDataInner.ts
+src/models/GetVATFilings200ResponseDataInnerEmbedded.ts
 src/models/InvalidRequestError.ts
 src/models/Language.ts
 src/models/Links.ts
