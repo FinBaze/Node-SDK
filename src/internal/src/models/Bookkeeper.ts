@@ -38,6 +38,12 @@ export interface Bookkeeper {
      * @type {string}
      * @memberof Bookkeeper
      */
+    readonly uuid: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Bookkeeper
+     */
     legalName: string;
     /**
      * 
@@ -70,6 +76,7 @@ export interface Bookkeeper {
  */
 export function instanceOfBookkeeper(value: object): value is Bookkeeper {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('links' in value) || value['links'] === undefined) return false;
@@ -89,6 +96,7 @@ export function BookkeeperFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'id': json['id'],
+        'uuid': json['uuid'],
         'legalName': json['legal-name'],
         'name': json['name'],
         'links': LinksFromJSON(json['_links']),
@@ -101,7 +109,7 @@ export function BookkeeperToJSON(json: any): Bookkeeper {
     return BookkeeperToJSONTyped(json, false);
 }
 
-export function BookkeeperToJSONTyped(value?: Omit<Bookkeeper, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function BookkeeperToJSONTyped(value?: Omit<Bookkeeper, 'id'|'uuid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

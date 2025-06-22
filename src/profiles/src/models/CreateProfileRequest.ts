@@ -67,6 +67,12 @@ export interface CreateProfileRequest {
      */
     timezone: string;
     /**
+     * UUID of bookkeeper to connect the profile to
+     * @type {string}
+     * @memberof CreateProfileRequest
+     */
+    bookkeeper?: string;
+    /**
      * 
      * @type {Language}
      * @memberof CreateProfileRequest
@@ -168,6 +174,7 @@ export function CreateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'legalName': json['legal_name'],
         'name': json['name'],
         'timezone': json['timezone'],
+        'bookkeeper': json['bookkeeper'] == null ? undefined : json['bookkeeper'],
         'language': LanguageFromJSON(json['language']),
         'registrationNumber': json['registration-number'],
         'registrationCountry': json['registration-country'],
@@ -195,6 +202,7 @@ export function CreateProfileRequestToJSONTyped(value?: CreateProfileRequest | n
         'legal_name': value['legalName'],
         'name': value['name'],
         'timezone': value['timezone'],
+        'bookkeeper': value['bookkeeper'],
         'language': LanguageToJSON(value['language']),
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
