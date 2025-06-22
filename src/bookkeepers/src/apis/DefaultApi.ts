@@ -197,6 +197,8 @@ export interface GetVATFilingsRequest {
     bookkeeperId: string;
     page?: number;
     size?: number;
+    from?: Date;
+    to?: Date;
     type?: VATFilingType;
     profile?: string;
 }
@@ -464,6 +466,8 @@ export interface DefaultApiInterface {
      * @param {string} bookkeeperId The id of the bookkeeper
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {Date} [from] Date from to start with
+     * @param {Date} [to] Date to to end with
      * @param {VATFilingType} [type] Type of the VAT filing
      * @param {string} [profile] Profile ID to filter
      * @param {*} [options] Override http request option.
@@ -1260,6 +1264,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['size'] != null) {
             queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['from'] != null) {
+            queryParameters['from'] = (requestParameters['from'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['to'] != null) {
+            queryParameters['to'] = (requestParameters['to'] as any).toISOString().substring(0,10);
         }
 
         if (requestParameters['type'] != null) {
