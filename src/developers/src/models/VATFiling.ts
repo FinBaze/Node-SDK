@@ -67,6 +67,18 @@ export interface VATFiling {
     readonly to: Date;
     /**
      * 
+     * @type {boolean}
+     * @memberof VATFiling
+     */
+    send: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VATFiling
+     */
+    error: boolean;
+    /**
+     * 
      * @type {any}
      * @memberof VATFiling
      */
@@ -112,6 +124,8 @@ export function instanceOfVATFiling(value: object): value is VATFiling {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('from' in value) || value['from'] === undefined) return false;
     if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('send' in value) || value['send'] === undefined) return false;
+    if (!('error' in value) || value['error'] === undefined) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('links' in value) || value['links'] === undefined) return false;
@@ -134,6 +148,8 @@ export function VATFilingFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'type': json['type'] == null ? undefined : VATFilingTypeFromJSON(json['type']),
         'from': (new Date(json['from'])),
         'to': (new Date(json['to'])),
+        'send': json['send'],
+        'error': json['error'],
         'data': json['data'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': ProcessDocumentEmbeddedFromJSON(json['_embedded']),
@@ -155,6 +171,8 @@ export function VATFilingToJSONTyped(value?: Omit<VATFiling, 'id'|'from'|'to'|'u
     return {
         
         'type': VATFilingTypeToJSON(value['type']),
+        'send': value['send'],
+        'error': value['error'],
         'data': value['data'],
         'metadata': value['metadata'],
         '_embedded': ProcessDocumentEmbeddedToJSON(value['embedded']),
