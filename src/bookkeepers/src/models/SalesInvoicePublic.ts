@@ -27,6 +27,13 @@ import {
     SalesInvoiceAmountsBookedToJSON,
     SalesInvoiceAmountsBookedToJSONTyped,
 } from './SalesInvoiceAmountsBooked';
+import type { Links } from './Links';
+import {
+    LinksFromJSON,
+    LinksFromJSONTyped,
+    LinksToJSON,
+    LinksToJSONTyped,
+} from './Links';
 import type { SalesInvoicePublicEmbedded } from './SalesInvoicePublicEmbedded';
 import {
     SalesInvoicePublicEmbeddedFromJSON,
@@ -180,6 +187,12 @@ export interface SalesInvoicePublic {
      * @memberof SalesInvoicePublic
      */
     embedded: SalesInvoicePublicEmbedded;
+    /**
+     * 
+     * @type {Links}
+     * @memberof SalesInvoicePublic
+     */
+    links: Links;
 }
 
 /**
@@ -194,6 +207,7 @@ export function instanceOfSalesInvoicePublic(value: object): value is SalesInvoi
     if (!('amounts' in value) || value['amounts'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('embedded' in value) || value['embedded'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
     return true;
 }
 
@@ -229,6 +243,7 @@ export function SalesInvoicePublicFromJSONTyped(json: any, ignoreDiscriminator: 
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': SalesInvoicePublicEmbeddedFromJSON(json['_embedded']),
+        'links': LinksFromJSON(json['_links']),
     };
 }
 
@@ -260,6 +275,7 @@ export function SalesInvoicePublicToJSONTyped(value?: Omit<SalesInvoicePublic, '
         'footer': value['footer'],
         'metadata': value['metadata'],
         '_embedded': SalesInvoicePublicEmbeddedToJSON(value['embedded']),
+        '_links': LinksToJSON(value['links']),
     };
 }
 
