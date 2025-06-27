@@ -5,6 +5,7 @@ export * from './Address';
 export * from './App';
 export * from './Asset';
 export * from './Bookkeeper';
+export * from './BuyCreditsRequest';
 export * from './CreateBookkeeperAccountRequest';
 export * from './CreateBookkeeperProfileRequest';
 export * from './CreateBookkeeperProfileRequestNl';

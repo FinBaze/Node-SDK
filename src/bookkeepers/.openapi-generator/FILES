@@ -11,6 +11,7 @@ src/models/Address.ts
 src/models/App.ts
 src/models/Asset.ts
 src/models/Bookkeeper.ts
+src/models/BuyCreditsRequest.ts
 src/models/CreateBookkeeperAccountRequest.ts
 src/models/CreateBookkeeperProfileRequest.ts
 src/models/CreateBookkeeperProfileRequestNl.ts

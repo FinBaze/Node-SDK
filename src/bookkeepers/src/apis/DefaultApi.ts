@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Account,
   Bookkeeper,
+  BuyCreditsRequest,
   CreateBookkeeperAccountRequest,
   CreateBookkeeperProfileRequest,
   CreateProcessDocumentRequest,
@@ -37,6 +38,7 @@ import type {
   ProcessDocument,
   Profile,
   SalesInvoice,
+  SalesInvoicePublic,
   ServerError,
   UnauthorisedError,
   VATFilingType,
@@ -46,6 +48,8 @@ import {
     AccountToJSON,
     BookkeeperFromJSON,
     BookkeeperToJSON,
+    BuyCreditsRequestFromJSON,
+    BuyCreditsRequestToJSON,
     CreateBookkeeperAccountRequestFromJSON,
     CreateBookkeeperAccountRequestToJSON,
     CreateBookkeeperProfileRequestFromJSON,
@@ -86,6 +90,8 @@ import {
     ProfileToJSON,
     SalesInvoiceFromJSON,
     SalesInvoiceToJSON,
+    SalesInvoicePublicFromJSON,
+    SalesInvoicePublicToJSON,
     ServerErrorFromJSON,
     ServerErrorToJSON,
     UnauthorisedErrorFromJSON,
@@ -93,6 +99,11 @@ import {
     VATFilingTypeFromJSON,
     VATFilingTypeToJSON,
 } from '../models/index';
+
+export interface BuyCreditsOperationRequest {
+    bookkeeperId: string;
+    buyCreditsRequest?: BuyCreditsRequest;
+}
 
 export interface CreateBookkeeperAccountOperationRequest {
     bookkeeperId: string;
@@ -236,6 +247,21 @@ export interface GetVATFilingsRequest {
  * @interface DefaultApiInterface
  */
 export interface DefaultApiInterface {
+    /**
+     * Buys credits
+     * @param {string} bookkeeperId The id of the bookkeeper
+     * @param {BuyCreditsRequest} [buyCreditsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    buyCreditsRaw(requestParameters: BuyCreditsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoicePublic>>;
+
+    /**
+     * Buys credits
+     */
+    buyCredits(requestParameters: BuyCreditsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoicePublic>;
+
     /**
      * Creates an relations
      * @param {string} bookkeeperId The id of the bookkeeper
@@ -560,6 +586,47 @@ export interface DefaultApiInterface {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
+
+    /**
+     * Buys credits
+     */
+    async buyCreditsRaw(requestParameters: BuyCreditsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoicePublic>> {
+        if (requestParameters['bookkeeperId'] == null) {
+            throw new runtime.RequiredError(
+                'bookkeeperId',
+                'Required parameter "bookkeeperId" was null or undefined when calling buyCredits().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/bookkeepers/{bookkeeperId}/credits`.replace(`{${"bookkeeperId"}}`, encodeURIComponent(String(requestParameters['bookkeeperId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: BuyCreditsRequestToJSON(requestParameters['buyCreditsRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoicePublicFromJSON(jsonValue));
+    }
+
+    /**
+     * Buys credits
+     */
+    async buyCredits(requestParameters: BuyCreditsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoicePublic> {
+        const response = await this.buyCreditsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates an relations
