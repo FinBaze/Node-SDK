@@ -34,6 +34,10 @@ src/models/GetCompaniesAutocomplete200ResponseDataInnerEu.ts
 src/models/GetJurisdictions200ResponseValue.ts
 src/models/GetJurisdictions200ResponseValueEu.ts
 src/models/GetJurisdictions200ResponseValueLegal.ts
+src/models/GetReminderPublic200Response.ts
+src/models/GetReminderPublic200ResponseAmounts.ts
+src/models/GetReminderPublic200ResponseAmountsBooked.ts
+src/models/GetReminderPublic200ResponseEmbedded.ts
 src/models/GetSubscriptionPublic200Response.ts
 src/models/GetSubscriptionPublic200ResponseAmounts.ts
 src/models/GetSubscriptionPublic200ResponseEmbedded.ts
@@ -107,8 +111,6 @@ src/models/RelationBankIban.ts
 src/models/RelationEu.ts
 src/models/RelationEuVies.ts
 src/models/Reminder.ts
-src/models/ReminderAmounts.ts
-src/models/ReminderAmountsBooked.ts
 src/models/ReminderEmbedded.ts
 src/models/ResetAccountPasswordRequest.ts
 src/models/RevenueCategory.ts

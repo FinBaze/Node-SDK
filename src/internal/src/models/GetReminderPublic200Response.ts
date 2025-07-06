@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetReminderPublic200ResponseEmbedded } from './GetReminderPublic200ResponseEmbedded';
+import {
+    GetReminderPublic200ResponseEmbeddedFromJSON,
+    GetReminderPublic200ResponseEmbeddedFromJSONTyped,
+    GetReminderPublic200ResponseEmbeddedToJSON,
+    GetReminderPublic200ResponseEmbeddedToJSONTyped,
+} from './GetReminderPublic200ResponseEmbedded';
 import type { Address } from './Address';
 import {
     AddressFromJSON,
@@ -34,182 +41,169 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
-import type { ReminderEmbedded } from './ReminderEmbedded';
-import {
-    ReminderEmbeddedFromJSON,
-    ReminderEmbeddedFromJSONTyped,
-    ReminderEmbeddedToJSON,
-    ReminderEmbeddedToJSONTyped,
-} from './ReminderEmbedded';
 
 /**
  * 
  * @export
- * @interface Reminder
+ * @interface GetReminderPublic200Response
  */
-export interface Reminder {
+export interface GetReminderPublic200Response {
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly uuid: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly reminderId?: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     reference?: string;
     /**
      * 
      * @type {number}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     fees?: number;
     /**
      * 
      * @type {number}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     originalFees?: number;
     /**
      * 
      * @type {Date}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly due?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly date?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly closed?: Date;
     /**
      * 
      * @type {boolean}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     paid?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     content?: boolean;
     /**
      * Indicates wheter the reminder is overdue or not
      * @type {boolean}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     overdue: boolean;
     /**
      * Indicates wheter the reminder is in concept or not
      * @type {boolean}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     concept: boolean;
     /**
      * 
      * @type {GetReminderPublic200ResponseAmounts}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     amounts: GetReminderPublic200ResponseAmounts;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     currency: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     legalName?: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     firstName?: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     middleName?: string;
     /**
      * 
      * @type {string}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     lastName?: string;
     /**
      * 
      * @type {Address}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     address?: Address;
     /**
-     * ID of the relation attached
-     * @type {string}
-     * @memberof Reminder
-     */
-    relation?: string;
-    /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     metadata?: { [key: string]: any; };
     /**
      * 
-     * @type {ReminderEmbedded}
-     * @memberof Reminder
+     * @type {GetReminderPublic200ResponseEmbedded}
+     * @memberof GetReminderPublic200Response
      */
-    embedded: ReminderEmbedded;
+    embedded: GetReminderPublic200ResponseEmbedded;
     /**
      * 
      * @type {Links}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     links: Links;
     /**
      * 
      * @type {Date}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Reminder
+     * @memberof GetReminderPublic200Response
      */
     readonly created: Date;
 }
 
 /**
- * Check if a given object implements the Reminder interface.
+ * Check if a given object implements the GetReminderPublic200Response interface.
  */
-export function instanceOfReminder(value: object): value is Reminder {
+export function instanceOfGetReminderPublic200Response(value: object): value is GetReminderPublic200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('overdue' in value) || value['overdue'] === undefined) return false;
@@ -223,11 +217,11 @@ export function instanceOfReminder(value: object): value is Reminder {
     return true;
 }
 
-export function ReminderFromJSON(json: any): Reminder {
-    return ReminderFromJSONTyped(json, false);
+export function GetReminderPublic200ResponseFromJSON(json: any): GetReminderPublic200Response {
+    return GetReminderPublic200ResponseFromJSONTyped(json, false);
 }
 
-export function ReminderFromJSONTyped(json: any, ignoreDiscriminator: boolean): Reminder {
+export function GetReminderPublic200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetReminderPublic200Response {
     if (json == null) {
         return json;
     }
@@ -253,20 +247,19 @@ export function ReminderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'middleName': json['middle-name'] == null ? undefined : json['middle-name'],
         'lastName': json['last-name'] == null ? undefined : json['last-name'],
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
-        'relation': json['relation'] == null ? undefined : json['relation'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': ReminderEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetReminderPublic200ResponseEmbeddedFromJSON(json['_embedded']),
         'links': LinksFromJSON(json['_links']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
 }
 
-export function ReminderToJSON(json: any): Reminder {
-    return ReminderToJSONTyped(json, false);
+export function GetReminderPublic200ResponseToJSON(json: any): GetReminderPublic200Response {
+    return GetReminderPublic200ResponseToJSONTyped(json, false);
 }
 
-export function ReminderToJSONTyped(value?: Omit<Reminder, 'id'|'uuid'|'reminder-id'|'due'|'date'|'closed'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetReminderPublic200ResponseToJSONTyped(value?: Omit<GetReminderPublic200Response, 'id'|'uuid'|'reminder-id'|'due'|'date'|'closed'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -287,9 +280,8 @@ export function ReminderToJSONTyped(value?: Omit<Reminder, 'id'|'uuid'|'reminder
         'middle-name': value['middleName'],
         'last-name': value['lastName'],
         'address': AddressToJSON(value['address']),
-        'relation': value['relation'],
         'metadata': value['metadata'],
-        '_embedded': ReminderEmbeddedToJSON(value['embedded']),
+        '_embedded': GetReminderPublic200ResponseEmbeddedToJSON(value['embedded']),
         '_links': LinksToJSON(value['links']),
     };
 }

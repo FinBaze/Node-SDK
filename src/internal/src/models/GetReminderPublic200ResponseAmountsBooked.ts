@@ -16,39 +16,39 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ReminderAmountsBooked
+ * @interface GetReminderPublic200ResponseAmountsBooked
  */
-export interface ReminderAmountsBooked {
+export interface GetReminderPublic200ResponseAmountsBooked {
     /**
      * 
      * @type {number}
-     * @memberof ReminderAmountsBooked
+     * @memberof GetReminderPublic200ResponseAmountsBooked
      */
     total: number;
     /**
      * 
      * @type {number}
-     * @memberof ReminderAmountsBooked
+     * @memberof GetReminderPublic200ResponseAmountsBooked
      */
     subtotal: number;
     /**
      * 
      * @type {number}
-     * @memberof ReminderAmountsBooked
+     * @memberof GetReminderPublic200ResponseAmountsBooked
      */
     fees: number;
     /**
      * 
      * @type {number}
-     * @memberof ReminderAmountsBooked
+     * @memberof GetReminderPublic200ResponseAmountsBooked
      */
     interest: number;
 }
 
 /**
- * Check if a given object implements the ReminderAmountsBooked interface.
+ * Check if a given object implements the GetReminderPublic200ResponseAmountsBooked interface.
  */
-export function instanceOfReminderAmountsBooked(value: object): value is ReminderAmountsBooked {
+export function instanceOfGetReminderPublic200ResponseAmountsBooked(value: object): value is GetReminderPublic200ResponseAmountsBooked {
     if (!('total' in value) || value['total'] === undefined) return false;
     if (!('subtotal' in value) || value['subtotal'] === undefined) return false;
     if (!('fees' in value) || value['fees'] === undefined) return false;
@@ -56,11 +56,11 @@ export function instanceOfReminderAmountsBooked(value: object): value is Reminde
     return true;
 }
 
-export function ReminderAmountsBookedFromJSON(json: any): ReminderAmountsBooked {
-    return ReminderAmountsBookedFromJSONTyped(json, false);
+export function GetReminderPublic200ResponseAmountsBookedFromJSON(json: any): GetReminderPublic200ResponseAmountsBooked {
+    return GetReminderPublic200ResponseAmountsBookedFromJSONTyped(json, false);
 }
 
-export function ReminderAmountsBookedFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReminderAmountsBooked {
+export function GetReminderPublic200ResponseAmountsBookedFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetReminderPublic200ResponseAmountsBooked {
     if (json == null) {
         return json;
     }
@@ -73,11 +73,11 @@ export function ReminderAmountsBookedFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function ReminderAmountsBookedToJSON(json: any): ReminderAmountsBooked {
-    return ReminderAmountsBookedToJSONTyped(json, false);
+export function GetReminderPublic200ResponseAmountsBookedToJSON(json: any): GetReminderPublic200ResponseAmountsBooked {
+    return GetReminderPublic200ResponseAmountsBookedToJSONTyped(json, false);
 }
 
-export function ReminderAmountsBookedToJSONTyped(value?: ReminderAmountsBooked | null, ignoreDiscriminator: boolean = false): any {
+export function GetReminderPublic200ResponseAmountsBookedToJSONTyped(value?: GetReminderPublic200ResponseAmountsBooked | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

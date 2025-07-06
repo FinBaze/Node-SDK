@@ -26,6 +26,7 @@ import type {
   Device,
   GetCompaniesAutocomplete200Response,
   GetJurisdictions200ResponseValue,
+  GetReminderPublic200Response,
   GetSubscriptionPublic200Response,
   GetSubscriptionPublicInvoices200Response,
   ResetAccountPasswordRequest,
@@ -58,6 +59,8 @@ import {
     GetCompaniesAutocomplete200ResponseToJSON,
     GetJurisdictions200ResponseValueFromJSON,
     GetJurisdictions200ResponseValueToJSON,
+    GetReminderPublic200ResponseFromJSON,
+    GetReminderPublic200ResponseToJSON,
     GetSubscriptionPublic200ResponseFromJSON,
     GetSubscriptionPublic200ResponseToJSON,
     GetSubscriptionPublicInvoices200ResponseFromJSON,
@@ -86,6 +89,12 @@ export interface CreateBankingServiceOnboardingRequest {
 
 export interface CreateDeviceOperationRequest {
     createDeviceRequest?: CreateDeviceRequest;
+}
+
+export interface CreateReminderPublicPaymentRequest {
+    profileId: string;
+    reminderUUID: string;
+    createSubscriptionPublicPaymentMethodRequest?: CreateSubscriptionPublicPaymentMethodRequest;
 }
 
 export interface CreateSalesInvoicePublicPaymentRequest {
@@ -120,6 +129,11 @@ export interface GetCompaniesAutocompleteRequest {
 export interface GetPurchaseInvoicePublicRequest {
     profileId: string;
     purchaseInvoiceUUID: string;
+}
+
+export interface GetReminderPublicRequest {
+    profileId: string;
+    reminderUUID: string;
 }
 
 export interface GetSalesInvoicePublicRequest {
@@ -244,6 +258,22 @@ export interface DefaultApiInterface {
      * Creates an device
      */
     createDevice(requestParameters: CreateDeviceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device>;
+
+    /**
+     * Creates an payment attempt for an reminder
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderUUID The uuid of the reminder
+     * @param {CreateSubscriptionPublicPaymentMethodRequest} [createSubscriptionPublicPaymentMethodRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>>;
+
+    /**
+     * Creates an payment attempt for an reminder
+     */
+    createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response>;
 
     /**
      * Creates an payment attempt for an sales invoice
@@ -390,6 +420,21 @@ export interface DefaultApiInterface {
      * Returns a purchase invoice public data
      */
     getPurchaseInvoicePublic(requestParameters: GetPurchaseInvoicePublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Returns a reminder
+     * @param {string} profileId The id of the profile
+     * @param {string} reminderUUID The uuid of the reminder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getReminderPublicRaw(requestParameters: GetReminderPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReminderPublic200Response>>;
+
+    /**
+     * Returns a reminder
+     */
+    getReminderPublic(requestParameters: GetReminderPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReminderPublic200Response>;
 
     /**
      * Returns a sales invoice
@@ -706,6 +751,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createDevice(requestParameters: CreateDeviceOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Device> {
         const response = await this.createDeviceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an payment attempt for an reminder
+     */
+    async createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createReminderPublicPayment().'
+            );
+        }
+
+        if (requestParameters['reminderUUID'] == null) {
+            throw new runtime.RequiredError(
+                'reminderUUID',
+                'Required parameter "reminderUUID" was null or undefined when calling createReminderPublicPayment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/reminders/{profileId}/{reminderUUID}/payments`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderUUID"}}`, encodeURIComponent(String(requestParameters['reminderUUID']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateSubscriptionPublicPaymentMethodRequestToJSON(requestParameters['createSubscriptionPublicPaymentMethodRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSubscriptionPublicPaymentMethod200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an payment attempt for an reminder
+     */
+    async createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response> {
+        const response = await this.createReminderPublicPaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1112,6 +1205,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getPurchaseInvoicePublic(requestParameters: GetPurchaseInvoicePublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
         const response = await this.getPurchaseInvoicePublicRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a reminder
+     */
+    async getReminderPublicRaw(requestParameters: GetReminderPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReminderPublic200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getReminderPublic().'
+            );
+        }
+
+        if (requestParameters['reminderUUID'] == null) {
+            throw new runtime.RequiredError(
+                'reminderUUID',
+                'Required parameter "reminderUUID" was null or undefined when calling getReminderPublic().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/reminders/{profileId}/{reminderUUID}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"reminderUUID"}}`, encodeURIComponent(String(requestParameters['reminderUUID']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetReminderPublic200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a reminder
+     */
+    async getReminderPublic(requestParameters: GetReminderPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReminderPublic200Response> {
+        const response = await this.getReminderPublicRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
