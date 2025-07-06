@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProfilePublic } from './ProfilePublic';
+import {
+    ProfilePublicFromJSON,
+    ProfilePublicFromJSONTyped,
+    ProfilePublicToJSON,
+    ProfilePublicToJSONTyped,
+} from './ProfilePublic';
 import type { SalesInvoicePublic } from './SalesInvoicePublic';
 import {
     SalesInvoicePublicFromJSON,
@@ -20,13 +27,6 @@ import {
     SalesInvoicePublicToJSON,
     SalesInvoicePublicToJSONTyped,
 } from './SalesInvoicePublic';
-import type { Profile } from './Profile';
-import {
-    ProfileFromJSON,
-    ProfileFromJSONTyped,
-    ProfileToJSON,
-    ProfileToJSONTyped,
-} from './Profile';
 
 /**
  * 
@@ -42,10 +42,10 @@ export interface GetReminderPublic200ResponseEmbedded {
     invoices: Array<SalesInvoicePublic>;
     /**
      * 
-     * @type {Profile}
+     * @type {ProfilePublic}
      * @memberof GetReminderPublic200ResponseEmbedded
      */
-    profile?: Profile;
+    profile?: ProfilePublic;
 }
 
 /**
@@ -67,7 +67,7 @@ export function GetReminderPublic200ResponseEmbeddedFromJSONTyped(json: any, ign
     return {
         
         'invoices': ((json['invoices'] as Array<any>).map(SalesInvoicePublicFromJSON)),
-        'profile': json['profile'] == null ? undefined : ProfileFromJSON(json['profile']),
+        'profile': json['profile'] == null ? undefined : ProfilePublicFromJSON(json['profile']),
     };
 }
 
@@ -83,7 +83,7 @@ export function GetReminderPublic200ResponseEmbeddedToJSONTyped(value?: GetRemin
     return {
         
         'invoices': ((value['invoices'] as Array<any>).map(SalesInvoicePublicToJSON)),
-        'profile': ProfileToJSON(value['profile']),
+        'profile': ProfilePublicToJSON(value['profile']),
     };
 }
 
