@@ -663,6 +663,11 @@ export interface CreateRelationOperationRequest {
     createRelationRequest?: CreateRelationRequest;
 }
 
+export interface CreateRelationReminderRequest {
+    profileId: string;
+    relationId: string;
+}
+
 export interface CreateRelationsExportRequest {
     profileId: string;
     createRelationsImportRequest?: CreateRelationsImportRequest;
@@ -692,6 +697,11 @@ export interface CreateSalesInvoiceLineOperationRequest {
     profileId: string;
     salesInvoiceId: string;
     createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+}
+
+export interface CreateSalesInvoiceReminderRequest {
+    profileId: string;
+    salesInvoiceId: string;
 }
 
 export interface CreateSalesInvoicesImportRequest {
@@ -2522,6 +2532,21 @@ export interface DefaultApiInterface {
     createRelation(requestParameters: CreateRelationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation>;
 
     /**
+     * Returns a relations
+     * @param {string} profileId The id of the profile
+     * @param {string} relationId The ID of the relation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createRelationReminderRaw(requestParameters: CreateRelationReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>>;
+
+    /**
+     * Returns a relations
+     */
+    createRelationReminder(requestParameters: CreateRelationReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder>;
+
+    /**
      * Creates an relation export
      * @param {string} profileId The id of the profile
      * @param {CreateRelationsImportRequest} [createRelationsImportRequest] 
@@ -2611,6 +2636,21 @@ export interface DefaultApiInterface {
      * creates a sales invoice line
      */
     createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
+
+    /**
+     * Creates a sales invoices reminder with one sales invoice.
+     * @param {string} profileId The id of the profile
+     * @param {string} salesInvoiceId The id of the sales invoice
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createSalesInvoiceReminderRaw(requestParameters: CreateSalesInvoiceReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>>;
+
+    /**
+     * Creates a sales invoices reminder with one sales invoice.
+     */
+    createSalesInvoiceReminder(requestParameters: CreateSalesInvoiceReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder>;
 
     /**
      * Creates an sales invoice import
@@ -7588,6 +7628,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a relations
+     */
+    async createRelationReminderRaw(requestParameters: CreateRelationReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createRelationReminder().'
+            );
+        }
+
+        if (requestParameters['relationId'] == null) {
+            throw new runtime.RequiredError(
+                'relationId',
+                'Required parameter "relationId" was null or undefined when calling createRelationReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/relations/{relationId}/reminder`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"relationId"}}`, encodeURIComponent(String(requestParameters['relationId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ReminderFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a relations
+     */
+    async createRelationReminder(requestParameters: CreateRelationReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder> {
+        const response = await this.createRelationReminderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates an relation export
      */
     async createRelationsExportRaw(requestParameters: CreateRelationsExportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
@@ -7837,6 +7922,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
         const response = await this.createSalesInvoiceLineRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a sales invoices reminder with one sales invoice.
+     */
+    async createSalesInvoiceReminderRaw(requestParameters: CreateSalesInvoiceReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Reminder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createSalesInvoiceReminder().'
+            );
+        }
+
+        if (requestParameters['salesInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'salesInvoiceId',
+                'Required parameter "salesInvoiceId" was null or undefined when calling createSalesInvoiceReminder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/sales-invoices/{salesInvoiceId}/reminder`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"salesInvoiceId"}}`, encodeURIComponent(String(requestParameters['salesInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ReminderFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a sales invoices reminder with one sales invoice.
+     */
+    async createSalesInvoiceReminder(requestParameters: CreateSalesInvoiceReminderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Reminder> {
+        const response = await this.createSalesInvoiceReminderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
