@@ -40,6 +40,8 @@ src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcess.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger.ts
 src/models/CreateObligationRequest.ts
 src/models/CreateObligationRequestItemsInner.ts
+src/models/CreatePackingSlibRequest.ts
+src/models/CreatePackingSlibRequestLinesInner.ts
 src/models/CreateProcessDocumentRequest.ts
 src/models/CreateProcessDocumentRequestFile.ts
 src/models/CreateProductCategoryRequest.ts
@@ -67,6 +69,7 @@ src/models/CreatePurchaseInvoiceLineRequest.ts
 src/models/CreatePurchaseInvoicePaymentBatchRequest.ts
 src/models/CreatePurchaseInvoicePaymentRequest.ts
 src/models/CreatePurchaseInvoiceRequest.ts
+src/models/CreatePurchaseOrderRequest.ts
 src/models/CreateQuoteLineRequest.ts
 src/models/CreateQuoteRequest.ts
 src/models/CreateRelationRequest.ts
@@ -84,6 +87,7 @@ src/models/CreateStockCategoryRequest.ts
 src/models/CreateSubscriptionBasedOnSalesInvoiceRequest.ts
 src/models/CreateSubscriptionLineRequest.ts
 src/models/CreateSubscriptionRequest.ts
+src/models/CreateVATFilingRequest.ts
 src/models/CreateVehicleRequest.ts
 src/models/CreateVehicleTripRequest.ts
 src/models/CreateVehicleTripRequestOdometer.ts
@@ -116,6 +120,7 @@ src/models/GetNLVatData200ResponseSection3.ts
 src/models/GetNLVatData200ResponseSection4.ts
 src/models/GetNLVatData200ResponseSection5.ts
 src/models/GetObligations200Response.ts
+src/models/GetPackingSlibs200Response.ts
 src/models/GetProcessDocuments200Response.ts
 src/models/GetProducts200Response.ts
 src/models/GetProfileAccounts200Response.ts
@@ -138,6 +143,7 @@ src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200ResponseDataInner.ts
 src/models/GetPurchaseInvoices200Response.ts
+src/models/GetPurchaseOrders200Response.ts
 src/models/GetQuotes200Response.ts
 src/models/GetRelationVerifyVATNumber200Response.ts
 src/models/GetRelations200Response.ts
@@ -147,6 +153,7 @@ src/models/GetRelationsAutocomplete200ResponseDataInnerEu.ts
 src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
 src/models/GetSubscriptions200Response.ts
+src/models/GetVATFilings200Response.ts
 src/models/GetVehicleTrips200Response.ts
 src/models/GetVehicles200Response.ts
 src/models/ImportMonetaryAccountCAMT053Request.ts
@@ -176,6 +183,9 @@ src/models/NotFoundError.ts
 src/models/Obligation.ts
 src/models/ObligationEmbedded.ts
 src/models/ObligationLine.ts
+src/models/PackingSlib.ts
+src/models/PackingSlibEmbedded.ts
+src/models/PackingSlibLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentEmbedded.ts
@@ -204,6 +214,9 @@ src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts
 src/models/PurchaseInvoiceLine.ts
 src/models/PurchaseInvoiceLineEmbedded.ts
+src/models/PurchaseOrder.ts
+src/models/PurchaseOrderEmbedded.ts
+src/models/PurchaseOrderLine.ts
 src/models/Quote.ts
 src/models/QuoteEmbedded.ts
 src/models/QuoteLine.ts
@@ -247,7 +260,9 @@ src/models/UnauthorisedError.ts
 src/models/UndisputePurchaseInvoiceRequest.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
+src/models/UpdatePackingSlibRequest.ts
 src/models/UpdateProfileRequest.ts
+src/models/UpdatePurchaseOrderRequest.ts
 src/models/VATFiling.ts
 src/models/VATFilingType.ts
 src/models/Vehicle.ts

@@ -37,6 +37,7 @@ import type {
   CreateMonetaryMemorialEntryRequest,
   CreateObligationRequest,
   CreateObligationRequestItemsInner,
+  CreatePackingSlibRequest,
   CreateProcessDocumentRequest,
   CreateProductCategoryRequest,
   CreateProductRequest,
@@ -49,6 +50,7 @@ import type {
   CreatePurchaseInvoicePaymentBatchRequest,
   CreatePurchaseInvoicePaymentRequest,
   CreatePurchaseInvoiceRequest,
+  CreatePurchaseOrderRequest,
   CreateQuoteLineRequest,
   CreateQuoteRequest,
   CreateRelationRequest,
@@ -60,6 +62,7 @@ import type {
   CreateSubscriptionBasedOnSalesInvoiceRequest,
   CreateSubscriptionLineRequest,
   CreateSubscriptionRequest,
+  CreateVATFilingRequest,
   CreateVehicleRequest,
   CreateVehicleTripRequest,
   CreditLoan,
@@ -83,6 +86,7 @@ import type {
   GetMonetaryAccountOpenbankingAuthorisation200Response,
   GetNLVatData200Response,
   GetObligations200Response,
+  GetPackingSlibs200Response,
   GetProcessDocuments200Response,
   GetProducts200Response,
   GetProfileAccounts200Response,
@@ -99,6 +103,7 @@ import type {
   GetPurchaseInvoicePaymentBatches200Response,
   GetPurchaseInvoicePaymentBatches200ResponseDataInner,
   GetPurchaseInvoices200Response,
+  GetPurchaseOrders200Response,
   GetQuotes200Response,
   GetRelationVerifyVATNumber200Response,
   GetRelations200Response,
@@ -106,6 +111,7 @@ import type {
   GetReminders200Response,
   GetSalesInvoices200Response,
   GetSubscriptions200Response,
+  GetVATFilings200Response,
   GetVehicleTrips200Response,
   GetVehicles200Response,
   ImportMonetaryAccountCAMT053Request,
@@ -120,6 +126,7 @@ import type {
   NLVATFiling,
   Obligation,
   ObligationLine,
+  PackingSlib,
   ProcessDocument,
   ProcessMonetaryAccountPaymentCreditLoanRequest,
   ProcessMonetaryAccountPaymentCurrentAccountRequest,
@@ -137,6 +144,7 @@ import type {
   PullMonetaryAccount200Response,
   PurchaseInvoice,
   PurchaseInvoiceLine,
+  PurchaseOrder,
   Quote,
   QuoteLine,
   Relation,
@@ -156,7 +164,11 @@ import type {
   UndisputePurchaseInvoiceRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
+  UpdatePackingSlibRequest,
   UpdateProfileRequest,
+  UpdatePurchaseOrderRequest,
+  VATFiling,
+  VATFilingType,
   Vehicle,
   VehicleTrip,
 } from '../models/index';
@@ -205,6 +217,8 @@ import {
     CreateObligationRequestToJSON,
     CreateObligationRequestItemsInnerFromJSON,
     CreateObligationRequestItemsInnerToJSON,
+    CreatePackingSlibRequestFromJSON,
+    CreatePackingSlibRequestToJSON,
     CreateProcessDocumentRequestFromJSON,
     CreateProcessDocumentRequestToJSON,
     CreateProductCategoryRequestFromJSON,
@@ -229,6 +243,8 @@ import {
     CreatePurchaseInvoicePaymentRequestToJSON,
     CreatePurchaseInvoiceRequestFromJSON,
     CreatePurchaseInvoiceRequestToJSON,
+    CreatePurchaseOrderRequestFromJSON,
+    CreatePurchaseOrderRequestToJSON,
     CreateQuoteLineRequestFromJSON,
     CreateQuoteLineRequestToJSON,
     CreateQuoteRequestFromJSON,
@@ -251,6 +267,8 @@ import {
     CreateSubscriptionLineRequestToJSON,
     CreateSubscriptionRequestFromJSON,
     CreateSubscriptionRequestToJSON,
+    CreateVATFilingRequestFromJSON,
+    CreateVATFilingRequestToJSON,
     CreateVehicleRequestFromJSON,
     CreateVehicleRequestToJSON,
     CreateVehicleTripRequestFromJSON,
@@ -297,6 +315,8 @@ import {
     GetNLVatData200ResponseToJSON,
     GetObligations200ResponseFromJSON,
     GetObligations200ResponseToJSON,
+    GetPackingSlibs200ResponseFromJSON,
+    GetPackingSlibs200ResponseToJSON,
     GetProcessDocuments200ResponseFromJSON,
     GetProcessDocuments200ResponseToJSON,
     GetProducts200ResponseFromJSON,
@@ -329,6 +349,8 @@ import {
     GetPurchaseInvoicePaymentBatches200ResponseDataInnerToJSON,
     GetPurchaseInvoices200ResponseFromJSON,
     GetPurchaseInvoices200ResponseToJSON,
+    GetPurchaseOrders200ResponseFromJSON,
+    GetPurchaseOrders200ResponseToJSON,
     GetQuotes200ResponseFromJSON,
     GetQuotes200ResponseToJSON,
     GetRelationVerifyVATNumber200ResponseFromJSON,
@@ -343,6 +365,8 @@ import {
     GetSalesInvoices200ResponseToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
+    GetVATFilings200ResponseFromJSON,
+    GetVATFilings200ResponseToJSON,
     GetVehicleTrips200ResponseFromJSON,
     GetVehicleTrips200ResponseToJSON,
     GetVehicles200ResponseFromJSON,
@@ -371,6 +395,8 @@ import {
     ObligationToJSON,
     ObligationLineFromJSON,
     ObligationLineToJSON,
+    PackingSlibFromJSON,
+    PackingSlibToJSON,
     ProcessDocumentFromJSON,
     ProcessDocumentToJSON,
     ProcessMonetaryAccountPaymentCreditLoanRequestFromJSON,
@@ -405,6 +431,8 @@ import {
     PurchaseInvoiceToJSON,
     PurchaseInvoiceLineFromJSON,
     PurchaseInvoiceLineToJSON,
+    PurchaseOrderFromJSON,
+    PurchaseOrderToJSON,
     QuoteFromJSON,
     QuoteToJSON,
     QuoteLineFromJSON,
@@ -443,8 +471,16 @@ import {
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
     UpdateCurrentAccountRequestToJSON,
+    UpdatePackingSlibRequestFromJSON,
+    UpdatePackingSlibRequestToJSON,
     UpdateProfileRequestFromJSON,
     UpdateProfileRequestToJSON,
+    UpdatePurchaseOrderRequestFromJSON,
+    UpdatePurchaseOrderRequestToJSON,
+    VATFilingFromJSON,
+    VATFilingToJSON,
+    VATFilingTypeFromJSON,
+    VATFilingTypeToJSON,
     VehicleFromJSON,
     VehicleToJSON,
     VehicleTripFromJSON,
@@ -460,9 +496,21 @@ export interface CloseObligationRequest {
     obligationId: string;
 }
 
+export interface ClosePackingSilbRequest {
+    profileId: string;
+    packingSlibId: string;
+    body?: object;
+}
+
 export interface ClosePurchaseInvoiceRequest {
     profileId: string;
     purchaseInvoiceId: string;
+    body?: object;
+}
+
+export interface ClosePurchaseOrderRequest {
+    profileId: string;
+    purchaseOrderId: string;
     body?: object;
 }
 
@@ -580,6 +628,11 @@ export interface CreateObligationLineRequest {
     createObligationRequestItemsInner?: CreateObligationRequestItemsInner;
 }
 
+export interface CreatePackingSlibOperationRequest {
+    profileId: string;
+    createPackingSlibRequest?: CreatePackingSlibRequest;
+}
+
 export interface CreateProcessDocumentOperationRequest {
     profileId: string;
     createProcessDocumentRequest?: CreateProcessDocumentRequest;
@@ -645,6 +698,11 @@ export interface CreatePurchaseInvoicePaymentBatchOperationRequest {
 export interface CreatePurchaseInvoicePaymentBatchBankPaymentRequest {
     profileId: string;
     purchaseInvoicePaymentBatchId: string;
+}
+
+export interface CreatePurchaseOrderOperationRequest {
+    profileId: string;
+    createPurchaseOrderRequest?: CreatePurchaseOrderRequest;
 }
 
 export interface CreateQuoteOperationRequest {
@@ -731,6 +789,11 @@ export interface CreateSubscriptionLineOperationRequest {
     createSubscriptionLineRequest?: Omit<CreateSubscriptionLineRequest, 'updated'|'created'>;
 }
 
+export interface CreateVATFilingOperationRequest {
+    profileId: string;
+    createVATFilingRequest?: Omit<CreateVATFilingRequest, 'from'|'to'>;
+}
+
 export interface CreateVehicleOperationRequest {
     profileId: string;
     createVehicleRequest?: CreateVehicleRequest;
@@ -811,6 +874,11 @@ export interface DeleteObligationOperationRequest {
     deleteObligationRequest?: DeleteObligationRequest;
 }
 
+export interface DeletePackingSlibRequest {
+    profileId: string;
+    packingSlibId: string;
+}
+
 export interface DeleteProcessDocumentRequest {
     profileId: string;
     processDocumentId: string;
@@ -856,6 +924,11 @@ export interface DeletePurchaseInvoiceLineRequest {
 export interface DeletePurchaseInvoicePaymentBatchRequest {
     profileId: string;
     purchaseInvoicePaymentBatchId: string;
+}
+
+export interface DeletePurchaseOrderRequest {
+    profileId: string;
+    purchaseOrderId: string;
 }
 
 export interface DeleteQuoteRequest {
@@ -1140,6 +1213,25 @@ export interface GetObligationsRequest {
     relation?: string;
 }
 
+export interface GetPackingSlibRequest {
+    profileId: string;
+    packingSlibId: string;
+}
+
+export interface GetPackingSlibsRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    relation?: string;
+    purchaseOrder?: string;
+    number?: string;
+    file?: boolean;
+    date?: Date;
+    product?: string;
+    project?: string;
+    concept?: boolean;
+}
+
 export interface GetProcessDocumentRequest {
     profileId: string;
     processDocumentId: string;
@@ -1344,6 +1436,24 @@ export interface GetPurchaseInvoicesRequest {
     concept?: boolean;
 }
 
+export interface GetPurchaseOrderRequest {
+    profileId: string;
+    purchaseOrderId: string;
+}
+
+export interface GetPurchaseOrdersRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    relation?: string;
+    number?: string;
+    file?: boolean;
+    date?: Date;
+    product?: string;
+    project?: string;
+    concept?: boolean;
+}
+
 export interface GetQuoteRequest {
     profileId: string;
     quoteId: string;
@@ -1544,6 +1654,21 @@ export interface GetSubscriptionsRequest {
     relation?: string;
 }
 
+export interface GetVATFilingRequest {
+    profileId: string;
+    vatFilingId: string;
+}
+
+export interface GetVATFilingsRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    from?: Date;
+    to?: Date;
+    type?: VATFilingType;
+    profile?: string;
+}
+
 export interface GetVehicleRequest {
     profileId: string;
     vehicleId: string;
@@ -1680,6 +1805,11 @@ export interface SendSalesInvoiceOperationRequest {
     sendSalesInvoiceRequest?: SendSalesInvoiceRequest;
 }
 
+export interface SendVATFilingRequest {
+    profileId: string;
+    vatFilingId: string;
+}
+
 export interface SoftclosePurchaseInvoiceOperationRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -1783,6 +1913,12 @@ export interface UpdateObligationLineRequest {
     createObligationRequestItemsInner?: CreateObligationRequestItemsInner;
 }
 
+export interface UpdatePackingSlibOperationRequest {
+    profileId: string;
+    packingSlibId: string;
+    updatePackingSlibRequest?: UpdatePackingSlibRequest;
+}
+
 export interface UpdateProcessDocumentRequest {
     profileId: string;
     processDocumentId: string;
@@ -1836,6 +1972,12 @@ export interface UpdatePurchaseInvoicePaymentBatchRequest {
     profileId: string;
     projectId: string;
     createPurchaseInvoicePaymentBatchRequest?: CreatePurchaseInvoicePaymentBatchRequest;
+}
+
+export interface UpdatePurchaseOrderOperationRequest {
+    profileId: string;
+    purchaseOrderId: string;
+    updatePurchaseOrderRequest?: UpdatePurchaseOrderRequest;
 }
 
 export interface UpdateQuoteRequest {
@@ -1949,6 +2091,22 @@ export interface DefaultApiInterface {
     closeObligation(requestParameters: CloseObligationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation>;
 
     /**
+     * Closes a packing slib
+     * @param {string} profileId The id of the profile
+     * @param {string} packingSlibId The ID of the packing slip
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    closePackingSilbRaw(requestParameters: ClosePackingSilbRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>>;
+
+    /**
+     * Closes a packing slib
+     */
+    closePackingSilb(requestParameters: ClosePackingSilbRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib>;
+
+    /**
      * Closes a purchase invoice
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
@@ -1963,6 +2121,22 @@ export interface DefaultApiInterface {
      * Closes a purchase invoice
      */
     closePurchaseInvoice(requestParameters: ClosePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
+
+    /**
+     * Closes a purchase order
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseOrderId The ID of the purchase order
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    closePurchaseOrderRaw(requestParameters: ClosePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>>;
+
+    /**
+     * Closes a purchase order
+     */
+    closePurchaseOrder(requestParameters: ClosePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder>;
 
     /**
      * Closes a quote
@@ -2289,6 +2463,21 @@ export interface DefaultApiInterface {
     createObligationLine(requestParameters: CreateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ObligationLine>>;
 
     /**
+     * Creates an new packing slip with the given data, when using this endpoint the packing slip also needs to be closed in order to be processed. The packing slip will first be in concept and not be processed in the financial statement.
+     * @param {string} profileId The id of the profile
+     * @param {CreatePackingSlibRequest} [createPackingSlibRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPackingSlibRaw(requestParameters: CreatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>>;
+
+    /**
+     * Creates an new packing slip with the given data, when using this endpoint the packing slip also needs to be closed in order to be processed. The packing slip will first be in concept and not be processed in the financial statement.
+     */
+    createPackingSlib(requestParameters: CreatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib>;
+
+    /**
      * Creates a process document
      * @param {string} profileId The id of the profile
      * @param {CreateProcessDocumentRequest} [createProcessDocumentRequest] 
@@ -2484,6 +2673,21 @@ export interface DefaultApiInterface {
      * Create purchase invoice payment batch payment
      */
     createPurchaseInvoicePaymentBatchBankPayment(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response>;
+
+    /**
+     * Creates an new purchase order with the given data, when using this endpoint the purchase order also needs to be closed in order to be processed. The purchase order will first be in concept and not be processed in the financial statement.
+     * @param {string} profileId The id of the profile
+     * @param {CreatePurchaseOrderRequest} [createPurchaseOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPurchaseOrderRaw(requestParameters: CreatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>>;
+
+    /**
+     * Creates an new purchase order with the given data, when using this endpoint the purchase order also needs to be closed in order to be processed. The purchase order will first be in concept and not be processed in the financial statement.
+     */
+    createPurchaseOrder(requestParameters: CreatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder>;
 
     /**
      * Creates an concept Quote
@@ -2730,6 +2934,21 @@ export interface DefaultApiInterface {
     createSubscriptionLine(requestParameters: CreateSubscriptionLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SubscriptionLine>>;
 
     /**
+     * Creates a vat filing
+     * @param {string} profileId The id of the profile
+     * @param {CreateVATFilingRequest} [createVATFilingRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VATFiling>>>;
+
+    /**
+     * Creates a vat filing
+     */
+    createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VATFiling>>;
+
+    /**
      * Creates a vehicle
      * @param {string} profileId The id of the profile
      * @param {CreateVehicleRequest} [createVehicleRequest] 
@@ -2960,6 +3179,21 @@ export interface DefaultApiInterface {
     deleteObligation(requestParameters: DeleteObligationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Deletes a packing slip
+     * @param {string} profileId The id of the profile
+     * @param {string} packingSlibId The ID of the packing slip
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deletePackingSlibRaw(requestParameters: DeletePackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a packing slip
+     */
+    deletePackingSlib(requestParameters: DeletePackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Deletes a process document
      * @param {string} profileId The id of the profile
      * @param {string} processDocumentId The ID of the process document
@@ -3095,6 +3329,21 @@ export interface DefaultApiInterface {
      * Deletes a payment batch
      */
     deletePurchaseInvoicePaymentBatch(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a purchase order
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseOrderId The ID of the purchase order
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deletePurchaseOrderRaw(requestParameters: DeletePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a purchase order
+     */
+    deletePurchaseOrder(requestParameters: DeletePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a quote
@@ -3849,6 +4098,45 @@ export interface DefaultApiInterface {
     getObligations(requestParameters: GetObligationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetObligations200Response>;
 
     /**
+     * Returns a packing slip
+     * @param {string} profileId The id of the profile
+     * @param {string} packingSlibId The ID of the packing slip
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPackingSlibRaw(requestParameters: GetPackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>>;
+
+    /**
+     * Returns a packing slip
+     */
+    getPackingSlib(requestParameters: GetPackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib>;
+
+    /**
+     * Returns all packing slips
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [relation] Non empty string with the ID of the relation to filter
+     * @param {string} [purchaseOrder] Purchase Order number to filter
+     * @param {string} [number] Packing slip number to filter
+     * @param {boolean} [file] If the purchase invoice has an uploaded file
+     * @param {Date} [date] Invoice date to filter
+     * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [project] Filter invoices that contain this project ID
+     * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPackingSlibsRaw(requestParameters: GetPackingSlibsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPackingSlibs200Response>>;
+
+    /**
+     * Returns all packing slips
+     */
+    getPackingSlibs(requestParameters: GetPackingSlibsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPackingSlibs200Response>;
+
+    /**
      * Returns a process document
      * @param {string} profileId The id of the profile
      * @param {string} processDocumentId The ID of the process document
@@ -4406,6 +4694,44 @@ export interface DefaultApiInterface {
     getPurchaseInvoices(requestParameters: GetPurchaseInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoices200Response>;
 
     /**
+     * Returns a purchase order
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseOrderId The ID of the purchase order
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseOrderRaw(requestParameters: GetPurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>>;
+
+    /**
+     * Returns a purchase order
+     */
+    getPurchaseOrder(requestParameters: GetPurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder>;
+
+    /**
+     * Returns all purchase orders
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [relation] Non empty string with the ID of the relation to filter
+     * @param {string} [number] Purchase Order number to filter
+     * @param {boolean} [file] If the purchase invoice has an uploaded file
+     * @param {Date} [date] Invoice date to filter
+     * @param {string} [product] Filter invoices that contain this product ID
+     * @param {string} [project] Filter invoices that contain this project ID
+     * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseOrdersRaw(requestParameters: GetPurchaseOrdersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseOrders200Response>>;
+
+    /**
+     * Returns all purchase orders
+     */
+    getPurchaseOrders(requestParameters: GetPurchaseOrdersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseOrders200Response>;
+
+    /**
      * Returns a quote
      * @param {string} profileId The id of the profile
      * @param {string} quoteId The id of the quote
@@ -4916,6 +5242,41 @@ export interface DefaultApiInterface {
     getSubscriptions(requestParameters: GetSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSubscriptions200Response>;
 
     /**
+     * Returns an vat filing
+     * @param {string} profileId The id of the profile
+     * @param {string} vatFilingId The ID of the vat filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getVATFilingRaw(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>>;
+
+    /**
+     * Returns an vat filing
+     */
+    getVATFiling(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling>;
+
+    /**
+     * Returns all vat filings
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {Date} [from] Date from to start with
+     * @param {Date} [to] Date to to end with
+     * @param {VATFilingType} [type] Type of the VAT filing
+     * @param {string} [profile] Profile ID to filter
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getVATFilingsRaw(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVATFilings200Response>>;
+
+    /**
+     * Returns all vat filings
+     */
+    getVATFilings(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVATFilings200Response>;
+
+    /**
      * Returns a vehicle
      * @param {string} profileId The id of the profile
      * @param {string} vehicleId The id of the vehicle
@@ -5252,6 +5613,21 @@ export interface DefaultApiInterface {
     sendSalesInvoice(requestParameters: SendSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Sends a VAT filing and finalized it
+     * @param {string} profileId The id of the profile
+     * @param {string} vatFilingId The ID of the vat filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    sendVATFilingRaw(requestParameters: SendVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>>;
+
+    /**
+     * Sends a VAT filing and finalized it
+     */
+    sendVATFiling(requestParameters: SendVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling>;
+
+    /**
      * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
@@ -5525,6 +5901,22 @@ export interface DefaultApiInterface {
     updateObligationLine(requestParameters: UpdateObligationLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ObligationLine>;
 
     /**
+     * updates a packing slip
+     * @param {string} profileId The id of the profile
+     * @param {string} packingSlibId The ID of the packing slip
+     * @param {UpdatePackingSlibRequest} [updatePackingSlibRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updatePackingSlibRaw(requestParameters: UpdatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>>;
+
+    /**
+     * updates a packing slip
+     */
+    updatePackingSlib(requestParameters: UpdatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib>;
+
+    /**
      * Updates a process document
      * @param {string} profileId The id of the profile
      * @param {string} processDocumentId The ID of the process document
@@ -5668,6 +6060,22 @@ export interface DefaultApiInterface {
      * Updates a payment batch
      */
     updatePurchaseInvoicePaymentBatch(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner>;
+
+    /**
+     * updates a purchase order
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseOrderId The ID of the purchase order
+     * @param {UpdatePurchaseOrderRequest} [updatePurchaseOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updatePurchaseOrderRaw(requestParameters: UpdatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>>;
+
+    /**
+     * updates a purchase order
+     */
+    updatePurchaseOrder(requestParameters: UpdatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder>;
 
     /**
      * Updates an Quote
@@ -5953,6 +6361,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Closes a packing slib
+     */
+    async closePackingSilbRaw(requestParameters: ClosePackingSilbRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling closePackingSilb().'
+            );
+        }
+
+        if (requestParameters['packingSlibId'] == null) {
+            throw new runtime.RequiredError(
+                'packingSlibId',
+                'Required parameter "packingSlibId" was null or undefined when calling closePackingSilb().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PackingSlibFromJSON(jsonValue));
+    }
+
+    /**
+     * Closes a packing slib
+     */
+    async closePackingSilb(requestParameters: ClosePackingSilbRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib> {
+        const response = await this.closePackingSilbRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Closes a purchase invoice
      */
     async closePurchaseInvoiceRaw(requestParameters: ClosePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -5997,6 +6453,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async closePurchaseInvoice(requestParameters: ClosePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice> {
         const response = await this.closePurchaseInvoiceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Closes a purchase order
+     */
+    async closePurchaseOrderRaw(requestParameters: ClosePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling closePurchaseOrder().'
+            );
+        }
+
+        if (requestParameters['purchaseOrderId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseOrderId',
+                'Required parameter "purchaseOrderId" was null or undefined when calling closePurchaseOrder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders/{purchaseOrderId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseOrderId"}}`, encodeURIComponent(String(requestParameters['purchaseOrderId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseOrderFromJSON(jsonValue));
+    }
+
+    /**
+     * Closes a purchase order
+     */
+    async closePurchaseOrder(requestParameters: ClosePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder> {
+        const response = await this.closePurchaseOrderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -6940,6 +7444,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates an new packing slip with the given data, when using this endpoint the packing slip also needs to be closed in order to be processed. The packing slip will first be in concept and not be processed in the financial statement.
+     */
+    async createPackingSlibRaw(requestParameters: CreatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPackingSlib().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePackingSlibRequestToJSON(requestParameters['createPackingSlibRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PackingSlibFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an new packing slip with the given data, when using this endpoint the packing slip also needs to be closed in order to be processed. The packing slip will first be in concept and not be processed in the financial statement.
+     */
+    async createPackingSlib(requestParameters: CreatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib> {
+        const response = await this.createPackingSlibRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates a process document
      */
     async createProcessDocumentRaw(requestParameters: CreateProcessDocumentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessDocument>> {
@@ -7494,6 +8039,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createPurchaseInvoicePaymentBatchBankPayment(requestParameters: CreatePurchaseInvoicePaymentBatchBankPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateMonetaryAccountBankPayment200Response> {
         const response = await this.createPurchaseInvoicePaymentBatchBankPaymentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates an new purchase order with the given data, when using this endpoint the purchase order also needs to be closed in order to be processed. The purchase order will first be in concept and not be processed in the financial statement.
+     */
+    async createPurchaseOrderRaw(requestParameters: CreatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPurchaseOrder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePurchaseOrderRequestToJSON(requestParameters['createPurchaseOrderRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseOrderFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an new purchase order with the given data, when using this endpoint the purchase order also needs to be closed in order to be processed. The purchase order will first be in concept and not be processed in the financial statement.
+     */
+    async createPurchaseOrder(requestParameters: CreatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder> {
+        const response = await this.createPurchaseOrderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -8190,6 +8776,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates a vat filing
+     */
+    async createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VATFiling>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createVATFiling().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateVATFilingRequestToJSON(requestParameters['createVATFilingRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(VATFilingFromJSON));
+    }
+
+    /**
+     * Creates a vat filing
+     */
+    async createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VATFiling>> {
+        const response = await this.createVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates a vehicle
      */
     async createVehicleRaw(requestParameters: CreateVehicleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
@@ -8872,6 +9499,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Deletes a packing slip
+     */
+    async deletePackingSlibRaw(requestParameters: DeletePackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deletePackingSlib().'
+            );
+        }
+
+        if (requestParameters['packingSlibId'] == null) {
+            throw new runtime.RequiredError(
+                'packingSlibId',
+                'Required parameter "packingSlibId" was null or undefined when calling deletePackingSlib().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a packing slip
+     */
+    async deletePackingSlib(requestParameters: DeletePackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deletePackingSlibRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Deletes a process document
      */
     async deleteProcessDocumentRaw(requestParameters: DeleteProcessDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -9279,6 +9950,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deletePurchaseInvoicePaymentBatch(requestParameters: DeletePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deletePurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a purchase order
+     */
+    async deletePurchaseOrderRaw(requestParameters: DeletePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deletePurchaseOrder().'
+            );
+        }
+
+        if (requestParameters['purchaseOrderId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseOrderId',
+                'Required parameter "purchaseOrderId" was null or undefined when calling deletePurchaseOrder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseOrderId"}}`, encodeURIComponent(String(requestParameters['purchaseOrderId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a purchase order
+     */
+    async deletePurchaseOrder(requestParameters: DeletePurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deletePurchaseOrderRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -11574,6 +12289,129 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a packing slip
+     */
+    async getPackingSlibRaw(requestParameters: GetPackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPackingSlib().'
+            );
+        }
+
+        if (requestParameters['packingSlibId'] == null) {
+            throw new runtime.RequiredError(
+                'packingSlibId',
+                'Required parameter "packingSlibId" was null or undefined when calling getPackingSlib().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PackingSlibFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a packing slip
+     */
+    async getPackingSlib(requestParameters: GetPackingSlibRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib> {
+        const response = await this.getPackingSlibRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all packing slips
+     */
+    async getPackingSlibsRaw(requestParameters: GetPackingSlibsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPackingSlibs200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPackingSlibs().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['purchaseOrder'] != null) {
+            queryParameters['purchase-order'] = requestParameters['purchaseOrder'];
+        }
+
+        if (requestParameters['number'] != null) {
+            queryParameters['number'] = requestParameters['number'];
+        }
+
+        if (requestParameters['file'] != null) {
+            queryParameters['file'] = requestParameters['file'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
+        }
+
+        if (requestParameters['concept'] != null) {
+            queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPackingSlibs200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all packing slips
+     */
+    async getPackingSlibs(requestParameters: GetPackingSlibsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPackingSlibs200Response> {
+        const response = await this.getPackingSlibsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a process document
      */
     async getProcessDocumentRaw(requestParameters: GetProcessDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessDocument>> {
@@ -13218,6 +14056,125 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a purchase order
+     */
+    async getPurchaseOrderRaw(requestParameters: GetPurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseOrder().'
+            );
+        }
+
+        if (requestParameters['purchaseOrderId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseOrderId',
+                'Required parameter "purchaseOrderId" was null or undefined when calling getPurchaseOrder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseOrderId"}}`, encodeURIComponent(String(requestParameters['purchaseOrderId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseOrderFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a purchase order
+     */
+    async getPurchaseOrder(requestParameters: GetPurchaseOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder> {
+        const response = await this.getPurchaseOrderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all purchase orders
+     */
+    async getPurchaseOrdersRaw(requestParameters: GetPurchaseOrdersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPurchaseOrders200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseOrders().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['relation'] != null) {
+            queryParameters['relation'] = requestParameters['relation'];
+        }
+
+        if (requestParameters['number'] != null) {
+            queryParameters['number'] = requestParameters['number'];
+        }
+
+        if (requestParameters['file'] != null) {
+            queryParameters['file'] = requestParameters['file'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['product'] != null) {
+            queryParameters['product'] = requestParameters['product'];
+        }
+
+        if (requestParameters['project'] != null) {
+            queryParameters['project'] = requestParameters['project'];
+        }
+
+        if (requestParameters['concept'] != null) {
+            queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetPurchaseOrders200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all purchase orders
+     */
+    async getPurchaseOrders(requestParameters: GetPurchaseOrdersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseOrders200Response> {
+        const response = await this.getPurchaseOrdersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a quote
      */
     async getQuoteRaw(requestParameters: GetQuoteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Quote>> {
@@ -14820,6 +15777,113 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns an vat filing
+     */
+    async getVATFilingRaw(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getVATFiling().'
+            );
+        }
+
+        if (requestParameters['vatFilingId'] == null) {
+            throw new runtime.RequiredError(
+                'vatFilingId',
+                'Required parameter "vatFilingId" was null or undefined when calling getVATFiling().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings/{vatFilingId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"vatFilingId"}}`, encodeURIComponent(String(requestParameters['vatFilingId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VATFilingFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns an vat filing
+     */
+    async getVATFiling(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling> {
+        const response = await this.getVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all vat filings
+     */
+    async getVATFilingsRaw(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVATFilings200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getVATFilings().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['from'] != null) {
+            queryParameters['from'] = (requestParameters['from'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['to'] != null) {
+            queryParameters['to'] = (requestParameters['to'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
+        }
+
+        if (requestParameters['profile'] != null) {
+            queryParameters['profile'] = requestParameters['profile'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetVATFilings200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all vat filings
+     */
+    async getVATFilings(requestParameters: GetVATFilingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVATFilings200Response> {
+        const response = await this.getVATFilingsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a vehicle
      */
     async getVehicleRaw(requestParameters: GetVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
@@ -15860,6 +16924,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Sends a VAT filing and finalized it
+     */
+    async sendVATFilingRaw(requestParameters: SendVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling sendVATFiling().'
+            );
+        }
+
+        if (requestParameters['vatFilingId'] == null) {
+            throw new runtime.RequiredError(
+                'vatFilingId',
+                'Required parameter "vatFilingId" was null or undefined when calling sendVATFiling().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings/{vatFilingId}/send`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"vatFilingId"}}`, encodeURIComponent(String(requestParameters['vatFilingId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VATFilingFromJSON(jsonValue));
+    }
+
+    /**
+     * Sends a VAT filing and finalized it
+     */
+    async sendVATFiling(requestParameters: SendVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling> {
+        const response = await this.sendVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Soft closes a purchase invoice, this will validate the totals and correct any minor mistakes, and if no mistakes are found it will close the invoice.
      */
     async softclosePurchaseInvoiceRaw(requestParameters: SoftclosePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -16694,6 +17803,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * updates a packing slip
+     */
+    async updatePackingSlibRaw(requestParameters: UpdatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PackingSlib>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updatePackingSlib().'
+            );
+        }
+
+        if (requestParameters['packingSlibId'] == null) {
+            throw new runtime.RequiredError(
+                'packingSlibId',
+                'Required parameter "packingSlibId" was null or undefined when calling updatePackingSlib().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdatePackingSlibRequestToJSON(requestParameters['updatePackingSlibRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PackingSlibFromJSON(jsonValue));
+    }
+
+    /**
+     * updates a packing slip
+     */
+    async updatePackingSlib(requestParameters: UpdatePackingSlibOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PackingSlib> {
+        const response = await this.updatePackingSlibRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Updates a process document
      */
     async updateProcessDocumentRaw(requestParameters: UpdateProcessDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProcessDocument>> {
@@ -17136,6 +18293,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updatePurchaseInvoicePaymentBatch(requestParameters: UpdatePurchaseInvoicePaymentBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPurchaseInvoicePaymentBatches200ResponseDataInner> {
         const response = await this.updatePurchaseInvoicePaymentBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * updates a purchase order
+     */
+    async updatePurchaseOrderRaw(requestParameters: UpdatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseOrder>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updatePurchaseOrder().'
+            );
+        }
+
+        if (requestParameters['purchaseOrderId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseOrderId',
+                'Required parameter "purchaseOrderId" was null or undefined when calling updatePurchaseOrder().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-orders/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseOrderId"}}`, encodeURIComponent(String(requestParameters['purchaseOrderId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdatePurchaseOrderRequestToJSON(requestParameters['updatePurchaseOrderRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseOrderFromJSON(jsonValue));
+    }
+
+    /**
+     * updates a purchase order
+     */
+    async updatePurchaseOrder(requestParameters: UpdatePurchaseOrderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseOrder> {
+        const response = await this.updatePurchaseOrderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

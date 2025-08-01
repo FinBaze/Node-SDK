@@ -76,6 +76,9 @@ src/models/NotFoundError.ts
 src/models/Obligation.ts
 src/models/ObligationEmbedded.ts
 src/models/ObligationLine.ts
+src/models/PackingSlib.ts
+src/models/PackingSlibEmbedded.ts
+src/models/PackingSlibLine.ts
 src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentTask.ts
@@ -97,6 +100,9 @@ src/models/PurchaseInvoice.ts
 src/models/PurchaseInvoiceEmbedded.ts
 src/models/PurchaseInvoiceLine.ts
 src/models/PurchaseInvoiceLineEmbedded.ts
+src/models/PurchaseOrder.ts
+src/models/PurchaseOrderEmbedded.ts
+src/models/PurchaseOrderLine.ts
 src/models/Quote.ts
 src/models/QuoteEmbedded.ts
 src/models/QuoteLine.ts

@@ -52,7 +52,7 @@ export interface VATFiling {
      * @type {VATFilingType}
      * @memberof VATFiling
      */
-    type?: VATFilingType;
+    type: VATFilingType;
     /**
      * 
      * @type {Date}
@@ -122,6 +122,7 @@ export interface VATFiling {
  */
 export function instanceOfVATFiling(value: object): value is VATFiling {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
     if (!('from' in value) || value['from'] === undefined) return false;
     if (!('to' in value) || value['to'] === undefined) return false;
     if (!('send' in value) || value['send'] === undefined) return false;
@@ -145,7 +146,7 @@ export function VATFilingFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'id': json['id'],
-        'type': json['type'] == null ? undefined : VATFilingTypeFromJSON(json['type']),
+        'type': VATFilingTypeFromJSON(json['type']),
         'from': (new Date(json['from'])),
         'to': (new Date(json['to'])),
         'send': json['send'],
