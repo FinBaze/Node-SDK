@@ -139,6 +139,7 @@ export * from './GetPurchaseInvoicePaymentBatches200ResponseDataInner';
 export * from './GetPurchaseInvoices200Response';
 export * from './GetPurchaseOrders200Response';
 export * from './GetQuotes200Response';
+export * from './GetRelationBalance200Response';
 export * from './GetRelationVerifyVATNumber200Response';
 export * from './GetRelations200Response';
 export * from './GetRelationsAutocomplete200Response';

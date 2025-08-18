@@ -105,6 +105,7 @@ import type {
   GetPurchaseInvoices200Response,
   GetPurchaseOrders200Response,
   GetQuotes200Response,
+  GetRelationBalance200Response,
   GetRelationVerifyVATNumber200Response,
   GetRelations200Response,
   GetRelationsAutocomplete200Response,
@@ -353,6 +354,8 @@ import {
     GetPurchaseOrders200ResponseToJSON,
     GetQuotes200ResponseFromJSON,
     GetQuotes200ResponseToJSON,
+    GetRelationBalance200ResponseFromJSON,
+    GetRelationBalance200ResponseToJSON,
     GetRelationVerifyVATNumber200ResponseFromJSON,
     GetRelationVerifyVATNumber200ResponseToJSON,
     GetRelations200ResponseFromJSON,
@@ -1497,6 +1500,11 @@ export interface GetQuotesRequest {
 }
 
 export interface GetRelationRequest {
+    profileId: string;
+    relationId: string;
+}
+
+export interface GetRelationBalanceRequest {
     profileId: string;
     relationId: string;
 }
@@ -4857,6 +4865,21 @@ export interface DefaultApiInterface {
      * Returns a relations
      */
     getRelation(requestParameters: GetRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation>;
+
+    /**
+     * Returns a relations
+     * @param {string} profileId The id of the profile
+     * @param {string} relationId The ID of the relation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getRelationBalanceRaw(requestParameters: GetRelationBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationBalance200Response>>;
+
+    /**
+     * Returns a relations
+     */
+    getRelationBalance(requestParameters: GetRelationBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationBalance200Response>;
 
     /**
      * Verify an VAT number
@@ -14567,6 +14590,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getRelation(requestParameters: GetRelationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation> {
         const response = await this.getRelationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a relations
+     */
+    async getRelationBalanceRaw(requestParameters: GetRelationBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationBalance200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getRelationBalance().'
+            );
+        }
+
+        if (requestParameters['relationId'] == null) {
+            throw new runtime.RequiredError(
+                'relationId',
+                'Required parameter "relationId" was null or undefined when calling getRelationBalance().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/relations/{relationId}/balance`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"relationId"}}`, encodeURIComponent(String(requestParameters['relationId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRelationBalance200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a relations
+     */
+    async getRelationBalance(requestParameters: GetRelationBalanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationBalance200Response> {
+        const response = await this.getRelationBalanceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

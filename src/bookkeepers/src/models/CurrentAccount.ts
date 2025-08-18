@@ -46,6 +46,12 @@ export interface CurrentAccount {
      */
     name: string;
     /**
+     * 
+     * @type {string}
+     * @memberof CurrentAccount
+     */
+    ledger: string;
+    /**
      * ID of the relation the loan has given
      * @type {string}
      * @memberof CurrentAccount
@@ -95,6 +101,7 @@ export interface CurrentAccount {
 export function instanceOfCurrentAccount(value: object): value is CurrentAccount {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('ledger' in value) || value['ledger'] === undefined) return false;
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('interest' in value) || value['interest'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
@@ -117,6 +124,7 @@ export function CurrentAccountFromJSONTyped(json: any, ignoreDiscriminator: bool
         'id': json['id'],
         'code': json['code'] == null ? undefined : json['code'],
         'name': json['name'],
+        'ledger': json['ledger'],
         'relation': json['relation'],
         'interest': json['interest'],
         'currency': json['currency'],
@@ -140,6 +148,7 @@ export function CurrentAccountToJSONTyped(value?: Omit<CurrentAccount, 'id'|'upd
         
         'code': value['code'],
         'name': value['name'],
+        'ledger': value['ledger'],
         'relation': value['relation'],
         'interest': value['interest'],
         'currency': value['currency'],

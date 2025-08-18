@@ -32,6 +32,12 @@ export interface CreateCurrentAccountRequest {
      */
     name: string;
     /**
+     * 
+     * @type {string}
+     * @memberof CreateCurrentAccountRequest
+     */
+    ledger?: string;
+    /**
      * ID of the relation the loan has given
      * @type {string}
      * @memberof CreateCurrentAccountRequest
@@ -80,6 +86,7 @@ export function CreateCurrentAccountRequestFromJSONTyped(json: any, ignoreDiscri
         
         'code': json['code'] == null ? undefined : json['code'],
         'name': json['name'],
+        'ledger': json['ledger'] == null ? undefined : json['ledger'],
         'relation': json['relation'],
         'interest': json['interest'],
         'currency': json['currency'],
@@ -100,6 +107,7 @@ export function CreateCurrentAccountRequestToJSONTyped(value?: CreateCurrentAcco
         
         'code': value['code'],
         'name': value['name'],
+        'ledger': value['ledger'],
         'relation': value['relation'],
         'interest': value['interest'],
         'currency': value['currency'],
