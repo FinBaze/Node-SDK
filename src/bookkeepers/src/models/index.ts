@@ -117,6 +117,7 @@ export * from './SalesInvoiceAmountsBooked';
 export * from './SalesInvoiceEmbedded';
 export * from './SalesInvoiceLine';
 export * from './SalesInvoiceLineBooked';
+export * from './SalesInvoiceLineEmbedded';
 export * from './SalesInvoicePublic';
 export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';

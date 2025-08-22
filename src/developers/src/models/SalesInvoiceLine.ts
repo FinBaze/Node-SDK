@@ -20,6 +20,13 @@ import {
     SalesInvoiceLineBookedToJSON,
     SalesInvoiceLineBookedToJSONTyped,
 } from './SalesInvoiceLineBooked';
+import type { SalesInvoiceLineEmbedded } from './SalesInvoiceLineEmbedded';
+import {
+    SalesInvoiceLineEmbeddedFromJSON,
+    SalesInvoiceLineEmbeddedFromJSONTyped,
+    SalesInvoiceLineEmbeddedToJSON,
+    SalesInvoiceLineEmbeddedToJSONTyped,
+} from './SalesInvoiceLineEmbedded';
 
 /**
  * 
@@ -105,6 +112,12 @@ export interface SalesInvoiceLine {
      * @memberof SalesInvoiceLine
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {SalesInvoiceLineEmbedded}
+     * @memberof SalesInvoiceLine
+     */
+    embedded: SalesInvoiceLineEmbedded;
     /**
      * 
      * @type {Date}
@@ -279,6 +292,7 @@ export function instanceOfSalesInvoiceLine(value: object): value is SalesInvoice
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('quantity' in value) || value['quantity'] === undefined) return false;
     if (!('booked' in value) || value['booked'] === undefined) return false;
+    if (!('embedded' in value) || value['embedded'] === undefined) return false;
     if (!('updated' in value) || value['updated'] === undefined) return false;
     if (!('created' in value) || value['created'] === undefined) return false;
     return true;
@@ -307,6 +321,7 @@ export function SalesInvoiceLineFromJSONTyped(json: any, ignoreDiscriminator: bo
         'quantity': json['quantity'],
         'booked': SalesInvoiceLineBookedFromJSON(json['booked']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'embedded': SalesInvoiceLineEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -335,6 +350,7 @@ export function SalesInvoiceLineToJSONTyped(value?: Omit<SalesInvoiceLine, 'id'|
         'quantity': value['quantity'],
         'booked': SalesInvoiceLineBookedToJSON(value['booked']),
         'metadata': value['metadata'],
+        '_embedded': SalesInvoiceLineEmbeddedToJSON(value['embedded']),
     };
 }
 

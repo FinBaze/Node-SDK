@@ -127,6 +127,7 @@ src/models/SalesInvoiceAmountsBooked.ts
 src/models/SalesInvoiceEmbedded.ts
 src/models/SalesInvoiceLine.ts
 src/models/SalesInvoiceLineBooked.ts
+src/models/SalesInvoiceLineEmbedded.ts
 src/models/SalesInvoicePeriod.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
