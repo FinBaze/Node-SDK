@@ -1676,6 +1676,16 @@ export interface GetVATFilingRequest {
     vatFilingId: string;
 }
 
+export interface GetVATFilingPDFRequest {
+    profileId: string;
+    vatFilingId: string;
+}
+
+export interface GetVATFilingPDFHTMLRequest {
+    profileId: string;
+    vatFilingId: string;
+}
+
 export interface GetVATFilingsRequest {
     profileId: string;
     page?: number;
@@ -5303,6 +5313,36 @@ export interface DefaultApiInterface {
      * Returns an vat filing
      */
     getVATFiling(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling>;
+
+    /**
+     * Returns the VAT filing data
+     * @param {string} profileId The id of the profile
+     * @param {string} vatFilingId The ID of the vat filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getVATFilingPDFRaw(requestParameters: GetVATFilingPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Returns the VAT filing data
+     */
+    getVATFilingPDF(requestParameters: GetVATFilingPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Returns the VAT filing data
+     * @param {string} profileId The id of the profile
+     * @param {string} vatFilingId The ID of the vat filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getVATFilingPDFHTMLRaw(requestParameters: GetVATFilingPDFHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>>;
+
+    /**
+     * Returns the VAT filing data
+     */
+    getVATFilingPDFHTML(requestParameters: GetVATFilingPDFHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string>;
 
     /**
      * Returns all vat filings
@@ -15959,6 +15999,100 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getVATFiling(requestParameters: GetVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling> {
         const response = await this.getVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the VAT filing data
+     */
+    async getVATFilingPDFRaw(requestParameters: GetVATFilingPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getVATFilingPDF().'
+            );
+        }
+
+        if (requestParameters['vatFilingId'] == null) {
+            throw new runtime.RequiredError(
+                'vatFilingId',
+                'Required parameter "vatFilingId" was null or undefined when calling getVATFilingPDF().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings/{vatFilingId}/pdf`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"vatFilingId"}}`, encodeURIComponent(String(requestParameters['vatFilingId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns the VAT filing data
+     */
+    async getVATFilingPDF(requestParameters: GetVATFilingPDFRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.getVATFilingPDFRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the VAT filing data
+     */
+    async getVATFilingPDFHTMLRaw(requestParameters: GetVATFilingPDFHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getVATFilingPDFHTML().'
+            );
+        }
+
+        if (requestParameters['vatFilingId'] == null) {
+            throw new runtime.RequiredError(
+                'vatFilingId',
+                'Required parameter "vatFilingId" was null or undefined when calling getVATFilingPDFHTML().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings/{vatFilingId}/html`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"vatFilingId"}}`, encodeURIComponent(String(requestParameters['vatFilingId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Returns the VAT filing data
+     */
+    async getVATFilingPDFHTML(requestParameters: GetVATFilingPDFHTMLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.getVATFilingPDFHTMLRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
