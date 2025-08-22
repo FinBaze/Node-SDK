@@ -38,6 +38,7 @@ src/models/CreateMonetaryMemorialEntryRequest.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInner.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcess.ts
 src/models/CreateMonetaryMemorialEntryRequestItemsInnerProcessLedger.ts
+src/models/CreateObligaitonBasedOnPurchaseInvoiceRequest.ts
 src/models/CreateObligationRequest.ts
 src/models/CreateObligationRequestItemsInner.ts
 src/models/CreatePackingSlibRequest.ts
@@ -218,6 +219,7 @@ src/models/PurchaseInvoiceLineEmbedded.ts
 src/models/PurchaseOrder.ts
 src/models/PurchaseOrderEmbedded.ts
 src/models/PurchaseOrderLine.ts
+src/models/PurchaseOrderLineEmbedded.ts
 src/models/Quote.ts
 src/models/QuoteEmbedded.ts
 src/models/QuoteLine.ts

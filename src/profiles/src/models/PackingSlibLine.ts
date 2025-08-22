@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { PurchaseOrderLineEmbedded } from './PurchaseOrderLineEmbedded';
+import {
+    PurchaseOrderLineEmbeddedFromJSON,
+    PurchaseOrderLineEmbeddedFromJSONTyped,
+    PurchaseOrderLineEmbeddedToJSON,
+    PurchaseOrderLineEmbeddedToJSONTyped,
+} from './PurchaseOrderLineEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -20,13 +27,6 @@ import {
     LinksToJSON,
     LinksToJSONTyped,
 } from './Links';
-import type { PurchaseInvoiceLineEmbedded } from './PurchaseInvoiceLineEmbedded';
-import {
-    PurchaseInvoiceLineEmbeddedFromJSON,
-    PurchaseInvoiceLineEmbeddedFromJSONTyped,
-    PurchaseInvoiceLineEmbeddedToJSON,
-    PurchaseInvoiceLineEmbeddedToJSONTyped,
-} from './PurchaseInvoiceLineEmbedded';
 
 /**
  * 
@@ -102,10 +102,10 @@ export interface PackingSlibLine {
     links: Links;
     /**
      * 
-     * @type {PurchaseInvoiceLineEmbedded}
+     * @type {PurchaseOrderLineEmbedded}
      * @memberof PackingSlibLine
      */
-    embedded: PurchaseInvoiceLineEmbedded;
+    embedded: PurchaseOrderLineEmbedded;
     /**
      * 
      * @type {Date}
@@ -156,7 +156,7 @@ export function PackingSlibLineFromJSONTyped(json: any, ignoreDiscriminator: boo
         'quantity': json['quantity'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
-        'embedded': PurchaseInvoiceLineEmbeddedFromJSON(json['_embedded']),
+        'embedded': PurchaseOrderLineEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -183,7 +183,7 @@ export function PackingSlibLineToJSONTyped(value?: Omit<PackingSlibLine, 'id'|'u
         'quantity': value['quantity'],
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
-        '_embedded': PurchaseInvoiceLineEmbeddedToJSON(value['embedded']),
+        '_embedded': PurchaseOrderLineEmbeddedToJSON(value['embedded']),
     };
 }
 

@@ -103,6 +103,7 @@ src/models/PurchaseInvoiceLineEmbedded.ts
 src/models/PurchaseOrder.ts
 src/models/PurchaseOrderEmbedded.ts
 src/models/PurchaseOrderLine.ts
+src/models/PurchaseOrderLineEmbedded.ts
 src/models/Quote.ts
 src/models/QuoteEmbedded.ts
 src/models/QuoteLine.ts

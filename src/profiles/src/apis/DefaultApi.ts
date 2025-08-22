@@ -35,6 +35,7 @@ import type {
   CreateMonetaryAccountPaymentRequestInner,
   CreateMonetaryAccountRequest,
   CreateMonetaryMemorialEntryRequest,
+  CreateObligaitonBasedOnPurchaseInvoiceRequest,
   CreateObligationRequest,
   CreateObligationRequestItemsInner,
   CreatePackingSlibRequest,
@@ -214,6 +215,8 @@ import {
     CreateMonetaryAccountRequestToJSON,
     CreateMonetaryMemorialEntryRequestFromJSON,
     CreateMonetaryMemorialEntryRequestToJSON,
+    CreateObligaitonBasedOnPurchaseInvoiceRequestFromJSON,
+    CreateObligaitonBasedOnPurchaseInvoiceRequestToJSON,
     CreateObligationRequestFromJSON,
     CreateObligationRequestToJSON,
     CreateObligationRequestItemsInnerFromJSON,
@@ -618,6 +621,12 @@ export interface CreateNLVATFilingRequest {
     profileId: string;
     from: Date;
     to: Date;
+}
+
+export interface CreateObligaitonBasedOnPurchaseInvoiceOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    createObligaitonBasedOnPurchaseInvoiceRequest?: CreateObligaitonBasedOnPurchaseInvoiceRequest;
 }
 
 export interface CreateObligationOperationRequest {
@@ -2438,6 +2447,22 @@ export interface DefaultApiInterface {
      * Returns the VAT filing data
      */
     createNLVATFiling(requestParameters: CreateNLVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NLVATFiling>;
+
+    /**
+     * Creates a obligation based on a purchase invoice
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {CreateObligaitonBasedOnPurchaseInvoiceRequest} [createObligaitonBasedOnPurchaseInvoiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createObligaitonBasedOnPurchaseInvoiceRaw(requestParameters: CreateObligaitonBasedOnPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>>;
+
+    /**
+     * Creates a obligation based on a purchase invoice
+     */
+    createObligaitonBasedOnPurchaseInvoice(requestParameters: CreateObligaitonBasedOnPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation>;
 
     /**
      * Creates a obligation
@@ -7374,6 +7399,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createNLVATFiling(requestParameters: CreateNLVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NLVATFiling> {
         const response = await this.createNLVATFilingRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a obligation based on a purchase invoice
+     */
+    async createObligaitonBasedOnPurchaseInvoiceRaw(requestParameters: CreateObligaitonBasedOnPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Obligation>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createObligaitonBasedOnPurchaseInvoice().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling createObligaitonBasedOnPurchaseInvoice().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/obligation`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateObligaitonBasedOnPurchaseInvoiceRequestToJSON(requestParameters['createObligaitonBasedOnPurchaseInvoiceRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ObligationFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a obligation based on a purchase invoice
+     */
+    async createObligaitonBasedOnPurchaseInvoice(requestParameters: CreateObligaitonBasedOnPurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Obligation> {
+        const response = await this.createObligaitonBasedOnPurchaseInvoiceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -97,6 +97,7 @@ export * from './PurchaseInvoiceLineEmbedded';
 export * from './PurchaseOrder';
 export * from './PurchaseOrderEmbedded';
 export * from './PurchaseOrderLine';
+export * from './PurchaseOrderLineEmbedded';
 export * from './Quote';
 export * from './QuoteEmbedded';
 export * from './QuoteLine';

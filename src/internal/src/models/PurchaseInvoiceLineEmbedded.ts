@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Project } from './Project';
+import {
+    ProjectFromJSON,
+    ProjectFromJSONTyped,
+    ProjectToJSON,
+    ProjectToJSONTyped,
+} from './Project';
 import type { ExpenseCategory } from './ExpenseCategory';
 import {
     ExpenseCategoryFromJSON,
@@ -33,6 +40,12 @@ export interface PurchaseInvoiceLineEmbedded {
      * @memberof PurchaseInvoiceLineEmbedded
      */
     expenseCategory?: ExpenseCategory;
+    /**
+     * 
+     * @type {Project}
+     * @memberof PurchaseInvoiceLineEmbedded
+     */
+    project?: Project;
 }
 
 /**
@@ -53,6 +66,7 @@ export function PurchaseInvoiceLineEmbeddedFromJSONTyped(json: any, ignoreDiscri
     return {
         
         'expenseCategory': json['expense-category'] == null ? undefined : ExpenseCategoryFromJSON(json['expense-category']),
+        'project': json['project'] == null ? undefined : ProjectFromJSON(json['project']),
     };
 }
 
@@ -68,6 +82,7 @@ export function PurchaseInvoiceLineEmbeddedToJSONTyped(value?: PurchaseInvoiceLi
     return {
         
         'expense-category': ExpenseCategoryToJSON(value['expenseCategory']),
+        'project': ProjectToJSON(value['project']),
     };
 }
 
