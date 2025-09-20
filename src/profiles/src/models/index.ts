@@ -149,6 +149,7 @@ export * from './GetRelationsAutocomplete200ResponseDataInnerEu';
 export * from './GetReminders200Response';
 export * from './GetSalesInvoices200Response';
 export * from './GetSalesInvoicesAmountParameter';
+export * from './GetSalesInvoicesDateParameter';
 export * from './GetSubscriptions200Response';
 export * from './GetVATFilings200Response';
 export * from './GetVehicleTrips200Response';

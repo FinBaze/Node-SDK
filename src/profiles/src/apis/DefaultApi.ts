@@ -113,6 +113,7 @@ import type {
   GetReminders200Response,
   GetSalesInvoices200Response,
   GetSalesInvoicesAmountParameter,
+  GetSalesInvoicesDateParameter,
   GetSubscriptions200Response,
   GetVATFilings200Response,
   GetVehicleTrips200Response,
@@ -372,6 +373,8 @@ import {
     GetSalesInvoices200ResponseToJSON,
     GetSalesInvoicesAmountParameterFromJSON,
     GetSalesInvoicesAmountParameterToJSON,
+    GetSalesInvoicesDateParameterFromJSON,
+    GetSalesInvoicesDateParameterToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
     GetVATFilings200ResponseFromJSON,
@@ -1439,16 +1442,18 @@ export interface GetPurchaseInvoicesRequest {
     profileId: string;
     page?: number;
     size?: number;
+    search?: string;
     relation?: string;
     invoiceId?: string;
     file?: boolean;
-    date?: Date;
     overdue?: boolean;
     product?: string;
     project?: string;
     batch?: string;
     paid?: boolean;
     concept?: boolean;
+    date?: GetSalesInvoicesDateParameter;
+    amount?: GetSalesInvoicesAmountParameter;
 }
 
 export interface GetPurchaseOrderRequest {
@@ -1631,13 +1636,13 @@ export interface GetSalesInvoicesRequest {
     product?: string;
     project?: string;
     invoiceId?: string;
-    date?: Date;
     overdue?: boolean;
     paid?: boolean;
     credit?: boolean;
     credited?: boolean;
     concept?: boolean;
     currency?: string;
+    date?: GetSalesInvoicesDateParameter;
     amount?: GetSalesInvoicesAmountParameter;
 }
 
@@ -4717,16 +4722,18 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [search] Search the resource
      * @param {string} [relation] Non empty string with the ID of the relation to filter
      * @param {string} [invoiceId] Invoice ID to filter
      * @param {boolean} [file] If the purchase invoice has an uploaded file
-     * @param {Date} [date] Invoice date to filter
      * @param {boolean} [overdue] If the invoice is overdue to filter
      * @param {string} [product] Filter invoices that contain this product ID
      * @param {string} [project] Filter invoices that contain this project ID
      * @param {string} [batch] Filter invoices that are in this batch
      * @param {boolean} [paid] If the invoice is paid to filter
      * @param {boolean} [concept] If the invoice is in an concept invoice
+     * @param {GetSalesInvoicesDateParameter} [date] The date the invoice should be less than or equal to
+     * @param {GetSalesInvoicesAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -5189,13 +5196,13 @@ export interface DefaultApiInterface {
      * @param {string} [product] Filter invoices that contain this product ID
      * @param {string} [project] Filter invoices that contain this project ID
      * @param {string} [invoiceId] Invoice ID to search
-     * @param {Date} [date] Invoice date
      * @param {boolean} [overdue] If the invoice is overdue
      * @param {boolean} [paid] If the invoice is paid
      * @param {boolean} [credit] If the invoice is an credit invoice
      * @param {boolean} [credited] If the invoice has already been credited
      * @param {boolean} [concept] If the invoice is in an concept invoice
      * @param {string} [currency] The currency of the sales invoice
+     * @param {GetSalesInvoicesDateParameter} [date] The date the invoice should be less than or equal to
      * @param {GetSalesInvoicesAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14127,6 +14134,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['size'] = requestParameters['size'];
         }
 
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
         if (requestParameters['relation'] != null) {
             queryParameters['relation'] = requestParameters['relation'];
         }
@@ -14137,10 +14148,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['file'] != null) {
             queryParameters['file'] = requestParameters['file'];
-        }
-
-        if (requestParameters['date'] != null) {
-            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
         }
 
         if (requestParameters['overdue'] != null) {
@@ -14165,6 +14172,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['concept'] != null) {
             queryParameters['concept'] = requestParameters['concept'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = requestParameters['date'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -15622,10 +15637,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['invoice_id'] = requestParameters['invoiceId'];
         }
 
-        if (requestParameters['date'] != null) {
-            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
-        }
-
         if (requestParameters['overdue'] != null) {
             queryParameters['overdue'] = requestParameters['overdue'];
         }
@@ -15648,6 +15659,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['currency'] != null) {
             queryParameters['currency'] = requestParameters['currency'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = requestParameters['date'];
         }
 
         if (requestParameters['amount'] != null) {

@@ -155,6 +155,7 @@ src/models/GetRelationsAutocomplete200ResponseDataInnerEu.ts
 src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
 src/models/GetSalesInvoicesAmountParameter.ts
+src/models/GetSalesInvoicesDateParameter.ts
 src/models/GetSubscriptions200Response.ts
 src/models/GetVATFilings200Response.ts
 src/models/GetVehicleTrips200Response.ts
