@@ -76,6 +76,8 @@ import type {
   Employee,
   ExpenseCategory,
   GetAllMonetaryAccountPayments200Response,
+  GetAllMonetaryAccountPaymentsAmountParameter,
+  GetAllMonetaryAccountPaymentsDateParameter,
   GetAssets200Response,
   GetCreditLoans200Response,
   GetCurrentAccounts200Response,
@@ -112,8 +114,6 @@ import type {
   GetRelationsAutocomplete200Response,
   GetReminders200Response,
   GetSalesInvoices200Response,
-  GetSalesInvoicesAmountParameter,
-  GetSalesInvoicesDateParameter,
   GetSubscriptions200Response,
   GetVATFilings200Response,
   GetVehicleTrips200Response,
@@ -299,6 +299,10 @@ import {
     ExpenseCategoryToJSON,
     GetAllMonetaryAccountPayments200ResponseFromJSON,
     GetAllMonetaryAccountPayments200ResponseToJSON,
+    GetAllMonetaryAccountPaymentsAmountParameterFromJSON,
+    GetAllMonetaryAccountPaymentsAmountParameterToJSON,
+    GetAllMonetaryAccountPaymentsDateParameterFromJSON,
+    GetAllMonetaryAccountPaymentsDateParameterToJSON,
     GetAssets200ResponseFromJSON,
     GetAssets200ResponseToJSON,
     GetCreditLoans200ResponseFromJSON,
@@ -371,10 +375,6 @@ import {
     GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
-    GetSalesInvoicesAmountParameterFromJSON,
-    GetSalesInvoicesAmountParameterToJSON,
-    GetSalesInvoicesDateParameterFromJSON,
-    GetSalesInvoicesDateParameterToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
     GetVATFilings200ResponseFromJSON,
@@ -1030,10 +1030,11 @@ export interface GetAllMonetaryAccountPaymentsRequest {
     page?: number;
     size?: number;
     search?: string;
+    date?: GetAllMonetaryAccountPaymentsDateParameter;
+    amount?: GetAllMonetaryAccountPaymentsAmountParameter;
     description?: string;
     reference?: string;
     unprocessed?: boolean;
-    amount?: number;
     relation?: string;
     creditLoan?: string;
     debitLoan?: string;
@@ -1170,10 +1171,11 @@ export interface GetMonetaryAccountPaymentsRequest {
     page?: number;
     size?: number;
     search?: string;
+    date?: GetAllMonetaryAccountPaymentsDateParameter;
+    amount?: GetAllMonetaryAccountPaymentsAmountParameter;
     description?: string;
     reference?: string;
     unprocessed?: boolean;
-    amount?: number;
     relation?: string;
     creditLoan?: string;
     debitLoan?: string;
@@ -1452,8 +1454,8 @@ export interface GetPurchaseInvoicesRequest {
     batch?: string;
     paid?: boolean;
     concept?: boolean;
-    date?: GetSalesInvoicesDateParameter;
-    amount?: GetSalesInvoicesAmountParameter;
+    date?: GetAllMonetaryAccountPaymentsDateParameter;
+    amount?: GetAllMonetaryAccountPaymentsAmountParameter;
 }
 
 export interface GetPurchaseOrderRequest {
@@ -1642,8 +1644,8 @@ export interface GetSalesInvoicesRequest {
     credited?: boolean;
     concept?: boolean;
     currency?: string;
-    date?: GetSalesInvoicesDateParameter;
-    amount?: GetSalesInvoicesAmountParameter;
+    date?: GetAllMonetaryAccountPaymentsDateParameter;
+    amount?: GetAllMonetaryAccountPaymentsAmountParameter;
 }
 
 export interface GetStockCategoriesRequest {
@@ -3617,10 +3619,11 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [search] Search the resource
+     * @param {GetAllMonetaryAccountPaymentsDateParameter} [date] The date the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {string} [description] Filter based on the exact description
      * @param {string} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
-     * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
      * @param {string} [creditLoan] Credit loan Id that is connected to this payment
      * @param {string} [debitLoan] Debit loan Id that is connected to this payment
@@ -3986,11 +3989,12 @@ export interface DefaultApiInterface {
      * @param {string} monetaryAccountId The ID of the monetary account
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
-     * @param {string} [search] Filter for anything that includes the search criterea
+     * @param {string} [search] Search the resource
+     * @param {GetAllMonetaryAccountPaymentsDateParameter} [date] The date the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {string} [description] Filter based on the exact description
      * @param {string} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
-     * @param {number} [amount] the amount of the payment
      * @param {string} [relation] Relation that is connected to this payment
      * @param {string} [creditLoan] Credit loan Id that is connected to this payment
      * @param {string} [debitLoan] Debit loan Id that is connected to this payment
@@ -4732,8 +4736,8 @@ export interface DefaultApiInterface {
      * @param {string} [batch] Filter invoices that are in this batch
      * @param {boolean} [paid] If the invoice is paid to filter
      * @param {boolean} [concept] If the invoice is in an concept invoice
-     * @param {GetSalesInvoicesDateParameter} [date] The date the invoice should be less than or equal to
-     * @param {GetSalesInvoicesAmountParameter} [amount] The amount the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsDateParameter} [date] The date the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -5202,8 +5206,8 @@ export interface DefaultApiInterface {
      * @param {boolean} [credited] If the invoice has already been credited
      * @param {boolean} [concept] If the invoice is in an concept invoice
      * @param {string} [currency] The currency of the sales invoice
-     * @param {GetSalesInvoicesDateParameter} [date] The date the invoice should be less than or equal to
-     * @param {GetSalesInvoicesAmountParameter} [amount] The amount the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsDateParameter} [date] The date the invoice should be less than or equal to
+     * @param {GetAllMonetaryAccountPaymentsAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -10810,6 +10814,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['search'] = requestParameters['search'];
         }
 
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = requestParameters['date'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
+        }
+
         if (requestParameters['description'] != null) {
             queryParameters['description'] = requestParameters['description'];
         }
@@ -10820,10 +10832,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['unprocessed'] != null) {
             queryParameters['unprocessed'] = requestParameters['unprocessed'];
-        }
-
-        if (requestParameters['amount'] != null) {
-            queryParameters['amount'] = requestParameters['amount'];
         }
 
         if (requestParameters['relation'] != null) {
@@ -11927,6 +11935,14 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['search'] = requestParameters['search'];
         }
 
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = requestParameters['date'];
+        }
+
+        if (requestParameters['amount'] != null) {
+            queryParameters['amount'] = requestParameters['amount'];
+        }
+
         if (requestParameters['description'] != null) {
             queryParameters['description'] = requestParameters['description'];
         }
@@ -11937,10 +11953,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['unprocessed'] != null) {
             queryParameters['unprocessed'] = requestParameters['unprocessed'];
-        }
-
-        if (requestParameters['amount'] != null) {
-            queryParameters['amount'] = requestParameters['amount'];
         }
 
         if (requestParameters['relation'] != null) {

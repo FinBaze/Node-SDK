@@ -104,6 +104,8 @@ src/models/Employee.ts
 src/models/ExpenseCategory.ts
 src/models/ForbiddenError.ts
 src/models/GetAllMonetaryAccountPayments200Response.ts
+src/models/GetAllMonetaryAccountPaymentsAmountParameter.ts
+src/models/GetAllMonetaryAccountPaymentsDateParameter.ts
 src/models/GetAssets200Response.ts
 src/models/GetCreditLoans200Response.ts
 src/models/GetCurrentAccounts200Response.ts
@@ -154,8 +156,6 @@ src/models/GetRelationsAutocomplete200ResponseDataInner.ts
 src/models/GetRelationsAutocomplete200ResponseDataInnerEu.ts
 src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
-src/models/GetSalesInvoicesAmountParameter.ts
-src/models/GetSalesInvoicesDateParameter.ts
 src/models/GetSubscriptions200Response.ts
 src/models/GetVATFilings200Response.ts
 src/models/GetVehicleTrips200Response.ts
