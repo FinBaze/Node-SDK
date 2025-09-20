@@ -112,6 +112,7 @@ import type {
   GetRelationsAutocomplete200Response,
   GetReminders200Response,
   GetSalesInvoices200Response,
+  GetSalesInvoicesAmountParameter,
   GetSubscriptions200Response,
   GetVATFilings200Response,
   GetVehicleTrips200Response,
@@ -369,6 +370,8 @@ import {
     GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
+    GetSalesInvoicesAmountParameterFromJSON,
+    GetSalesInvoicesAmountParameterToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
     GetVATFilings200ResponseFromJSON,
@@ -1621,6 +1624,7 @@ export interface GetSalesInvoicesRequest {
     profileId: string;
     page?: number;
     size?: number;
+    search?: string;
     reference?: string;
     subscription?: string;
     relation?: string;
@@ -1634,9 +1638,7 @@ export interface GetSalesInvoicesRequest {
     credited?: boolean;
     concept?: boolean;
     currency?: string;
-    amount?: number;
-    amountLte?: number;
-    amountGte?: number;
+    amount?: GetSalesInvoicesAmountParameter;
 }
 
 export interface GetStockCategoriesRequest {
@@ -3609,7 +3611,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
-     * @param {string} [search] Filter for anything that includes the search criterea
+     * @param {string} [search] Search the resource
      * @param {string} [description] Filter based on the exact description
      * @param {string} [reference] Filter based on the exact reference
      * @param {boolean} [unprocessed] Filter for unprocessed payments (true) or processed payments (false), if not provided all payments, including processed payments are returned
@@ -5180,6 +5182,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [search] Search the resource
      * @param {string} [reference] Reference of the sales invoice
      * @param {string} [subscription] Subscription ID to filter to
      * @param {string} [relation] ID of the relation to filter to
@@ -5193,9 +5196,7 @@ export interface DefaultApiInterface {
      * @param {boolean} [credited] If the invoice has already been credited
      * @param {boolean} [concept] If the invoice is in an concept invoice
      * @param {string} [currency] The currency of the sales invoice
-     * @param {number} [amount] The amount the invoice should equal to
-     * @param {number} [amountLte] The amount the invoice should be less than or equal to
-     * @param {number} [amountGte] The amount the invoice should be greater than or equal to
+     * @param {GetSalesInvoicesAmountParameter} [amount] The amount the invoice should be less than or equal to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -15593,6 +15594,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['size'] = requestParameters['size'];
         }
 
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
         if (requestParameters['reference'] != null) {
             queryParameters['reference'] = requestParameters['reference'];
         }
@@ -15647,14 +15652,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['amount'] != null) {
             queryParameters['amount'] = requestParameters['amount'];
-        }
-
-        if (requestParameters['amountLte'] != null) {
-            queryParameters['amount_lte'] = requestParameters['amountLte'];
-        }
-
-        if (requestParameters['amountGte'] != null) {
-            queryParameters['amount_gte'] = requestParameters['amountGte'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
