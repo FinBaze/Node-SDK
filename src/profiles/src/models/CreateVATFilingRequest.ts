@@ -38,13 +38,13 @@ export interface CreateVATFilingRequest {
      * @type {Date}
      * @memberof CreateVATFilingRequest
      */
-    readonly from: Date;
+    from: Date;
     /**
      * 
      * @type {Date}
      * @memberof CreateVATFilingRequest
      */
-    readonly to: Date;
+    to: Date;
 }
 
 
@@ -79,7 +79,7 @@ export function CreateVATFilingRequestToJSON(json: any): CreateVATFilingRequest 
     return CreateVATFilingRequestToJSONTyped(json, false);
 }
 
-export function CreateVATFilingRequestToJSONTyped(value?: Omit<CreateVATFilingRequest, 'from'|'to'> | null, ignoreDiscriminator: boolean = false): any {
+export function CreateVATFilingRequestToJSONTyped(value?: CreateVATFilingRequest | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -87,6 +87,8 @@ export function CreateVATFilingRequestToJSONTyped(value?: Omit<CreateVATFilingRe
     return {
         
         'type': VATFilingTypeToJSON(value['type']),
+        'from': ((value['from']).toISOString().substring(0,10)),
+        'to': ((value['to']).toISOString().substring(0,10)),
     };
 }
 

@@ -809,7 +809,7 @@ export interface CreateSubscriptionLineOperationRequest {
 
 export interface CreateVATFilingOperationRequest {
     profileId: string;
-    createVATFilingRequest?: Omit<CreateVATFilingRequest, 'from'|'to'>;
+    createVATFilingRequest?: CreateVATFilingRequest;
 }
 
 export interface CreateVehicleOperationRequest {
@@ -2994,12 +2994,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VATFiling>>>;
+    createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>>;
 
     /**
      * Creates a vat filing
      */
-    createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VATFiling>>;
+    createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling>;
 
     /**
      * Creates a vehicle
@@ -8928,7 +8928,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates a vat filing
      */
-    async createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VATFiling>>> {
+    async createVATFilingRaw(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VATFiling>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8955,13 +8955,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateVATFilingRequestToJSON(requestParameters['createVATFilingRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(VATFilingFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VATFilingFromJSON(jsonValue));
     }
 
     /**
      * Creates a vat filing
      */
-    async createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VATFiling>> {
+    async createVATFiling(requestParameters: CreateVATFilingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VATFiling> {
         const response = await this.createVATFilingRaw(requestParameters, initOverrides);
         return await response.value();
     }
