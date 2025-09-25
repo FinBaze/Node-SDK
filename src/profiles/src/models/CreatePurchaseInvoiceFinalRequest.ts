@@ -60,6 +60,12 @@ export interface CreatePurchaseInvoiceFinalRequest {
      */
     period?: CreateSalesInvoiceRequestPeriod;
     /**
+     * The external reference number of the supplier or internal PO number
+     * @type {string}
+     * @memberof CreatePurchaseInvoiceFinalRequest
+     */
+    reference: string;
+    /**
      * ID of the relation to use
      * @type {string}
      * @memberof CreatePurchaseInvoiceFinalRequest
@@ -102,6 +108,7 @@ export interface CreatePurchaseInvoiceFinalRequest {
  */
 export function instanceOfCreatePurchaseInvoiceFinalRequest(value: object): value is CreatePurchaseInvoiceFinalRequest {
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('reference' in value) || value['reference'] === undefined) return false;
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('invoiceId' in value) || value['invoiceId'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
@@ -123,6 +130,7 @@ export function CreatePurchaseInvoiceFinalRequestFromJSONTyped(json: any, ignore
         'file': json['file'] == null ? undefined : CreatePurchaseInvoiceFinalRequestFileFromJSON(json['file']),
         'currency': json['currency'],
         'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
+        'reference': json['reference'],
         'relation': json['relation'],
         'invoiceId': json['invoice_id'],
         'date': (new Date(json['date'])),
@@ -146,6 +154,7 @@ export function CreatePurchaseInvoiceFinalRequestToJSONTyped(value?: CreatePurch
         'file': CreatePurchaseInvoiceFinalRequestFileToJSON(value['file']),
         'currency': value['currency'],
         'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
+        'reference': value['reference'],
         'relation': value['relation'],
         'invoice_id': value['invoiceId'],
         'date': ((value['date']).toISOString().substring(0,10)),

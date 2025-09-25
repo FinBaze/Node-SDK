@@ -107,8 +107,8 @@ export function ProjectTimeToJSONTyped(value?: Omit<ProjectTime, 'id'|'updated'|
     return {
         
         'name': value['name'],
-        'start': ((value['start']).toISOString().substring(0,10)),
-        'end': value['end'] == null ? undefined : ((value['end']).toISOString().substring(0,10)),
+        'start': ((value['start']).toISOString()),
+        'end': value['end'] == null ? undefined : ((value['end']).toISOString()),
         'employee': value['employee'],
     };
 }

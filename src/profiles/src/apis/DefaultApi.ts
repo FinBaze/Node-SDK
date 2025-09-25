@@ -1449,6 +1449,7 @@ export interface GetPurchaseInvoicesRequest {
     invoiceId?: string;
     file?: boolean;
     overdue?: boolean;
+    disputed?: boolean;
     product?: string;
     project?: string;
     batch?: string;
@@ -4731,6 +4732,7 @@ export interface DefaultApiInterface {
      * @param {string} [invoiceId] Invoice ID to filter
      * @param {boolean} [file] If the purchase invoice has an uploaded file
      * @param {boolean} [overdue] If the invoice is overdue to filter
+     * @param {boolean} [disputed] If the invoice is disputed to filter
      * @param {string} [product] Filter invoices that contain this product ID
      * @param {string} [project] Filter invoices that contain this project ID
      * @param {string} [batch] Filter invoices that are in this batch
@@ -14164,6 +14166,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['overdue'] != null) {
             queryParameters['overdue'] = requestParameters['overdue'];
+        }
+
+        if (requestParameters['disputed'] != null) {
+            queryParameters['disputed'] = requestParameters['disputed'];
         }
 
         if (requestParameters['product'] != null) {

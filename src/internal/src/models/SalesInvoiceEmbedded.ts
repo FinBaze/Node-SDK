@@ -20,6 +20,13 @@ import {
     SalesInvoiceToJSON,
     SalesInvoiceToJSONTyped,
 } from './SalesInvoice';
+import type { Relation } from './Relation';
+import {
+    RelationFromJSON,
+    RelationFromJSONTyped,
+    RelationToJSON,
+    RelationToJSONTyped,
+} from './Relation';
 import type { SalesInvoiceLine } from './SalesInvoiceLine';
 import {
     SalesInvoiceLineFromJSON,
@@ -34,6 +41,13 @@ import {
     MonetaryAccountPaymentToJSON,
     MonetaryAccountPaymentToJSONTyped,
 } from './MonetaryAccountPayment';
+import type { Subscription } from './Subscription';
+import {
+    SubscriptionFromJSON,
+    SubscriptionFromJSONTyped,
+    SubscriptionToJSON,
+    SubscriptionToJSONTyped,
+} from './Subscription';
 import type { Profile } from './Profile';
 import {
     ProfileFromJSON,
@@ -74,6 +88,18 @@ export interface SalesInvoiceEmbedded {
     attachedInvoices: Array<SalesInvoice>;
     /**
      * 
+     * @type {Subscription}
+     * @memberof SalesInvoiceEmbedded
+     */
+    subscription?: Subscription;
+    /**
+     * 
+     * @type {Relation}
+     * @memberof SalesInvoiceEmbedded
+     */
+    relation?: Relation;
+    /**
+     * 
      * @type {Array<MonetaryAccountPayment>}
      * @memberof SalesInvoiceEmbedded
      */
@@ -105,6 +131,8 @@ export function SalesInvoiceEmbeddedFromJSONTyped(json: any, ignoreDiscriminator
         'lines': ((json['lines'] as Array<any>).map(SalesInvoiceLineFromJSON)),
         'initialInvoice': json['initial-invoice'] == null ? undefined : SalesInvoiceFromJSON(json['initial-invoice']),
         'attachedInvoices': ((json['attached-invoices'] as Array<any>).map(SalesInvoiceFromJSON)),
+        'subscription': json['subscription'] == null ? undefined : SubscriptionFromJSON(json['subscription']),
+        'relation': json['relation'] == null ? undefined : RelationFromJSON(json['relation']),
         'payments': ((json['payments'] as Array<any>).map(MonetaryAccountPaymentFromJSON)),
     };
 }
@@ -124,6 +152,8 @@ export function SalesInvoiceEmbeddedToJSONTyped(value?: SalesInvoiceEmbedded | n
         'lines': ((value['lines'] as Array<any>).map(SalesInvoiceLineToJSON)),
         'initial-invoice': SalesInvoiceToJSON(value['initialInvoice']),
         'attached-invoices': ((value['attachedInvoices'] as Array<any>).map(SalesInvoiceToJSON)),
+        'subscription': SubscriptionToJSON(value['subscription']),
+        'relation': RelationToJSON(value['relation']),
         'payments': ((value['payments'] as Array<any>).map(MonetaryAccountPaymentToJSON)),
     };
 }

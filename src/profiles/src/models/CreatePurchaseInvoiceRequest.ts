@@ -53,6 +53,12 @@ export interface CreatePurchaseInvoiceRequest {
      */
     relation: string;
     /**
+     * The external reference number of the supplier or internal PO number
+     * @type {string}
+     * @memberof CreatePurchaseInvoiceRequest
+     */
+    reference?: string;
+    /**
      * 
      * @type {CreateSalesInvoiceRequestPeriod}
      * @memberof CreatePurchaseInvoiceRequest
@@ -106,6 +112,7 @@ export function CreatePurchaseInvoiceRequestFromJSONTyped(json: any, ignoreDiscr
         'file': json['file'] == null ? undefined : CreatePurchaseInvoiceFinalRequestFileFromJSON(json['file']),
         'currency': json['currency'],
         'relation': json['relation'],
+        'reference': json['reference'] == null ? undefined : json['reference'],
         'period': json['period'] == null ? undefined : CreateSalesInvoiceRequestPeriodFromJSON(json['period']),
         'invoiceId': json['invoice_id'] == null ? undefined : json['invoice_id'],
         'date': json['date'] == null ? undefined : (new Date(json['date'])),
@@ -128,6 +135,7 @@ export function CreatePurchaseInvoiceRequestToJSONTyped(value?: CreatePurchaseIn
         'file': CreatePurchaseInvoiceFinalRequestFileToJSON(value['file']),
         'currency': value['currency'],
         'relation': value['relation'],
+        'reference': value['reference'],
         'period': CreateSalesInvoiceRequestPeriodToJSON(value['period']),
         'invoice_id': value['invoiceId'],
         'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),

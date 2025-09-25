@@ -61,6 +61,12 @@ export interface PurchaseInvoice {
      */
     readonly uuid: string;
     /**
+     * The external reference number of the supplier or internal PO number
+     * @type {string}
+     * @memberof PurchaseInvoice
+     */
+    reference?: string;
+    /**
      * Invoice number of the purchase invoice
      * @type {string}
      * @memberof PurchaseInvoice
@@ -215,6 +221,7 @@ export function PurchaseInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'id': json['id'],
         'uuid': json['uuid'],
+        'reference': json['reference'] == null ? undefined : json['reference'],
         'invoiceId': json['invoice_id'],
         'period': json['period'] == null ? undefined : SalesInvoicePeriodFromJSON(json['period']),
         'scheduled': json['scheduled'] == null ? undefined : (new Date(json['scheduled'])),
@@ -249,6 +256,7 @@ export function PurchaseInvoiceToJSONTyped(value?: Omit<PurchaseInvoice, 'id'|'u
 
     return {
         
+        'reference': value['reference'],
         'invoice_id': value['invoiceId'],
         'period': SalesInvoicePeriodToJSON(value['period']),
         'scheduled': value['scheduled'] == null ? undefined : ((value['scheduled']).toISOString().substring(0,10)),
