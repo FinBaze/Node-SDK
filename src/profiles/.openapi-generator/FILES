@@ -243,6 +243,7 @@ src/models/SalesInvoiceLineEmbedded.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
+src/models/SalesInvoicePublicEmbeddedSettings.ts
 src/models/SalesInvoicePublicEmbeddedSubscription.ts
 src/models/SalesInvoicePublicEmbeddedSubscriptionEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner.ts

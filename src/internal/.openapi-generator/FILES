@@ -132,6 +132,7 @@ src/models/SalesInvoicePeriod.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
+src/models/SalesInvoicePublicEmbeddedSettings.ts
 src/models/SendResetPasswordRequestRequest.ts
 src/models/ServerError.ts
 src/models/StockCategory.ts

@@ -104,6 +104,7 @@ export * from './SalesInvoicePeriod';
 export * from './SalesInvoicePublic';
 export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';
+export * from './SalesInvoicePublicEmbeddedSettings';
 export * from './SalesInvoicePublicEmbeddedSubscription';
 export * from './SalesInvoicePublicEmbeddedSubscriptionEmbedded';
 export * from './SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner';

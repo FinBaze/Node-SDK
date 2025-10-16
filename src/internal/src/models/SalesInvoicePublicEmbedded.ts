@@ -34,6 +34,13 @@ import {
     GetSubscriptionPublic200ResponseToJSON,
     GetSubscriptionPublic200ResponseToJSONTyped,
 } from './GetSubscriptionPublic200Response';
+import type { SalesInvoicePublicEmbeddedSettings } from './SalesInvoicePublicEmbeddedSettings';
+import {
+    SalesInvoicePublicEmbeddedSettingsFromJSON,
+    SalesInvoicePublicEmbeddedSettingsFromJSONTyped,
+    SalesInvoicePublicEmbeddedSettingsToJSON,
+    SalesInvoicePublicEmbeddedSettingsToJSONTyped,
+} from './SalesInvoicePublicEmbeddedSettings';
 
 /**
  * 
@@ -41,6 +48,12 @@ import {
  * @interface SalesInvoicePublicEmbedded
  */
 export interface SalesInvoicePublicEmbedded {
+    /**
+     * 
+     * @type {SalesInvoicePublicEmbeddedSettings}
+     * @memberof SalesInvoicePublicEmbedded
+     */
+    settings: SalesInvoicePublicEmbeddedSettings;
     /**
      * 
      * @type {Array<SalesInvoicePublicEmbeddedLinesInner>}
@@ -65,6 +78,7 @@ export interface SalesInvoicePublicEmbedded {
  * Check if a given object implements the SalesInvoicePublicEmbedded interface.
  */
 export function instanceOfSalesInvoicePublicEmbedded(value: object): value is SalesInvoicePublicEmbedded {
+    if (!('settings' in value) || value['settings'] === undefined) return false;
     if (!('lines' in value) || value['lines'] === undefined) return false;
     if (!('profile' in value) || value['profile'] === undefined) return false;
     return true;
@@ -80,6 +94,7 @@ export function SalesInvoicePublicEmbeddedFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
+        'settings': SalesInvoicePublicEmbeddedSettingsFromJSON(json['settings']),
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerFromJSON)),
         'profile': ProfilePublicFromJSON(json['profile']),
         'subscription': json['subscription'] == null ? undefined : GetSubscriptionPublic200ResponseFromJSON(json['subscription']),
@@ -97,6 +112,7 @@ export function SalesInvoicePublicEmbeddedToJSONTyped(value?: SalesInvoicePublic
 
     return {
         
+        'settings': SalesInvoicePublicEmbeddedSettingsToJSON(value['settings']),
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerToJSON)),
         'profile': ProfilePublicToJSON(value['profile']),
         'subscription': GetSubscriptionPublic200ResponseToJSON(value['subscription']),

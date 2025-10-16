@@ -126,6 +126,7 @@ export * from './SalesInvoicePeriod';
 export * from './SalesInvoicePublic';
 export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';
+export * from './SalesInvoicePublicEmbeddedSettings';
 export * from './SendResetPasswordRequestRequest';
 export * from './ServerError';
 export * from './StockCategory';
