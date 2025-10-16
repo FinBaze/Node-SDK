@@ -85,6 +85,7 @@ src/models/CreateSalesInvoiceRequest.ts
 src/models/CreateSalesInvoiceRequestEu.ts
 src/models/CreateSalesInvoiceRequestPeriod.ts
 src/models/CreateStockCategoryRequest.ts
+src/models/CreateStockLocationRequest.ts
 src/models/CreateSubscriptionBasedOnSalesInvoiceRequest.ts
 src/models/CreateSubscriptionLineRequest.ts
 src/models/CreateSubscriptionRequest.ts

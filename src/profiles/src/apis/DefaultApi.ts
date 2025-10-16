@@ -60,6 +60,7 @@ import type {
   CreateSalesInvoiceLineRequest,
   CreateSalesInvoiceRequest,
   CreateStockCategoryRequest,
+  CreateStockLocationRequest,
   CreateSubscriptionBasedOnSalesInvoiceRequest,
   CreateSubscriptionLineRequest,
   CreateSubscriptionRequest,
@@ -160,6 +161,7 @@ import type {
   SendSalesInvoiceRequest,
   SoftclosePurchaseInvoiceRequest,
   StockCategory,
+  StockLocation,
   SubmitProcessDocumentRequest,
   SubscribeProfilePlan201Response,
   SubscribeProfilePlanRequest,
@@ -267,6 +269,8 @@ import {
     CreateSalesInvoiceRequestToJSON,
     CreateStockCategoryRequestFromJSON,
     CreateStockCategoryRequestToJSON,
+    CreateStockLocationRequestFromJSON,
+    CreateStockLocationRequestToJSON,
     CreateSubscriptionBasedOnSalesInvoiceRequestFromJSON,
     CreateSubscriptionBasedOnSalesInvoiceRequestToJSON,
     CreateSubscriptionLineRequestFromJSON,
@@ -467,6 +471,8 @@ import {
     SoftclosePurchaseInvoiceRequestToJSON,
     StockCategoryFromJSON,
     StockCategoryToJSON,
+    StockLocationFromJSON,
+    StockLocationToJSON,
     SubmitProcessDocumentRequestFromJSON,
     SubmitProcessDocumentRequestToJSON,
     SubscribeProfilePlan201ResponseFromJSON,
@@ -790,6 +796,11 @@ export interface CreateStockCategoryOperationRequest {
     createStockCategoryRequest?: CreateStockCategoryRequest;
 }
 
+export interface CreateStockLocationOperationRequest {
+    profileId: string;
+    createStockLocationRequest?: CreateStockLocationRequest;
+}
+
 export interface CreateSubscriptionOperationRequest {
     profileId: string;
     createSubscriptionRequest?: CreateSubscriptionRequest;
@@ -991,10 +1002,20 @@ export interface DeleteStockCategoryRequest {
     stockCategoryId: string;
 }
 
+export interface DeleteStockLocationRequest {
+    profileId: string;
+    stockLocationId: string;
+}
+
 export interface DeleteSubscriptionOperationRequest {
     profileId: string;
     subscriptionId: string;
     deleteSubscriptionRequest?: DeleteSubscriptionRequest;
+}
+
+export interface DeleteVATFilingRequest {
+    profileId: string;
+    vatFilingId: string;
 }
 
 export interface DeleteVehicleRequest {
@@ -1653,6 +1674,15 @@ export interface GetStockCategoriesRequest {
     profileId: string;
 }
 
+export interface GetStockLocationRequest {
+    profileId: string;
+    stockLocationId: string;
+}
+
+export interface GetStockLocationsRequest {
+    profileId: string;
+}
+
 export interface GetStockcategoryRequest {
     profileId: string;
     stockCategoryId: string;
@@ -2063,6 +2093,11 @@ export interface UpdateSalesInvoiceLineRequest {
 export interface UpdateStockCategoryRequest {
     profileId: string;
     stockCategoryId: string;
+}
+
+export interface UpdateStockLocationRequest {
+    profileId: string;
+    stockLocationId: string;
 }
 
 export interface UpdateSubscriptionRequest {
@@ -2940,6 +2975,21 @@ export interface DefaultApiInterface {
     createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
 
     /**
+     * Creates an stock location
+     * @param {string} profileId The id of the profile
+     * @param {CreateStockLocationRequest} [createStockLocationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+
+    /**
+     * Creates an stock location
+     */
+    createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+
+    /**
      * Creates a subscription
      * @param {string} profileId The id of the profile
      * @param {CreateSubscriptionRequest} [createSubscriptionRequest] 
@@ -3521,6 +3571,21 @@ export interface DefaultApiInterface {
     deleteStockCategory(requestParameters: DeleteStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Deletes a stock location
+     * @param {string} profileId The id of the profile
+     * @param {string} stockLocationId The ID of the stock location
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteStockLocationRaw(requestParameters: DeleteStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a stock location
+     */
+    deleteStockLocation(requestParameters: DeleteStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Deletes a subscription
      * @param {string} profileId The id of the profile
      * @param {string} subscriptionId The ID of the subscription
@@ -3535,6 +3600,21 @@ export interface DefaultApiInterface {
      * Deletes a subscription
      */
     deleteSubscription(requestParameters: DeleteSubscriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Returns an vat filing
+     * @param {string} profileId The id of the profile
+     * @param {string} vatFilingId The ID of the vat filing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteVATFilingRaw(requestParameters: DeleteVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Returns an vat filing
+     */
+    deleteVATFiling(requestParameters: DeleteVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a vehicle
@@ -5236,6 +5316,35 @@ export interface DefaultApiInterface {
     getStockCategories(requestParameters: GetStockCategoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
 
     /**
+     * Returns a stock location
+     * @param {string} profileId The id of the profile
+     * @param {string} stockLocationId The ID of the stock location
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getStockLocationRaw(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>>;
+
+    /**
+     * Returns a stock location
+     */
+    getStockLocation(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation>;
+
+    /**
+     * Returns all stock locations
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getStockLocationsRaw(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+
+    /**
+     * Returns all stock locations
+     */
+    getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+
+    /**
      * Returns a stock category
      * @param {string} profileId The id of the profile
      * @param {string} stockCategoryId The ID of the balance category
@@ -6306,6 +6415,21 @@ export interface DefaultApiInterface {
      * Updates a stock category
      */
     updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
+
+    /**
+     * Updates a stock category
+     * @param {string} profileId The id of the profile
+     * @param {string} stockLocationId The ID of the stock location
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+
+    /**
+     * Updates a stock category
+     */
+    updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
 
     /**
      * Updates a subscription
@@ -8789,6 +8913,47 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Creates an stock location
+     */
+    async createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createStockLocation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-locations`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateStockLocationRequestToJSON(requestParameters['createStockLocationRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+    }
+
+    /**
+     * Creates an stock location
+     */
+    async createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+        const response = await this.createStockLocationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates a subscription
      */
     async createSubscriptionRaw(requestParameters: CreateSubscriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Subscription>>> {
@@ -10513,6 +10678,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Deletes a stock location
+     */
+    async deleteStockLocationRaw(requestParameters: DeleteStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteStockLocation().'
+            );
+        }
+
+        if (requestParameters['stockLocationId'] == null) {
+            throw new runtime.RequiredError(
+                'stockLocationId',
+                'Required parameter "stockLocationId" was null or undefined when calling deleteStockLocation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-locations/{stockLocationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockLocationId"}}`, encodeURIComponent(String(requestParameters['stockLocationId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a stock location
+     */
+    async deleteStockLocation(requestParameters: DeleteStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteStockLocationRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Deletes a subscription
      */
     async deleteSubscriptionRaw(requestParameters: DeleteSubscriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -10557,6 +10766,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteSubscription(requestParameters: DeleteSubscriptionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteSubscriptionRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Returns an vat filing
+     */
+    async deleteVATFilingRaw(requestParameters: DeleteVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteVATFiling().'
+            );
+        }
+
+        if (requestParameters['vatFilingId'] == null) {
+            throw new runtime.RequiredError(
+                'vatFilingId',
+                'Required parameter "vatFilingId" was null or undefined when calling deleteVATFiling().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/vat-filings/{vatFilingId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"vatFilingId"}}`, encodeURIComponent(String(requestParameters['vatFilingId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Returns an vat filing
+     */
+    async deleteVATFiling(requestParameters: DeleteVATFilingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteVATFilingRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -15751,6 +16004,89 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a stock location
+     */
+    async getStockLocationRaw(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getStockLocation().'
+            );
+        }
+
+        if (requestParameters['stockLocationId'] == null) {
+            throw new runtime.RequiredError(
+                'stockLocationId',
+                'Required parameter "stockLocationId" was null or undefined when calling getStockLocation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-locations/{stockLocationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockLocationId"}}`, encodeURIComponent(String(requestParameters['stockLocationId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a stock location
+     */
+    async getStockLocation(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation> {
+        const response = await this.getStockLocationRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all stock locations
+     */
+    async getStockLocationsRaw(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getStockLocations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-locations`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+    }
+
+    /**
+     * Returns all stock locations
+     */
+    async getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+        const response = await this.getStockLocationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a stock category
      */
     async getStockcategoryRaw(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
@@ -19038,6 +19374,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>> {
         const response = await this.updateStockCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a stock category
+     */
+    async updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateStockLocation().'
+            );
+        }
+
+        if (requestParameters['stockLocationId'] == null) {
+            throw new runtime.RequiredError(
+                'stockLocationId',
+                'Required parameter "stockLocationId" was null or undefined when calling updateStockLocation().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-locations/{stockLocationId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockLocationId"}}`, encodeURIComponent(String(requestParameters['stockLocationId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+    }
+
+    /**
+     * Updates a stock category
+     */
+    async updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+        const response = await this.updateStockLocationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

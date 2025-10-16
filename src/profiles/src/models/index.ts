@@ -79,6 +79,7 @@ export * from './CreateSalesInvoiceRequest';
 export * from './CreateSalesInvoiceRequestEu';
 export * from './CreateSalesInvoiceRequestPeriod';
 export * from './CreateStockCategoryRequest';
+export * from './CreateStockLocationRequest';
 export * from './CreateSubscriptionBasedOnSalesInvoiceRequest';
 export * from './CreateSubscriptionLineRequest';
 export * from './CreateSubscriptionRequest';
