@@ -19,7 +19,8 @@
  */
 export const VATFilingType = {
     Vat: 'nl_vat',
-    Oss: 'nl_oss'
+    Oss: 'nl_oss',
+    Icp: 'nl_icp'
 } as const;
 export type VATFilingType = typeof VATFilingType[keyof typeof VATFilingType];
 
