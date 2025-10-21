@@ -2967,12 +2967,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>>;
+    createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
 
     /**
      * Creates an stock category
      */
-    createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
+    createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Creates an stock location
@@ -2982,12 +2982,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+    createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>>;
 
     /**
      * Creates an stock location
      */
-    createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+    createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation>;
 
     /**
      * Creates a subscription
@@ -6409,12 +6409,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>>;
+    updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
 
     /**
      * Updates a stock category
      */
-    updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
+    updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Updates a stock category
@@ -6424,12 +6424,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+    updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>>;
 
     /**
      * Updates a stock category
      */
-    updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+    updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation>;
 
     /**
      * Updates a subscription
@@ -8874,7 +8874,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an stock category
      */
-    async createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>> {
+    async createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8901,13 +8901,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateStockCategoryRequestToJSON(requestParameters['createStockCategoryRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockCategoryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
     }
 
     /**
      * Creates an stock category
      */
-    async createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>> {
+    async createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
         const response = await this.createStockCategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -8915,7 +8915,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an stock location
      */
-    async createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+    async createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8942,13 +8942,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateStockLocationRequestToJSON(requestParameters['createStockLocationRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));
     }
 
     /**
      * Creates an stock location
      */
-    async createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+    async createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation> {
         const response = await this.createStockLocationRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -19335,7 +19335,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a stock category
      */
-    async updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>> {
+    async updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -19366,13 +19366,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockCategoryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
     }
 
     /**
      * Updates a stock category
      */
-    async updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>> {
+    async updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
         const response = await this.updateStockCategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -19380,7 +19380,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a stock category
      */
-    async updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+    async updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -19411,13 +19411,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));
     }
 
     /**
      * Updates a stock category
      */
-    async updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+    async updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation> {
         const response = await this.updateStockLocationRaw(requestParameters, initOverrides);
         return await response.value();
     }
