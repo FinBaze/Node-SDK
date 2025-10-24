@@ -2093,11 +2093,13 @@ export interface UpdateSalesInvoiceLineRequest {
 export interface UpdateStockCategoryRequest {
     profileId: string;
     stockCategoryId: string;
+    createStockCategoryRequest?: CreateStockCategoryRequest;
 }
 
 export interface UpdateStockLocationRequest {
     profileId: string;
     stockLocationId: string;
+    createStockLocationRequest?: CreateStockLocationRequest;
 }
 
 export interface UpdateSubscriptionRequest {
@@ -6405,6 +6407,7 @@ export interface DefaultApiInterface {
      * Updates a stock category
      * @param {string} profileId The id of the profile
      * @param {string} stockCategoryId The ID of the balance category
+     * @param {CreateStockCategoryRequest} [createStockCategoryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -6420,6 +6423,7 @@ export interface DefaultApiInterface {
      * Updates a stock category
      * @param {string} profileId The id of the profile
      * @param {string} stockLocationId The ID of the stock location
+     * @param {CreateStockLocationRequest} [createStockLocationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -19354,6 +19358,8 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
@@ -19364,6 +19370,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: CreateStockCategoryRequestToJSON(requestParameters['createStockCategoryRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
@@ -19399,6 +19406,8 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
@@ -19409,6 +19418,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: CreateStockLocationRequestToJSON(requestParameters['createStockLocationRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));

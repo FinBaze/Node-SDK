@@ -38,6 +38,7 @@ src/models/GetReminderPublic200Response.ts
 src/models/GetReminderPublic200ResponseAmounts.ts
 src/models/GetReminderPublic200ResponseAmountsBooked.ts
 src/models/GetReminderPublic200ResponseEmbedded.ts
+src/models/GetReminderPublic200ResponseEmbeddedSettings.ts
 src/models/GetSubscriptionPublic200Response.ts
 src/models/GetSubscriptionPublic200ResponseAmounts.ts
 src/models/GetSubscriptionPublic200ResponseEmbedded.ts
@@ -132,7 +133,6 @@ src/models/SalesInvoicePeriod.ts
 src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
-src/models/SalesInvoicePublicEmbeddedSettings.ts
 src/models/SendResetPasswordRequestRequest.ts
 src/models/ServerError.ts
 src/models/StockCategory.ts
