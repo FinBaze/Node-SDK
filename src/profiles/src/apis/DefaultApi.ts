@@ -1674,6 +1674,11 @@ export interface GetStockCategoriesRequest {
     profileId: string;
 }
 
+export interface GetStockCategoryRequest {
+    profileId: string;
+    stockCategoryId: string;
+}
+
 export interface GetStockLocationRequest {
     profileId: string;
     stockLocationId: string;
@@ -1681,11 +1686,6 @@ export interface GetStockLocationRequest {
 
 export interface GetStockLocationsRequest {
     profileId: string;
-}
-
-export interface GetStockcategoryRequest {
-    profileId: string;
-    stockCategoryId: string;
 }
 
 export interface GetSubscriptionRequest {
@@ -5318,6 +5318,21 @@ export interface DefaultApiInterface {
     getStockCategories(requestParameters: GetStockCategoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
 
     /**
+     * Returns a stock category
+     * @param {string} profileId The id of the profile
+     * @param {string} stockCategoryId The ID of the balance category
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getStockCategoryRaw(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
+
+    /**
+     * Returns a stock category
+     */
+    getStockCategory(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
+
+    /**
      * Returns a stock location
      * @param {string} profileId The id of the profile
      * @param {string} stockLocationId The ID of the stock location
@@ -5345,21 +5360,6 @@ export interface DefaultApiInterface {
      * Returns all stock locations
      */
     getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
-
-    /**
-     * Returns a stock category
-     * @param {string} profileId The id of the profile
-     * @param {string} stockCategoryId The ID of the balance category
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    getStockcategoryRaw(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
-
-    /**
-     * Returns a stock category
-     */
-    getStockcategory(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Returns a subscription
@@ -16008,6 +16008,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a stock category
+     */
+    async getStockCategoryRaw(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getStockCategory().'
+            );
+        }
+
+        if (requestParameters['stockCategoryId'] == null) {
+            throw new runtime.RequiredError(
+                'stockCategoryId',
+                'Required parameter "stockCategoryId" was null or undefined when calling getStockCategory().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-categories/{stockCategoryId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockCategoryId"}}`, encodeURIComponent(String(requestParameters['stockCategoryId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a stock category
+     */
+    async getStockCategory(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
+        const response = await this.getStockCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a stock location
      */
     async getStockLocationRaw(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
@@ -16087,51 +16132,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
         const response = await this.getStockLocationsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns a stock category
-     */
-    async getStockcategoryRaw(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
-        if (requestParameters['profileId'] == null) {
-            throw new runtime.RequiredError(
-                'profileId',
-                'Required parameter "profileId" was null or undefined when calling getStockcategory().'
-            );
-        }
-
-        if (requestParameters['stockCategoryId'] == null) {
-            throw new runtime.RequiredError(
-                'stockCategoryId',
-                'Required parameter "stockCategoryId" was null or undefined when calling getStockcategory().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
-        }
-
-        const response = await this.request({
-            path: `/v1/profiles/{profileId}/stock-categories/{stockCategoryId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockCategoryId"}}`, encodeURIComponent(String(requestParameters['stockCategoryId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns a stock category
-     */
-    async getStockcategory(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
-        const response = await this.getStockcategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
