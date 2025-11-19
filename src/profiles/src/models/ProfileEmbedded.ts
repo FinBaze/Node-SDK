@@ -33,7 +33,8 @@ export interface ProfileEmbedded {
  */
 export const ProfileEmbeddedStatusEnum = {
     Active: 'active',
-    Inactive: 'inactive'
+    Inactive: 'inactive',
+    Suspended: 'suspended'
 } as const;
 export type ProfileEmbeddedStatusEnum = typeof ProfileEmbeddedStatusEnum[keyof typeof ProfileEmbeddedStatusEnum];
 
