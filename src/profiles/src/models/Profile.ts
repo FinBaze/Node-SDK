@@ -27,6 +27,13 @@ import {
     LanguageToJSON,
     LanguageToJSONTyped,
 } from './Language';
+import type { ProfileEmbedded } from './ProfileEmbedded';
+import {
+    ProfileEmbeddedFromJSON,
+    ProfileEmbeddedFromJSONTyped,
+    ProfileEmbeddedToJSON,
+    ProfileEmbeddedToJSONTyped,
+} from './ProfileEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -177,6 +184,12 @@ export interface Profile {
      */
     links: Links;
     /**
+     * 
+     * @type {ProfileEmbedded}
+     * @memberof Profile
+     */
+    embedded?: ProfileEmbedded;
+    /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
      * @memberof Profile
@@ -247,6 +260,7 @@ export function ProfileFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
         'links': LinksFromJSON(json['_links']),
+        'embedded': json['_embedded'] == null ? undefined : ProfileEmbeddedFromJSON(json['_embedded']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
@@ -278,6 +292,7 @@ export function ProfileToJSONTyped(value?: Omit<Profile, 'id'|'updated'|'created
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),
         '_links': LinksToJSON(value['links']),
+        '_embedded': ProfileEmbeddedToJSON(value['embedded']),
         'metadata': value['metadata'],
     };
 }

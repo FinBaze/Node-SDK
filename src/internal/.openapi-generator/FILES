@@ -87,6 +87,7 @@ src/models/ProcessDocumentTaskMessagesInnerFunctionsValueInner.ts
 src/models/Product.ts
 src/models/ProductCategory.ts
 src/models/Profile.ts
+src/models/ProfileEmbedded.ts
 src/models/ProfileFeatures.ts
 src/models/ProfileNl.ts
 src/models/ProfileNlVat.ts
@@ -96,6 +97,7 @@ src/models/ProfilePublicNlVat.ts
 src/models/ProfileSettings.ts
 src/models/ProfileSettingsBranding.ts
 src/models/ProfileSettingsEmail.ts
+src/models/ProfileSettingsEmailSmtp.ts
 src/models/ProfileSettingsPurchaseInvoice.ts
 src/models/ProfileSettingsReminder.ts
 src/models/ProfileSettingsSalesInvoice.ts

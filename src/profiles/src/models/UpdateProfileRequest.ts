@@ -27,13 +27,13 @@ import {
     LanguageToJSON,
     LanguageToJSONTyped,
 } from './Language';
-import type { CreateProfileRequestSettings } from './CreateProfileRequestSettings';
+import type { UpdateProfileRequestSettings } from './UpdateProfileRequestSettings';
 import {
-    CreateProfileRequestSettingsFromJSON,
-    CreateProfileRequestSettingsFromJSONTyped,
-    CreateProfileRequestSettingsToJSON,
-    CreateProfileRequestSettingsToJSONTyped,
-} from './CreateProfileRequestSettings';
+    UpdateProfileRequestSettingsFromJSON,
+    UpdateProfileRequestSettingsFromJSONTyped,
+    UpdateProfileRequestSettingsToJSON,
+    UpdateProfileRequestSettingsToJSONTyped,
+} from './UpdateProfileRequestSettings';
 import type { CreateProfileRequestNl } from './CreateProfileRequestNl';
 import {
     CreateProfileRequestNlFromJSON,
@@ -98,10 +98,10 @@ export interface UpdateProfileRequest {
     nl?: CreateProfileRequestNl;
     /**
      * 
-     * @type {CreateProfileRequestSettings}
+     * @type {UpdateProfileRequestSettings}
      * @memberof UpdateProfileRequest
      */
-    settings?: CreateProfileRequestSettings;
+    settings?: UpdateProfileRequestSettings;
     /**
      * 
      * @type {string}
@@ -164,7 +164,7 @@ export function UpdateProfileRequestFromJSONTyped(json: any, ignoreDiscriminator
         'registrationNumber': json['registration-number'] == null ? undefined : json['registration-number'],
         'registrationCountry': json['registration-country'] == null ? undefined : json['registration-country'],
         'nl': json['nl'] == null ? undefined : CreateProfileRequestNlFromJSON(json['nl']),
-        'settings': json['settings'] == null ? undefined : CreateProfileRequestSettingsFromJSON(json['settings']),
+        'settings': json['settings'] == null ? undefined : UpdateProfileRequestSettingsFromJSON(json['settings']),
         'distanceUnit': json['distance-unit'] == null ? undefined : json['distance-unit'],
         'currency': json['currency'] == null ? undefined : json['currency'],
         'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
@@ -191,7 +191,7 @@ export function UpdateProfileRequestToJSONTyped(value?: UpdateProfileRequest | n
         'registration-number': value['registrationNumber'],
         'registration-country': value['registrationCountry'],
         'nl': CreateProfileRequestNlToJSON(value['nl']),
-        'settings': CreateProfileRequestSettingsToJSON(value['settings']),
+        'settings': UpdateProfileRequestSettingsToJSON(value['settings']),
         'distance-unit': value['distanceUnit'],
         'currency': value['currency'],
         'address': AddressToJSON(value['address']),

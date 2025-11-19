@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CreateProfileRequestSettingsEmailSmtp } from './CreateProfileRequestSettingsEmailSmtp';
+import {
+    CreateProfileRequestSettingsEmailSmtpFromJSON,
+    CreateProfileRequestSettingsEmailSmtpFromJSONTyped,
+    CreateProfileRequestSettingsEmailSmtpToJSON,
+    CreateProfileRequestSettingsEmailSmtpToJSONTyped,
+} from './CreateProfileRequestSettingsEmailSmtp';
+
 /**
  * 
  * @export
@@ -33,10 +41,10 @@ export interface CreateProfileRequestSettingsEmail {
     name?: string;
     /**
      * 
-     * @type {any}
+     * @type {CreateProfileRequestSettingsEmailSmtp}
      * @memberof CreateProfileRequestSettingsEmail
      */
-    smtp?: any | null;
+    smtp?: CreateProfileRequestSettingsEmailSmtp;
 }
 
 /**
@@ -58,7 +66,7 @@ export function CreateProfileRequestSettingsEmailFromJSONTyped(json: any, ignore
         
         'email': json['email'] == null ? undefined : json['email'],
         'name': json['name'] == null ? undefined : json['name'],
-        'smtp': json['smtp'] == null ? undefined : json['smtp'],
+        'smtp': json['smtp'] == null ? undefined : CreateProfileRequestSettingsEmailSmtpFromJSON(json['smtp']),
     };
 }
 
@@ -75,7 +83,7 @@ export function CreateProfileRequestSettingsEmailToJSONTyped(value?: CreateProfi
         
         'email': value['email'],
         'name': value['name'],
-        'smtp': value['smtp'],
+        'smtp': CreateProfileRequestSettingsEmailSmtpToJSON(value['smtp']),
     };
 }
 

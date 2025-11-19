@@ -57,8 +57,8 @@ import type {
   CreateRelationRequest,
   CreateRelationsImportRequest,
   CreateReminderRequest,
-  CreateSalesInvoiceLineRequest,
   CreateSalesInvoiceRequest,
+  CreateSalesInvoiceRequestLinesInner,
   CreateStockCategoryRequest,
   CreateStockLocationRequest,
   CreateSubscriptionBasedOnSalesInvoiceRequest,
@@ -263,10 +263,10 @@ import {
     CreateRelationsImportRequestToJSON,
     CreateReminderRequestFromJSON,
     CreateReminderRequestToJSON,
-    CreateSalesInvoiceLineRequestFromJSON,
-    CreateSalesInvoiceLineRequestToJSON,
     CreateSalesInvoiceRequestFromJSON,
     CreateSalesInvoiceRequestToJSON,
+    CreateSalesInvoiceRequestLinesInnerFromJSON,
+    CreateSalesInvoiceRequestLinesInnerToJSON,
     CreateStockCategoryRequestFromJSON,
     CreateStockCategoryRequestToJSON,
     CreateStockLocationRequestFromJSON,
@@ -775,10 +775,10 @@ export interface CreateSalesInvoiceOperationRequest {
     createSalesInvoiceRequest?: CreateSalesInvoiceRequest;
 }
 
-export interface CreateSalesInvoiceLineOperationRequest {
+export interface CreateSalesInvoiceLineRequest {
     profileId: string;
     salesInvoiceId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createSalesInvoiceRequestLinesInner?: CreateSalesInvoiceRequestLinesInner;
 }
 
 export interface CreateSalesInvoiceReminderRequest {
@@ -2037,7 +2037,7 @@ export interface UpdatePurchaseInvoiceLineRequest {
 
 export interface UpdatePurchaseInvoicePaymentBatchRequest {
     profileId: string;
-    projectId: string;
+    purchaseInvoicePaymentBatchId: string;
     createPurchaseInvoicePaymentBatchRequest?: CreatePurchaseInvoicePaymentBatchRequest;
 }
 
@@ -2087,7 +2087,7 @@ export interface UpdateSalesInvoiceLineRequest {
     profileId: string;
     salesInvoiceId: string;
     salesInvoiceLineId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createSalesInvoiceRequestLinesInner?: CreateSalesInvoiceRequestLinesInner;
 }
 
 export interface UpdateStockCategoryRequest {
@@ -2919,17 +2919,17 @@ export interface DefaultApiInterface {
      * creates a sales invoice line
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceId The id of the sales invoice
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateSalesInvoiceRequestLinesInner} [createSalesInvoiceRequestLinesInner] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>>;
+    createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>>;
 
     /**
      * creates a sales invoice line
      */
-    createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
+    createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
 
     /**
      * Creates a sales invoices reminder with one sales invoice.
@@ -6261,7 +6261,7 @@ export interface DefaultApiInterface {
     /**
      * Updates a payment batch
      * @param {string} profileId The id of the profile
-     * @param {string} projectId The ID of the project
+     * @param {string} purchaseInvoicePaymentBatchId The ID of the purchase invoice payment batch
      * @param {CreatePurchaseInvoicePaymentBatchRequest} [createPurchaseInvoicePaymentBatchRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6391,7 +6391,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceId The id of the sales invoice
      * @param {string} salesInvoiceLineId The id of the sales invoice line
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateSalesInvoiceRequestLinesInner} [createSalesInvoiceRequestLinesInner] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -6620,7 +6620,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -8744,7 +8744,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * creates a sales invoice line
      */
-    async createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>> {
+    async createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8775,7 +8775,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateSalesInvoiceRequestLinesInnerToJSON(requestParameters['createSalesInvoiceRequestLinesInner']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceLineFromJSON(jsonValue));
@@ -8784,7 +8784,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * creates a sales invoice line
      */
-    async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
+    async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
         const response = await this.createSalesInvoiceLineRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -9845,7 +9845,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -12731,7 +12731,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -18477,7 +18477,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -18904,10 +18904,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             );
         }
 
-        if (requestParameters['projectId'] == null) {
+        if (requestParameters['purchaseInvoicePaymentBatchId'] == null) {
             throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
+                'purchaseInvoicePaymentBatchId',
+                'Required parameter "purchaseInvoicePaymentBatchId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
             );
         }
 
@@ -18923,7 +18923,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoicePaymentBatchId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoicePaymentBatchId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -19322,7 +19322,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateSalesInvoiceRequestLinesInnerToJSON(requestParameters['createSalesInvoiceRequestLinesInner']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceLineFromJSON(jsonValue));

@@ -19,6 +19,7 @@ src/models/CreateBookkeeperProfileRequestNlVat.ts
 src/models/CreateBookkeeperProfileRequestSettings.ts
 src/models/CreateBookkeeperProfileRequestSettingsBranding.ts
 src/models/CreateBookkeeperProfileRequestSettingsEmail.ts
+src/models/CreateBookkeeperProfileRequestSettingsEmailSmtp.ts
 src/models/CreateBookkeeperProfileRequestSettingsPurchaseInvoice.ts
 src/models/CreateBookkeeperProfileRequestSettingsReminder.ts
 src/models/CreateBookkeeperProfileRequestSettingsSalesInvoice.ts
@@ -26,6 +27,7 @@ src/models/CreateProcessDocumentRequest.ts
 src/models/CreateProcessDocumentRequestFile.ts
 src/models/CreateSalesInvoiceRequest.ts
 src/models/CreateSalesInvoiceRequestEu.ts
+src/models/CreateSalesInvoiceRequestLinesInner.ts
 src/models/CreateSalesInvoiceRequestPeriod.ts
 src/models/CreditLoan.ts
 src/models/CurrentAccount.ts
@@ -87,6 +89,7 @@ src/models/ProcessDocumentTaskMessagesInnerFunctionsValueInner.ts
 src/models/Product.ts
 src/models/ProductCategory.ts
 src/models/Profile.ts
+src/models/ProfileEmbedded.ts
 src/models/ProfileFeatures.ts
 src/models/ProfilePublic.ts
 src/models/ProfilePublicNl.ts

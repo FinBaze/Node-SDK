@@ -20,6 +20,13 @@ import {
     AddressToJSON,
     AddressToJSONTyped,
 } from './Address';
+import type { CreateSalesInvoiceRequestLinesInner } from './CreateSalesInvoiceRequestLinesInner';
+import {
+    CreateSalesInvoiceRequestLinesInnerFromJSON,
+    CreateSalesInvoiceRequestLinesInnerFromJSONTyped,
+    CreateSalesInvoiceRequestLinesInnerToJSON,
+    CreateSalesInvoiceRequestLinesInnerToJSONTyped,
+} from './CreateSalesInvoiceRequestLinesInner';
 import type { CreateSalesInvoiceRequestEu } from './CreateSalesInvoiceRequestEu';
 import {
     CreateSalesInvoiceRequestEuFromJSON,
@@ -149,6 +156,12 @@ export interface CreateSalesInvoiceRequest {
      * @memberof CreateSalesInvoiceRequest
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Array<CreateSalesInvoiceRequestLinesInner>}
+     * @memberof CreateSalesInvoiceRequest
+     */
+    lines?: Array<CreateSalesInvoiceRequestLinesInner>;
 }
 
 /**
@@ -186,6 +199,7 @@ export function CreateSalesInvoiceRequestFromJSONTyped(json: any, ignoreDiscrimi
         'memo': json['memo'] == null ? undefined : json['memo'],
         'footer': json['footer'] == null ? undefined : json['footer'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'lines': json['lines'] == null ? undefined : ((json['lines'] as Array<any>).map(CreateSalesInvoiceRequestLinesInnerFromJSON)),
     };
 }
 
@@ -218,6 +232,7 @@ export function CreateSalesInvoiceRequestToJSONTyped(value?: CreateSalesInvoiceR
         'memo': value['memo'],
         'footer': value['footer'],
         'metadata': value['metadata'],
+        'lines': value['lines'] == null ? undefined : ((value['lines'] as Array<any>).map(CreateSalesInvoiceRequestLinesInnerToJSON)),
     };
 }
 

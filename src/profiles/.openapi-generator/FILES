@@ -54,6 +54,7 @@ src/models/CreateProfileRequestNlVat.ts
 src/models/CreateProfileRequestSettings.ts
 src/models/CreateProfileRequestSettingsBranding.ts
 src/models/CreateProfileRequestSettingsEmail.ts
+src/models/CreateProfileRequestSettingsEmailSmtp.ts
 src/models/CreateProfileRequestSettingsPurchaseInvoice.ts
 src/models/CreateProfileRequestSettingsReminder.ts
 src/models/CreateProfileRequestSettingsSalesInvoice.ts
@@ -80,9 +81,9 @@ src/models/CreateRelationRequestEu.ts
 src/models/CreateRelationRequestEuVies.ts
 src/models/CreateRelationsImportRequest.ts
 src/models/CreateReminderRequest.ts
-src/models/CreateSalesInvoiceLineRequest.ts
 src/models/CreateSalesInvoiceRequest.ts
 src/models/CreateSalesInvoiceRequestEu.ts
+src/models/CreateSalesInvoiceRequestLinesInner.ts
 src/models/CreateSalesInvoiceRequestPeriod.ts
 src/models/CreateStockCategoryRequest.ts
 src/models/CreateStockLocationRequest.ts
@@ -205,6 +206,7 @@ src/models/ProcessMonetaryAccountPaymentSalesInvoiceRequest.ts
 src/models/Product.ts
 src/models/ProductCategory.ts
 src/models/Profile.ts
+src/models/ProfileEmbedded.ts
 src/models/ProfileFeatures.ts
 src/models/ProfilePublic.ts
 src/models/ProfilePublicNl.ts
@@ -270,6 +272,8 @@ src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/UpdatePackingSlibRequest.ts
 src/models/UpdateProfileRequest.ts
+src/models/UpdateProfileRequestSettings.ts
+src/models/UpdateProfileRequestSettingsEmail.ts
 src/models/UpdatePurchaseOrderRequest.ts
 src/models/VATFiling.ts
 src/models/VATFilingType.ts
