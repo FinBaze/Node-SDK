@@ -115,6 +115,7 @@ import type {
   GetRelationsAutocomplete200Response,
   GetReminders200Response,
   GetSalesInvoices200Response,
+  GetSalesInvoicesSortParameter,
   GetSubscriptions200Response,
   GetVATFilings200Response,
   GetVehicleTrips200Response,
@@ -379,6 +380,8 @@ import {
     GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
+    GetSalesInvoicesSortParameterFromJSON,
+    GetSalesInvoicesSortParameterToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
     GetVATFilings200ResponseFromJSON,
@@ -1654,6 +1657,7 @@ export interface GetSalesInvoicesRequest {
     page?: number;
     size?: number;
     search?: string;
+    sort?: GetSalesInvoicesSortParameter;
     reference?: string;
     subscription?: string;
     relation?: string;
@@ -5278,6 +5282,7 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [search] Search the resource
+     * @param {GetSalesInvoicesSortParameter} [sort] Sorting
      * @param {string} [reference] Reference of the sales invoice
      * @param {string} [subscription] Subscription ID to filter to
      * @param {string} [relation] ID of the relation to filter to
@@ -15886,6 +15891,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['search'] != null) {
             queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         if (requestParameters['reference'] != null) {

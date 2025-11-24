@@ -158,6 +158,7 @@ src/models/GetRelationsAutocomplete200ResponseDataInner.ts
 src/models/GetRelationsAutocomplete200ResponseDataInnerEu.ts
 src/models/GetReminders200Response.ts
 src/models/GetSalesInvoices200Response.ts
+src/models/GetSalesInvoicesSortParameter.ts
 src/models/GetSubscriptions200Response.ts
 src/models/GetVATFilings200Response.ts
 src/models/GetVehicleTrips200Response.ts
@@ -253,6 +254,7 @@ src/models/SendSalesInvoiceRequest.ts
 src/models/ServerError.ts
 src/models/SoftclosePurchaseInvoiceRequest.ts
 src/models/SoftclosePurchaseInvoiceRequestTotals.ts
+src/models/SortValue.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/SubmitProcessDocumentRequest.ts

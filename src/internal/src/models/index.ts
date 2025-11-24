@@ -131,6 +131,7 @@ export * from './SalesInvoicePublicEmbedded';
 export * from './SalesInvoicePublicEmbeddedLinesInner';
 export * from './SendResetPasswordRequestRequest';
 export * from './ServerError';
+export * from './SortValue';
 export * from './StockCategory';
 export * from './StockLocation';
 export * from './Subscription';

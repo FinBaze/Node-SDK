@@ -137,6 +137,7 @@ src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
 src/models/SendResetPasswordRequestRequest.ts
 src/models/ServerError.ts
+src/models/SortValue.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/Subscription.ts

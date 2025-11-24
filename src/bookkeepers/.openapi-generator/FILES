@@ -135,6 +135,7 @@ src/models/SalesInvoicePublicEmbeddedSubscription.ts
 src/models/SalesInvoicePublicEmbeddedSubscriptionEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner.ts
 src/models/ServerError.ts
+src/models/SortValue.ts
 src/models/StockCategory.ts
 src/models/StockLocation.ts
 src/models/Subscription.ts
