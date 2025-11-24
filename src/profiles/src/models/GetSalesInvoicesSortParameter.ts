@@ -72,7 +72,7 @@ export function GetSalesInvoicesSortParameterFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
-        'invoiceId': json['invoice_id'] == null ? undefined : SortValueFromJSON(json['invoice_id']),
+        'invoiceId': json['invoiceId'] == null ? undefined : SortValueFromJSON(json['invoiceId']),
         'date': json['date'] == null ? undefined : SortValueFromJSON(json['date']),
         'created': json['created'] == null ? undefined : SortValueFromJSON(json['created']),
         'relation': json['relation'] == null ? undefined : SortValueFromJSON(json['relation']),
@@ -90,7 +90,7 @@ export function GetSalesInvoicesSortParameterToJSONTyped(value?: GetSalesInvoice
 
     return {
         
-        'invoice_id': SortValueToJSON(value['invoiceId']),
+        'invoiceId': SortValueToJSON(value['invoiceId']),
         'date': SortValueToJSON(value['date']),
         'created': SortValueToJSON(value['created']),
         'relation': SortValueToJSON(value['relation']),
