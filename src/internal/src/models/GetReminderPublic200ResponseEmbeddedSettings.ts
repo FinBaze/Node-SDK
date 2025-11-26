@@ -33,7 +33,8 @@ export interface GetReminderPublic200ResponseEmbeddedSettings {
  */
 export const GetReminderPublic200ResponseEmbeddedSettingsMethodsEnum = {
     Openbanking: 'openbanking',
-    CreditCard: 'credit_card'
+    CreditCard: 'credit_card',
+    SepaCredit: 'sepa_credit'
 } as const;
 export type GetReminderPublic200ResponseEmbeddedSettingsMethodsEnum = typeof GetReminderPublic200ResponseEmbeddedSettingsMethodsEnum[keyof typeof GetReminderPublic200ResponseEmbeddedSettingsMethodsEnum];
 

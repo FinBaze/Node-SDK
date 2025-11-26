@@ -18,6 +18,9 @@ src/models/CreateAccountMeZendeskToken200Response.ts
 src/models/CreateAccountRequest.ts
 src/models/CreateBankingServiceOnboarding200Response.ts
 src/models/CreateDeviceRequest.ts
+src/models/CreateReminderPublicPayment200Response.ts
+src/models/CreateReminderPublicPayment200ResponseSepaTransfer.ts
+src/models/CreateReminderPublicPaymentRequest.ts
 src/models/CreateSubscriptionPublicPaymentMethod200Response.ts
 src/models/CreateSubscriptionPublicPaymentMethodRequest.ts
 src/models/CreateSubscriptionPublicPaymentMethodRequestData.ts

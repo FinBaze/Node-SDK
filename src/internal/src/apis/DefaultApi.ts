@@ -21,6 +21,8 @@ import type {
   CreateAccountRequest,
   CreateBankingServiceOnboarding200Response,
   CreateDeviceRequest,
+  CreateReminderPublicPayment200Response,
+  CreateReminderPublicPaymentRequest,
   CreateSubscriptionPublicPaymentMethod200Response,
   CreateSubscriptionPublicPaymentMethodRequest,
   Device,
@@ -49,6 +51,10 @@ import {
     CreateBankingServiceOnboarding200ResponseToJSON,
     CreateDeviceRequestFromJSON,
     CreateDeviceRequestToJSON,
+    CreateReminderPublicPayment200ResponseFromJSON,
+    CreateReminderPublicPayment200ResponseToJSON,
+    CreateReminderPublicPaymentRequestFromJSON,
+    CreateReminderPublicPaymentRequestToJSON,
     CreateSubscriptionPublicPaymentMethod200ResponseFromJSON,
     CreateSubscriptionPublicPaymentMethod200ResponseToJSON,
     CreateSubscriptionPublicPaymentMethodRequestFromJSON,
@@ -91,16 +97,16 @@ export interface CreateDeviceOperationRequest {
     createDeviceRequest?: CreateDeviceRequest;
 }
 
-export interface CreateReminderPublicPaymentRequest {
+export interface CreateReminderPublicPaymentOperationRequest {
     profileId: string;
     reminderUUID: string;
-    createSubscriptionPublicPaymentMethodRequest?: CreateSubscriptionPublicPaymentMethodRequest;
+    createReminderPublicPaymentRequest?: CreateReminderPublicPaymentRequest;
 }
 
 export interface CreateSalesInvoicePublicPaymentRequest {
     profileId: string;
     salesInvoiceUUID: string;
-    createSubscriptionPublicPaymentMethodRequest?: CreateSubscriptionPublicPaymentMethodRequest;
+    createReminderPublicPaymentRequest?: CreateReminderPublicPaymentRequest;
 }
 
 export interface CreateSubscriptionPublicPaymentMethodOperationRequest {
@@ -263,33 +269,33 @@ export interface DefaultApiInterface {
      * Creates an payment attempt for an reminder
      * @param {string} profileId The id of the profile
      * @param {string} reminderUUID The uuid of the reminder
-     * @param {CreateSubscriptionPublicPaymentMethodRequest} [createSubscriptionPublicPaymentMethodRequest] 
+     * @param {CreateReminderPublicPaymentRequest} [createReminderPublicPaymentRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>>;
+    createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminderPublicPayment200Response>>;
 
     /**
      * Creates an payment attempt for an reminder
      */
-    createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response>;
+    createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminderPublicPayment200Response>;
 
     /**
      * Creates an payment attempt for an sales invoice
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceUUID The uuid of the sales invoice
-     * @param {CreateSubscriptionPublicPaymentMethodRequest} [createSubscriptionPublicPaymentMethodRequest] 
+     * @param {CreateReminderPublicPaymentRequest} [createReminderPublicPaymentRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>>;
+    createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminderPublicPayment200Response>>;
 
     /**
      * Creates an payment attempt for an sales invoice
      */
-    createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response>;
+    createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminderPublicPayment200Response>;
 
     /**
      * Creates an payment method attempt for an subscription
@@ -757,7 +763,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an payment attempt for an reminder
      */
-    async createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>> {
+    async createReminderPublicPaymentRaw(requestParameters: CreateReminderPublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminderPublicPayment200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -788,16 +794,16 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSubscriptionPublicPaymentMethodRequestToJSON(requestParameters['createSubscriptionPublicPaymentMethodRequest']),
+            body: CreateReminderPublicPaymentRequestToJSON(requestParameters['createReminderPublicPaymentRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSubscriptionPublicPaymentMethod200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminderPublicPayment200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates an payment attempt for an reminder
      */
-    async createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response> {
+    async createReminderPublicPayment(requestParameters: CreateReminderPublicPaymentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminderPublicPayment200Response> {
         const response = await this.createReminderPublicPaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -805,7 +811,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an payment attempt for an sales invoice
      */
-    async createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSubscriptionPublicPaymentMethod200Response>> {
+    async createSalesInvoicePublicPaymentRaw(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateReminderPublicPayment200Response>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -836,16 +842,16 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSubscriptionPublicPaymentMethodRequestToJSON(requestParameters['createSubscriptionPublicPaymentMethodRequest']),
+            body: CreateReminderPublicPaymentRequestToJSON(requestParameters['createReminderPublicPaymentRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSubscriptionPublicPaymentMethod200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateReminderPublicPayment200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates an payment attempt for an sales invoice
      */
-    async createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSubscriptionPublicPaymentMethod200Response> {
+    async createSalesInvoicePublicPayment(requestParameters: CreateSalesInvoicePublicPaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateReminderPublicPayment200Response> {
         const response = await this.createSalesInvoicePublicPaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }

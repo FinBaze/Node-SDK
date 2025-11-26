@@ -33,7 +33,8 @@ export interface SalesInvoicePublicEmbeddedSettings {
  */
 export const SalesInvoicePublicEmbeddedSettingsMethodsEnum = {
     Openbanking: 'openbanking',
-    CreditCard: 'credit_card'
+    CreditCard: 'credit_card',
+    SepaCredit: 'sepa_credit'
 } as const;
 export type SalesInvoicePublicEmbeddedSettingsMethodsEnum = typeof SalesInvoicePublicEmbeddedSettingsMethodsEnum[keyof typeof SalesInvoicePublicEmbeddedSettingsMethodsEnum];
 
