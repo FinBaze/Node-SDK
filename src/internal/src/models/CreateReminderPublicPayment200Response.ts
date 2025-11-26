@@ -41,6 +41,18 @@ export interface CreateReminderPublicPayment200Response {
     externalId: string;
     /**
      * 
+     * @type {number}
+     * @memberof CreateReminderPublicPayment200Response
+     */
+    amount: number;
+    /**
+     * ISO 3166-1 alpha-2 currency code
+     * @type {string}
+     * @memberof CreateReminderPublicPayment200Response
+     */
+    currency: string;
+    /**
+     * 
      * @type {string}
      * @memberof CreateReminderPublicPayment200Response
      */
@@ -78,6 +90,8 @@ export type CreateReminderPublicPayment200ResponseStateEnum = typeof CreateRemin
 export function instanceOfCreateReminderPublicPayment200Response(value: object): value is CreateReminderPublicPayment200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('state' in value) || value['state'] === undefined) return false;
     return true;
 }
@@ -94,6 +108,8 @@ export function CreateReminderPublicPayment200ResponseFromJSONTyped(json: any, i
         
         'id': json['id'],
         'externalId': json['external_id'],
+        'amount': json['amount'],
+        'currency': json['currency'],
         'state': json['state'],
         'redirect': json['redirect'] == null ? undefined : json['redirect'],
         'sepaTransfer': json['sepa_transfer'] == null ? undefined : CreateReminderPublicPayment200ResponseSepaTransferFromJSON(json['sepa_transfer']),
@@ -113,6 +129,8 @@ export function CreateReminderPublicPayment200ResponseToJSONTyped(value?: Create
         
         'id': value['id'],
         'external_id': value['externalId'],
+        'amount': value['amount'],
+        'currency': value['currency'],
         'state': value['state'],
         'redirect': value['redirect'],
         'sepa_transfer': CreateReminderPublicPayment200ResponseSepaTransferToJSON(value['sepaTransfer']),
