@@ -17,8 +17,10 @@ import * as runtime from '../runtime';
 import type {
   Account,
   Asset,
+  AssetWriteoff,
   CloseSalesInvoiceRequest,
   CreateAssetRequest,
+  CreateAssetWriteoffRequest,
   CreateChat200Response,
   CreateChatRequest,
   CreateCreditLoanRequest,
@@ -102,6 +104,7 @@ import type {
   GetProfileMetadata200Response,
   GetProfileOutgoingPurchaseInvoices200ResponseValue,
   GetProfilePlan200Response,
+  GetProfileStatus200Response,
   GetProjects200Response,
   GetProjectsTimes200Response,
   GetPurchaseInvoicePaymentBatches200Response,
@@ -169,6 +172,7 @@ import type {
   Subscription,
   SubscriptionLine,
   UndisputePurchaseInvoiceRequest,
+  UpdateAssetWriteoffRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
   UpdatePackingSlibRequest,
@@ -184,10 +188,14 @@ import {
     AccountToJSON,
     AssetFromJSON,
     AssetToJSON,
+    AssetWriteoffFromJSON,
+    AssetWriteoffToJSON,
     CloseSalesInvoiceRequestFromJSON,
     CloseSalesInvoiceRequestToJSON,
     CreateAssetRequestFromJSON,
     CreateAssetRequestToJSON,
+    CreateAssetWriteoffRequestFromJSON,
+    CreateAssetWriteoffRequestToJSON,
     CreateChat200ResponseFromJSON,
     CreateChat200ResponseToJSON,
     CreateChatRequestFromJSON,
@@ -354,6 +362,8 @@ import {
     GetProfileOutgoingPurchaseInvoices200ResponseValueToJSON,
     GetProfilePlan200ResponseFromJSON,
     GetProfilePlan200ResponseToJSON,
+    GetProfileStatus200ResponseFromJSON,
+    GetProfileStatus200ResponseToJSON,
     GetProjects200ResponseFromJSON,
     GetProjects200ResponseToJSON,
     GetProjectsTimes200ResponseFromJSON,
@@ -488,6 +498,8 @@ import {
     SubscriptionLineToJSON,
     UndisputePurchaseInvoiceRequestFromJSON,
     UndisputePurchaseInvoiceRequestToJSON,
+    UpdateAssetWriteoffRequestFromJSON,
+    UpdateAssetWriteoffRequestToJSON,
     UpdateCreditLoanRequestFromJSON,
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
@@ -555,6 +567,12 @@ export interface CloseSubscriptionRequest {
 export interface CreateAssetOperationRequest {
     profileId: string;
     createAssetRequest?: CreateAssetRequest;
+}
+
+export interface CreateAssetWriteoffOperationRequest {
+    profileId: string;
+    assetId: string;
+    createAssetWriteoffRequest?: CreateAssetWriteoffRequest;
 }
 
 export interface CreateChatOperationRequest {
@@ -848,6 +866,12 @@ export interface DeleteAssetRequest {
     assetId: string;
 }
 
+export interface DeleteAssetWriteoffRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
+}
+
 export interface DeleteCreditLoanRequest {
     profileId: string;
     creditLoanId: string;
@@ -1066,6 +1090,17 @@ export interface GetAllMonetaryAccountPaymentsRequest {
 }
 
 export interface GetAssetRequest {
+    profileId: string;
+    assetId: string;
+}
+
+export interface GetAssetWriteoffRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
+}
+
+export interface GetAssetWriteoffsRequest {
     profileId: string;
     assetId: string;
 }
@@ -1408,6 +1443,10 @@ export interface GetProfileOutgoingPurchaseInvoicesRequest {
 }
 
 export interface GetProfilePlanRequest {
+    profileId: string;
+}
+
+export interface GetProfileStatusRequest {
     profileId: string;
 }
 
@@ -1917,6 +1956,13 @@ export interface UpdateAssetRequest {
     createAssetRequest?: CreateAssetRequest;
 }
 
+export interface UpdateAssetWriteoffOperationRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
+    updateAssetWriteoffRequest?: UpdateAssetWriteoffRequest;
+}
+
 export interface UpdateChatRequest {
     profileId: string;
     chatId: string;
@@ -2277,6 +2323,22 @@ export interface DefaultApiInterface {
      * Creates a asset
      */
     createAsset(requestParameters: CreateAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
+
+    /**
+     * Creates a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {CreateAssetWriteoffRequest} [createAssetWriteoffRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createAssetWriteoffRaw(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Creates a asset writeoff
+     */
+    createAssetWriteoff(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
 
     /**
      * Creates a chat
@@ -3120,6 +3182,22 @@ export interface DefaultApiInterface {
     deleteAsset(requestParameters: DeleteAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
+     * Deletes a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteAssetWriteoffRaw(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a asset writeoff
+     */
+    deleteAssetWriteoff(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Deletes a credit loan
      * @param {string} profileId The id of the profile
      * @param {string} creditLoanId The id of the loan
@@ -3740,6 +3818,37 @@ export interface DefaultApiInterface {
      * Returns a asset
      */
     getAsset(requestParameters: GetAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
+
+    /**
+     * Returns a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAssetWriteoffRaw(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Returns a asset writeoff
+     */
+    getAssetWriteoff(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
+
+    /**
+     * Returns a asset writeoffs
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAssetWriteoffsRaw(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Returns a asset writeoffs
+     */
+    getAssetWriteoffs(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
 
     /**
      * Returns all assets
@@ -4651,6 +4760,20 @@ export interface DefaultApiInterface {
      * Retrieves the current subscription of an profile
      */
     getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response>;
+
+    /**
+     * Retrieves the current subscription status of an profile
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileStatusRaw(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileStatus200Response>>;
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    getProfileStatus(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileStatus200Response>;
 
     /**
      * Returns a list of all the profiles
@@ -5942,6 +6065,23 @@ export interface DefaultApiInterface {
     updateAsset(requestParameters: UpdateAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
 
     /**
+     * Updates a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {UpdateAssetWriteoffRequest} [updateAssetWriteoffRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateAssetWriteoffRaw(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Updates a asset writeoff
+     */
+    updateAssetWriteoff(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
+
+    /**
      * Updates a chat
      * @param {string} profileId The id of the profile
      * @param {string} chatId The id of the chat
@@ -6918,6 +7058,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createAsset(requestParameters: CreateAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset> {
         const response = await this.createAssetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a asset writeoff
+     */
+    async createAssetWriteoffRaw(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling createAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateAssetWriteoffRequestToJSON(requestParameters['createAssetWriteoffRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a asset writeoff
+     */
+    async createAssetWriteoff(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.createAssetWriteoffRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -9322,6 +9510,57 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Deletes a asset writeoff
+     */
+    async deleteAssetWriteoffRaw(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a asset writeoff
+     */
+    async deleteAssetWriteoff(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteAssetWriteoffRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Deletes a credit loan
      */
     async deleteCreditLoanRaw(requestParameters: DeleteCreditLoanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -11181,6 +11420,103 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getAsset(requestParameters: GetAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset> {
         const response = await this.getAssetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a asset writeoff
+     */
+    async getAssetWriteoffRaw(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a asset writeoff
+     */
+    async getAssetWriteoff(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.getAssetWriteoffRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a asset writeoffs
+     */
+    async getAssetWriteoffsRaw(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getAssetWriteoffs().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getAssetWriteoffs().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a asset writeoffs
+     */
+    async getAssetWriteoffs(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.getAssetWriteoffsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -13918,6 +14254,44 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response> {
         const response = await this.getProfilePlanRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    async getProfileStatusRaw(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileStatus200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileStatus().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/status`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileStatus200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    async getProfileStatus(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileStatus200Response> {
+        const response = await this.getProfileStatusRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -17914,6 +18288,61 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async updateAsset(requestParameters: UpdateAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset> {
         const response = await this.updateAssetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates a asset writeoff
+     */
+    async updateAssetWriteoffRaw(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAssetWriteoffRequestToJSON(requestParameters['updateAssetWriteoffRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a asset writeoff
+     */
+    async updateAssetWriteoff(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.updateAssetWriteoffRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

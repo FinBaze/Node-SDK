@@ -16,75 +16,75 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+ * @interface GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
  */
-export interface SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner {
+export interface GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner {
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     taxCode: string;
     /**
      * 
      * @type {number}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     tax: number;
     /**
      * 
      * @type {number}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     price: number;
     /**
      * 
      * @type {number}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     quantity: number;
     /**
      * 
      * @type {number}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     discount?: number;
     /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner
      */
     readonly created: Date;
 }
 
 /**
- * Check if a given object implements the SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner interface.
+ * Check if a given object implements the GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner interface.
  */
-export function instanceOfSalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner(value: object): value is SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner {
+export function instanceOfGetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner(value: object): value is GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('taxCode' in value) || value['taxCode'] === undefined) return false;
@@ -96,11 +96,11 @@ export function instanceOfSalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInn
     return true;
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSON(json: any): SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner {
-    return SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSONTyped(json, false);
+export function GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerFromJSON(json: any): GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner {
+    return GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerFromJSONTyped(json, false);
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner {
+export function GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner {
     if (json == null) {
         return json;
     }
@@ -119,11 +119,11 @@ export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerFromJSON
     };
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSON(json: any): SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner {
-    return SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped(json, false);
+export function GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerToJSON(json: any): GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner {
+    return GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped(json, false);
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped(value?: Omit<SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInnerToJSONTyped(value?: Omit<GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner, 'id'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

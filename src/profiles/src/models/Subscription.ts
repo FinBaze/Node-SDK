@@ -20,6 +20,13 @@ import {
     SubscriptionEmbeddedToJSON,
     SubscriptionEmbeddedToJSONTyped,
 } from './SubscriptionEmbedded';
+import type { GetProfileStatus200ResponseEmbeddedSubscriptionAmounts } from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
+import {
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSONTyped,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSONTyped,
+} from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -34,13 +41,6 @@ import {
     SubscriptionFrequencyToJSON,
     SubscriptionFrequencyToJSONTyped,
 } from './SubscriptionFrequency';
-import type { SubscriptionAmounts } from './SubscriptionAmounts';
-import {
-    SubscriptionAmountsFromJSON,
-    SubscriptionAmountsFromJSONTyped,
-    SubscriptionAmountsToJSON,
-    SubscriptionAmountsToJSONTyped,
-} from './SubscriptionAmounts';
 
 /**
  * 
@@ -104,10 +104,10 @@ export interface Subscription {
     closed?: Date;
     /**
      * 
-     * @type {SubscriptionAmounts}
+     * @type {GetProfileStatus200ResponseEmbeddedSubscriptionAmounts}
      * @memberof Subscription
      */
-    amounts: SubscriptionAmounts;
+    amounts: GetProfileStatus200ResponseEmbeddedSubscriptionAmounts;
     /**
      * 
      * @type {SubscriptionFrequency}
@@ -186,7 +186,7 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'endDate': json['end-date'] == null ? undefined : (new Date(json['end-date'])),
         'canceled': json['canceled'] == null ? undefined : (new Date(json['canceled'])),
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
-        'amounts': SubscriptionAmountsFromJSON(json['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON(json['amounts']),
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': SubscriptionEmbeddedFromJSON(json['_embedded']),
@@ -214,7 +214,7 @@ export function SubscriptionToJSONTyped(value?: Omit<Subscription, 'id'|'uuid'|'
         'end-date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString().substring(0,10)),
         'canceled': value['canceled'] == null ? undefined : ((value['canceled']).toISOString().substring(0,10)),
         'closed': value['closed'] == null ? undefined : ((value['closed']).toISOString().substring(0,10)),
-        'amounts': SubscriptionAmountsToJSON(value['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON(value['amounts']),
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
         '_embedded': SubscriptionEmbeddedToJSON(value['embedded']),

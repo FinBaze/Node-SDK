@@ -13,13 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
-import type { SalesInvoicePublicEmbeddedSubscriptionEmbedded } from './SalesInvoicePublicEmbeddedSubscriptionEmbedded';
+import type { GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded } from './GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded';
 import {
-    SalesInvoicePublicEmbeddedSubscriptionEmbeddedFromJSON,
-    SalesInvoicePublicEmbeddedSubscriptionEmbeddedFromJSONTyped,
-    SalesInvoicePublicEmbeddedSubscriptionEmbeddedToJSON,
-    SalesInvoicePublicEmbeddedSubscriptionEmbeddedToJSONTyped,
-} from './SalesInvoicePublicEmbeddedSubscriptionEmbedded';
+    GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedFromJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedFromJSONTyped,
+    GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedToJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedToJSONTyped,
+} from './GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded';
+import type { GetProfileStatus200ResponseEmbeddedSubscriptionAmounts } from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
+import {
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSONTyped,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSONTyped,
+} from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
 import type { SubscriptionFrequency } from './SubscriptionFrequency';
 import {
     SubscriptionFrequencyFromJSON,
@@ -27,108 +34,101 @@ import {
     SubscriptionFrequencyToJSON,
     SubscriptionFrequencyToJSONTyped,
 } from './SubscriptionFrequency';
-import type { SubscriptionAmounts } from './SubscriptionAmounts';
-import {
-    SubscriptionAmountsFromJSON,
-    SubscriptionAmountsFromJSONTyped,
-    SubscriptionAmountsToJSON,
-    SubscriptionAmountsToJSONTyped,
-} from './SubscriptionAmounts';
 
 /**
  * 
  * @export
- * @interface SalesInvoicePublicEmbeddedSubscription
+ * @interface GetProfileStatus200ResponseEmbeddedSubscription
  */
-export interface SalesInvoicePublicEmbeddedSubscription {
+export interface GetProfileStatus200ResponseEmbeddedSubscription {
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     readonly uuid: string;
     /**
      * ISO 3166-1 alpha-2 currency code
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     currency: string;
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     relation?: string;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     startDate: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     endDate?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     canceled?: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     closed?: Date;
     /**
      * 
-     * @type {SubscriptionAmounts}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @type {GetProfileStatus200ResponseEmbeddedSubscriptionAmounts}
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
-    amounts: SubscriptionAmounts;
+    amounts: GetProfileStatus200ResponseEmbeddedSubscriptionAmounts;
     /**
      * 
      * @type {SubscriptionFrequency}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     frequency: SubscriptionFrequency;
     /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     metadata?: { [key: string]: any; };
     /**
      * 
-     * @type {SalesInvoicePublicEmbeddedSubscriptionEmbedded}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @type {GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded}
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
-    embedded: SalesInvoicePublicEmbeddedSubscriptionEmbedded;
+    embedded: GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof SalesInvoicePublicEmbeddedSubscription
+     * @memberof GetProfileStatus200ResponseEmbeddedSubscription
      */
     readonly created: Date;
 }
@@ -136,9 +136,9 @@ export interface SalesInvoicePublicEmbeddedSubscription {
 
 
 /**
- * Check if a given object implements the SalesInvoicePublicEmbeddedSubscription interface.
+ * Check if a given object implements the GetProfileStatus200ResponseEmbeddedSubscription interface.
  */
-export function instanceOfSalesInvoicePublicEmbeddedSubscription(value: object): value is SalesInvoicePublicEmbeddedSubscription {
+export function instanceOfGetProfileStatus200ResponseEmbeddedSubscription(value: object): value is GetProfileStatus200ResponseEmbeddedSubscription {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
@@ -152,11 +152,11 @@ export function instanceOfSalesInvoicePublicEmbeddedSubscription(value: object):
     return true;
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionFromJSON(json: any): SalesInvoicePublicEmbeddedSubscription {
-    return SalesInvoicePublicEmbeddedSubscriptionFromJSONTyped(json, false);
+export function GetProfileStatus200ResponseEmbeddedSubscriptionFromJSON(json: any): GetProfileStatus200ResponseEmbeddedSubscription {
+    return GetProfileStatus200ResponseEmbeddedSubscriptionFromJSONTyped(json, false);
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SalesInvoicePublicEmbeddedSubscription {
+export function GetProfileStatus200ResponseEmbeddedSubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProfileStatus200ResponseEmbeddedSubscription {
     if (json == null) {
         return json;
     }
@@ -171,20 +171,20 @@ export function SalesInvoicePublicEmbeddedSubscriptionFromJSONTyped(json: any, i
         'endDate': json['end-date'] == null ? undefined : (new Date(json['end-date'])),
         'canceled': json['canceled'] == null ? undefined : (new Date(json['canceled'])),
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
-        'amounts': SubscriptionAmountsFromJSON(json['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON(json['amounts']),
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'embedded': SalesInvoicePublicEmbeddedSubscriptionEmbeddedFromJSON(json['_embedded']),
+        'embedded': GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionToJSON(json: any): SalesInvoicePublicEmbeddedSubscription {
-    return SalesInvoicePublicEmbeddedSubscriptionToJSONTyped(json, false);
+export function GetProfileStatus200ResponseEmbeddedSubscriptionToJSON(json: any): GetProfileStatus200ResponseEmbeddedSubscription {
+    return GetProfileStatus200ResponseEmbeddedSubscriptionToJSONTyped(json, false);
 }
 
-export function SalesInvoicePublicEmbeddedSubscriptionToJSONTyped(value?: Omit<SalesInvoicePublicEmbeddedSubscription, 'id'|'uuid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetProfileStatus200ResponseEmbeddedSubscriptionToJSONTyped(value?: Omit<GetProfileStatus200ResponseEmbeddedSubscription, 'id'|'uuid'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -198,10 +198,10 @@ export function SalesInvoicePublicEmbeddedSubscriptionToJSONTyped(value?: Omit<S
         'end-date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString().substring(0,10)),
         'canceled': value['canceled'] == null ? undefined : ((value['canceled']).toISOString().substring(0,10)),
         'closed': value['closed'] == null ? undefined : ((value['closed']).toISOString().substring(0,10)),
-        'amounts': SubscriptionAmountsToJSON(value['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON(value['amounts']),
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
-        '_embedded': SalesInvoicePublicEmbeddedSubscriptionEmbeddedToJSON(value['embedded']),
+        '_embedded': GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedToJSON(value['embedded']),
     };
 }
 

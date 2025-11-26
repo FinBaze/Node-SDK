@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetProfileStatus200ResponseEmbeddedSubscriptionAmounts } from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
+import {
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSONTyped,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSONTyped,
+} from './GetProfileStatus200ResponseEmbeddedSubscriptionAmounts';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -34,13 +41,6 @@ import {
     ObligationEmbeddedToJSON,
     ObligationEmbeddedToJSONTyped,
 } from './ObligationEmbedded';
-import type { SubscriptionAmounts } from './SubscriptionAmounts';
-import {
-    SubscriptionAmountsFromJSON,
-    SubscriptionAmountsFromJSONTyped,
-    SubscriptionAmountsToJSON,
-    SubscriptionAmountsToJSONTyped,
-} from './SubscriptionAmounts';
 
 /**
  * 
@@ -110,10 +110,10 @@ export interface Obligation {
     closed?: Date;
     /**
      * 
-     * @type {SubscriptionAmounts}
+     * @type {GetProfileStatus200ResponseEmbeddedSubscriptionAmounts}
      * @memberof Obligation
      */
-    amounts: SubscriptionAmounts;
+    amounts: GetProfileStatus200ResponseEmbeddedSubscriptionAmounts;
     /**
      * 
      * @type {SubscriptionFrequency}
@@ -193,7 +193,7 @@ export function ObligationFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'canceled': json['canceled'] == null ? undefined : (new Date(json['canceled'])),
         'renewal': json['renewal'] == null ? undefined : (new Date(json['renewal'])),
         'closed': json['closed'] == null ? undefined : (new Date(json['closed'])),
-        'amounts': SubscriptionAmountsFromJSON(json['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsFromJSON(json['amounts']),
         'frequency': SubscriptionFrequencyFromJSON(json['frequency']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'embedded': ObligationEmbeddedFromJSON(json['_embedded']),
@@ -222,7 +222,7 @@ export function ObligationToJSONTyped(value?: Omit<Obligation, 'id'|'uuid'|'upda
         'canceled': value['canceled'] == null ? undefined : ((value['canceled']).toISOString().substring(0,10)),
         'renewal': value['renewal'] == null ? undefined : ((value['renewal']).toISOString().substring(0,10)),
         'closed': value['closed'] == null ? undefined : ((value['closed']).toISOString().substring(0,10)),
-        'amounts': SubscriptionAmountsToJSON(value['amounts']),
+        'amounts': GetProfileStatus200ResponseEmbeddedSubscriptionAmountsToJSON(value['amounts']),
         'frequency': SubscriptionFrequencyToJSON(value['frequency']),
         'metadata': value['metadata'],
         '_embedded': ObligationEmbeddedToJSON(value['embedded']),

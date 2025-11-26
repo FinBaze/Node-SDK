@@ -10,9 +10,11 @@ src/models/Account.ts
 src/models/Address.ts
 src/models/App.ts
 src/models/Asset.ts
+src/models/AssetWriteoff.ts
 src/models/Bookkeeper.ts
 src/models/CloseSalesInvoiceRequest.ts
 src/models/CreateAssetRequest.ts
+src/models/CreateAssetWriteoffRequest.ts
 src/models/CreateChat200Response.ts
 src/models/CreateChat200ResponseMessagesInner.ts
 src/models/CreateChat200ResponseMessagesInnerFunctionsValueInner.ts
@@ -143,6 +145,12 @@ src/models/GetProfileOutgoingPurchaseInvoices200ResponseValue.ts
 src/models/GetProfilePlan200Response.ts
 src/models/GetProfilePlan200ResponseEmbedded.ts
 src/models/GetProfilePlan200ResponseEmbeddedPlan.ts
+src/models/GetProfileStatus200Response.ts
+src/models/GetProfileStatus200ResponseEmbedded.ts
+src/models/GetProfileStatus200ResponseEmbeddedSubscription.ts
+src/models/GetProfileStatus200ResponseEmbeddedSubscriptionAmounts.ts
+src/models/GetProfileStatus200ResponseEmbeddedSubscriptionEmbedded.ts
+src/models/GetProfileStatus200ResponseEmbeddedSubscriptionEmbeddedLinesInner.ts
 src/models/GetProjects200Response.ts
 src/models/GetProjectsTimes200Response.ts
 src/models/GetPurchaseInvoicePaymentBatches200Response.ts
@@ -247,9 +255,6 @@ src/models/SalesInvoicePublic.ts
 src/models/SalesInvoicePublicEmbedded.ts
 src/models/SalesInvoicePublicEmbeddedLinesInner.ts
 src/models/SalesInvoicePublicEmbeddedSettings.ts
-src/models/SalesInvoicePublicEmbeddedSubscription.ts
-src/models/SalesInvoicePublicEmbeddedSubscriptionEmbedded.ts
-src/models/SalesInvoicePublicEmbeddedSubscriptionEmbeddedLinesInner.ts
 src/models/SendSalesInvoiceRequest.ts
 src/models/ServerError.ts
 src/models/SoftclosePurchaseInvoiceRequest.ts
@@ -262,7 +267,6 @@ src/models/SubscribeProfilePlan201Response.ts
 src/models/SubscribeProfilePlanRequest.ts
 src/models/SubscribeProfilePlanRequestOpenbanking.ts
 src/models/Subscription.ts
-src/models/SubscriptionAmounts.ts
 src/models/SubscriptionEmbedded.ts
 src/models/SubscriptionFrequency.ts
 src/models/SubscriptionLine.ts
@@ -270,6 +274,7 @@ src/models/TaxCode.ts
 src/models/Type.ts
 src/models/UnauthorisedError.ts
 src/models/UndisputePurchaseInvoiceRequest.ts
+src/models/UpdateAssetWriteoffRequest.ts
 src/models/UpdateCreditLoanRequest.ts
 src/models/UpdateCurrentAccountRequest.ts
 src/models/UpdatePackingSlibRequest.ts
