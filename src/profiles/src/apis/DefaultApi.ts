@@ -1713,6 +1713,10 @@ export interface GetSalesInvoicesRequest {
     amount?: GetAllMonetaryAccountPaymentsAmountParameter;
 }
 
+export interface GetSalesInvoicesTAXCodesRequest {
+    profileId: string;
+}
+
 export interface GetStockCategoriesRequest {
     profileId: string;
 }
@@ -4095,12 +4099,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    getMemorialEntryRaw(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MemorialEntry>>>;
+    getMemorialEntryRaw(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialEntry>>;
 
     /**
      * Returns a memorial entry
      */
-    getMemorialEntry(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MemorialEntry>>;
+    getMemorialEntry(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialEntry>;
 
     /**
      * Returns a monetary account
@@ -5432,6 +5436,20 @@ export interface DefaultApiInterface {
     getSalesInvoices(requestParameters: GetSalesInvoicesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSalesInvoices200Response>;
 
     /**
+     * Returns all VAT codes usable for sales invoices
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getSalesInvoicesTAXCodesRaw(requestParameters: GetSalesInvoicesTAXCodesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>>;
+
+    /**
+     * Returns all VAT codes usable for sales invoices
+     */
+    getSalesInvoicesTAXCodes(requestParameters: GetSalesInvoicesTAXCodesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>>;
+
+    /**
      * Returns all stock categories
      * @param {string} profileId The id of the profile
      * @param {*} [options] Override http request option.
@@ -6185,12 +6203,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateMemorialEntryRaw(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MemorialEntry>>>;
+    updateMemorialEntryRaw(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialEntry>>;
 
     /**
      * Updates a memorial entry
      */
-    updateMemorialEntry(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MemorialEntry>>;
+    updateMemorialEntry(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialEntry>;
 
     /**
      * Updates a monetary account
@@ -12222,7 +12240,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns a memorial entry
      */
-    async getMemorialEntryRaw(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MemorialEntry>>> {
+    async getMemorialEntryRaw(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialEntry>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -12253,13 +12271,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MemorialEntryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MemorialEntryFromJSON(jsonValue));
     }
 
     /**
      * Returns a memorial entry
      */
-    async getMemorialEntry(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MemorialEntry>> {
+    async getMemorialEntry(requestParameters: GetMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialEntry> {
         const response = await this.getMemorialEntryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -16353,6 +16371,44 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns all VAT codes usable for sales invoices
+     */
+    async getSalesInvoicesTAXCodesRaw(requestParameters: GetSalesInvoicesTAXCodesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getSalesInvoicesTAXCodes().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/sales-invoices/tax-codes`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Returns all VAT codes usable for sales invoices
+     */
+    async getSalesInvoicesTAXCodes(requestParameters: GetSalesInvoicesTAXCodesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.getSalesInvoicesTAXCodesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns all stock categories
      */
     async getStockCategoriesRaw(requestParameters: GetStockCategoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>> {
@@ -18634,7 +18690,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a memorial entry
      */
-    async updateMemorialEntryRaw(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MemorialEntry>>> {
+    async updateMemorialEntryRaw(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialEntry>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -18668,13 +18724,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateMemorialEntryRequestToJSON(requestParameters['createMemorialEntryRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MemorialEntryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MemorialEntryFromJSON(jsonValue));
     }
 
     /**
      * Updates a memorial entry
      */
-    async updateMemorialEntry(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MemorialEntry>> {
+    async updateMemorialEntry(requestParameters: UpdateMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialEntry> {
         const response = await this.updateMemorialEntryRaw(requestParameters, initOverrides);
         return await response.value();
     }
