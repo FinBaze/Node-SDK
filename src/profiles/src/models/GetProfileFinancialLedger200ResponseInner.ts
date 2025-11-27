@@ -33,6 +33,12 @@ export interface GetProfileFinancialLedger200ResponseInner {
     correlation?: string;
     /**
      * 
+     * @type {string}
+     * @memberof GetProfileFinancialLedger200ResponseInner
+     */
+    kind?: GetProfileFinancialLedger200ResponseInnerKindEnum;
+    /**
+     * 
      * @type {number}
      * @memberof GetProfileFinancialLedger200ResponseInner
      */
@@ -43,6 +49,12 @@ export interface GetProfileFinancialLedger200ResponseInner {
      * @memberof GetProfileFinancialLedger200ResponseInner
      */
     description: string;
+    /**
+     * Project ID that this booking relates to
+     * @type {string}
+     * @memberof GetProfileFinancialLedger200ResponseInner
+     */
+    project?: string;
     /**
      * 
      * @type {string}
@@ -75,6 +87,19 @@ export interface GetProfileFinancialLedger200ResponseInner {
     created: Date;
 }
 
+
+/**
+ * @export
+ */
+export const GetProfileFinancialLedger200ResponseInnerKindEnum = {
+    Debit: 'debit',
+    Credit: 'credit',
+    Assets: 'assets',
+    Liabilities: 'liabilities'
+} as const;
+export type GetProfileFinancialLedger200ResponseInnerKindEnum = typeof GetProfileFinancialLedger200ResponseInnerKindEnum[keyof typeof GetProfileFinancialLedger200ResponseInnerKindEnum];
+
+
 /**
  * Check if a given object implements the GetProfileFinancialLedger200ResponseInner interface.
  */
@@ -101,8 +126,10 @@ export function GetProfileFinancialLedger200ResponseInnerFromJSONTyped(json: any
         
         'id': json['id'],
         'correlation': json['correlation'] == null ? undefined : json['correlation'],
+        'kind': json['kind'] == null ? undefined : json['kind'],
         'amount': json['amount'],
         'description': json['description'],
+        'project': json['project'] == null ? undefined : json['project'],
         'type': json['type'],
         'ledger': json['ledger'],
         'date': (new Date(json['date'])),
@@ -124,8 +151,10 @@ export function GetProfileFinancialLedger200ResponseInnerToJSONTyped(value?: Get
         
         'id': value['id'],
         'correlation': value['correlation'],
+        'kind': value['kind'],
         'amount': value['amount'],
         'description': value['description'],
+        'project': value['project'],
         'type': value['type'],
         'ledger': value['ledger'],
         'date': ((value['date']).toISOString().substring(0,10)),

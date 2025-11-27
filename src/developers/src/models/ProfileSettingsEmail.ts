@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProfileSettingsEmailSmtp } from './ProfileSettingsEmailSmtp';
+import {
+    ProfileSettingsEmailSmtpFromJSON,
+    ProfileSettingsEmailSmtpFromJSONTyped,
+    ProfileSettingsEmailSmtpToJSON,
+    ProfileSettingsEmailSmtpToJSONTyped,
+} from './ProfileSettingsEmailSmtp';
+
 /**
  * 
  * @export
@@ -33,10 +41,10 @@ export interface ProfileSettingsEmail {
     name?: string;
     /**
      * 
-     * @type {any}
+     * @type {ProfileSettingsEmailSmtp}
      * @memberof ProfileSettingsEmail
      */
-    smtp?: any | null;
+    smtp?: ProfileSettingsEmailSmtp;
 }
 
 /**
@@ -58,7 +66,7 @@ export function ProfileSettingsEmailFromJSONTyped(json: any, ignoreDiscriminator
         
         'email': json['email'] == null ? undefined : json['email'],
         'name': json['name'] == null ? undefined : json['name'],
-        'smtp': json['smtp'] == null ? undefined : json['smtp'],
+        'smtp': json['smtp'] == null ? undefined : ProfileSettingsEmailSmtpFromJSON(json['smtp']),
     };
 }
 
@@ -75,7 +83,7 @@ export function ProfileSettingsEmailToJSONTyped(value?: ProfileSettingsEmail | n
         
         'email': value['email'],
         'name': value['name'],
-        'smtp': value['smtp'],
+        'smtp': ProfileSettingsEmailSmtpToJSON(value['smtp']),
     };
 }
 

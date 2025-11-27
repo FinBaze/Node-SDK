@@ -32,8 +32,8 @@ export interface AuthorizeOAuth2Request {
     clientId: string;
     redirectUri: string;
     state: string;
-    scope?: string;
-    responseType?: AuthorizeOAuth2ResponseTypeEnum;
+    scope: string;
+    responseType: AuthorizeOAuth2ResponseTypeEnum;
 }
 
 export interface GetAppRequest {
@@ -65,8 +65,8 @@ export interface DefaultApiInterface {
      * @param {string} clientId The Client ID assigned by us
      * @param {string} redirectUri The Client ID assigned by you with us
      * @param {string} state Unique identifier of the request
-     * @param {string} [scope] Space seperated list of all the scopes
-     * @param {'code'} [responseType] Response type
+     * @param {string} scope Space seperated list of all the scopes
+     * @param {'code'} responseType Response type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -157,7 +157,41 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             );
         }
 
+        if (requestParameters['scope'] == null) {
+            throw new runtime.RequiredError(
+                'scope',
+                'Required parameter "scope" was null or undefined when calling authorizeOAuth2().'
+            );
+        }
+
+        if (requestParameters['responseType'] == null) {
+            throw new runtime.RequiredError(
+                'responseType',
+                'Required parameter "responseType" was null or undefined when calling authorizeOAuth2().'
+            );
+        }
+
         const queryParameters: any = {};
+
+        if (requestParameters['clientId'] != null) {
+            queryParameters['client_id'] = requestParameters['clientId'];
+        }
+
+        if (requestParameters['redirectUri'] != null) {
+            queryParameters['redirect_uri'] = requestParameters['redirectUri'];
+        }
+
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
+        }
+
+        if (requestParameters['scope'] != null) {
+            queryParameters['scope'] = requestParameters['scope'];
+        }
+
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -167,7 +201,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/oauth2/authorize`.replace(`{${"client_id"}}`, encodeURIComponent(String(requestParameters['clientId']))).replace(`{${"redirect_uri"}}`, encodeURIComponent(String(requestParameters['redirectUri']))).replace(`{${"state"}}`, encodeURIComponent(String(requestParameters['state']))).replace(`{${"scope"}}`, encodeURIComponent(String(requestParameters['scope']))).replace(`{${"response_type"}}`, encodeURIComponent(String(requestParameters['responseType']))),
+            path: `/v1/oauth2/authorize`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

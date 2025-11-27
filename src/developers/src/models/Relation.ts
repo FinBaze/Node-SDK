@@ -62,6 +62,12 @@ export interface Relation {
      */
     readonly id: string;
     /**
+     * 
+     * @type {string}
+     * @memberof Relation
+     */
+    readonly uuid: string;
+    /**
      * Display name based on the legal name, first, middle, and last name
      * @type {string}
      * @memberof Relation
@@ -188,6 +194,7 @@ export type RelationTagsEnum = typeof RelationTagsEnum[keyof typeof RelationTags
  */
 export function instanceOfRelation(value: object): value is Relation {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('uuid' in value) || value['uuid'] === undefined) return false;
     if (!('tags' in value) || value['tags'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('firstName' in value) || value['firstName'] === undefined) return false;
@@ -211,6 +218,7 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'id': json['id'],
+        'uuid': json['uuid'],
         'name': json['name'] == null ? undefined : json['name'],
         'tags': json['tags'],
         'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
@@ -235,7 +243,7 @@ export function RelationToJSON(json: any): Relation {
     return RelationToJSONTyped(json, false);
 }
 
-export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'name'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'uuid'|'name'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

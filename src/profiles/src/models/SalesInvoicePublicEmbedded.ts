@@ -20,13 +20,6 @@ import {
     ProfilePublicToJSON,
     ProfilePublicToJSONTyped,
 } from './ProfilePublic';
-import type { SalesInvoicePublicEmbeddedSubscription } from './SalesInvoicePublicEmbeddedSubscription';
-import {
-    SalesInvoicePublicEmbeddedSubscriptionFromJSON,
-    SalesInvoicePublicEmbeddedSubscriptionFromJSONTyped,
-    SalesInvoicePublicEmbeddedSubscriptionToJSON,
-    SalesInvoicePublicEmbeddedSubscriptionToJSONTyped,
-} from './SalesInvoicePublicEmbeddedSubscription';
 import type { SalesInvoicePublicEmbeddedLinesInner } from './SalesInvoicePublicEmbeddedLinesInner';
 import {
     SalesInvoicePublicEmbeddedLinesInnerFromJSON,
@@ -34,6 +27,13 @@ import {
     SalesInvoicePublicEmbeddedLinesInnerToJSON,
     SalesInvoicePublicEmbeddedLinesInnerToJSONTyped,
 } from './SalesInvoicePublicEmbeddedLinesInner';
+import type { GetProfileStatus200ResponseEmbeddedSubscription } from './GetProfileStatus200ResponseEmbeddedSubscription';
+import {
+    GetProfileStatus200ResponseEmbeddedSubscriptionFromJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionFromJSONTyped,
+    GetProfileStatus200ResponseEmbeddedSubscriptionToJSON,
+    GetProfileStatus200ResponseEmbeddedSubscriptionToJSONTyped,
+} from './GetProfileStatus200ResponseEmbeddedSubscription';
 import type { SalesInvoicePublicEmbeddedSettings } from './SalesInvoicePublicEmbeddedSettings';
 import {
     SalesInvoicePublicEmbeddedSettingsFromJSON,
@@ -68,10 +68,10 @@ export interface SalesInvoicePublicEmbedded {
     profile: ProfilePublic;
     /**
      * 
-     * @type {SalesInvoicePublicEmbeddedSubscription}
+     * @type {GetProfileStatus200ResponseEmbeddedSubscription}
      * @memberof SalesInvoicePublicEmbedded
      */
-    subscription?: SalesInvoicePublicEmbeddedSubscription;
+    subscription?: GetProfileStatus200ResponseEmbeddedSubscription;
 }
 
 /**
@@ -97,7 +97,7 @@ export function SalesInvoicePublicEmbeddedFromJSONTyped(json: any, ignoreDiscrim
         'settings': SalesInvoicePublicEmbeddedSettingsFromJSON(json['settings']),
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerFromJSON)),
         'profile': ProfilePublicFromJSON(json['profile']),
-        'subscription': json['subscription'] == null ? undefined : SalesInvoicePublicEmbeddedSubscriptionFromJSON(json['subscription']),
+        'subscription': json['subscription'] == null ? undefined : GetProfileStatus200ResponseEmbeddedSubscriptionFromJSON(json['subscription']),
     };
 }
 
@@ -115,7 +115,7 @@ export function SalesInvoicePublicEmbeddedToJSONTyped(value?: SalesInvoicePublic
         'settings': SalesInvoicePublicEmbeddedSettingsToJSON(value['settings']),
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerToJSON)),
         'profile': ProfilePublicToJSON(value['profile']),
-        'subscription': SalesInvoicePublicEmbeddedSubscriptionToJSON(value['subscription']),
+        'subscription': GetProfileStatus200ResponseEmbeddedSubscriptionToJSON(value['subscription']),
     };
 }
 

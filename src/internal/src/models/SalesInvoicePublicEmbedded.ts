@@ -20,6 +20,13 @@ import {
     ProfilePublicToJSON,
     ProfilePublicToJSONTyped,
 } from './ProfilePublic';
+import type { GetReminderPublic200ResponseEmbeddedSettings } from './GetReminderPublic200ResponseEmbeddedSettings';
+import {
+    GetReminderPublic200ResponseEmbeddedSettingsFromJSON,
+    GetReminderPublic200ResponseEmbeddedSettingsFromJSONTyped,
+    GetReminderPublic200ResponseEmbeddedSettingsToJSON,
+    GetReminderPublic200ResponseEmbeddedSettingsToJSONTyped,
+} from './GetReminderPublic200ResponseEmbeddedSettings';
 import type { SalesInvoicePublicEmbeddedLinesInner } from './SalesInvoicePublicEmbeddedLinesInner';
 import {
     SalesInvoicePublicEmbeddedLinesInnerFromJSON,
@@ -34,13 +41,6 @@ import {
     GetSubscriptionPublic200ResponseToJSON,
     GetSubscriptionPublic200ResponseToJSONTyped,
 } from './GetSubscriptionPublic200Response';
-import type { SalesInvoicePublicEmbeddedSettings } from './SalesInvoicePublicEmbeddedSettings';
-import {
-    SalesInvoicePublicEmbeddedSettingsFromJSON,
-    SalesInvoicePublicEmbeddedSettingsFromJSONTyped,
-    SalesInvoicePublicEmbeddedSettingsToJSON,
-    SalesInvoicePublicEmbeddedSettingsToJSONTyped,
-} from './SalesInvoicePublicEmbeddedSettings';
 
 /**
  * 
@@ -50,10 +50,10 @@ import {
 export interface SalesInvoicePublicEmbedded {
     /**
      * 
-     * @type {SalesInvoicePublicEmbeddedSettings}
+     * @type {GetReminderPublic200ResponseEmbeddedSettings}
      * @memberof SalesInvoicePublicEmbedded
      */
-    settings: SalesInvoicePublicEmbeddedSettings;
+    settings: GetReminderPublic200ResponseEmbeddedSettings;
     /**
      * 
      * @type {Array<SalesInvoicePublicEmbeddedLinesInner>}
@@ -94,7 +94,7 @@ export function SalesInvoicePublicEmbeddedFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'settings': SalesInvoicePublicEmbeddedSettingsFromJSON(json['settings']),
+        'settings': GetReminderPublic200ResponseEmbeddedSettingsFromJSON(json['settings']),
         'lines': ((json['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerFromJSON)),
         'profile': ProfilePublicFromJSON(json['profile']),
         'subscription': json['subscription'] == null ? undefined : GetSubscriptionPublic200ResponseFromJSON(json['subscription']),
@@ -112,7 +112,7 @@ export function SalesInvoicePublicEmbeddedToJSONTyped(value?: SalesInvoicePublic
 
     return {
         
-        'settings': SalesInvoicePublicEmbeddedSettingsToJSON(value['settings']),
+        'settings': GetReminderPublic200ResponseEmbeddedSettingsToJSON(value['settings']),
         'lines': ((value['lines'] as Array<any>).map(SalesInvoicePublicEmbeddedLinesInnerToJSON)),
         'profile': ProfilePublicToJSON(value['profile']),
         'subscription': GetSubscriptionPublic200ResponseToJSON(value['subscription']),

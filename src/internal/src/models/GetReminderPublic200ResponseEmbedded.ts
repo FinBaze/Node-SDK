@@ -20,6 +20,13 @@ import {
     ProfilePublicToJSON,
     ProfilePublicToJSONTyped,
 } from './ProfilePublic';
+import type { GetReminderPublic200ResponseEmbeddedSettings } from './GetReminderPublic200ResponseEmbeddedSettings';
+import {
+    GetReminderPublic200ResponseEmbeddedSettingsFromJSON,
+    GetReminderPublic200ResponseEmbeddedSettingsFromJSONTyped,
+    GetReminderPublic200ResponseEmbeddedSettingsToJSON,
+    GetReminderPublic200ResponseEmbeddedSettingsToJSONTyped,
+} from './GetReminderPublic200ResponseEmbeddedSettings';
 import type { SalesInvoicePublic } from './SalesInvoicePublic';
 import {
     SalesInvoicePublicFromJSON,
@@ -34,6 +41,12 @@ import {
  * @interface GetReminderPublic200ResponseEmbedded
  */
 export interface GetReminderPublic200ResponseEmbedded {
+    /**
+     * 
+     * @type {GetReminderPublic200ResponseEmbeddedSettings}
+     * @memberof GetReminderPublic200ResponseEmbedded
+     */
+    settings: GetReminderPublic200ResponseEmbeddedSettings;
     /**
      * 
      * @type {Array<SalesInvoicePublic>}
@@ -52,6 +65,7 @@ export interface GetReminderPublic200ResponseEmbedded {
  * Check if a given object implements the GetReminderPublic200ResponseEmbedded interface.
  */
 export function instanceOfGetReminderPublic200ResponseEmbedded(value: object): value is GetReminderPublic200ResponseEmbedded {
+    if (!('settings' in value) || value['settings'] === undefined) return false;
     if (!('invoices' in value) || value['invoices'] === undefined) return false;
     return true;
 }
@@ -66,6 +80,7 @@ export function GetReminderPublic200ResponseEmbeddedFromJSONTyped(json: any, ign
     }
     return {
         
+        'settings': GetReminderPublic200ResponseEmbeddedSettingsFromJSON(json['settings']),
         'invoices': ((json['invoices'] as Array<any>).map(SalesInvoicePublicFromJSON)),
         'profile': json['profile'] == null ? undefined : ProfilePublicFromJSON(json['profile']),
     };
@@ -82,6 +97,7 @@ export function GetReminderPublic200ResponseEmbeddedToJSONTyped(value?: GetRemin
 
     return {
         
+        'settings': GetReminderPublic200ResponseEmbeddedSettingsToJSON(value['settings']),
         'invoices': ((value['invoices'] as Array<any>).map(SalesInvoicePublicToJSON)),
         'profile': ProfilePublicToJSON(value['profile']),
     };

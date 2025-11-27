@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CreateBookkeeperProfileRequestSettingsEmailSmtp } from './CreateBookkeeperProfileRequestSettingsEmailSmtp';
+import {
+    CreateBookkeeperProfileRequestSettingsEmailSmtpFromJSON,
+    CreateBookkeeperProfileRequestSettingsEmailSmtpFromJSONTyped,
+    CreateBookkeeperProfileRequestSettingsEmailSmtpToJSON,
+    CreateBookkeeperProfileRequestSettingsEmailSmtpToJSONTyped,
+} from './CreateBookkeeperProfileRequestSettingsEmailSmtp';
+
 /**
  * 
  * @export
@@ -33,10 +41,10 @@ export interface CreateBookkeeperProfileRequestSettingsEmail {
     name?: string;
     /**
      * 
-     * @type {any}
+     * @type {CreateBookkeeperProfileRequestSettingsEmailSmtp}
      * @memberof CreateBookkeeperProfileRequestSettingsEmail
      */
-    smtp?: any | null;
+    smtp?: CreateBookkeeperProfileRequestSettingsEmailSmtp;
 }
 
 /**
@@ -58,7 +66,7 @@ export function CreateBookkeeperProfileRequestSettingsEmailFromJSONTyped(json: a
         
         'email': json['email'] == null ? undefined : json['email'],
         'name': json['name'] == null ? undefined : json['name'],
-        'smtp': json['smtp'] == null ? undefined : json['smtp'],
+        'smtp': json['smtp'] == null ? undefined : CreateBookkeeperProfileRequestSettingsEmailSmtpFromJSON(json['smtp']),
     };
 }
 
@@ -75,7 +83,7 @@ export function CreateBookkeeperProfileRequestSettingsEmailToJSONTyped(value?: C
         
         'email': value['email'],
         'name': value['name'],
-        'smtp': value['smtp'],
+        'smtp': CreateBookkeeperProfileRequestSettingsEmailSmtpToJSON(value['smtp']),
     };
 }
 

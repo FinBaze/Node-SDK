@@ -17,8 +17,10 @@ import * as runtime from '../runtime';
 import type {
   Account,
   Asset,
+  AssetWriteoff,
   CloseSalesInvoiceRequest,
   CreateAssetRequest,
+  CreateAssetWriteoffRequest,
   CreateChat200Response,
   CreateChatRequest,
   CreateCreditLoanRequest,
@@ -57,8 +59,8 @@ import type {
   CreateRelationRequest,
   CreateRelationsImportRequest,
   CreateReminderRequest,
-  CreateSalesInvoiceLineRequest,
   CreateSalesInvoiceRequest,
+  CreateSalesInvoiceRequestLinesInner,
   CreateStockCategoryRequest,
   CreateStockLocationRequest,
   CreateSubscriptionBasedOnSalesInvoiceRequest,
@@ -102,6 +104,7 @@ import type {
   GetProfileMetadata200Response,
   GetProfileOutgoingPurchaseInvoices200ResponseValue,
   GetProfilePlan200Response,
+  GetProfileStatus200Response,
   GetProjects200Response,
   GetProjectsTimes200Response,
   GetPurchaseInvoicePaymentBatches200Response,
@@ -115,6 +118,7 @@ import type {
   GetRelationsAutocomplete200Response,
   GetReminders200Response,
   GetSalesInvoices200Response,
+  GetSalesInvoicesSortParameter,
   GetSubscriptions200Response,
   GetVATFilings200Response,
   GetVehicleTrips200Response,
@@ -168,6 +172,7 @@ import type {
   Subscription,
   SubscriptionLine,
   UndisputePurchaseInvoiceRequest,
+  UpdateAssetWriteoffRequest,
   UpdateCreditLoanRequest,
   UpdateCurrentAccountRequest,
   UpdatePackingSlibRequest,
@@ -183,10 +188,14 @@ import {
     AccountToJSON,
     AssetFromJSON,
     AssetToJSON,
+    AssetWriteoffFromJSON,
+    AssetWriteoffToJSON,
     CloseSalesInvoiceRequestFromJSON,
     CloseSalesInvoiceRequestToJSON,
     CreateAssetRequestFromJSON,
     CreateAssetRequestToJSON,
+    CreateAssetWriteoffRequestFromJSON,
+    CreateAssetWriteoffRequestToJSON,
     CreateChat200ResponseFromJSON,
     CreateChat200ResponseToJSON,
     CreateChatRequestFromJSON,
@@ -263,10 +272,10 @@ import {
     CreateRelationsImportRequestToJSON,
     CreateReminderRequestFromJSON,
     CreateReminderRequestToJSON,
-    CreateSalesInvoiceLineRequestFromJSON,
-    CreateSalesInvoiceLineRequestToJSON,
     CreateSalesInvoiceRequestFromJSON,
     CreateSalesInvoiceRequestToJSON,
+    CreateSalesInvoiceRequestLinesInnerFromJSON,
+    CreateSalesInvoiceRequestLinesInnerToJSON,
     CreateStockCategoryRequestFromJSON,
     CreateStockCategoryRequestToJSON,
     CreateStockLocationRequestFromJSON,
@@ -353,6 +362,8 @@ import {
     GetProfileOutgoingPurchaseInvoices200ResponseValueToJSON,
     GetProfilePlan200ResponseFromJSON,
     GetProfilePlan200ResponseToJSON,
+    GetProfileStatus200ResponseFromJSON,
+    GetProfileStatus200ResponseToJSON,
     GetProjects200ResponseFromJSON,
     GetProjects200ResponseToJSON,
     GetProjectsTimes200ResponseFromJSON,
@@ -379,6 +390,8 @@ import {
     GetReminders200ResponseToJSON,
     GetSalesInvoices200ResponseFromJSON,
     GetSalesInvoices200ResponseToJSON,
+    GetSalesInvoicesSortParameterFromJSON,
+    GetSalesInvoicesSortParameterToJSON,
     GetSubscriptions200ResponseFromJSON,
     GetSubscriptions200ResponseToJSON,
     GetVATFilings200ResponseFromJSON,
@@ -485,6 +498,8 @@ import {
     SubscriptionLineToJSON,
     UndisputePurchaseInvoiceRequestFromJSON,
     UndisputePurchaseInvoiceRequestToJSON,
+    UpdateAssetWriteoffRequestFromJSON,
+    UpdateAssetWriteoffRequestToJSON,
     UpdateCreditLoanRequestFromJSON,
     UpdateCreditLoanRequestToJSON,
     UpdateCurrentAccountRequestFromJSON,
@@ -552,6 +567,12 @@ export interface CloseSubscriptionRequest {
 export interface CreateAssetOperationRequest {
     profileId: string;
     createAssetRequest?: CreateAssetRequest;
+}
+
+export interface CreateAssetWriteoffOperationRequest {
+    profileId: string;
+    assetId: string;
+    createAssetWriteoffRequest?: CreateAssetWriteoffRequest;
 }
 
 export interface CreateChatOperationRequest {
@@ -775,10 +796,10 @@ export interface CreateSalesInvoiceOperationRequest {
     createSalesInvoiceRequest?: CreateSalesInvoiceRequest;
 }
 
-export interface CreateSalesInvoiceLineOperationRequest {
+export interface CreateSalesInvoiceLineRequest {
     profileId: string;
     salesInvoiceId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createSalesInvoiceRequestLinesInner?: CreateSalesInvoiceRequestLinesInner;
 }
 
 export interface CreateSalesInvoiceReminderRequest {
@@ -843,6 +864,12 @@ export interface CreditSalesInvoiceOperationRequest {
 export interface DeleteAssetRequest {
     profileId: string;
     assetId: string;
+}
+
+export interface DeleteAssetWriteoffRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
 }
 
 export interface DeleteCreditLoanRequest {
@@ -1063,6 +1090,17 @@ export interface GetAllMonetaryAccountPaymentsRequest {
 }
 
 export interface GetAssetRequest {
+    profileId: string;
+    assetId: string;
+}
+
+export interface GetAssetWriteoffRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
+}
+
+export interface GetAssetWriteoffsRequest {
     profileId: string;
     assetId: string;
 }
@@ -1408,6 +1446,10 @@ export interface GetProfilePlanRequest {
     profileId: string;
 }
 
+export interface GetProfileStatusRequest {
+    profileId: string;
+}
+
 export interface GetProjectRequest {
     profileId: string;
     projectId: string;
@@ -1654,6 +1696,7 @@ export interface GetSalesInvoicesRequest {
     page?: number;
     size?: number;
     search?: string;
+    sort?: GetSalesInvoicesSortParameter;
     reference?: string;
     subscription?: string;
     relation?: string;
@@ -1674,6 +1717,11 @@ export interface GetStockCategoriesRequest {
     profileId: string;
 }
 
+export interface GetStockCategoryRequest {
+    profileId: string;
+    stockCategoryId: string;
+}
+
 export interface GetStockLocationRequest {
     profileId: string;
     stockLocationId: string;
@@ -1681,11 +1729,6 @@ export interface GetStockLocationRequest {
 
 export interface GetStockLocationsRequest {
     profileId: string;
-}
-
-export interface GetStockcategoryRequest {
-    profileId: string;
-    stockCategoryId: string;
 }
 
 export interface GetSubscriptionRequest {
@@ -1913,6 +1956,13 @@ export interface UpdateAssetRequest {
     createAssetRequest?: CreateAssetRequest;
 }
 
+export interface UpdateAssetWriteoffOperationRequest {
+    profileId: string;
+    assetId: string;
+    assetWriteoffId: string;
+    updateAssetWriteoffRequest?: UpdateAssetWriteoffRequest;
+}
+
 export interface UpdateChatRequest {
     profileId: string;
     chatId: string;
@@ -2037,7 +2087,7 @@ export interface UpdatePurchaseInvoiceLineRequest {
 
 export interface UpdatePurchaseInvoicePaymentBatchRequest {
     profileId: string;
-    projectId: string;
+    purchaseInvoicePaymentBatchId: string;
     createPurchaseInvoicePaymentBatchRequest?: CreatePurchaseInvoicePaymentBatchRequest;
 }
 
@@ -2087,17 +2137,19 @@ export interface UpdateSalesInvoiceLineRequest {
     profileId: string;
     salesInvoiceId: string;
     salesInvoiceLineId: string;
-    createSalesInvoiceLineRequest?: CreateSalesInvoiceLineRequest;
+    createSalesInvoiceRequestLinesInner?: CreateSalesInvoiceRequestLinesInner;
 }
 
 export interface UpdateStockCategoryRequest {
     profileId: string;
     stockCategoryId: string;
+    createStockCategoryRequest?: CreateStockCategoryRequest;
 }
 
 export interface UpdateStockLocationRequest {
     profileId: string;
     stockLocationId: string;
+    createStockLocationRequest?: CreateStockLocationRequest;
 }
 
 export interface UpdateSubscriptionRequest {
@@ -2271,6 +2323,22 @@ export interface DefaultApiInterface {
      * Creates a asset
      */
     createAsset(requestParameters: CreateAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
+
+    /**
+     * Creates a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {CreateAssetWriteoffRequest} [createAssetWriteoffRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createAssetWriteoffRaw(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Creates a asset writeoff
+     */
+    createAssetWriteoff(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
 
     /**
      * Creates a chat
@@ -2917,17 +2985,17 @@ export interface DefaultApiInterface {
      * creates a sales invoice line
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceId The id of the sales invoice
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateSalesInvoiceRequestLinesInner} [createSalesInvoiceRequestLinesInner] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>>;
+    createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>>;
 
     /**
      * creates a sales invoice line
      */
-    createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
+    createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
 
     /**
      * Creates a sales invoices reminder with one sales invoice.
@@ -2967,12 +3035,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>>;
+    createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
 
     /**
      * Creates an stock category
      */
-    createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
+    createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Creates an stock location
@@ -2982,12 +3050,12 @@ export interface DefaultApiInterface {
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+    createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>>;
 
     /**
      * Creates an stock location
      */
-    createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+    createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation>;
 
     /**
      * Creates a subscription
@@ -3112,6 +3180,22 @@ export interface DefaultApiInterface {
      * Deletes a asset
      */
     deleteAsset(requestParameters: DeleteAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteAssetWriteoffRaw(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a asset writeoff
+     */
+    deleteAssetWriteoff(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a credit loan
@@ -3734,6 +3818,37 @@ export interface DefaultApiInterface {
      * Returns a asset
      */
     getAsset(requestParameters: GetAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
+
+    /**
+     * Returns a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAssetWriteoffRaw(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Returns a asset writeoff
+     */
+    getAssetWriteoff(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
+
+    /**
+     * Returns a asset writeoffs
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getAssetWriteoffsRaw(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Returns a asset writeoffs
+     */
+    getAssetWriteoffs(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
 
     /**
      * Returns all assets
@@ -4647,6 +4762,20 @@ export interface DefaultApiInterface {
     getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response>;
 
     /**
+     * Retrieves the current subscription status of an profile
+     * @param {string} profileId The id of the profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getProfileStatusRaw(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileStatus200Response>>;
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    getProfileStatus(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileStatus200Response>;
+
+    /**
      * Returns a list of all the profiles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5276,6 +5405,7 @@ export interface DefaultApiInterface {
      * @param {number} [page] Number of the page, starting at 0
      * @param {number} [size] The number of resourced returned in one single page.
      * @param {string} [search] Search the resource
+     * @param {GetSalesInvoicesSortParameter} [sort] Sorting
      * @param {string} [reference] Reference of the sales invoice
      * @param {string} [subscription] Subscription ID to filter to
      * @param {string} [relation] ID of the relation to filter to
@@ -5316,6 +5446,21 @@ export interface DefaultApiInterface {
     getStockCategories(requestParameters: GetStockCategoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
 
     /**
+     * Returns a stock category
+     * @param {string} profileId The id of the profile
+     * @param {string} stockCategoryId The ID of the balance category
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getStockCategoryRaw(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
+
+    /**
+     * Returns a stock category
+     */
+    getStockCategory(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
+
+    /**
      * Returns a stock location
      * @param {string} profileId The id of the profile
      * @param {string} stockLocationId The ID of the stock location
@@ -5343,21 +5488,6 @@ export interface DefaultApiInterface {
      * Returns all stock locations
      */
     getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
-
-    /**
-     * Returns a stock category
-     * @param {string} profileId The id of the profile
-     * @param {string} stockCategoryId The ID of the balance category
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    getStockcategoryRaw(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
-
-    /**
-     * Returns a stock category
-     */
-    getStockcategory(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Returns a subscription
@@ -5935,6 +6065,23 @@ export interface DefaultApiInterface {
     updateAsset(requestParameters: UpdateAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset>;
 
     /**
+     * Updates a asset writeoff
+     * @param {string} profileId The id of the profile
+     * @param {string} assetId The id of the asset
+     * @param {string} assetWriteoffId The ID of the asset writeoff
+     * @param {UpdateAssetWriteoffRequest} [updateAssetWriteoffRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    updateAssetWriteoffRaw(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>>;
+
+    /**
+     * Updates a asset writeoff
+     */
+    updateAssetWriteoff(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff>;
+
+    /**
      * Updates a chat
      * @param {string} profileId The id of the profile
      * @param {string} chatId The id of the chat
@@ -6259,7 +6406,7 @@ export interface DefaultApiInterface {
     /**
      * Updates a payment batch
      * @param {string} profileId The id of the profile
-     * @param {string} projectId The ID of the project
+     * @param {string} purchaseInvoicePaymentBatchId The ID of the purchase invoice payment batch
      * @param {CreatePurchaseInvoicePaymentBatchRequest} [createPurchaseInvoicePaymentBatchRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6389,7 +6536,7 @@ export interface DefaultApiInterface {
      * @param {string} profileId The id of the profile
      * @param {string} salesInvoiceId The id of the sales invoice
      * @param {string} salesInvoiceLineId The id of the sales invoice line
-     * @param {CreateSalesInvoiceLineRequest} [createSalesInvoiceLineRequest] 
+     * @param {CreateSalesInvoiceRequestLinesInner} [createSalesInvoiceRequestLinesInner] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
@@ -6405,31 +6552,33 @@ export interface DefaultApiInterface {
      * Updates a stock category
      * @param {string} profileId The id of the profile
      * @param {string} stockCategoryId The ID of the balance category
+     * @param {CreateStockCategoryRequest} [createStockCategoryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>>;
+    updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>>;
 
     /**
      * Updates a stock category
      */
-    updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>>;
+    updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory>;
 
     /**
      * Updates a stock category
      * @param {string} profileId The id of the profile
      * @param {string} stockLocationId The ID of the stock location
+     * @param {CreateStockLocationRequest} [createStockLocationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApiInterface
      */
-    updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>>;
+    updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>>;
 
     /**
      * Updates a stock category
      */
-    updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>>;
+    updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation>;
 
     /**
      * Updates a subscription
@@ -6616,7 +6765,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}/close`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -6909,6 +7058,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createAsset(requestParameters: CreateAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset> {
         const response = await this.createAssetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a asset writeoff
+     */
+    async createAssetWriteoffRaw(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling createAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateAssetWriteoffRequestToJSON(requestParameters['createAssetWriteoffRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a asset writeoff
+     */
+    async createAssetWriteoff(requestParameters: CreateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.createAssetWriteoffRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -8740,7 +8937,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * creates a sales invoice line
      */
-    async createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>> {
+    async createSalesInvoiceLineRaw(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8771,7 +8968,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateSalesInvoiceRequestLinesInnerToJSON(requestParameters['createSalesInvoiceRequestLinesInner']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceLineFromJSON(jsonValue));
@@ -8780,7 +8977,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * creates a sales invoice line
      */
-    async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
+    async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
         const response = await this.createSalesInvoiceLineRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -8874,7 +9071,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an stock category
      */
-    async createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>> {
+    async createStockCategoryRaw(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8901,13 +9098,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateStockCategoryRequestToJSON(requestParameters['createStockCategoryRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockCategoryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
     }
 
     /**
      * Creates an stock category
      */
-    async createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>> {
+    async createStockCategory(requestParameters: CreateStockCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
         const response = await this.createStockCategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -8915,7 +9112,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Creates an stock location
      */
-    async createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+    async createStockLocationRaw(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -8942,13 +9139,13 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             body: CreateStockLocationRequestToJSON(requestParameters['createStockLocationRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));
     }
 
     /**
      * Creates an stock location
      */
-    async createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+    async createStockLocation(requestParameters: CreateStockLocationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation> {
         const response = await this.createStockLocationRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -9310,6 +9507,57 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deleteAsset(requestParameters: DeleteAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteAssetRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a asset writeoff
+     */
+    async deleteAssetWriteoffRaw(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling deleteAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a asset writeoff
+     */
+    async deleteAssetWriteoff(requestParameters: DeleteAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteAssetWriteoffRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -9841,7 +10089,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -11172,6 +11420,103 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getAsset(requestParameters: GetAssetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Asset> {
         const response = await this.getAssetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a asset writeoff
+     */
+    async getAssetWriteoffRaw(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling getAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a asset writeoff
+     */
+    async getAssetWriteoff(requestParameters: GetAssetWriteoffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.getAssetWriteoffRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a asset writeoffs
+     */
+    async getAssetWriteoffsRaw(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getAssetWriteoffs().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getAssetWriteoffs().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a asset writeoffs
+     */
+    async getAssetWriteoffs(requestParameters: GetAssetWriteoffsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.getAssetWriteoffsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -12727,7 +13072,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -13909,6 +14254,44 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getProfilePlan(requestParameters: GetProfilePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfilePlan200Response> {
         const response = await this.getProfilePlanRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    async getProfileStatusRaw(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProfileStatus200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getProfileStatus().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/status`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetProfileStatus200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retrieves the current subscription status of an profile
+     */
+    async getProfileStatus(requestParameters: GetProfileStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProfileStatus200Response> {
+        const response = await this.getProfileStatusRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -15884,6 +16267,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             queryParameters['search'] = requestParameters['search'];
         }
 
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
         if (requestParameters['reference'] != null) {
             queryParameters['reference'] = requestParameters['reference'];
         }
@@ -16004,6 +16391,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Returns a stock category
+     */
+    async getStockCategoryRaw(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getStockCategory().'
+            );
+        }
+
+        if (requestParameters['stockCategoryId'] == null) {
+            throw new runtime.RequiredError(
+                'stockCategoryId',
+                'Required parameter "stockCategoryId" was null or undefined when calling getStockCategory().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/stock-categories/{stockCategoryId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockCategoryId"}}`, encodeURIComponent(String(requestParameters['stockCategoryId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a stock category
+     */
+    async getStockCategory(requestParameters: GetStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
+        const response = await this.getStockCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns a stock location
      */
     async getStockLocationRaw(requestParameters: GetStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
@@ -16083,51 +16515,6 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getStockLocations(requestParameters: GetStockLocationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
         const response = await this.getStockLocationsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns a stock category
-     */
-    async getStockcategoryRaw(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
-        if (requestParameters['profileId'] == null) {
-            throw new runtime.RequiredError(
-                'profileId',
-                'Required parameter "profileId" was null or undefined when calling getStockcategory().'
-            );
-        }
-
-        if (requestParameters['stockCategoryId'] == null) {
-            throw new runtime.RequiredError(
-                'stockCategoryId',
-                'Required parameter "stockCategoryId" was null or undefined when calling getStockcategory().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
-        }
-
-        const response = await this.request({
-            path: `/v1/profiles/{profileId}/stock-categories/{stockCategoryId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"stockCategoryId"}}`, encodeURIComponent(String(requestParameters['stockCategoryId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns a stock category
-     */
-    async getStockcategory(requestParameters: GetStockcategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
-        const response = await this.getStockcategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -17905,6 +18292,61 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Updates a asset writeoff
+     */
+    async updateAssetWriteoffRaw(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AssetWriteoff>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        if (requestParameters['assetWriteoffId'] == null) {
+            throw new runtime.RequiredError(
+                'assetWriteoffId',
+                'Required parameter "assetWriteoffId" was null or undefined when calling updateAssetWriteoff().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/assets/{assetId}/writeoffs/{assetWriteoffId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"assetId"}}`, encodeURIComponent(String(requestParameters['assetId']))).replace(`{${"assetWriteoffId"}}`, encodeURIComponent(String(requestParameters['assetWriteoffId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAssetWriteoffRequestToJSON(requestParameters['updateAssetWriteoffRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AssetWriteoffFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a asset writeoff
+     */
+    async updateAssetWriteoff(requestParameters: UpdateAssetWriteoffOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AssetWriteoff> {
+        const response = await this.updateAssetWriteoffRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Updates a chat
      */
     async updateChatRaw(requestParameters: UpdateChatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateChat200Response>> {
@@ -18473,7 +18915,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/packing-slibs/{purchaseOrderId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
+            path: `/v1/profiles/{profileId}/packing-slibs/{packingSlibId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"packingSlibId"}}`, encodeURIComponent(String(requestParameters['packingSlibId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -18900,10 +19342,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             );
         }
 
-        if (requestParameters['projectId'] == null) {
+        if (requestParameters['purchaseInvoicePaymentBatchId'] == null) {
             throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
+                'purchaseInvoicePaymentBatchId',
+                'Required parameter "purchaseInvoicePaymentBatchId" was null or undefined when calling updatePurchaseInvoicePaymentBatch().'
             );
         }
 
@@ -18919,7 +19361,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
         }
 
         const response = await this.request({
-            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/v1/profiles/{profileId}/purchase-invoice-payment-batches/{purchaseInvoicePaymentBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoicePaymentBatchId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoicePaymentBatchId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -19318,7 +19760,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateSalesInvoiceLineRequestToJSON(requestParameters['createSalesInvoiceLineRequest']),
+            body: CreateSalesInvoiceRequestLinesInnerToJSON(requestParameters['createSalesInvoiceRequestLinesInner']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceLineFromJSON(jsonValue));
@@ -19335,7 +19777,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a stock category
      */
-    async updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockCategory>>> {
+    async updateStockCategoryRaw(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockCategory>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -19354,6 +19796,8 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
@@ -19364,15 +19808,16 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: CreateStockCategoryRequestToJSON(requestParameters['createStockCategoryRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockCategoryFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockCategoryFromJSON(jsonValue));
     }
 
     /**
      * Updates a stock category
      */
-    async updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockCategory>> {
+    async updateStockCategory(requestParameters: UpdateStockCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockCategory> {
         const response = await this.updateStockCategoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -19380,7 +19825,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Updates a stock category
      */
-    async updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StockLocation>>> {
+    async updateStockLocationRaw(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StockLocation>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
                 'profileId',
@@ -19399,6 +19844,8 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
@@ -19409,15 +19856,16 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: CreateStockLocationRequestToJSON(requestParameters['createStockLocationRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StockLocationFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => StockLocationFromJSON(jsonValue));
     }
 
     /**
      * Updates a stock category
      */
-    async updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StockLocation>> {
+    async updateStockLocation(requestParameters: UpdateStockLocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StockLocation> {
         const response = await this.updateStockLocationRaw(requestParameters, initOverrides);
         return await response.value();
     }
