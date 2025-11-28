@@ -20,13 +20,6 @@ import {
     GetRelationPublic200ResponseEuToJSON,
     GetRelationPublic200ResponseEuToJSONTyped,
 } from './GetRelationPublic200ResponseEu';
-import type { RelationBank } from './RelationBank';
-import {
-    RelationBankFromJSON,
-    RelationBankFromJSONTyped,
-    RelationBankToJSON,
-    RelationBankToJSONTyped,
-} from './RelationBank';
 import type { Address } from './Address';
 import {
     AddressFromJSON,
@@ -41,6 +34,13 @@ import {
     LanguageToJSON,
     LanguageToJSONTyped,
 } from './Language';
+import type { GetRelationPublic200ResponseEmbedded } from './GetRelationPublic200ResponseEmbedded';
+import {
+    GetRelationPublic200ResponseEmbeddedFromJSON,
+    GetRelationPublic200ResponseEmbeddedFromJSONTyped,
+    GetRelationPublic200ResponseEmbeddedToJSON,
+    GetRelationPublic200ResponseEmbeddedToJSONTyped,
+} from './GetRelationPublic200ResponseEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -52,150 +52,127 @@ import {
 /**
  * 
  * @export
- * @interface Relation
+ * @interface GetRelationPublic200Response
  */
-export interface Relation {
+export interface GetRelationPublic200Response {
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     readonly id: string;
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     readonly uuid: string;
     /**
      * Display name based on the legal name, first, middle, and last name
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     readonly name?: string;
     /**
-     * Tags for the relation
-     * @type {Array<string>}
-     * @memberof Relation
-     */
-    tags: Array<RelationTagsEnum>;
-    /**
      * Registered number of the company
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     registeredNumber?: string;
     /**
      * 
      * @type {Language}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     language?: Language;
     /**
      * 
      * @type {Array<string>}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     emails?: Array<string>;
     /**
      * ISO 3166-1 alpha-2 country code
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     registrationCountry?: string;
     /**
      * 
-     * @type {RelationBank}
-     * @memberof Relation
-     */
-    bank?: RelationBank;
-    /**
-     * 
      * @type {GetRelationPublic200ResponseEu}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     eu?: GetRelationPublic200ResponseEu;
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     legalName: string;
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     firstName: string;
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     middleName: string;
     /**
      * 
      * @type {string}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     lastName: string;
     /**
      * 
      * @type {Address}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     address: Address;
     /**
      * Free form key/ value pair
      * @type {{ [key: string]: any; }}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     metadata?: { [key: string]: any; };
     /**
      * 
      * @type {Links}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     links: Links;
     /**
      * 
+     * @type {GetRelationPublic200ResponseEmbedded}
+     * @memberof GetRelationPublic200Response
+     */
+    embedded?: GetRelationPublic200ResponseEmbedded;
+    /**
+     * 
      * @type {Date}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     readonly updated: Date;
     /**
      * 
      * @type {Date}
-     * @memberof Relation
+     * @memberof GetRelationPublic200Response
      */
     readonly created: Date;
 }
 
 
-/**
- * @export
- */
-export const RelationTagsEnum = {
-    Supplier: 'supplier',
-    Customer: 'customer',
-    Debtor: 'debtor',
-    Creditor: 'creditor',
-    Current: 'current',
-    Active: 'active',
-    Inactive: 'inactive',
-    Finbaze: 'finbaze',
-    TaxAuthority: 'tax-authority'
-} as const;
-export type RelationTagsEnum = typeof RelationTagsEnum[keyof typeof RelationTagsEnum];
-
 
 /**
- * Check if a given object implements the Relation interface.
+ * Check if a given object implements the GetRelationPublic200Response interface.
  */
-export function instanceOfRelation(value: object): value is Relation {
+export function instanceOfGetRelationPublic200Response(value: object): value is GetRelationPublic200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('uuid' in value) || value['uuid'] === undefined) return false;
-    if (!('tags' in value) || value['tags'] === undefined) return false;
     if (!('legalName' in value) || value['legalName'] === undefined) return false;
     if (!('firstName' in value) || value['firstName'] === undefined) return false;
     if (!('middleName' in value) || value['middleName'] === undefined) return false;
@@ -207,11 +184,11 @@ export function instanceOfRelation(value: object): value is Relation {
     return true;
 }
 
-export function RelationFromJSON(json: any): Relation {
-    return RelationFromJSONTyped(json, false);
+export function GetRelationPublic200ResponseFromJSON(json: any): GetRelationPublic200Response {
+    return GetRelationPublic200ResponseFromJSONTyped(json, false);
 }
 
-export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): Relation {
+export function GetRelationPublic200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetRelationPublic200Response {
     if (json == null) {
         return json;
     }
@@ -220,12 +197,10 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'id': json['id'],
         'uuid': json['uuid'],
         'name': json['name'] == null ? undefined : json['name'],
-        'tags': json['tags'],
         'registeredNumber': json['registered_number'] == null ? undefined : json['registered_number'],
         'language': json['language'] == null ? undefined : LanguageFromJSON(json['language']),
         'emails': json['emails'] == null ? undefined : json['emails'],
         'registrationCountry': json['registration_country'] == null ? undefined : json['registration_country'],
-        'bank': json['bank'] == null ? undefined : RelationBankFromJSON(json['bank']),
         'eu': json['eu'] == null ? undefined : GetRelationPublic200ResponseEuFromJSON(json['eu']),
         'legalName': json['legal_name'],
         'firstName': json['first_name'],
@@ -234,28 +209,27 @@ export function RelationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'address': AddressFromJSON(json['address']),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
+        'embedded': json['_embedded'] == null ? undefined : GetRelationPublic200ResponseEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
 }
 
-export function RelationToJSON(json: any): Relation {
-    return RelationToJSONTyped(json, false);
+export function GetRelationPublic200ResponseToJSON(json: any): GetRelationPublic200Response {
+    return GetRelationPublic200ResponseToJSONTyped(json, false);
 }
 
-export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'uuid'|'name'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
+export function GetRelationPublic200ResponseToJSONTyped(value?: Omit<GetRelationPublic200Response, 'id'|'uuid'|'name'|'updated'|'created'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'tags': value['tags'],
         'registered_number': value['registeredNumber'],
         'language': LanguageToJSON(value['language']),
         'emails': value['emails'],
         'registration_country': value['registrationCountry'],
-        'bank': RelationBankToJSON(value['bank']),
         'eu': GetRelationPublic200ResponseEuToJSON(value['eu']),
         'legal_name': value['legalName'],
         'first_name': value['firstName'],
@@ -264,6 +238,7 @@ export function RelationToJSONTyped(value?: Omit<Relation, 'id'|'uuid'|'name'|'u
         'address': AddressToJSON(value['address']),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
+        '_embedded': GetRelationPublic200ResponseEmbeddedToJSON(value['embedded']),
     };
 }
 

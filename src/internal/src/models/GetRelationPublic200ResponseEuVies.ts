@@ -16,42 +16,42 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface RelationEuVies
+ * @interface GetRelationPublic200ResponseEuVies
  */
-export interface RelationEuVies {
+export interface GetRelationPublic200ResponseEuVies {
     /**
      * Whether the VAT number is valid
      * @type {boolean}
-     * @memberof RelationEuVies
+     * @memberof GetRelationPublic200ResponseEuVies
      */
     valid: boolean;
     /**
      * Name of the company
      * @type {string}
-     * @memberof RelationEuVies
+     * @memberof GetRelationPublic200ResponseEuVies
      */
     name?: string;
     /**
      * Address of the company
      * @type {string}
-     * @memberof RelationEuVies
+     * @memberof GetRelationPublic200ResponseEuVies
      */
     address?: string;
 }
 
 /**
- * Check if a given object implements the RelationEuVies interface.
+ * Check if a given object implements the GetRelationPublic200ResponseEuVies interface.
  */
-export function instanceOfRelationEuVies(value: object): value is RelationEuVies {
+export function instanceOfGetRelationPublic200ResponseEuVies(value: object): value is GetRelationPublic200ResponseEuVies {
     if (!('valid' in value) || value['valid'] === undefined) return false;
     return true;
 }
 
-export function RelationEuViesFromJSON(json: any): RelationEuVies {
-    return RelationEuViesFromJSONTyped(json, false);
+export function GetRelationPublic200ResponseEuViesFromJSON(json: any): GetRelationPublic200ResponseEuVies {
+    return GetRelationPublic200ResponseEuViesFromJSONTyped(json, false);
 }
 
-export function RelationEuViesFromJSONTyped(json: any, ignoreDiscriminator: boolean): RelationEuVies {
+export function GetRelationPublic200ResponseEuViesFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetRelationPublic200ResponseEuVies {
     if (json == null) {
         return json;
     }
@@ -63,11 +63,11 @@ export function RelationEuViesFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function RelationEuViesToJSON(json: any): RelationEuVies {
-    return RelationEuViesToJSONTyped(json, false);
+export function GetRelationPublic200ResponseEuViesToJSON(json: any): GetRelationPublic200ResponseEuVies {
+    return GetRelationPublic200ResponseEuViesToJSONTyped(json, false);
 }
 
-export function RelationEuViesToJSONTyped(value?: RelationEuVies | null, ignoreDiscriminator: boolean = false): any {
+export function GetRelationPublic200ResponseEuViesToJSONTyped(value?: GetRelationPublic200ResponseEuVies | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

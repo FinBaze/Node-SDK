@@ -44,11 +44,11 @@ export interface CreatePurchaseInvoiceFinalRequestLinesInnerOneOf {
      */
     taxCode: CreatePurchaseInvoiceFinalRequestLinesInnerOneOfTaxCodeEnum;
     /**
-     * 
-     * @type {any}
+     * Set this to true if the price and discount are including the vat rate of the tax_code. We then overwrite the price, and discount exlcuding the taxes/ vat/ gst.
+     * @type {boolean}
      * @memberof CreatePurchaseInvoiceFinalRequestLinesInnerOneOf
      */
-    includingTax: any | null;
+    includingTax: boolean;
     /**
      * The price of one item in cents, excluding taxes, required if no product is provided
      * @type {number}

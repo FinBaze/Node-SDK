@@ -28,6 +28,7 @@ import type {
   Device,
   GetCompaniesAutocomplete200Response,
   GetJurisdictions200ResponseValue,
+  GetRelationPublic200Response,
   GetReminderPublic200Response,
   GetSubscriptionPublic200Response,
   GetSubscriptionPublicInvoices200Response,
@@ -65,6 +66,8 @@ import {
     GetCompaniesAutocomplete200ResponseToJSON,
     GetJurisdictions200ResponseValueFromJSON,
     GetJurisdictions200ResponseValueToJSON,
+    GetRelationPublic200ResponseFromJSON,
+    GetRelationPublic200ResponseToJSON,
     GetReminderPublic200ResponseFromJSON,
     GetReminderPublic200ResponseToJSON,
     GetSubscriptionPublic200ResponseFromJSON,
@@ -135,6 +138,11 @@ export interface GetCompaniesAutocompleteRequest {
 export interface GetPurchaseInvoicePublicRequest {
     profileId: string;
     purchaseInvoiceUUID: string;
+}
+
+export interface GetRelationPublicRequest {
+    profileId: string;
+    relationUUID: string;
 }
 
 export interface GetReminderPublicRequest {
@@ -426,6 +434,21 @@ export interface DefaultApiInterface {
      * Returns a purchase invoice public data
      */
     getPurchaseInvoicePublic(requestParameters: GetPurchaseInvoicePublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
+
+    /**
+     * Returns a relation
+     * @param {string} profileId The id of the profile
+     * @param {string} relationUUID The uuid of the relation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getRelationPublicRaw(requestParameters: GetRelationPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationPublic200Response>>;
+
+    /**
+     * Returns a relation
+     */
+    getRelationPublic(requestParameters: GetRelationPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationPublic200Response>;
 
     /**
      * Returns a reminder
@@ -1211,6 +1234,51 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getPurchaseInvoicePublic(requestParameters: GetPurchaseInvoicePublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
         const response = await this.getPurchaseInvoicePublicRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a relation
+     */
+    async getRelationPublicRaw(requestParameters: GetRelationPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRelationPublic200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getRelationPublic().'
+            );
+        }
+
+        if (requestParameters['relationUUID'] == null) {
+            throw new runtime.RequiredError(
+                'relationUUID',
+                'Required parameter "relationUUID" was null or undefined when calling getRelationPublic().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/relations/{profileId}/{relationUUID}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"relationUUID"}}`, encodeURIComponent(String(requestParameters['relationUUID']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRelationPublic200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a relation
+     */
+    async getRelationPublic(requestParameters: GetRelationPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRelationPublic200Response> {
+        const response = await this.getRelationPublicRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
