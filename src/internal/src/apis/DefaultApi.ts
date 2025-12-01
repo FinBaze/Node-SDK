@@ -135,6 +135,12 @@ export interface GetCompaniesAutocompleteRequest {
     registrationNumber?: string;
 }
 
+export interface GetPurchaseInvoiceAttachmentDataPublicRequest {
+    profileId: string;
+    purchaseInvoiceUUID: string;
+    purchaseInvoiceAttachmentId: string;
+}
+
 export interface GetPurchaseInvoicePublicRequest {
     profileId: string;
     purchaseInvoiceUUID: string;
@@ -419,6 +425,22 @@ export interface DefaultApiInterface {
      * Returns all languages
      */
     getLanguages(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>>;
+
+    /**
+     * Returns a purchase invoice public data
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceUUID The uuid of the purchase invoice
+     * @param {string} purchaseInvoiceAttachmentId The purchase invoice attachment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoiceAttachmentDataPublicRaw(requestParameters: GetPurchaseInvoiceAttachmentDataPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
+
+    /**
+     * Returns a purchase invoice public data
+     */
+    getPurchaseInvoiceAttachmentDataPublic(requestParameters: GetPurchaseInvoiceAttachmentDataPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
 
     /**
      * Returns a purchase invoice public data
@@ -1189,6 +1211,58 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getLanguages(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
         const response = await this.getLanguagesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a purchase invoice public data
+     */
+    async getPurchaseInvoiceAttachmentDataPublicRaw(requestParameters: GetPurchaseInvoiceAttachmentDataPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseInvoiceAttachmentDataPublic().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceUUID'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceUUID',
+                'Required parameter "purchaseInvoiceUUID" was null or undefined when calling getPurchaseInvoiceAttachmentDataPublic().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceAttachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceAttachmentId',
+                'Required parameter "purchaseInvoiceAttachmentId" was null or undefined when calling getPurchaseInvoiceAttachmentDataPublic().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/purchase-invoices/{profileId}/{purchaseInvoiceUUID}/{purchaseInvoiceAttachmentId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceUUID"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceUUID']))).replace(`{${"purchaseInvoiceAttachmentId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceAttachmentId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns a purchase invoice public data
+     */
+    async getPurchaseInvoiceAttachmentDataPublic(requestParameters: GetPurchaseInvoiceAttachmentDataPublicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.getPurchaseInvoiceAttachmentDataPublicRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
