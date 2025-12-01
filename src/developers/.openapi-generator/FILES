@@ -84,6 +84,7 @@ src/models/Project.ts
 src/models/ProjectEmbedded.ts
 src/models/ProjectTime.ts
 src/models/PurchaseInvoice.ts
+src/models/PurchaseInvoiceAttachment.ts
 src/models/PurchaseInvoiceEmbedded.ts
 src/models/PurchaseInvoiceLine.ts
 src/models/PurchaseInvoiceLineEmbedded.ts

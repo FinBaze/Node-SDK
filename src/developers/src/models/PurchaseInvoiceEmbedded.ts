@@ -20,6 +20,13 @@ import {
     RelationToJSON,
     RelationToJSONTyped,
 } from './Relation';
+import type { PurchaseInvoiceAttachment } from './PurchaseInvoiceAttachment';
+import {
+    PurchaseInvoiceAttachmentFromJSON,
+    PurchaseInvoiceAttachmentFromJSONTyped,
+    PurchaseInvoiceAttachmentToJSON,
+    PurchaseInvoiceAttachmentToJSONTyped,
+} from './PurchaseInvoiceAttachment';
 import type { MonetaryAccountPayment } from './MonetaryAccountPayment';
 import {
     MonetaryAccountPaymentFromJSON,
@@ -72,6 +79,12 @@ export interface PurchaseInvoiceEmbedded {
      * @memberof PurchaseInvoiceEmbedded
      */
     payments: Array<MonetaryAccountPayment>;
+    /**
+     * 
+     * @type {Array<PurchaseInvoiceAttachment>}
+     * @memberof PurchaseInvoiceEmbedded
+     */
+    attachments: Array<PurchaseInvoiceAttachment>;
 }
 
 /**
@@ -82,6 +95,7 @@ export function instanceOfPurchaseInvoiceEmbedded(value: object): value is Purch
     if (!('relation' in value) || value['relation'] === undefined) return false;
     if (!('lines' in value) || value['lines'] === undefined) return false;
     if (!('payments' in value) || value['payments'] === undefined) return false;
+    if (!('attachments' in value) || value['attachments'] === undefined) return false;
     return true;
 }
 
@@ -99,6 +113,7 @@ export function PurchaseInvoiceEmbeddedFromJSONTyped(json: any, ignoreDiscrimina
         'relation': RelationFromJSON(json['relation']),
         'lines': ((json['lines'] as Array<any>).map(PurchaseInvoiceLineFromJSON)),
         'payments': ((json['payments'] as Array<any>).map(MonetaryAccountPaymentFromJSON)),
+        'attachments': ((json['attachments'] as Array<any>).map(PurchaseInvoiceAttachmentFromJSON)),
     };
 }
 
@@ -117,6 +132,7 @@ export function PurchaseInvoiceEmbeddedToJSONTyped(value?: PurchaseInvoiceEmbedd
         'relation': RelationToJSON(value['relation']),
         'lines': ((value['lines'] as Array<any>).map(PurchaseInvoiceLineToJSON)),
         'payments': ((value['payments'] as Array<any>).map(MonetaryAccountPaymentToJSON)),
+        'attachments': ((value['attachments'] as Array<any>).map(PurchaseInvoiceAttachmentToJSON)),
     };
 }
 

@@ -97,6 +97,7 @@ export * from './Project';
 export * from './ProjectEmbedded';
 export * from './ProjectTime';
 export * from './PurchaseInvoice';
+export * from './PurchaseInvoiceAttachment';
 export * from './PurchaseInvoiceEmbedded';
 export * from './PurchaseInvoiceLine';
 export * from './PurchaseInvoiceLineEmbedded';

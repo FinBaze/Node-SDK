@@ -48,6 +48,7 @@ import type {
   CreateProfileRequest,
   CreateProjectRequest,
   CreateProjectTimeRequest,
+  CreatePurchaseInvoiceAttachmentRequest,
   CreatePurchaseInvoiceFinalRequest,
   CreatePurchaseInvoiceLineRequest,
   CreatePurchaseInvoicePaymentBatchRequest,
@@ -154,6 +155,7 @@ import type {
   ProjectTime,
   PullMonetaryAccount200Response,
   PurchaseInvoice,
+  PurchaseInvoiceAttachment,
   PurchaseInvoiceLine,
   PurchaseOrder,
   Quote,
@@ -252,6 +254,8 @@ import {
     CreateProjectRequestToJSON,
     CreateProjectTimeRequestFromJSON,
     CreateProjectTimeRequestToJSON,
+    CreatePurchaseInvoiceAttachmentRequestFromJSON,
+    CreatePurchaseInvoiceAttachmentRequestToJSON,
     CreatePurchaseInvoiceFinalRequestFromJSON,
     CreatePurchaseInvoiceFinalRequestToJSON,
     CreatePurchaseInvoiceLineRequestFromJSON,
@@ -464,6 +468,8 @@ import {
     PullMonetaryAccount200ResponseToJSON,
     PurchaseInvoiceFromJSON,
     PurchaseInvoiceToJSON,
+    PurchaseInvoiceAttachmentFromJSON,
+    PurchaseInvoiceAttachmentToJSON,
     PurchaseInvoiceLineFromJSON,
     PurchaseInvoiceLineToJSON,
     PurchaseOrderFromJSON,
@@ -729,6 +735,12 @@ export interface CreatePurchaseInvoiceOperationRequest {
     createPurchaseInvoiceRequest?: CreatePurchaseInvoiceRequest;
 }
 
+export interface CreatePurchaseInvoiceAttachmentOperationRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    createPurchaseInvoiceAttachmentRequest?: CreatePurchaseInvoiceAttachmentRequest;
+}
+
 export interface CreatePurchaseInvoiceFinalOperationRequest {
     profileId: string;
     createPurchaseInvoiceFinalRequest?: CreatePurchaseInvoiceFinalRequest;
@@ -985,6 +997,12 @@ export interface DeleteProjectTimeRequest {
 export interface DeletePurchaseInvoiceRequest {
     profileId: string;
     purchaseInvoiceId: string;
+}
+
+export interface DeletePurchaseInvoiceAttachmentRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    purchaseInvoiceAttachmentId: string;
 }
 
 export interface DeletePurchaseInvoiceLineRequest {
@@ -1510,6 +1528,17 @@ export interface GetPurchaseInvoiceRequest {
     purchaseInvoiceId: string;
 }
 
+export interface GetPurchaseInvoiceAttachmentRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    purchaseInvoiceAttachmentId: string;
+}
+
+export interface GetPurchaseInvoiceAttachmentsRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+}
+
 export interface GetPurchaseInvoiceLineRequest {
     profileId: string;
     purchaseInvoiceId: string;
@@ -1924,6 +1953,12 @@ export interface ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest {
     monetaryAccountPaymentId: string;
     unprocess?: boolean;
     processMonetaryAccountPaymentSalesInvoiceRequest?: ProcessMonetaryAccountPaymentSalesInvoiceRequest;
+}
+
+export interface PromotePurchaseInvoiceAttachmentRequest {
+    profileId: string;
+    purchaseInvoiceId: string;
+    purchaseInvoiceAttachmentId: string;
 }
 
 export interface PullMonetaryAccountRequest {
@@ -2803,6 +2838,22 @@ export interface DefaultApiInterface {
     createPurchaseInvoice(requestParameters: CreatePurchaseInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoice>;
 
     /**
+     * creates a purchase invoice attachment
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {CreatePurchaseInvoiceAttachmentRequest} [createPurchaseInvoiceAttachmentRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createPurchaseInvoiceAttachmentRaw(requestParameters: CreatePurchaseInvoiceAttachmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>>;
+
+    /**
+     * creates a purchase invoice attachment
+     */
+    createPurchaseInvoiceAttachment(requestParameters: CreatePurchaseInvoiceAttachmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment>;
+
+    /**
      * Creates an new purchase invoice with the given data, when using this endpoint the purchase invoice also needs to be closed in order to be processed. The purchase invoice will first be in concept and not be processed in the financial statement.
      * @param {string} profileId The id of the profile
      * @param {CreatePurchaseInvoiceFinalRequest} [createPurchaseInvoiceFinalRequest] 
@@ -3549,6 +3600,22 @@ export interface DefaultApiInterface {
      * Deletes a purchase invoice
      */
     deletePurchaseInvoice(requestParameters: DeletePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a purchase invoice attachment
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {string} purchaseInvoiceAttachmentId The purchase invoice attachment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deletePurchaseInvoiceAttachmentRaw(requestParameters: DeletePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a purchase invoice attachment
+     */
+    deletePurchaseInvoiceAttachment(requestParameters: DeletePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Deletes a purchase invoice line
@@ -4970,6 +5037,37 @@ export interface DefaultApiInterface {
      * Returns a purchase invoice line of a purchase invoice
      * @param {string} profileId The id of the profile
      * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {string} purchaseInvoiceAttachmentId The purchase invoice attachment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoiceAttachmentRaw(requestParameters: GetPurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>>;
+
+    /**
+     * Returns a purchase invoice line of a purchase invoice
+     */
+    getPurchaseInvoiceAttachment(requestParameters: GetPurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment>;
+
+    /**
+     * Returns all purchase invoice attachments
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getPurchaseInvoiceAttachmentsRaw(requestParameters: GetPurchaseInvoiceAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PurchaseInvoiceAttachment>>>;
+
+    /**
+     * Returns all purchase invoice attachments
+     */
+    getPurchaseInvoiceAttachments(requestParameters: GetPurchaseInvoiceAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PurchaseInvoiceAttachment>>;
+
+    /**
+     * Returns a purchase invoice line of a purchase invoice
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
      * @param {string} purchaseInvoiceLineId The ID of the purchase invoice line
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6001,6 +6099,22 @@ export interface DefaultApiInterface {
      * Updates a monetary account
      */
     processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Promotes an purchase invoice attachment to the current invoie
+     * @param {string} profileId The id of the profile
+     * @param {string} purchaseInvoiceId The ID assigned by us, of the created purchase invoice
+     * @param {string} purchaseInvoiceAttachmentId The purchase invoice attachment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    promotePurchaseInvoiceAttachmentRaw(requestParameters: PromotePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>>;
+
+    /**
+     * Promotes an purchase invoice attachment to the current invoie
+     */
+    promotePurchaseInvoiceAttachment(requestParameters: PromotePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment>;
 
     /**
      * Create an pull request for an monetary account
@@ -8443,6 +8557,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * creates a purchase invoice attachment
+     */
+    async createPurchaseInvoiceAttachmentRaw(requestParameters: CreatePurchaseInvoiceAttachmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createPurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling createPurchaseInvoiceAttachment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/attachments`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreatePurchaseInvoiceAttachmentRequestToJSON(requestParameters['createPurchaseInvoiceAttachmentRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceAttachmentFromJSON(jsonValue));
+    }
+
+    /**
+     * creates a purchase invoice attachment
+     */
+    async createPurchaseInvoiceAttachment(requestParameters: CreatePurchaseInvoiceAttachmentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment> {
+        const response = await this.createPurchaseInvoiceAttachmentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates an new purchase invoice with the given data, when using this endpoint the purchase invoice also needs to be closed in order to be processed. The purchase invoice will first be in concept and not be processed in the financial statement.
      */
     async createPurchaseInvoiceFinalRaw(requestParameters: CreatePurchaseInvoiceFinalOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoice>> {
@@ -10614,6 +10776,57 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async deletePurchaseInvoice(requestParameters: DeletePurchaseInvoiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deletePurchaseInvoiceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a purchase invoice attachment
+     */
+    async deletePurchaseInvoiceAttachmentRaw(requestParameters: DeletePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deletePurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling deletePurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceAttachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceAttachmentId',
+                'Required parameter "purchaseInvoiceAttachmentId" was null or undefined when calling deletePurchaseInvoiceAttachment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/attachments/{purchaseInvoiceAttachmentId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))).replace(`{${"purchaseInvoiceAttachmentId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceAttachmentId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a purchase invoice attachment
+     */
+    async deletePurchaseInvoiceAttachment(requestParameters: DeletePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deletePurchaseInvoiceAttachmentRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -14873,6 +15086,103 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Returns a purchase invoice line of a purchase invoice
      */
+    async getPurchaseInvoiceAttachmentRaw(requestParameters: GetPurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling getPurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceAttachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceAttachmentId',
+                'Required parameter "purchaseInvoiceAttachmentId" was null or undefined when calling getPurchaseInvoiceAttachment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/attachments/{purchaseInvoiceAttachmentId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))).replace(`{${"purchaseInvoiceAttachmentId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceAttachmentId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceAttachmentFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a purchase invoice line of a purchase invoice
+     */
+    async getPurchaseInvoiceAttachment(requestParameters: GetPurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment> {
+        const response = await this.getPurchaseInvoiceAttachmentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all purchase invoice attachments
+     */
+    async getPurchaseInvoiceAttachmentsRaw(requestParameters: GetPurchaseInvoiceAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PurchaseInvoiceAttachment>>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getPurchaseInvoiceAttachments().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling getPurchaseInvoiceAttachments().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/attachments`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PurchaseInvoiceAttachmentFromJSON));
+    }
+
+    /**
+     * Returns all purchase invoice attachments
+     */
+    async getPurchaseInvoiceAttachments(requestParameters: GetPurchaseInvoiceAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PurchaseInvoiceAttachment>> {
+        const response = await this.getPurchaseInvoiceAttachmentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a purchase invoice line of a purchase invoice
+     */
     async getPurchaseInvoiceLineRaw(requestParameters: GetPurchaseInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceLine>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
@@ -18099,6 +18409,58 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async processMonetaryAccountPaymentSalesInvoice(requestParameters: ProcessMonetaryAccountPaymentSalesInvoiceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.processMonetaryAccountPaymentSalesInvoiceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Promotes an purchase invoice attachment to the current invoie
+     */
+    async promotePurchaseInvoiceAttachmentRaw(requestParameters: PromotePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurchaseInvoiceAttachment>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling promotePurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceId',
+                'Required parameter "purchaseInvoiceId" was null or undefined when calling promotePurchaseInvoiceAttachment().'
+            );
+        }
+
+        if (requestParameters['purchaseInvoiceAttachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'purchaseInvoiceAttachmentId',
+                'Required parameter "purchaseInvoiceAttachmentId" was null or undefined when calling promotePurchaseInvoiceAttachment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/purchase-invoices/{purchaseInvoiceId}/attachments/{purchaseInvoiceAttachmentId}/promote`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"purchaseInvoiceId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceId']))).replace(`{${"purchaseInvoiceAttachmentId"}}`, encodeURIComponent(String(requestParameters['purchaseInvoiceAttachmentId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseInvoiceAttachmentFromJSON(jsonValue));
+    }
+
+    /**
+     * Promotes an purchase invoice attachment to the current invoie
+     */
+    async promotePurchaseInvoiceAttachment(requestParameters: PromotePurchaseInvoiceAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurchaseInvoiceAttachment> {
+        const response = await this.promotePurchaseInvoiceAttachmentRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
