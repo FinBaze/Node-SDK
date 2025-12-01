@@ -20,6 +20,8 @@ export * from './Language';
 export * from './Links';
 export * from './LinksSelf';
 export * from './LinksValue';
+export * from './MemorialBatch';
+export * from './MemorialBatchEmbedded';
 export * from './MemorialEntry';
 export * from './MemorialEntryEmbedded';
 export * from './MemorialEntryItem';

@@ -26,6 +26,8 @@ src/models/Language.ts
 src/models/Links.ts
 src/models/LinksSelf.ts
 src/models/LinksValue.ts
+src/models/MemorialBatch.ts
+src/models/MemorialBatchEmbedded.ts
 src/models/MemorialEntry.ts
 src/models/MemorialEntryEmbedded.ts
 src/models/MemorialEntryItem.ts
