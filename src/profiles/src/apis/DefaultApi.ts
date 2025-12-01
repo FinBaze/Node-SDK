@@ -88,6 +88,7 @@ import type {
   GetEmployees200Response,
   GetInstalledApp200Response,
   GetInstalledApps200Response,
+  GetMemorialBatches200Response,
   GetMemorialEntries200Response,
   GetMonetaryAccountOpenbankingAuthorisation200Response,
   GetNLVatData200Response,
@@ -128,6 +129,7 @@ import type {
   ImportMonetaryAccountMT940Request,
   InstallApp200Response,
   InstallAppRequest,
+  MemorialBatch,
   MemorialEntry,
   MonetaryAccount,
   MonetaryAccountAutoProcess,
@@ -330,6 +332,8 @@ import {
     GetInstalledApp200ResponseToJSON,
     GetInstalledApps200ResponseFromJSON,
     GetInstalledApps200ResponseToJSON,
+    GetMemorialBatches200ResponseFromJSON,
+    GetMemorialBatches200ResponseToJSON,
     GetMemorialEntries200ResponseFromJSON,
     GetMemorialEntries200ResponseToJSON,
     GetMonetaryAccountOpenbankingAuthorisation200ResponseFromJSON,
@@ -410,6 +414,8 @@ import {
     InstallApp200ResponseToJSON,
     InstallAppRequestFromJSON,
     InstallAppRequestToJSON,
+    MemorialBatchFromJSON,
+    MemorialBatchToJSON,
     MemorialEntryFromJSON,
     MemorialEntryToJSON,
     MonetaryAccountFromJSON,
@@ -603,6 +609,11 @@ export interface CreateEmployeeOperationRequest {
 export interface CreateExpenseCategoryOperationRequest {
     profileId: string;
     createExpenseCategoryRequest?: CreateExpenseCategoryRequest;
+}
+
+export interface CreateMemorialBatchRequest {
+    profileId: string;
+    createMonetaryMemorialEntryRequest?: CreateMonetaryMemorialEntryRequest;
 }
 
 export interface CreateMemorialEntryOperationRequest {
@@ -902,6 +913,11 @@ export interface DeleteInstalledAppRequest {
     profileId: string;
 }
 
+export interface DeleteMemorialBatchRequest {
+    profileId: string;
+    memorialBatchId: string;
+}
+
 export interface DeleteMemorialEntryRequest {
     profileId: string;
     memorialEntryId: string;
@@ -1182,6 +1198,19 @@ export interface GetInstalledAppsRequest {
     profileId: string;
     page?: number;
     size?: number;
+}
+
+export interface GetMemorialBatchRequest {
+    profileId: string;
+    memorialBatchId: string;
+}
+
+export interface GetMemorialBatchesRequest {
+    profileId: string;
+    page?: number;
+    size?: number;
+    ledger?: string;
+    date?: Date;
 }
 
 export interface GetMemorialEntriesRequest {
@@ -2436,6 +2465,21 @@ export interface DefaultApiInterface {
     createExpenseCategory(requestParameters: CreateExpenseCategoryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExpenseCategory>>;
 
     /**
+     * Create monetary memorial entry
+     * @param {string} profileId The id of the profile
+     * @param {CreateMonetaryMemorialEntryRequest} [createMonetaryMemorialEntryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createMemorialBatchRaw(requestParameters: CreateMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Create monetary memorial entry
+     */
+    createMemorialBatch(requestParameters: CreateMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Creates a memorial entry
      * @param {string} profileId The id of the profile
      * @param {CreateMemorialEntryRequest} [createMemorialEntryRequest] 
@@ -3295,6 +3339,21 @@ export interface DefaultApiInterface {
     /**
      * Deletes a memorial entry
      * @param {string} profileId The id of the profile
+     * @param {string} memorialBatchId The ID of the memorial batch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    deleteMemorialBatchRaw(requestParameters: DeleteMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Deletes a memorial entry
+     */
+    deleteMemorialBatch(requestParameters: DeleteMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Deletes a memorial entry
+     * @param {string} profileId The id of the profile
      * @param {string} memorialEntryId The id of the memorial entry
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4073,6 +4132,39 @@ export interface DefaultApiInterface {
      * Returns all installed apps
      */
     getInstalledApps(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApps200Response>;
+
+    /**
+     * Returns a memorial entry
+     * @param {string} profileId The id of the profile
+     * @param {string} memorialBatchId The ID of the memorial batch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getMemorialBatchRaw(requestParameters: GetMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialBatch>>;
+
+    /**
+     * Returns a memorial entry
+     */
+    getMemorialBatch(requestParameters: GetMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialBatch>;
+
+    /**
+     * Returns all memorial entries
+     * @param {string} profileId The id of the profile
+     * @param {number} [page] Number of the page, starting at 0
+     * @param {number} [size] The number of resourced returned in one single page.
+     * @param {string} [ledger] The ledger you want to search
+     * @param {Date} [date] The date you want to search
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    getMemorialBatchesRaw(requestParameters: GetMemorialBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMemorialBatches200Response>>;
+
+    /**
+     * Returns all memorial entries
+     */
+    getMemorialBatches(requestParameters: GetMemorialBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMemorialBatches200Response>;
 
     /**
      * Returns all memorial entries
@@ -7376,6 +7468,46 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Create monetary memorial entry
+     */
+    async createMemorialBatchRaw(requestParameters: CreateMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createMemorialBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/memorial-batches`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateMonetaryMemorialEntryRequestToJSON(requestParameters['createMonetaryMemorialEntryRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Create monetary memorial entry
+     */
+    async createMemorialBatch(requestParameters: CreateMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createMemorialBatchRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Creates a memorial entry
      */
     async createMemorialEntryRaw(requestParameters: CreateMemorialEntryOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialEntry>> {
@@ -9847,6 +9979,50 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     /**
      * Deletes a memorial entry
      */
+    async deleteMemorialBatchRaw(requestParameters: DeleteMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling deleteMemorialBatch().'
+            );
+        }
+
+        if (requestParameters['memorialBatchId'] == null) {
+            throw new runtime.RequiredError(
+                'memorialBatchId',
+                'Required parameter "memorialBatchId" was null or undefined when calling deleteMemorialBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/memorial-batches/{memorialBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"memorialBatchId"}}`, encodeURIComponent(String(requestParameters['memorialBatchId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a memorial entry
+     */
+    async deleteMemorialBatch(requestParameters: DeleteMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteMemorialBatchRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a memorial entry
+     */
     async deleteMemorialEntryRaw(requestParameters: DeleteMemorialEntryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['profileId'] == null) {
             throw new runtime.RequiredError(
@@ -12182,6 +12358,105 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async getInstalledApps(requestParameters: GetInstalledAppsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInstalledApps200Response> {
         const response = await this.getInstalledAppsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a memorial entry
+     */
+    async getMemorialBatchRaw(requestParameters: GetMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MemorialBatch>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getMemorialBatch().'
+            );
+        }
+
+        if (requestParameters['memorialBatchId'] == null) {
+            throw new runtime.RequiredError(
+                'memorialBatchId',
+                'Required parameter "memorialBatchId" was null or undefined when calling getMemorialBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/memorial-batches/{memorialBatchId}`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"memorialBatchId"}}`, encodeURIComponent(String(requestParameters['memorialBatchId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MemorialBatchFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a memorial entry
+     */
+    async getMemorialBatch(requestParameters: GetMemorialBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MemorialBatch> {
+        const response = await this.getMemorialBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns all memorial entries
+     */
+    async getMemorialBatchesRaw(requestParameters: GetMemorialBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMemorialBatches200Response>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling getMemorialBatches().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['ledger'] != null) {
+            queryParameters['ledger'] = requestParameters['ledger'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/memorial-batches`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetMemorialBatches200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns all memorial entries
+     */
+    async getMemorialBatches(requestParameters: GetMemorialBatchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMemorialBatches200Response> {
+        const response = await this.getMemorialBatchesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -117,6 +117,7 @@ src/models/GetDebitLoans200Response.ts
 src/models/GetEmployees200Response.ts
 src/models/GetInstalledApp200Response.ts
 src/models/GetInstalledApps200Response.ts
+src/models/GetMemorialBatches200Response.ts
 src/models/GetMemorialEntries200Response.ts
 src/models/GetMonetaryAccountOpenbankingAuthorisation200Response.ts
 src/models/GetNLVatData200Response.ts
