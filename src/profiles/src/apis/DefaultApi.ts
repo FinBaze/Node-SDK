@@ -1699,6 +1699,7 @@ export interface GetSalesInvoicesRequest {
     sort?: GetSalesInvoicesSortParameter;
     reference?: string;
     subscription?: string;
+    reminder?: string;
     relation?: string;
     product?: string;
     project?: string;
@@ -5412,6 +5413,7 @@ export interface DefaultApiInterface {
      * @param {GetSalesInvoicesSortParameter} [sort] Sorting
      * @param {string} [reference] Reference of the sales invoice
      * @param {string} [subscription] Subscription ID to filter to
+     * @param {string} [reminder] Reminder ID to filter to
      * @param {string} [relation] ID of the relation to filter to
      * @param {string} [product] Filter invoices that contain this product ID
      * @param {string} [project] Filter invoices that contain this project ID
@@ -16295,6 +16297,10 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
         if (requestParameters['subscription'] != null) {
             queryParameters['subscription'] = requestParameters['subscription'];
+        }
+
+        if (requestParameters['reminder'] != null) {
+            queryParameters['reminder'] = requestParameters['reminder'];
         }
 
         if (requestParameters['relation'] != null) {
