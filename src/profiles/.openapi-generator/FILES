@@ -84,6 +84,7 @@ src/models/CreateRelationRequestEu.ts
 src/models/CreateRelationRequestEuVies.ts
 src/models/CreateRelationsImportRequest.ts
 src/models/CreateReminderRequest.ts
+src/models/CreateSalesInvoiceLineAssetRequest.ts
 src/models/CreateSalesInvoiceRequest.ts
 src/models/CreateSalesInvoiceRequestEu.ts
 src/models/CreateSalesInvoiceRequestLinesInner.ts

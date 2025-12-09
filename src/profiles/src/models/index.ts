@@ -78,6 +78,7 @@ export * from './CreateRelationRequestEu';
 export * from './CreateRelationRequestEuVies';
 export * from './CreateRelationsImportRequest';
 export * from './CreateReminderRequest';
+export * from './CreateSalesInvoiceLineAssetRequest';
 export * from './CreateSalesInvoiceRequest';
 export * from './CreateSalesInvoiceRequestEu';
 export * from './CreateSalesInvoiceRequestLinesInner';

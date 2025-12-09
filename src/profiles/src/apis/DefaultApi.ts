@@ -60,6 +60,7 @@ import type {
   CreateRelationRequest,
   CreateRelationsImportRequest,
   CreateReminderRequest,
+  CreateSalesInvoiceLineAssetRequest,
   CreateSalesInvoiceRequest,
   CreateSalesInvoiceRequestLinesInner,
   CreateStockCategoryRequest,
@@ -278,6 +279,8 @@ import {
     CreateRelationsImportRequestToJSON,
     CreateReminderRequestFromJSON,
     CreateReminderRequestToJSON,
+    CreateSalesInvoiceLineAssetRequestFromJSON,
+    CreateSalesInvoiceLineAssetRequestToJSON,
     CreateSalesInvoiceRequestFromJSON,
     CreateSalesInvoiceRequestToJSON,
     CreateSalesInvoiceRequestLinesInnerFromJSON,
@@ -823,6 +826,12 @@ export interface CreateSalesInvoiceLineRequest {
     profileId: string;
     salesInvoiceId: string;
     createSalesInvoiceRequestLinesInner?: CreateSalesInvoiceRequestLinesInner;
+}
+
+export interface CreateSalesInvoiceLineAssetOperationRequest {
+    profileId: string;
+    salesInvoiceId: string;
+    createSalesInvoiceLineAssetRequest?: CreateSalesInvoiceLineAssetRequest;
 }
 
 export interface CreateSalesInvoiceReminderRequest {
@@ -3096,6 +3105,22 @@ export interface DefaultApiInterface {
      * creates a sales invoice line
      */
     createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
+
+    /**
+     * creates a sales invoice line
+     * @param {string} profileId The id of the profile
+     * @param {string} salesInvoiceId The id of the sales invoice
+     * @param {CreateSalesInvoiceLineAssetRequest} [createSalesInvoiceLineAssetRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    createSalesInvoiceLineAssetRaw(requestParameters: CreateSalesInvoiceLineAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>>;
+
+    /**
+     * creates a sales invoice line
+     */
+    createSalesInvoiceLineAsset(requestParameters: CreateSalesInvoiceLineAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine>;
 
     /**
      * Creates a sales invoices reminder with one sales invoice.
@@ -9293,6 +9318,54 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async createSalesInvoiceLine(requestParameters: CreateSalesInvoiceLineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
         const response = await this.createSalesInvoiceLineRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * creates a sales invoice line
+     */
+    async createSalesInvoiceLineAssetRaw(requestParameters: CreateSalesInvoiceLineAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SalesInvoiceLine>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling createSalesInvoiceLineAsset().'
+            );
+        }
+
+        if (requestParameters['salesInvoiceId'] == null) {
+            throw new runtime.RequiredError(
+                'salesInvoiceId',
+                'Required parameter "salesInvoiceId" was null or undefined when calling createSalesInvoiceLineAsset().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/sales-invoices/{salesInvoiceId}/lines/asset`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"salesInvoiceId"}}`, encodeURIComponent(String(requestParameters['salesInvoiceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateSalesInvoiceLineAssetRequestToJSON(requestParameters['createSalesInvoiceLineAssetRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SalesInvoiceLineFromJSON(jsonValue));
+    }
+
+    /**
+     * creates a sales invoice line
+     */
+    async createSalesInvoiceLineAsset(requestParameters: CreateSalesInvoiceLineAssetOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SalesInvoiceLine> {
+        const response = await this.createSalesInvoiceLineAssetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
