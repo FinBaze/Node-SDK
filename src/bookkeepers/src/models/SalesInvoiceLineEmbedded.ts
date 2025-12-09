@@ -20,6 +20,13 @@ import {
     ProjectToJSON,
     ProjectToJSONTyped,
 } from './Project';
+import type { Asset } from './Asset';
+import {
+    AssetFromJSON,
+    AssetFromJSONTyped,
+    AssetToJSON,
+    AssetToJSONTyped,
+} from './Asset';
 
 /**
  * 
@@ -33,6 +40,12 @@ export interface SalesInvoiceLineEmbedded {
      * @memberof SalesInvoiceLineEmbedded
      */
     project?: Project;
+    /**
+     * 
+     * @type {Asset}
+     * @memberof SalesInvoiceLineEmbedded
+     */
+    asset?: Asset;
 }
 
 /**
@@ -53,6 +66,7 @@ export function SalesInvoiceLineEmbeddedFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'project': json['project'] == null ? undefined : ProjectFromJSON(json['project']),
+        'asset': json['asset'] == null ? undefined : AssetFromJSON(json['asset']),
     };
 }
 
@@ -68,6 +82,7 @@ export function SalesInvoiceLineEmbeddedToJSONTyped(value?: SalesInvoiceLineEmbe
     return {
         
         'project': ProjectToJSON(value['project']),
+        'asset': AssetToJSON(value['asset']),
     };
 }
 

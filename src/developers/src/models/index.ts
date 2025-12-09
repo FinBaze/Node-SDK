@@ -4,6 +4,7 @@ export * from './Account';
 export * from './Address';
 export * from './App';
 export * from './Asset';
+export * from './AssetEmbedded';
 export * from './AssetWriteoff';
 export * from './Bookkeeper';
 export * from './CreditLoan';

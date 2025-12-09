@@ -10,6 +10,7 @@ src/models/Account.ts
 src/models/Address.ts
 src/models/App.ts
 src/models/Asset.ts
+src/models/AssetEmbedded.ts
 src/models/AssetWriteoff.ts
 src/models/Bookkeeper.ts
 src/models/CreditLoan.ts

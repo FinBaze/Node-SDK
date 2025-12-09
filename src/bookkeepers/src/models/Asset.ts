@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { AssetEmbedded } from './AssetEmbedded';
+import {
+    AssetEmbeddedFromJSON,
+    AssetEmbeddedFromJSONTyped,
+    AssetEmbeddedToJSON,
+    AssetEmbeddedToJSONTyped,
+} from './AssetEmbedded';
 import type { Links } from './Links';
 import {
     LinksFromJSON,
@@ -95,6 +102,12 @@ export interface Asset {
     links: Links;
     /**
      * 
+     * @type {AssetEmbedded}
+     * @memberof Asset
+     */
+    embedded?: AssetEmbedded;
+    /**
+     * 
      * @type {Date}
      * @memberof Asset
      */
@@ -144,6 +157,7 @@ export function AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ass
         'date': (new Date(json['date'])),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'links': LinksFromJSON(json['_links']),
+        'embedded': json['_embedded'] == null ? undefined : AssetEmbeddedFromJSON(json['_embedded']),
         'updated': (new Date(json['updated'])),
         'created': (new Date(json['created'])),
     };
@@ -170,6 +184,7 @@ export function AssetToJSONTyped(value?: Omit<Asset, 'id'|'updated'|'created'> |
         'date': ((value['date']).toISOString().substring(0,10)),
         'metadata': value['metadata'],
         '_links': LinksToJSON(value['links']),
+        '_embedded': AssetEmbeddedToJSON(value['embedded']),
     };
 }
 
