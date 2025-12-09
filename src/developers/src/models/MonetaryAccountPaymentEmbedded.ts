@@ -20,6 +20,13 @@ import {
     SalesInvoiceToJSON,
     SalesInvoiceToJSONTyped,
 } from './SalesInvoice';
+import type { VATFiling } from './VATFiling';
+import {
+    VATFilingFromJSON,
+    VATFilingFromJSONTyped,
+    VATFilingToJSON,
+    VATFilingToJSONTyped,
+} from './VATFiling';
 import type { CreditLoan } from './CreditLoan';
 import {
     CreditLoanFromJSON,
@@ -41,6 +48,13 @@ import {
     RelationToJSON,
     RelationToJSONTyped,
 } from './Relation';
+import type { Reminder } from './Reminder';
+import {
+    ReminderFromJSON,
+    ReminderFromJSONTyped,
+    ReminderToJSON,
+    ReminderToJSONTyped,
+} from './Reminder';
 import type { MonetaryAccount } from './MonetaryAccount';
 import {
     MonetaryAccountFromJSON,
@@ -137,6 +151,18 @@ export interface MonetaryAccountPaymentEmbedded {
      * @memberof MonetaryAccountPaymentEmbedded
      */
     currentAccount?: CurrentAccount;
+    /**
+     * 
+     * @type {VATFiling}
+     * @memberof MonetaryAccountPaymentEmbedded
+     */
+    vatFiling?: VATFiling;
+    /**
+     * 
+     * @type {Reminder}
+     * @memberof MonetaryAccountPaymentEmbedded
+     */
+    reminder?: Reminder;
 }
 
 /**
@@ -167,6 +193,8 @@ export function MonetaryAccountPaymentEmbeddedFromJSONTyped(json: any, ignoreDis
         'purchaseInvoice': json['purchase-invoice'] == null ? undefined : PurchaseInvoiceFromJSON(json['purchase-invoice']),
         'relation': json['relation'] == null ? undefined : RelationFromJSON(json['relation']),
         'currentAccount': json['current-account'] == null ? undefined : CurrentAccountFromJSON(json['current-account']),
+        'vatFiling': json['vat-filing'] == null ? undefined : VATFilingFromJSON(json['vat-filing']),
+        'reminder': json['reminder'] == null ? undefined : ReminderFromJSON(json['reminder']),
     };
 }
 
@@ -190,6 +218,8 @@ export function MonetaryAccountPaymentEmbeddedToJSONTyped(value?: MonetaryAccoun
         'purchase-invoice': PurchaseInvoiceToJSON(value['purchaseInvoice']),
         'relation': RelationToJSON(value['relation']),
         'current-account': CurrentAccountToJSON(value['currentAccount']),
+        'vat-filing': VATFilingToJSON(value['vatFiling']),
+        'reminder': ReminderToJSON(value['reminder']),
     };
 }
 

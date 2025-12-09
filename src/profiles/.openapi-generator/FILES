@@ -211,13 +211,14 @@ src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentEmbedded.ts
 src/models/ProcessMonetaryAccountPaymentCreditLoanRequest.ts
-src/models/ProcessMonetaryAccountPaymentCurrentAccountRequest.ts
 src/models/ProcessMonetaryAccountPaymentDebitLoanRequest.ts
 src/models/ProcessMonetaryAccountPaymentLedgerRequest.ts
 src/models/ProcessMonetaryAccountPaymentMemorialRequest.ts
 src/models/ProcessMonetaryAccountPaymentPurchaseInvoiceRequest.ts
 src/models/ProcessMonetaryAccountPaymentRelationRequest.ts
+src/models/ProcessMonetaryAccountPaymentReminderRequest.ts
 src/models/ProcessMonetaryAccountPaymentSalesInvoiceRequest.ts
+src/models/ProcessMonetaryAccountPaymentVATFilingRequest.ts
 src/models/Product.ts
 src/models/ProductCategory.ts
 src/models/Profile.ts
