@@ -175,6 +175,7 @@ src/models/GetSubscriptions200Response.ts
 src/models/GetVATFilings200Response.ts
 src/models/GetVehicleTrips200Response.ts
 src/models/GetVehicles200Response.ts
+src/models/ImportMonetaryAccountBookedCSVRequest.ts
 src/models/ImportMonetaryAccountCAMT053Request.ts
 src/models/ImportMonetaryAccountJSONRequest.ts
 src/models/ImportMonetaryAccountMT940Request.ts
@@ -211,6 +212,7 @@ src/models/ProcessDocument.ts
 src/models/ProcessDocumentEmail.ts
 src/models/ProcessDocumentEmbedded.ts
 src/models/ProcessMonetaryAccountPaymentCreditLoanRequest.ts
+src/models/ProcessMonetaryAccountPaymentCurrentAccountRequest.ts
 src/models/ProcessMonetaryAccountPaymentDebitLoanRequest.ts
 src/models/ProcessMonetaryAccountPaymentLedgerRequest.ts
 src/models/ProcessMonetaryAccountPaymentMemorialRequest.ts

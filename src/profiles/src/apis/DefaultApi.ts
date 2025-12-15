@@ -126,6 +126,7 @@ import type {
   GetVATFilings200Response,
   GetVehicleTrips200Response,
   GetVehicles200Response,
+  ImportMonetaryAccountBookedCSVRequest,
   ImportMonetaryAccountCAMT053Request,
   ImportMonetaryAccountJSONRequest,
   ImportMonetaryAccountMT940Request,
@@ -142,6 +143,7 @@ import type {
   PackingSlib,
   ProcessDocument,
   ProcessMonetaryAccountPaymentCreditLoanRequest,
+  ProcessMonetaryAccountPaymentCurrentAccountRequest,
   ProcessMonetaryAccountPaymentDebitLoanRequest,
   ProcessMonetaryAccountPaymentLedgerRequest,
   ProcessMonetaryAccountPaymentMemorialRequest,
@@ -412,6 +414,8 @@ import {
     GetVehicleTrips200ResponseToJSON,
     GetVehicles200ResponseFromJSON,
     GetVehicles200ResponseToJSON,
+    ImportMonetaryAccountBookedCSVRequestFromJSON,
+    ImportMonetaryAccountBookedCSVRequestToJSON,
     ImportMonetaryAccountCAMT053RequestFromJSON,
     ImportMonetaryAccountCAMT053RequestToJSON,
     ImportMonetaryAccountJSONRequestFromJSON,
@@ -444,6 +448,8 @@ import {
     ProcessDocumentToJSON,
     ProcessMonetaryAccountPaymentCreditLoanRequestFromJSON,
     ProcessMonetaryAccountPaymentCreditLoanRequestToJSON,
+    ProcessMonetaryAccountPaymentCurrentAccountRequestFromJSON,
+    ProcessMonetaryAccountPaymentCurrentAccountRequestToJSON,
     ProcessMonetaryAccountPaymentDebitLoanRequestFromJSON,
     ProcessMonetaryAccountPaymentDebitLoanRequestToJSON,
     ProcessMonetaryAccountPaymentLedgerRequestFromJSON,
@@ -1879,6 +1885,12 @@ export interface GetVehiclesRequest {
     asset?: string;
 }
 
+export interface ImportMonetaryAccountBookedCSVOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    importMonetaryAccountBookedCSVRequest?: ImportMonetaryAccountBookedCSVRequest;
+}
+
 export interface ImportMonetaryAccountCAMT053OperationRequest {
     profileId: string;
     monetaryAccountId: string;
@@ -1909,6 +1921,14 @@ export interface ProcessMonetaryAccountPaymentCreditLoanOperationRequest {
     monetaryAccountPaymentId: string;
     unprocess?: boolean;
     processMonetaryAccountPaymentCreditLoanRequest?: ProcessMonetaryAccountPaymentCreditLoanRequest;
+}
+
+export interface ProcessMonetaryAccountPaymentCurrentAccountOperationRequest {
+    profileId: string;
+    monetaryAccountId: string;
+    monetaryAccountPaymentId: string;
+    unprocess?: boolean;
+    processMonetaryAccountPaymentCurrentAccountRequest?: ProcessMonetaryAccountPaymentCurrentAccountRequest;
 }
 
 export interface ProcessMonetaryAccountPaymentDebitLoanOperationRequest {
@@ -5929,6 +5949,22 @@ export interface DefaultApiInterface {
     getVehicles(requestParameters: GetVehiclesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVehicles200Response>;
 
     /**
+     * Imports an JSON file into a monetary account
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {ImportMonetaryAccountBookedCSVRequest} [importMonetaryAccountBookedCSVRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    importMonetaryAccountBookedCSVRaw(requestParameters: ImportMonetaryAccountBookedCSVOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Imports an JSON file into a monetary account
+     */
+    importMonetaryAccountBookedCSV(requestParameters: ImportMonetaryAccountBookedCSVOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
      * Imports an CAMT053 file into a monetary account
      * @param {string} profileId The id of the profile
      * @param {string} monetaryAccountId The ID of the monetary account
@@ -6009,6 +6045,24 @@ export interface DefaultApiInterface {
      * Updates a monetary account
      */
     processMonetaryAccountPaymentCreditLoan(requestParameters: ProcessMonetaryAccountPaymentCreditLoanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * Updates a monetary account
+     * @param {string} profileId The id of the profile
+     * @param {string} monetaryAccountId The ID of the monetary account
+     * @param {string} monetaryAccountPaymentId The ID of the monetary account payment
+     * @param {boolean} [unprocess] If the payment is already processed, enter true to unprocess it before processing it again, otherwise you will get an error
+     * @param {ProcessMonetaryAccountPaymentCurrentAccountRequest} [processMonetaryAccountPaymentCurrentAccountRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    processMonetaryAccountPaymentCurrentAccountRaw(requestParameters: ProcessMonetaryAccountPaymentCurrentAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+    /**
+     * Updates a monetary account
+     */
+    processMonetaryAccountPaymentCurrentAccount(requestParameters: ProcessMonetaryAccountPaymentCurrentAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
     /**
      * Updates a monetary account
@@ -17861,6 +17915,53 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Imports an JSON file into a monetary account
+     */
+    async importMonetaryAccountBookedCSVRaw(requestParameters: ImportMonetaryAccountBookedCSVOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling importMonetaryAccountBookedCSV().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling importMonetaryAccountBookedCSV().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/import-booked-csv`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ImportMonetaryAccountBookedCSVRequestToJSON(requestParameters['importMonetaryAccountBookedCSVRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Imports an JSON file into a monetary account
+     */
+    async importMonetaryAccountBookedCSV(requestParameters: ImportMonetaryAccountBookedCSVOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.importMonetaryAccountBookedCSVRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Imports an CAMT053 file into a monetary account
      */
     async importMonetaryAccountCAMT053Raw(requestParameters: ImportMonetaryAccountCAMT053OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -18105,6 +18206,64 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
      */
     async processMonetaryAccountPaymentCreditLoan(requestParameters: ProcessMonetaryAccountPaymentCreditLoanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.processMonetaryAccountPaymentCreditLoanRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Updates a monetary account
+     */
+    async processMonetaryAccountPaymentCurrentAccountRaw(requestParameters: ProcessMonetaryAccountPaymentCurrentAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['profileId'] == null) {
+            throw new runtime.RequiredError(
+                'profileId',
+                'Required parameter "profileId" was null or undefined when calling processMonetaryAccountPaymentCurrentAccount().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountId',
+                'Required parameter "monetaryAccountId" was null or undefined when calling processMonetaryAccountPaymentCurrentAccount().'
+            );
+        }
+
+        if (requestParameters['monetaryAccountPaymentId'] == null) {
+            throw new runtime.RequiredError(
+                'monetaryAccountPaymentId',
+                'Required parameter "monetaryAccountPaymentId" was null or undefined when calling processMonetaryAccountPaymentCurrentAccount().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['unprocess'] != null) {
+            queryParameters['unprocess'] = requestParameters['unprocess'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuth2", []);
+        }
+
+        const response = await this.request({
+            path: `/v1/profiles/{profileId}/monetary-accounts/{monetaryAccountId}/payments/{monetaryAccountPaymentId}/current-account`.replace(`{${"profileId"}}`, encodeURIComponent(String(requestParameters['profileId']))).replace(`{${"monetaryAccountId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountId']))).replace(`{${"monetaryAccountPaymentId"}}`, encodeURIComponent(String(requestParameters['monetaryAccountPaymentId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ProcessMonetaryAccountPaymentCurrentAccountRequestToJSON(requestParameters['processMonetaryAccountPaymentCurrentAccountRequest']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Updates a monetary account
+     */
+    async processMonetaryAccountPaymentCurrentAccount(requestParameters: ProcessMonetaryAccountPaymentCurrentAccountOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.processMonetaryAccountPaymentCurrentAccountRaw(requestParameters, initOverrides);
     }
 
     /**
