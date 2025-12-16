@@ -31,6 +31,12 @@ export interface ProcessMonetaryAccountPaymentLedgerRequest {
      * @memberof ProcessMonetaryAccountPaymentLedgerRequest
      */
     ledger: string;
+    /**
+     * Optional project ID to process the payment to
+     * @type {string}
+     * @memberof ProcessMonetaryAccountPaymentLedgerRequest
+     */
+    project?: string;
 }
 
 /**
@@ -54,6 +60,7 @@ export function ProcessMonetaryAccountPaymentLedgerRequestFromJSONTyped(json: an
         
         'name': json['name'],
         'ledger': json['ledger'],
+        'project': json['project'] == null ? undefined : json['project'],
     };
 }
 
@@ -70,6 +77,7 @@ export function ProcessMonetaryAccountPaymentLedgerRequestToJSONTyped(value?: Pr
         
         'name': value['name'],
         'ledger': value['ledger'],
+        'project': value['project'],
     };
 }
 
