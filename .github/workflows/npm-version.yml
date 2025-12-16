@@ -1,6 +1,9 @@
 name: Version Increment
+
 permissions:
+  id-token: write  # Required for OIDC npm
   contents: write
+
 on:
   push:
     branches:
