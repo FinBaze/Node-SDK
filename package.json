@@ -1,12 +1,15 @@
 {
     "name": "@finbaze/sdk",
     "private": false,
-    "version": "1.1.209",
+    "version": "1.1.208",
     "description": "This is the Finbaze SDK, it is used to interact with the Finbaze API.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "module": "./dist/esm/index.js",
     "sideEffects": false,
+    "repository": {
+        "url": "https://github.com/FinBaze/Node-SDK"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 0",
         "build": "tsc && tsc -p tsconfig.esm.json && npm run fix",
